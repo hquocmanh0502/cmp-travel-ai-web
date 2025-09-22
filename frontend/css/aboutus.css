@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+.description{
+  text-align: justify !important;
+}
+
+/* body */
+.title1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  letter-spacing: 0.1em;
+  text-align: center;
+  color: #df6951;
+}
+.title2 {
+  font-family: "Volkhov", serif;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 71.04px;
+  text-align: center;
+  color: #293462
+}
+/* promotion */
+.promotion h1{
+  text-align: left;
+}
+.promotion h2{
+  text-align: left;
+}
+.hero {
+  padding: 100px 0; /* Adjust padding as needed */
+}
+
+.image-container {
+  position: relative; /* To position decorative lines */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 60px;
+}
+.col-md-6 p {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: left;
+  color: black;
+  margin: 40px 60px 40px 0px;
+}
+.image-container img{
+  transition: transform ease 0.3 ;
+}
+
+/* Add styles for decorative lines using pseudo-elements */
+.image-container::before,
+.image-container::after {
+  content: "";
+  position: absolute;
+  width: 100px; /* Adjust width as needed */
+  height: 2px;
+  background-color: #e04f67; /* Line color */
+  top: 0px;
+  /* Position and rotate lines as needed */
+}
+
+.image-container::before {
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.image-container::after {
+  right: 0;
+  transform: translateY(-50%);
+}
+.view-packages{
+  background-color: #DF6951;
+    color: white;
+    border: none;
+    display: inline-block !important;
+    padding: 1px 20px;
+    cursor: pointer;
+    font-family: 'Circular Std', sans-serif;
+    font-weight: 500;
+    border-radius: 10px;
+    line-height: 40px;
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .3s ease;
+}
+
+.view-packages:hover{
+    transform: scale(1.05);
+    background-color: #ff4d29;
+    font-weight:700;
+}
+
+/* adventure */
+.carousel-inner{
+  text-align: center;
+  margin: 100px 0;
+}
+.carousel-item video {
+  width: 95%;
+  height: 60vh;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+/* explore */
+.explore_more{
+  margin: 100px 0px;
+}
+
+.explore {
+  display: grid;
+  grid-template-columns: repeat(4, 23%); /* 4 columns, each 363px wide */
+  gap: 35px; /* Space between the cards */
+  margin: 50px 50px;
+}
+
+.package {
+  height: 40vh;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: white;  
+  position: relative;
+}
+
+.package img{
+  transition: transform ease 0.3s;
+}
+.package img:hover{
+  transform:scale(1.2);
+}
+.package.large {
+  grid-row: span 2; /* Span 2 rows */
+  height: calc(2 * 40vh + 35px); /* 2 times height + gap */
+}
+
+.image {
+  width: 100%;
+  height: 100%; /* Ensure the image doesn't take up the whole card */
+  background-color: #f0f0f0;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  position: absolute; /* Position text absolutely within the .package div */
+  bottom: -15px; /* Align text to the bottom */
+  left: 0; /* Align text to the left */
+  width: 80%;
+  padding: 10px; /* Padding for text */
+  color: white; /* White text color */
+  display: flex;
+  margin-left: 30px;
+  justify-content: space-between; /* Space between the title and price */
+  align-items: center;
+  justify-items: center;
+  font-family: "Poppins", sans-serif; 
+}
+
+.explore h2 {
+  margin-right: 30px;
+  font-size: 18px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 33px;
+  text-align: center;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.explore p {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 33px;
+  text-align: center;
+  text-shadow: 2px 2px 4px #000000;
+}
+/* trend */
+.trend {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 150px;
+}
+.trend h1{
+  text-align: left;
+}
+.trend h2{
+  text-align: left;
+}
+.imagines{
+  width: 40%;
+}
+.imagines img{
+  width: 100%;
+  margin-right: 30px;
+}
+.content {
+  width: 60%;
+  padding:0px 250px;
+}
+.content p{
+  font-family: "Poppins", sans-serif; 
+  color: #000000;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: left;
+}
+
+.stats {
+  margin-top: 50px;
+  display: flex;
+  justify-content: left;
+  gap:70px;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-image {
+  width: 100%;
+  height: auto;
+}
+
+.shell {
+  position: absolute;
+  top: 20%;
+  right: 0;
+  width: 15%;
+  transform: translate(-50%, -50%);
+}

@@ -1,0 +1,530 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+body, html {
+    overflow-x: hidden; /* Ngăn chặn cuộn ngang nếu không cần thiết */
+    overflow-y: auto;   /* Cho phép cuộn dọc nếu có nội dung dài */
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.header{
+  animation-name: changeImages;
+  animation-duration: 30s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes changeImages {
+  0% {
+    background-image: url("../images/homepage-image/header-image-4.jpg");
+  }
+  25% {
+    background-image: url("../images/homepage-image/header-image-2.jpg");
+  }
+  50% {
+    background-image: url("../images/homepage-image/header-image-3.jpg");
+  }
+  75% {
+    background-image: url("../images/homepage-image/header-image-1.jpg");
+  }
+  100% {
+    background-image: url("../images/homepage-image/header-image-4.jpg");
+  }
+}
+
+.context {
+    margin: 20vh 0px 50px 305px;
+    position: relative;
+    z-index: 2;
+}
+.slogan {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    margin-top: 20px;
+    font-size: 65px;
+    line-height: 70px;
+    text-shadow: 
+    -1px -1px 0 #000,  
+    1px -1px 0 #000,  
+    -1px 1px 0 #000,  
+    1px 1px 0 #000;
+    width: 750px;
+    transition: transform 0.3s ease-in-out
+}
+.slogan:hover{
+    transform: scale(1.05);
+}
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin: 0px 305px;
+    position: relative;
+    z-index: 2;
+    background-color: #afafafd7;
+    width: 850px;
+    height: 102px;
+    border-radius: 6px;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-box input,
+.search-box select{
+    font-family: 'Poppins', sans-serif;
+    background-color: #afafafab;
+    background-color: transparent;
+    border: none;
+    border-left: 3px solid white;
+    padding: 10px;
+    font-size: 1em;
+    color: white;
+    height: 75%; /* Đảm bảo chiều cao bằng nhau */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1; /* Cho phép chia sẻ không gian đều giữa các phần tử */
+}
+
+.search-box input {
+    border-left: none;
+}
+
+.search-box input::placeholder {
+    color: white;
+}
+
+.submit-btn {
+    padding: 5px 10px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #DF6951;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 140px;
+    height: 55px; 
+    border-radius: 10px;
+    font-size: 1em;
+    flex: 0 0 auto;
+    margin-right: 10px;
+    transition: transform 0.3s ease-in-out, background-color 0.3 ease-in-out;
+}
+.submit-btn:hover{
+    transform: scale(1.05);
+    background-color: #ff4d29;
+}
+.customer {
+    margin: 30px 305px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.customer ul {
+    display: flex;
+    list-style: none;
+    margin: 20px 0;
+}
+.customer ul li:not(:first-child){
+    text-indent: -12px;
+    position: relative;
+}
+.customer ul li img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.customer ul li:last-child::after {
+    content: "+";
+    font-size: 12px; 
+    color: white;
+    position: absolute;
+    top: 45%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+}
+.customer span {
+    margin-top: 0px; /* Căn khoảng cách giữa span và các hình ảnh */
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin-left: 20px;
+    font-size: 13px;
+}
+.scroll {
+    width: 100%;
+    position: relative;
+    bottom: -10px;
+    z-index: 2;
+    display: block;
+}
+
+.partner{
+    height: 150px;
+    width: 100%;
+    background-color: #F7F7F7;
+}
+
+.partner ul{
+  height: 100%;
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+
+}
+
+.partner ul li{
+  display: flex;
+  align-items: center;
+  opacity: 44%;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+.partner ul li:hover{
+    opacity: 100%;
+    transform: scale(1.1);
+}
+
+/* Body------------------------------------------------------------------------ */
+/* Category */
+.category {
+    margin: 70px 0;
+    height: 400px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+  }
+  .title1 {
+    text-align: center;
+    color: #df6951;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    text-align: center;
+  }
+
+  .title2 {
+    font-family: "Volkhov", serif;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 64.5px;
+    text-align: center;
+    color: #293462;
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+  
+  .services {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+  }
+  
+  .service-item {
+    background: white;
+    border-radius: 30px;
+    padding: 20px;
+    width: 235px;
+    height: 315px;
+    display: flex; /* Bật Flexbox */
+    flex-direction: column; /* Sắp xếp các phần tử con theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    transition: all .5s ease-in-out;
+  }
+  
+  .service-item img {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 30px;
+  }
+
+  .category h2 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    color: #1e1d4c;
+    margin: 10px 0;
+    white-space: nowrap;
+  }
+  
+  .category p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+    text-align: center;
+    color: #666;
+    width: 187px;
+    margin: 0;
+  }
+  
+  .main-service {
+    width: 227px;
+    height: 315px;
+    position: relative;
+  }
+  
+  .main-service .square {
+    position: absolute;
+    top: 260px;
+    left: -30px;
+    width: 80px;
+    height: 80px;
+    background-color: #df6951;
+    border-radius: 30px;
+    z-index: -2;
+  }
+  
+  .service-item:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  /* fast and easy */
+  .fast-easy{
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 130px;
+  }
+
+  .left{
+    width: 30%;
+  }
+
+  .left h2{
+    text-align: left;
+  }
+
+  .left h1{
+    text-align: left;
+  }
+
+  .step{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .ima{
+    margin-right: 20px;
+  }
+  
+  .ima img{
+    width: 40px;
+    height: 40px;
+  }
+  .right{
+    overflow: hidden;
+  }
+  .right img{
+    height: 600px;
+    position: relative;
+    bottom: 50px;
+  }
+
+  .content{
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.92px;
+  text-align: left;
+  color:#5E6282;
+  }
+  .cont h3{
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19.92px;
+  text-align: left;
+  color:#5E6282;
+  margin-bottom: 8px;
+  }
+
+  /* make holiday */
+  .makeholiday{
+    height: 400px;
+    background-image: url("../images/homepage/body/holiday.png");
+    margin-bottom: 100px;
+  }
+
+  /* Trendy */
+  .trending-tours {
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .tour-packages {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 50px;
+    margin-bottom: 150px;
+  }
+  
+  .tour-card {
+    background: #fff;
+    border-radius: 25px;
+    overflow: hidden;
+    width: calc(31% - 20px);
+    transition: all 0.5s ease;
+    position: relative;
+  }
+  
+  .tour-card:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tour-card img {
+    width: 100%;
+  }
+
+  .thumbnail{
+    height: 244px;
+  }
+  
+  .tour-info {
+    padding: 15px;
+  }
+  
+  .tour-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .country-flag {
+    position: absolute;
+    top: 210px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+  .tour-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .tour-duration,
+  .tour-people {
+    margin-right: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    color: #777;
+  }
+  
+  .tour-duration img,
+  .tour-people img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+  
+  .tour-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .rating i{
+    color: #FFBA0A;
+  }
+  .tour-title h2 {
+    font-size: 29.03px;
+    font-weight: 700;
+    line-height: 43.55px;
+    text-align: center;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .location p {
+    margin: 5px 0px;
+    color: #555;
+    text-align: start;
+    width: 393px;
+  }
+  .location {
+    display: flex;
+    align-items: center;
+    color: #777;
+    font-size: 16.81px;
+    font-weight: 400;
+    line-height: 25.21px;
+    text-align: center;
+  }
+  
+  .location img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+  
+  .rating-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .price {
+    color: #e67e22;
+    font-size: 29.03px;
+    font-weight: 550;
+    line-height: 43.55px;
+    text-align: center;
+  }
+  
+  .price del {
+    font-size: 0.8em;
+    color: #bbb;
+  }
+  
+  .description{
+    color: #000000;
+    margin-bottom: 15px;
+    font-size: 12.22px;
+    font-weight: 400;
+    line-height: 24.45px;
+    letter-spacing: 0.05em;
+    text-align: left;
+  }
+  
+  button {
+    display: block;
+    height: 45px;
+    width: 134.9px;
+    padding: 10px;
+    background-color: #df6951;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 12.77px;
+    font-weight: 600;
+    line-height: 19.16px;
+    text-align: center;
+  }
+  
+  button:hover {
+    background-color: #d35400;
+  }
+  
+

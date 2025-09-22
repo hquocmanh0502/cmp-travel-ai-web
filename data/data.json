@@ -1,0 +1,867 @@
+
+[
+  {
+    "name": "Maldives",
+    "country": "Maldives",
+    "description": "The Maldives is a tropical paradise renowned for its luxurious resorts, and vibrant marine life, making it a top destination for beach lovers and divers.",
+    "attractions": [
+      "Male",
+      "Ari Atoll  ",
+      "Bioluminescent Beaches"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.9",
+    "activity": [
+      "Snorkeling",
+      "Scuba Diving",
+      "Sandbank Picnic"
+    ],
+    "food": [
+      "Mas Huni",
+      "Garudhiya",
+      "Bis Keemiya"
+    ],
+    "id": "35",
+    "img": "https://images.unsplash.com/photo-1543731068-7e0f5beff43a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxfHxtYWxkaXZlc3xlbnwwfDB8fHwxNzE4NjE0Mzg3fDA&ixlib=rb-4.0.3&q=80&w=1080"
+  },
+  {
+    "name": "Lauterbrunnen",
+    "country": "Switzerland",
+    "description": "Lauterbrunnen, in the Swiss Alps, is known for its stunning waterfalls and scenic beauty. It's a serene valley with lush meadows and towering mountains, perfect for nature lovers.",
+    "attractions": [
+      "Staubbach Falls",
+      "Lauterbrunnen Valley",
+      "Trümmelbach Falls"
+    ],
+    "estimatedCost": "5500",
+    "rating": "4.6",
+    "activity": [
+      "Cable Car Rides",
+      "Waterfalls Tour",
+      "Mountain Biking"
+    ],
+    "food": [
+      "Swiss Fondue",
+      "Raclette",
+      "Hot Chocolate"
+    ],
+    "id": "36",
+    "img": "https://images.unsplash.com/photo-1559754417-c1304ca2f80f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxOXx8TGF1dGVyYnJ1bm5lbnxlbnwwfDB8fHwxNzE4NjE1NTQ3fDA&ixlib=rb-4.0.3&q=80&w=1080"
+  },
+  {
+    "name": "Amsterdam",
+    "country": "Netherlands",
+    "description": "Amsterdam is the capital of the Netherlands, known for its picturesque canals, historic architecture, and vibrant cultural scene.",
+    "attractions": [
+      "Rijksmuseum",
+      "Van Gogh Museum",
+      "Anne Frank House"
+    ],
+    "estimatedCost": "4000",
+    "rating": "4.5",
+    "activity": [
+      "Boat Tour",
+      "Biking",
+      "Visiting Coffee Shops"
+    ],
+    "food": [
+      "Stroopwafel",
+      "Poffertjes",
+      "Herring"
+    ],
+    "id": "1",
+    "img": "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NjE5NTF8MHwxfHNlYXJjaHwxfHxBbXN0ZXJkYW18ZW58MHx8fHwxNjg5ODM5MTUwfDA&ixlib=rb-4.0.3&q=80&w=1080"
+  },
+  {
+    "name": "Toronto",
+    "country": "Canada",
+    "description": "Toronto is Canada's largest city, a vibrant metropolis with diverse neighborhoods, iconic landmarks like the CN Tower, and a thriving arts and culture scene.",
+    "attractions": [
+      "CN Tower",
+      "Royal Ontario Museum",
+      "Distillery District"
+    ],
+    "estimatedCost": "4500",
+    "rating": "4.7",
+    "activity": [
+      "Harbourfront Centre",
+      "Explore Toronto Islands",
+      "Visit Kensington Market"
+    ],
+    "food": [
+      "Poutine",
+      "Peameal Bacon Sandwich",
+      "Butter Tarts"
+    ],
+    "id": "2",
+    "img": "https://images.unsplash.com/photo-1486325212027-8081e485255e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VG9yb250b3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Vancouver",
+    "country": "Canada",
+    "description": "Vancouver is a coastal city known for its stunning natural beauty, surrounded by mountains and ocean, offering a mix of outdoor activities and urban experiences.",
+    "attractions": [
+      "Stanley Park",
+      "Granville Island",
+      "Capilano Suspension Bridge"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.6",
+    "activity": [
+      "Grouse Mountain Hike",
+      "Seawall Biking",
+      "Explore Gastown"
+    ],
+    "food": [
+      "Salmon",
+      "Japadog",
+      "Nanaimo Bar"
+    ],
+    "id": "3",
+    "img": "https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFuY291dmVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Montreal",
+    "country": "Canada",
+    "description": "Montreal is a vibrant city with a strong French influence, known for its historic architecture, artsy neighborhoods, and lively festivals.",
+    "attractions": [
+      "Old Montreal",
+      "Montreal Museum of Fine Arts",
+      "Mount Royal Park"
+    ],
+    "estimatedCost": "4000",
+    "rating": "4.5",
+    "activity": [
+      "Explore Plateau-Mont-Royal",
+      "Bike along Lachine Canal",
+      "Experience Jazz Festival"
+    ],
+    "food": [
+      "Bagels",
+      "Poutine",
+      "Smoked Meat Sandwich"
+    ],
+    "id": "4",
+    "img": "https://images.unsplash.com/photo-1470181942237-78ce33fec141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8TW9udHJlYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Lisbon",
+    "country": "Portugal",
+    "description": "Lisbon, the capital city of Portugal, is a charming destination with narrow cobblestone streets, colorful buildings, and stunning viewpoints over the Tagus River.",
+    "attractions": [
+      "Belém Tower",
+      "Jerónimos Monastery",
+      "Castelo de São Jorge"
+    ],
+    "estimatedCost": "4000",
+    "rating": "4.7",
+    "activity": [
+      "Tram 28 Ride",
+      "Explore Alfama District",
+      "Visit LX Factory"
+    ],
+    "food": [
+      "Pastéis de Nata",
+      "Bacalhau",
+      "Sardines"
+    ],
+    "id": "5",
+    "img": "https://images.unsplash.com/photo-1588535684923-900727736ac0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8TGlzYm9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Porto",
+    "country": "Portugal",
+    "description": "Porto is a picturesque city known for its Port wine cellars, historic Ribeira district, and iconic Dom Luís I Bridge crossing the Douro River.",
+    "attractions": [
+      "Ribeira Square",
+      "Clerigos Tower",
+      "Serralves Museum"
+    ],
+    "estimatedCost": "3500",
+    "rating": "4.6",
+    "activity": [
+      "Port Wine Tasting",
+      "Boat Cruise on Douro River",
+      "Walk across Dom Luís I Bridge"
+    ],
+    "food": [
+      "Francesinha",
+      "Tripas à Moda do Porto",
+      "Pastel de Chaves"
+    ],
+    "id": "6",
+    "img": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UG9ydG98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Moscow",
+    "country": "Russia",
+    "description": "Moscow is the capital city of Russia, known for its iconic landmarks, rich history, and vibrant cultural scene.",
+    "attractions": [
+      "Red Square",
+      "Kremlin and St. Basil's Cathedral",
+      "Bolshoi Theatre"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.8",
+    "activity": [
+      "Visiting Moscow Metro Stations",
+      "Exploring Gorky Park",
+      "Boat Tour on the Moscow River"
+    ],
+    "food": [
+      "Borscht",
+      "Pelmeni",
+      "Blini"
+    ],
+    "id": "7",
+    "img": "https://images.unsplash.com/photo-1495542779398-9fec7dc7986c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bW9zY293fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Kazan",
+    "country": "Russia",
+    "description": "Kazan is a city where East meets West, showcasing its unique blend of Islamic and Russian cultures, with a stunning Kremlin and a vibrant city center.",
+    "attractions": [
+      "Kazan Kremlin",
+      "Kul Sharif Mosque",
+      "Bauman Street"
+    ],
+    "estimatedCost": "3800",
+    "rating": "4.5",
+    "activity": [
+      "Explore Kazan Riviera",
+      "Visit Raifa Monastery",
+      "Tatar Folk Show"
+    ],
+    "food": [
+      "Chak-Chak",
+      "Tatar Plow",
+      "Ikra"
+    ],
+    "id": "8",
+    "img": "https://images.unsplash.com/photo-1631775866694-fe340840cc52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8S2F6YW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Kuala Lumpur",
+    "country": "Malaysia",
+    "description": "Kuala Lumpur is the vibrant capital city of Malaysia, famous for its modern skyline, iconic Petronas Twin Towers, and diverse cultural heritage.",
+    "attractions": [
+      "Petronas Twin Towers",
+      "Batu Caves",
+      "Merdeka Square"
+    ],
+    "estimatedCost": "4500",
+    "rating": "4.7",
+    "activity": [
+      "Shopping at Bukit Bintang",
+      "Visiting KL Tower",
+      "Exploring Chinatown"
+    ],
+    "food": [
+      "Nasi Lemak",
+      "Char Kway Teow",
+      "Roti Canai"
+    ],
+    "id": "9",
+    "img": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8S3VhbGElMjBMdW1wdXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Malacca",
+    "country": "Malaysia",
+    "description": "Malacca (Melaka) is a historical city with a rich colonial past, featuring well-preserved heritage buildings and a unique blend of cultures.",
+    "attractions": [
+      "St. Paul's Hill",
+      "Jonker Street",
+      "A Famosa"
+    ],
+    "estimatedCost": "3200",
+    "rating": "4.5",
+    "activity": [
+      "River Cruise in Malacca River",
+      "Visiting Dutch Square",
+      "Baba Nyonya Heritage Museum"
+    ],
+    "food": [
+      "Chicken Rice Ball",
+      "Nyonya Laksa",
+      "Cendol"
+    ],
+    "id": "10",
+    "img": "https://images.unsplash.com/photo-1589733000502-225e3f26fb8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8TWFsYWNjYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Langkawi",
+    "country": "Malaysia",
+    "description": "Langkawi is a tropical paradise with beautiful beaches, lush rainforests, and a laid-back atmosphere, perfect for relaxation and adventure.",
+    "attractions": [
+      "Langkawi Cable Car",
+      "Eagle Square",
+      "Tanah Rata Waterfall"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.8",
+    "activity": [
+      "Island Hopping Tour",
+      "Jet Ski Adventure",
+      "Mangrove Forest Cruise"
+    ],
+    "food": [
+      "Nasi Dagang",
+      "Laksa",
+      "Satay"
+    ],
+    "id": "11",
+    "img": "https://images.unsplash.com/photo-1591251010190-43c22baa46b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TGFuZ2thd2l8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Causeway Bay",
+    "country": "Hong Kong",
+    "description": "Causeway Bay is a popular shopping and entertainment district, home to large department stores, trendy boutiques, and a vibrant food scene.",
+    "attractions": [
+      "Times Square ",
+      "Victoria Park ",
+      "Hysan Place"
+    ],
+    "estimatedCost": "4200",
+    "rating": "4.4",
+    "activity": [
+      "Shopping in Causeway Bay",
+      "Relaxing in Victoria Park",
+      "Tea-Time in Tea Restaurants"
+    ],
+    "food": [
+      "Wonton Noodles",
+      "Hotpot",
+      "Bubble Tea"
+    ],
+    "id": "12",
+    "img": "https://images.unsplash.com/photo-1660665641573-b6943d24e418?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Q2F1c2V3YXklMjBCYXl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Athens",
+    "country": "Greece",
+    "description": "Athens, the ancient capital, is a city steeped in history, showcasing iconic ruins, ancient temples, and a rich cultural heritage.",
+    "attractions": [
+      "Acropolis",
+      "Parthenon",
+      "Plaka"
+    ],
+    "estimatedCost": "4500",
+    "rating": "4.7",
+    "activity": [
+      "Visit Acropolis Museum",
+      "Explore Ancient Agora",
+      "Stroll along Dionysiou Areopagitou Street"
+    ],
+    "food": [
+      "Moussaka",
+      "Souvlaki",
+      "Spanakopita"
+    ],
+    "id": "13",
+    "img": "https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXRoZW5zfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Santorini",
+    "country": "Greece",
+    "description": "Santorini is a stunning volcanic island known for its white-washed buildings, dramatic sunsets, and picturesque cliffside villages.",
+    "attractions": [
+      "Oia",
+      "Fira",
+      "Red Beach"
+    ],
+    "estimatedCost": "5500",
+    "rating": "4.8",
+    "activity": [
+      "Sail around Caldera",
+      "Explore Akrotiri Archaeological Site",
+      "Wine Tasting at Local Vineyards"
+    ],
+    "food": [
+      "Fava",
+      "Santorini Tomatokeftedes",
+      "Loukoumades"
+    ],
+    "id": "14",
+    "img": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8U2FudG9yaW5pfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Tokyo",
+    "country": "Japan",
+    "description": "Tokyo, the capital city, is a bustling metropolis known for its modernity, ancient traditions, and vibrant pop culture.",
+    "attractions": [
+      "Senso-ji Temple",
+      "Shibuya Crossing",
+      "Tsukiji Outer Market"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.7",
+    "activity": [
+      "Visit Tokyo Skytree",
+      "Explore Akihabara",
+      "Stroll in Ueno Park"
+    ],
+    "food": [
+      "Sushi",
+      "Ramen",
+      "Tempura"
+    ],
+    "id": "15",
+    "img": "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VG9reW98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Kyoto",
+    "country": "Japan",
+    "description": "Kyoto is a city with a rich history, showcasing stunning temples, traditional tea houses, and beautiful cherry blossoms in spring.",
+    "attractions": [
+      "Kinkaku-ji (Golden Pavilion)",
+      "Fushimi Inari Taisha",
+      "Arashiyama Bamboo Grove"
+    ],
+    "estimatedCost": "4800",
+    "rating": "4.6",
+    "activity": [
+      "Experience a Tea Ceremony",
+      "Visit Gion District",
+      "Explore Nijo Castle"
+    ],
+    "food": [
+      "Kaiseki Ryori",
+      "Matcha Green Tea",
+      "Yudofu (Tofu Hot Pot)"
+    ],
+    "id": "16",
+    "img": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8S3lvdG98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Osaka",
+    "country": "Japan",
+    "description": "Osaka is a lively city known for its delicious street food, modern architecture, and vibrant nightlife.",
+    "attractions": [
+      "Osaka Castle",
+      "Dotonbori",
+      "Shinsaibashi Shopping Street"
+    ],
+    "estimatedCost": "4200",
+    "rating": "4.5",
+    "activity": [
+      "Taste Okonomiyaki",
+      "Visit Umeda Sky Building",
+      "Explore Kuromon Ichiba Market"
+    ],
+    "food": [
+      "Takoyaki",
+      "Okonomiyaki",
+      "Kushikatsu"
+    ],
+    "id": "17",
+    "img": "https://images.unsplash.com/photo-1589452271712-64b8a66c7b71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8T3Nha2F8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Delhi",
+    "country": "India",
+    "description": "Delhi, the capital city of India, is a historical and cultural hub known for its magnificent architecture, bustling markets, and diverse cuisine.",
+    "attractions": [
+      "Red Fort",
+      "Qutub Minar",
+      "India Gate"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.2",
+    "activity": [
+      "Heritage Walk",
+      "Rickshaw Ride in Old Delhi",
+      "Shopping at Chandni Chowk"
+    ],
+    "food": [
+      "Paratha",
+      "Chole Bhature",
+      "Butter Chicken"
+    ],
+    "id": "18",
+    "img": "https://images.unsplash.com/photo-1513014576558-921f00d80b77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fERlbGhpfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "London",
+    "country": "United Kingdom",
+    "description": "London, the capital city of the United Kingdom, is a global metropolis known for its iconic landmarks, rich history, and diverse cultural offerings.",
+    "attractions": [
+      "Buckingham Palace",
+      "Tower of London",
+      "British Museum"
+    ],
+    "estimatedCost": "8000",
+    "rating": "4.7",
+    "activity": [
+      "West End Theatre Show",
+      "River Thames Cruise",
+      "Visit to the Tate Modern"
+    ],
+    "food": [
+      "Fish and Chips",
+      "Full English Breakfast",
+      "Afternoon Tea"
+    ],
+    "id": "19",
+    "img": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TG9uZG9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Manchester",
+    "country": "United Kingdom",
+    "description": "Manchester, a vibrant city in England, is renowned for its rich industrial heritage, world-class music scene, and famous football clubs.",
+    "attractions": [
+      "Old Trafford Stadium",
+      "Manchester Cathedral",
+      "The Lowry"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.3",
+    "activity": [
+      "Manchester United Stadium Tour",
+      "Exploring the Northern Quarter",
+      "Museum of Science and Industry"
+    ],
+    "food": [
+      "Lancashire Hotpot",
+      "Manchester Tart",
+      "Fisherman's Breakfast"
+    ],
+    "id": "20",
+    "img": "https://images.unsplash.com/photo-1515586838455-8f8f940d6853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWFuY2hlc3RlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Bangkok",
+    "country": "Thailand",
+    "description": "Bangkok, the capital city of Thailand, is a vibrant metropolis known for its ornate temples, bustling markets, and vibrant street life.",
+    "attractions": [
+      "Grand Palace",
+      "Wat Arun",
+      "Chatuchak Weekend Market"
+    ],
+    "estimatedCost": "7000",
+    "rating": "4.2",
+    "activity": [
+      "Tuk-Tuk Tour",
+      "Boat Trip along the Chao Phraya River",
+      "Thai Massage"
+    ],
+    "food": [
+      "Pad Thai",
+      "Tom Yum Goong",
+      "Mango Sticky Rice"
+    ],
+    "id": "21",
+    "img": "https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QmFuZ2tva3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Phuket",
+    "country": "Thailand",
+    "description": "Phuket, an island province in southern Thailand, is renowned for its stunning beaches, clear turquoise waters, and vibrant nightlife.",
+    "attractions": [
+      "Patong Beach",
+      "Phi Phi Islands",
+      "Big Buddha"
+    ],
+    "estimatedCost": "6000",
+    "rating": "3.7",
+    "activity": [
+      "Island Hopping",
+      "Snorkeling or Scuba Diving",
+      "Phuket Fantasea Show"
+    ],
+    "food": [
+      "Tom Kha Gai",
+      "Massaman Curry",
+      "Mango with Sticky Rice"
+    ],
+    "id": "22",
+    "img": "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UGh1a2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Berlin",
+    "country": "Germany",
+    "description": "Berlin, the capital city of Germany, is known for its rich history, vibrant cultural scene, and iconic landmarks.",
+    "attractions": [
+      "Brandenburg Gate",
+      "Berlin Wall",
+      "Museum Island"
+    ],
+    "estimatedCost": "6000",
+    "rating": "3.8",
+    "activity": [
+      "Visit to Checkpoint Charlie",
+      "Exploring the Reichstag Building",
+      "Bike Tour in Berlin"
+    ],
+    "food": [
+      "Currywurst",
+      "Schnitzel",
+      "Berliner Pfannkuchen"
+    ],
+    "id": "23",
+    "img": "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QmVybGlufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Munich",
+    "country": "Germany",
+    "description": "Munich, the capital of Bavaria, is famous for its Oktoberfest celebrations, stunning architecture, and vibrant beer gardens.",
+    "attractions": [
+      "Marienplatz",
+      "Nymphenburg Palace",
+      "English Garden"
+    ],
+    "estimatedCost": "5500",
+    "rating": "4.1",
+    "activity": [
+      "Beer Tasting in a Beer Hall",
+      "Visiting the BMW Museum",
+      "Day Trip to Neuschwanstein Castle"
+    ],
+    "food": [
+      "Pretzels",
+      "Weisswurst",
+      "Apfelstrudel"
+    ],
+    "id": "24",
+    "img": "https://images.unsplash.com/photo-1595867818082-083862f3d630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TXVuaWNofGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Rome",
+    "country": "Italy",
+    "description": "Rome, the capital city of Italy, is a treasure trove of ancient ruins, majestic churches, and exquisite art. It's known for its rich history and vibrant street life.",
+    "attractions": [
+      "Colosseum",
+      "Vatican City",
+      "Trevi Fountain"
+    ],
+    "estimatedCost": "6000",
+    "rating": "4.3",
+    "activity": [
+      "Visit to the Roman Forum",
+      "Exploring the Pantheon",
+      "Strolling through Piazza Navona"
+    ],
+    "food": [
+      "Pizza",
+      "Pasta Carbonara",
+      "Gelato"
+    ],
+    "id": "25",
+    "img": "https://images.unsplash.com/photo-1531572753322-ad063cecc140?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Um9tZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Florence",
+    "country": "Italy",
+    "description": "Florence, the birthplace of the Renaissance, is renowned for its extraordinary art, magnificent architecture, and charming streets lined with boutiques and cafes.",
+    "attractions": [
+      "Uffizi Gallery",
+      "Duomo",
+      "Ponte Vecchio"
+    ],
+    "estimatedCost": "5500",
+    "rating": "4.5",
+    "activity": [
+      "Admiring Michelangelo's David",
+      "Exploring the Boboli Gardens",
+      "Visiting the Pitti Palace"
+    ],
+    "food": [
+      "Bistecca alla Fiorentina",
+      "Ribollita",
+      "Gelato"
+    ],
+    "id": "26",
+    "img": "https://images.unsplash.com/photo-1528114039593-4366cc08227d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8RmxvcmVuY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Venice",
+    "country": "Italy",
+    "description": "Venice, a city built on water, is famous for its canals, romantic gondolas, and stunning architecture. It's a unique and enchanting destination in Italy.",
+    "attractions": [
+      "St. Mark's Square",
+      "Rialto Bridge",
+      "Doge's Palace"
+    ],
+    "estimatedCost": "5000",
+    "rating": "4.1",
+    "activity": [
+      "Gondola Ride along the Canals",
+      "Visiting Murano Island for Glassmaking",
+      "Exploring the Peggy Guggenheim Collection"
+    ],
+    "food": [
+      "Seafood Risotto",
+      "Cicchetti",
+      "Tiramisu"
+    ],
+    "id": "27",
+    "img": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VmVuaWNlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Milan",
+    "country": "Italy",
+    "description": "Milan, the fashion capital of Italy, is known for its stylish boutiques, stunning architecture, and vibrant arts scene. It's a bustling metropolis with a cosmopolitan vibe.",
+    "attractions": [
+      "Duomo",
+      "Galleria Vittorio Emanuele II",
+      "The Last Supper"
+    ],
+    "estimatedCost": "4500",
+    "rating": "4.2",
+    "activity": [
+      "Shopping in the Fashion District",
+      "Exploring the Brera Art Gallery",
+      "Attending a Performance at La Scala"
+    ],
+    "food": [
+      "Risotto alla Milanese",
+      "Cotoletta alla Milanese",
+      "Panettone"
+    ],
+    "id": "28",
+    "img": "https://images.unsplash.com/photo-1572602648934-1d98de6dab48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8TWlsYW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Valencia",
+    "country": "Spain",
+    "description": "Valencia, located on the southeastern coast of Spain, is famous for its futuristic architecture, delicious cuisine, and lively street festivals.",
+    "attractions": [
+      "City of Arts and Sciences",
+      "Mercado Central",
+      "Bioparc Valencia"
+    ],
+    "estimatedCost": "4000",
+    "rating": "2.9",
+    "activity": [
+      "Visiting the Oceanografic",
+      "Exploring the Historic Center",
+      "Relaxing on Malvarrosa Beach"
+    ],
+    "food": [
+      "Paella",
+      "Horchata",
+      "Buñuelos"
+    ],
+    "id": "29",
+    "img": "https://images.unsplash.com/photo-1529437971227-3344caa48ce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFsZW5jaWF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Paris",
+    "country": "France",
+    "description": "Paris, the capital city of France, is known as the 'City of Love' and is famous for its iconic landmarks, rich history, and exquisite cuisine.",
+    "attractions": [
+      "Eiffel Tower",
+      "Louvre Museum",
+      "Notre-Dame Cathedral"
+    ],
+    "estimatedCost": "7000",
+    "rating": "4.3",
+    "activity": [
+      "Cruise on the Seine River",
+      "Exploring Montmartre",
+      "Visiting the Palace of Versailles"
+    ],
+    "food": [
+      "Croissant",
+      "Escargot",
+      "Macarons"
+    ],
+    "id": "30",
+    "img": "https://images.unsplash.com/photo-1550340499-a6c60fc8287c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8UGFyaXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Lyon",
+    "country": "France",
+    "description": "Lyon, located in east-central France, is renowned for its gastronomy, historical architecture, and vibrant cultural scene.",
+    "attractions": [
+      "Basilica of Notre-Dame de Fourvière",
+      "Vieux Lyon",
+      "Musée des Confluences"
+    ],
+    "estimatedCost": "5500",
+    "rating": "4.5",
+    "activity": [
+      "Culinary Tour in Les Halles de Lyon",
+      "Exploring the Traboules",
+      "Visiting the Lumière Institute"
+    ],
+    "food": [
+      "Coq au Vin",
+      "Quenelle",
+      "Tarte Tatin"
+    ],
+    "id": "31",
+    "img": "https://images.unsplash.com/photo-1602087594298-706ccc894bfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8THlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Marseille",
+    "country": "France",
+    "description": "Marseille, located on the Mediterranean coast, is the second-largest city in France and is known for its rich history, vibrant culture, and beautiful waterfront.",
+    "attractions": [
+      "Old Port",
+      "Notre-Dame de la Garde",
+      "Calanques National Park"
+    ],
+    "estimatedCost": "5000",
+    "rating": "2.9",
+    "activity": [
+      "Boat Trip to Frioul Archipelago",
+      "Exploring Le Panier",
+      "Visiting the MuCEM"
+    ],
+    "food": [
+      "Bouillabaisse",
+      "Navettes",
+      "Pastis"
+    ],
+    "id": "32",
+    "img": "https://images.unsplash.com/photo-1576244348464-c7d393b6dfc0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWFyc2VpbGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Bordeaux",
+    "country": "France",
+    "description": "Bordeaux, located in southwestern France, is famous for its world-class wines, beautiful architecture, and charming historic center.",
+    "attractions": [
+      "Place de la Bourse",
+      "Saint-André Cathedral",
+      "La Cité du Vin"
+    ],
+    "estimatedCost": "4000",
+    "rating": "1.8",
+    "activity": [
+      "Wine Tasting in the Vineyards",
+      "Exploring the Quais des Chartrons",
+      "Visiting the Musée d'Aquitaine"
+    ],
+    "food": [
+      "Entrecôte Bordelaise",
+      "Canelés",
+      "Pain au Chocolat"
+    ],
+    "id": "33",
+    "img": "https://images.unsplash.com/photo-1586987177718-54e088c798b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Qm9yZGVhdXh8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+  },
+  {
+    "name": "Barcelona",
+    "country": "Spain",
+    "description": "Barcelona, located on the northeastern coast of Spain, is known for its unique architecture, vibrant street life, and beautiful beaches.",
+    "attractions": [
+      "Sagrada Familia",
+      "Park Güell",
+      "Gothic Quarter"
+    ],
+    "estimatedCost": "6500",
+    "rating": "4.3",
+    "activity": [
+      "Exploring La Rambla",
+      "Visiting Casa Batlló",
+      "Relaxing at Barceloneta Beach"
+    ],
+    "food": [
+      "Tapas",
+      "Paella",
+      "Churros"
+    ],
+    "id": "34",
+    "img": "https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QmFyY2Vsb25hfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+  }
+]

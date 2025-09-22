@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link rel="stylesheet" href="./css/aboutus.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <!-- header -->
+  <header class="header" style="background-image: url('./images/aboutus/background.jpg');">
+    <div class="overlay"></div>
+    <div class="header-text">
+      <div id="up-title">READ</div>
+      <div id="down-title">About Us</div>
+    </div>
+    <div class="nav-top-bar">
+      <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+      <div class="nav-bar">
+        <ul>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li><a href="#" id="current" style="color: #ff6600;">About Us</a></li>
+          <li class="active"><a href="destination.html">Destination</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li class="active"><a href="blog.html">Blog</a></li>
+          <li class="active"><a href="contact.html">Contact</a></li>
+          <li class="active"><a href="feedback.html">Feedback</a></li>
+          
+          <!-- Greeting cho user đã login - Ban đầu ẩn -->
+          <li class="greeting-li" style="display: none;">
+            <span class="user-greeting">
+              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+            </span>
+            <div class="user-dropdown-menu">
+              <a href="#">Thông tin cá nhân</a>
+              <a href="#">Đơn đặt tour</a>
+              <a href="#" onclick="logout()">Đăng xuất</a>
+            </div>
+          </li>
+          
+          <!-- Auth buttons cho user chưa login - Ban đầu hiện - Đặt trong <li> -->
+          <li class="auth-li" id="auth-li">
+            <div class="auth-buttons">
+              <a href="login.html" class="btn-login">Login</a>
+              <a href="create_acc.html" class="btn-register">Register</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <section class="body">
+    <!-- promotion -->
+    <section class="promotion">
+      <section class="hero">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 slide-right">
+              <h1 class="title1">Promotion</h1>
+              <h2 class="title2">We Provide You Best Sightseeing Tours</h2>
+              <p class="description">"Join our captivating sightseeing tours, thoughtfully designed to highlight the
+                most fascinating aspects of each destination. Whether you're exploring historical sites, stunning
+                natural landscapes, or vibrant city scenes, our knowledgeable guides ensure you experience the best of
+                every place we visit."</p>
+              <button class="buttons">View Packages</button>
+            </div>
+            <div class="col-md-6 slide-left">
+              <div class="image-container">
+                <img src="./images/aboutus/Ellipse 626.png" class="img-fluid rounded-circle"
+                  alt="Europe Sightseeing">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+    <!-- video -->
+    <div id="carouselExampleIndicators" class="carousel slide video slide-up" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <video src="./images/aboutus/italy.mp4" id="video-1" muted autoplay preload="auto"></video>
+        </div>
+        <div class="carousel-item">
+          <video src="./images/aboutus/maldives.mp4" id="video-2" muted autoplay preload="auto"></video>
+        </div>
+        <div class="carousel-item">
+          <video src="./images/aboutus/japan.mp4" id="video-3" muted autoplay preload="auto"></video>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <!-- trend -->
+    <section class="trend">
+      <div class="images">
+        <img src="./images/aboutus/2anh.png" alt="Polaroid 1" class="polaroid slide-right">
+      </div>
+      <div class="content slide-up">
+        <h2 class="title1">TREND</h2>
+        <h1 class="title2">Our Popular Tour Plans</h1>
+        <p class="description">"Discover a range of captivating tour plans that cater to diverse interests and
+          preferences. From scenic getaways and romantic escapes to cultural explorations and vibrant musical events,
+          our popular tour options promise unforgettable experiences in renowned destinations worldwide."</p>
+        <div class="stats">
+          <div class="stat">
+            <img src="./images/aboutus/78.png" alt="Vacations" class="stat-image">
+          </div>
+          <div class="stat">
+            <img src="./images/aboutus/55.png" alt="Honeymoon" class="stat-image">
+          </div>
+          <div class="stat">
+            <img src="./images/aboutus/30.png" alt="Musical Events" class="stat-image">
+          </div>
+        </div>
+      </div>
+      <img src="./images/aboutus/voso.png" alt="Shell" class="shell slide-left">
+    </section>
+    <!-- explore -->
+    <section class="explore_more">
+      <h1 class="title1 reveal">Explore more</h1>
+      <h2 class="title2 reveal">Our International Packages</h2>
+      <section class="explore">
+        <div class="package large slide-right-delay">
+          <div class="image"><img src="./images/aboutus/rio.png" alt=""></div>
+          <div class="info">
+            <h2>Barcelona</h2>
+            <p>$840</p>
+          </div>
+        </div>
+        <div class="package slide-right-delay" data-id="35">
+          <div class="image"><img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHw1fHxNYWxkaXZlc3xlbnwwfHx8fDE3MTkxNTI4MzJ8MA&ixlib=rb-4.0.3&q=80&w=1080" alt=""></div>
+          <div class="info">
+              <h2>Maldives</h2>
+              <p>5.000$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="36">
+          <div class="image"><img src="https://images.unsplash.com/photo-1612178010892-205e565c4c5d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwzfHxMYXV0ZXJicnVubmVufGVufDB8fHx8MTcxOTE1NDUwMHww&ixlib=rb-4.0.3&q=80&w=1080" alt=""></div>
+          <div class="info">
+              <h2>Lauterbrunnen</h2>
+              <p>5.500$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="5">
+          <div class="image"><img src="https://images.unsplash.com/photo-1588535684923-900727736ac0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwyfHxMaXNib258ZW58MHx8fHwxNzE5MTU2NDIyfDA&ixlib=rb-4.0.3&q=80&w=1080" alt=""></div>
+          <div class="info">
+              <h2>Lisbon</h2>
+              <p>4.000$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="13">
+          <div class="image"><img src="https://images.unsplash.com/photo-1605707141131-aa742dcf4671?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHw1fHxBdGhlbnN8ZW58MHx8fHwxNzE5MTc1MDI0fDA&ixlib=rb-4.0.3&q=80&w=1080" alt=""></div>
+          <div class="info">
+              <h2>Athens</h2>
+              <p>4.500$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="14">
+          <div class="image"><img src="https://images.unsplash.com/photo-1548580392-8d9c772d854e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHw4fHxTYW50b3Jpbml8ZW58MHx8fHwxNzE5MTc1MTA5fDA&ixlib=rb-4.0.3&q=80&w=1080" alt=""></div>
+          <div class="info">
+              <h2>Santorini</h2>
+              <p>5.500$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="22">
+          <div class="image"><img src=https://images.unsplash.com/photo-1586820672103-2272d8490ade?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwyfHxQaHVrZXR8ZW58MHx8fHwxNzE5MTc1MTY2fDA&ixlib=rb-4.0.3&q=80&w=1080 alt=""></div>
+          <div class="info">
+              <h2>Phuket</h2>
+              <p>6.000$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="26">
+          <div class="image"><img src="https://images.unsplash.com/photo-1528114039593-4366cc08227d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHw0fHxGbG9yZW5jZXxlbnwwfHx8fDE3MTkxNzUyMzh8MA&ixlib=rb-4.0.3&q=80&w=1080" alt=""></div>
+          <div class="info">
+              <h2>Florence</h2>
+              <p>5.500$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="28">
+          <div class="image"><img src=https://images.unsplash.com/photo-1610016302534-6f67f1c968d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxfHxNaWxhbnxlbnwwfHx8fDE3MTkxNzUzMDN8MA&ixlib=rb-4.0.3&q=80&w=1080 alt=""></div>
+          <div class="info">
+              <h2>Milan</h2>
+              <p>4.500$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="25">
+          <div class="image"><img src=https://images.unsplash.com/photo-1525874684015-58379d421a52?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHw0fHxSb21lfGVufDB8fHx8MTcxOTE3NTM2NHww&ixlib=rb-4.0.3&q=80&w=1080 alt=""></div>
+          <div class="info">
+              <h2>Rome</h2>
+              <p>6.000$</p>
+          </div>
+      </div>
+      <div class="package slide-right-delay" data-id="30">
+          <div class="image"><img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwzfHxQYXJpc3xlbnwwfHx8fDE3MTkxNzU0MzJ8MA&ixlib=rb-4.0.3&q=80&w=1080" alt=""></div>
+          <div class="info">
+              <h2>Paris</h2>
+              <p>7000$</p>
+          </div>
+      </div>
+      </section>
+    </section>
+
+
+  </section>
+  <!-- Scroll Icon -->
+  <div class="icon-container">
+    <i id="scrollDownIcon"><img src="./images/blog/xuong.png" alt="Cuộn xuống"></i>
+    <i id="scrollUpIcon"><img src="./images/blog/len.png" alt="Cuộn lên"></i>
+  </div>
+  <!-- Footer -->
+  <footer></footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/aboutus.js"></script>
+</body>
+
+</html>

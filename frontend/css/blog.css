@@ -1,0 +1,230 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+body {
+    width: 100%;
+    height: auto;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+}
+
+.main-box {
+    width: 100%;
+    height: 1800px;
+    margin: 0 auto;
+    background: #f0faff;
+    text-align: center;
+    z-index: 1;
+}
+
+.titletren {
+    padding-top: 34px;
+}
+
+.titletren h3 {
+    font-family: "Volkhov", serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 50px;
+    text-transform: capitalize;
+    color: #181E4B;
+}
+
+.icon img {
+    width: 30px;
+    margin-right: 20px;
+
+}
+
+.icon img {
+    transition: transform 0.3s ease-in-out;
+    /* Tạo hiệu ứng chuyển đổi mượt mà */
+}
+
+.icon img:hover {
+    transform: scale(1.2);
+}
+
+
+
+/* button css */
+.learn-more {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+    width: 12rem;
+    height: auto;
+}
+
+
+.learn-more .circle {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: relative;
+    display: block;
+    margin: 0;
+    width: 3rem;
+    height: 3rem;
+    background: #282936;
+    border-radius: 1.625rem;
+}
+
+.learn-more .circle .icon {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff;
+}
+
+.learn-more .circle .icon.arrow {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    left: 0.625rem;
+    width: 1.125rem;
+    height: 0.125rem;
+    background: none;
+}
+
+.learn-more .circle .icon.arrow::before {
+    position: absolute;
+    content: "";
+    top: -0.29rem;
+    right: 0.0625rem;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 0.125rem solid #fff;
+    border-right: 0.125rem solid #fff;
+    transform: rotate(45deg);
+}
+
+.button-text {
+    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+    position: absolute;
+    top: -.2rem;
+    left: 2rem;
+    padding: 0.75rem 0;
+    margin: 0 0 0 1.85rem;
+    color: #282936;
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-align: center;
+    text-transform: uppercase;
+}
+.learn-more:hover{
+    background-color: #fff;
+}
+.learn-more:hover .circle {
+    width: 100%;
+}
+
+.learn-more:hover .circle .icon.arrow {
+    background: #fff;
+    transform: translate(1rem, 0);
+}
+
+.learn-more:hover .button-text {
+    color: #fff;
+}
+
+/* css box */
+.nd a {
+    font-size: 24px;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    color: #555;
+}
+
+.nd h6 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 26px;
+    text-align: center;
+    color: #555;
+}
+
+.nd p {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    font-style: normal;
+    line-height: 26px;
+    text-align: center;
+    color: #555;
+}
+
+.box {
+    margin: 0 auto;
+    width: 1000px;
+    height: 280px;
+    background-color: #fff;
+    display: flex;
+    margin-bottom: 40px;
+    box-shadow: 0px 4px 48px 12px rgba(0, 0, 0, 0.09);
+    transform: translateY(50px); /* Di chuyển box xuống 50px */
+    transition: all 0.5s ease; /* Hiệu ứng chuyển tiếp mượt mà */
+}
+
+.box img {
+    height: 100%;
+    width: 400px;
+    margin-right: 30px;
+}
+  
+.box.in-view {
+    opacity: 1; /* Hiển thị box khi xuất hiện trong vùng nhìn */
+    transform: translateY(0px); /* Di chuyển box về vị trí ban đầu */
+  }
+
+.nd {
+    text-align: left;
+    padding-top: 30px;
+    position: relative;
+}
+
+.nd p {
+    text-align: left;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.nd h6 {
+    position: absolute;
+}
+
+.nd a {
+    transition: transform 1.5s ease-in-out;
+    /* Tạo hiệu ứng chuyển đổi mượt mà */
+}
+
+.nd a:hover {
+    color: rgb(196, 60, 11);
+    /* Phóng to ảnh khi di chuột qua 10% */
+}
+
+#gallery {
+    transition: transform 0.5s ease-in-out;
+    /* Tạo hiệu ứng chuyển đổi mượt mà */
+}
+
+#gallery:hover {
+    transform: scale(1.05);
+    /* Phóng to ảnh khi di chuột qua 10% */
+}

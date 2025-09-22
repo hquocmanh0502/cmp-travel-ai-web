@@ -1,0 +1,279 @@
+:root {
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --facebook-color: #3b5998;
+    --google-color: #db4437;
+    --text-color: #555;
+    --border-color: #ddd;
+    --background-color: #f0f4f8;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -150px;
+    width: 400px;
+    height: 400px;
+    background-color: rgba(230, 240, 255, 0.7);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.login-form {
+    flex: 1;
+    padding: 60px 40px;
+    z-index: 2;
+}
+
+h2 {
+    font-size: 2.5em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.signup-link {
+    color: var(--text-color);
+    font-size: 0.9em;
+    margin-bottom: 25px;
+}
+
+.signup-link a, .forgot-password a {
+    color: var(--secondary-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.signup-link a:hover, .forgot-password a:hover {
+    color: var(--primary-color);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    position: absolute;
+    top: 14px;
+    left: 15px;
+    font-size: 0.9em;
+    color: var(--text-color);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1em;
+    background-color: #f7f9fb;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    background-color: #fff;
+}
+
+.input-group input:not(:placeholder-shown) + label,
+.input-group input:focus + label {
+    top: -10px;
+    left: 10px;
+    font-size: 0.7em;
+    padding: 0 5px;
+    background-color: #fff;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-container input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    padding-right: 40px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.password-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 600;
+    background: linear-gradient(to right, #ff8c42, #ffb347);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 140, 66, 0.4);
+}
+
+.forgot-password {
+    text-align: right;
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #999;
+    margin: 30px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.divider:not(:empty)::before {
+    margin-right: .25em;
+}
+
+.divider:not(:empty)::after {
+    margin-left: .25em;
+}
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.social-btn {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #f7f9fb;
+    display: flex; /* Sử dụng Flexbox để căn chỉnh */
+    align-items: center;
+    justify-content: center; /* Căn giữa nội dung */
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.social-btn:hover {
+    background-color: #eef2f5;
+    border-color: #cdd4da;
+}
+
+/* Các biểu tượng và văn bản được sắp xếp theo hàng ngang */
+.social-btn .fab, .social-btn svg {
+    margin-right: 10px;
+    margin-left: 0; /* Bỏ thuộc tính margin-left để căn giữa */
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.social-btn span {
+    display: inline-block;
+}
+
+.facebook-btn {
+    color: var(--facebook-color);
+}
+
+.facebook-btn .social-icon {
+    fill: var(--facebook-color);
+}
+
+.google-btn {
+    color: var(--google-color);
+}
+
+.google-btn i {
+    color: #db4437;
+}
+
+/* Thêm vào cuối file */
+
+.back-to-home {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.home-link {
+    color: var(--text-color);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    transition: color 0.3s;
+}
+
+.home-link:hover {
+    color: var(--primary-color);
+}
+
+.home-link i {
+    font-size: 1.1em;
+}
+
+/* Password toggle functionality */
+.password-toggle {
+    cursor: pointer;
+    user-select: none;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}

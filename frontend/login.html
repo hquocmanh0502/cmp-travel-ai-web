@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - CMP Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Login</h2>
+            <p class="signup-link">Don't have an account? <a href="create_acc.html">Create new</a></p>
+            <form id="loginForm">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                </div>
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder=" " required>
+                        <span class="password-toggle">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </span>
+                    </div>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <p class="forgot-password"><a href="#">Forgot a password?</a></p>
+            <div class="divider">
+                <span>Or</span>
+            </div>
+            <div class="social-login">
+                <button class="social-btn facebook-btn">
+                    <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.505 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.77l-.443 2.89h-2.327v6.987C18.343 21.128 22 16.991 22 12z"></path></svg>
+                    <span>Continue with Facebook</span>
+                </button>
+                <button class="social-btn google-btn">
+                    <i class="fab fa-google"></i>
+                    <span>Continue with Google</span>
+                </button>
+            </div>
+            <div class="back-to-home">
+                <a href="index.html" class="home-link">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/auth.js"></script>
+</body>
+</html>

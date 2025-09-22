@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservation</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/reservation.css">
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
+  <div class="overlay"></div>
+  <div class="header-text">
+    <div id="up-title">EXPLORE</div>
+    <div id="down-title">Landscapes</div>
+  </div>
+  <div class="nav-top-bar">
+    <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+    <div class="nav-bar">
+      <ul>
+        <li class="active"><a href="index.html">Home</a></li>
+        <li class="active"><a href="aboutus.html">About Us</a></li>
+        <li class="active"><a href="destination.html">Destination</a></li>
+        <li class="active"><a href="gallery.html">Gallery</a></li>
+        <li class="active"><a href="blog.html">Blog</a></li>
+        <li class="active"><a href="contact.html">Contact</a></li>
+        <li class="active"><a href="feedback.html">Feedback</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<body>
+  <div class="container my-5">
+    <h1 class="text-center mb-4" id="head-tilte"> <i class="fa-regular fa-clipboard mx-4"></i> RESERVATION</h1>
+    <form class="form-section py-3 px-4" action="#">
+      <!-- Check-in and Check-out -->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="label-title">Check-in date *</label>
+          <input type="date" class="form-control" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="label-title">Check-out date *</label>
+          <input type="date" class="form-control" required>
+        </div>
+      </div>
+
+      <!-- Member -->
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="adult" class="inner-label">Adult</label>
+          <select class="form-control" name="adult">
+            <option>--Choose--</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <!-- Options for adults -->
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="children" class="inner-label">Children</label>
+          <select class="form-control" name="children">
+            <option>--Choose--</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="infant" class="inner-label">Infant</label>
+          <select class="form-control" name="infant">
+            <option>--Choose--</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+          </select>
+        </div>
+      </div>
+      <span class="form-text text-muted">(Infant: 1-4 years and children: 5-11 years.)</span>
+
+      <hr>
+
+      <!-- Room selection -->
+      <div class="form-group">
+        <label class="label-title">How many rooms do you need?</label>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label class="inner-label">Superior</label>
+            <select class="form-control" name="superior">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="inner-label">Junior Deluxe</label>
+            <select class="form-control" name="junior-deluxe">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="inner-label">Deluxe</label>
+            <select class="form-control" name="deluxe">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label class="inner-label">Suite</label>
+            <select class="form-control" name="suite">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="inner-label">Family</label>
+            <select class="form-control" name="family">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="inner-label">President</label>
+            <select class="form-control" name="president">
+              <option>0</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Transfer options -->
+      <div class="form-group">
+        <label class="label-title">Do you need the transfer?</label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="transfer-1" name="transfer" value="self">
+          <label class="form-check-label" for="transfer-1">I will arrange by myself or ask for advice</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="transfer-2" name="transfer" value="private-car">
+          <label class="form-check-label" for="transfer-2">Private Car</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="transfer-3" name="transfer" value="shuttle-bus">
+          <label class="form-check-label">Shuttle Bus</label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Restaurant options -->
+      <div class="form-group">
+        <label class="label-title">Restaurant</label>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="restaurant-1" name="restaurant" value="breakfast">
+          <label class="form-check-label">Breakfast</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="restaurant-2" name="restaurant">
+          <label class="form-check-label" for="restaurant-2">Lunch</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input">
+          <label class="form-check-label">Dinner</label>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Guest Information -->
+      <label class="label-title">Guest Information</label>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <select name="" class="form-control">
+            <option value="Mr">Mr</option>
+            <option value="Ms">Ms</option>
+            <option value="Mrs">Mrs</option>
+          </select>
+        </div>
+        <div class="form-group col-md-8">
+          <input type="text" placeholder="Full Name *" class="form-control" required>
+        </div>
+        <div class="form-group col-md-12">
+          <input type="email" placeholder="Email" class="form-control">
+        </div>
+        <div class="form-group col-md-12">
+          <input type="number" placeholder="Phone Number *" class="form-control" required>
+        </div>
+        <div class="form-group col-md-12">
+          <textarea id="other-request" class="form-control" placeholder="Other Request"></textarea>
+        </div>
+      </div>
+
+      <div class="alert alert-success d-none" role="alert">
+        Your information was sent successfully!
+      </div>
+      <div class="alert alert-danger d-none" role="alert">
+        Please enter complete information in the required fields
+      </div>
+      
+      <div class="col text-center">
+        <button type="submit" class="btn text-center">Send</button>      
+      </div>
+        
+    </form>
+  </div>
+  
+  <!-- Footer -->
+  <footer></footer>
+
+  <script src="./js/main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

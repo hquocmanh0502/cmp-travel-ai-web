@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins';
+}
+
+i {
+  color: #FFBA0A;
+  margin-right: .5rem;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  top: -150px;
+  z-index: 999;
+}
+
+.btn-back {
+  border: 1px solid #DF6951;
+  color: #DF6951;
+  padding: .4rem 4rem;
+  font-weight: 600;
+}
+
+.btn-back i {
+  color: #DF6951;
+}
+
+.btn-back:hover {
+  color: white;
+  background-color: #DF6951;
+}
+
+.btn-back:hover i {
+  color: white;
+}
+
+.destination-info h1 {
+  font-size: 3rem;
+  font-family: 'Volkhov';
+  font-weight: 600;
+  color: #181E4B;
+}
+
+.destination-info .price {
+  color: #DF6951;
+  font-size: 1.5rem;
+}
+
+.destination-info p {
+  font-size: 0.9rem;
+}
+
+.detail-list {
+  margin-top: 1rem;
+  padding: 0;
+  ;
+  font-size: 0.9rem;
+}
+
+.detail-list li {
+  display: flex;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.detail-list li span:first-child {
+  color: #DF6951;
+  width: 25%;
+  display: inline-block;
+  font-weight: bolder;
+}
+
+.detail-list li span:last-child {
+  width: 75%;
+  display: inline-block;
+}
+
+.image-zoom {
+  width: 100%;
+  height: 370px;
+  overflow: hidden;
+}
+
+.image-zoom img {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.image-zoom:hover img {
+  transform: scale(1.1);
+}
+
+.btn-book {
+  background-color: #DF6951;
+  color: white;
+}
+
+.btn-book:hover {
+  background-color: #d34d32;
+  color: white;
+}
+
+.gallery {
+  margin: 2.2rem 0;
+}
+
+.gallery h2 {
+  font-family: 'Volkhov';
+  font-weight: 600;
+  color: #181E4B;
+}
+
+.inner-image {
+  width: 100%;
+  height: 198px;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.inner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.inner-image:hover img {
+  transform: scale(1.1);
+}

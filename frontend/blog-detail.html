@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/blog-detail.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+    <link rel="stylesheet" href="./css/erro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <header class="header" style="background-image: url('./images/header-bg/blog-bg.jpg');">
+        <div class="overlay"></div>
+        <div class="header-text">
+            <div id="up-title">READ</div>
+            <div id="down-title">Our Blog</div>
+        </div>
+        <div class="nav-top-bar">
+            <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+            <div class="nav-bar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="aboutus.html">About Us</a></li>
+                    <li><a href="destination.html">Destination</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="#" id="current" style="color: #ff6600;">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <div class="greeting-li">  <!-- ← Selector JS bắt đây, position relative từ CSS! -->
+                        <span class="user-greeting">
+                        Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+                        </span>  <!-- ← Click vào span này toggle! Flex center từ CSS -->
+                        <div class="user-dropdown-menu">  <!-- ← Menu ẩn, display block khi .active -->
+                            <a href="#">Thông tin cá nhân</a>
+                            <a href="#">Đơn đặt tour</a>
+                            <a href="#">Đăng xuất</a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="head">
+            <h1 class="blog-title"></h1>
+            <p class="blog-description"></p>
+        </div>
+        <div class="section">
+            <h2>Geography</h2>
+            <p id="geography"></p>
+            <div class="image">
+                <img id="geography-img" src="" alt="">
+            </div>
+        </div>
+        <div class="section">
+            <h2>Climate</h2>
+            <p id="climate"></p>
+            <div class="image">
+                <img id="climate-img" src="" alt="">
+            </div>
+        </div>
+        <div class="section">
+            <h2>Language</h2>
+            <p id="language"></p>
+        </div>
+        <div class="section">
+            <h2>People & Culture</h2>
+            <p id="culture"></p>
+            <div class="image">
+                <img id="culture-img" src="" alt="">
+            </div>
+        </div>
+        <div class="mb-3 back">
+            <a href="blog.html" class="btn btn-back"><i class="fa-solid fa-arrow-left"></i>Back</a>
+          </div>
+    </div>
+    <!-- Scroll Icon -->
+    <div class="icon-container">
+        <i id="scrollDownIcon"><img src="./images/blog/xuong.png" alt="Cuộn xuống"></i>
+        <i id="scrollUpIcon"><img src="./images/blog/len.png" alt="Cuộn lên"></i>
+    </div>
+    
+    <footer></footer>
+    <script src="./js/main.js"></script>
+    <script src="./js/blog-detail.js"></script>
+    <script src="./js/erro.js"></script>
+</body>
+
+</html>

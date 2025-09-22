@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link rel="stylesheet" href="./css/homepage.css" />
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+  <!-- AI Chatbot Widget -->
+  <div id="chatbot-widget" class="chatbot-widget">
+    <div class="chatbot-header" onclick="toggleChatbot()">
+      <i class="fas fa-robot"></i>
+      <span>CMP Travel Assistant</span>
+      <i class="fas fa-chevron-up" id="chatbot-toggle"></i>
+    </div>
+    <div class="chatbot-body" id="chatbot-body">
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="bot-message">
+          Xin chào! Tôi là trợ lý AI của CMP Travel. Tôi có thể giúp bạn tìm tour phù hợp, tư vấn giá cả và hỗ trợ đặt tour. Bạn cần hỗ trợ gì?
+        </div>
+      </div>
+      <div class="chatbot-suggestions" id="chatbot-suggestions">
+        <button onclick="sendMessage('Gợi ý tour phù hợp với tôi')">Gợi ý tour</button>
+        <button onclick="sendMessage('Tour nào đang hot nhất?')">Tour hot</button>
+        <button onclick="sendMessage('Giá tour như thế nào?')">Về giá cả</button>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." onkeypress="handleEnter(event)">
+        <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+  .chatbot-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    z-index: 1000;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .chatbot-header {
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 15px 15px 0 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+
+  .chatbot-header:hover {
+    background: linear-gradient(135deg, #ff5500, #ff7722);
+  }
+
+  .chatbot-header i:first-child {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  .chatbot-body {
+    height: 450px;
+    display: none;
+    flex-direction: column;
+    background: #f8f9fa;
+  }
+
+  .chatbot-body.open {
+    display: flex;
+  }
+
+  .chatbot-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 300px;
+    background: white;
+  }
+
+  .bot-message, .user-message {
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-radius: 18px;
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  .bot-message {
+    background: #f1f3f5;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+  }
+
+  .user-message {
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    margin-left: auto;
+    text-align: right;
+    border-bottom-right-radius: 4px;
+  }
+
+  .chatbot-suggestions {
+    padding: 15px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .chatbot-suggestions button {
+    background: white;
+    border: 1px solid #dee2e6;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #666;
+  }
+
+  .chatbot-suggestions button:hover {
+    background: #ff6600;
+    color: white;
+    border-color: #ff6600;
+  }
+
+  .chatbot-input {
+    display: flex;
+    padding: 20px;
+    background: white;
+    border-radius: 0 0 15px 15px;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .chatbot-input input {
+    flex: 1;
+    border: 1px solid #dee2e6;
+    border-radius: 25px;
+    padding: 12px 18px;
+    margin-right: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .chatbot-input input:focus {
+    border-color: #ff6600;
+  }
+
+  .chatbot-input button {
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chatbot-input button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #ff5500, #ff7722);
+  }
+
+  /* Scrollbar styling */
+  .chatbot-messages::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .chatbot-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .chatbot-messages::-webkit-scrollbar-thumb {
+    background: #ff6600;
+    border-radius: 2px;
+  }
+  </style>
+
+  <script>
+  let chatbotOpen = false;
+  let sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+  function toggleChatbot() {
+    const body = document.getElementById('chatbot-body');
+    const toggle = document.getElementById('chatbot-toggle');
+    
+    if (chatbotOpen) {
+      body.classList.remove('open');
+      toggle.classList.remove('fa-chevron-down');
+      toggle.classList.add('fa-chevron-up');
+      chatbotOpen = false;
+    } else {
+      body.classList.add('open');
+      toggle.classList.remove('fa-chevron-up');
+      toggle.classList.add('fa-chevron-down');
+      chatbotOpen = true;
+    }
+  }
+
+  async function sendChatMessage() {
+    const input = document.getElementById('chatbot-input');
+    const message = input.value.trim();
+    
+    if (message) {
+      addMessage(message, 'user');
+      input.value = '';
+      
+      // Show typing indicator
+      addTypingIndicator();
+      
+      try {
+        const userId = localStorage.getItem('userId');
+        const response = await fetch('/api/chatbot/message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId, message, userId })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          removeTypingIndicator();
+          addMessage(data.message, 'bot');
+          
+          if (data.suggestions && data.suggestions.length > 0) {
+            updateSuggestions(data.suggestions);
+          }
+        } else {
+          removeTypingIndicator();
+          addMessage('Xin lỗi, tôi đang gặp sự cố. Vui lòng thử lại sau.', 'bot');
+        }
+      } catch (error) {
+        console.error('Chatbot error:', error);
+        removeTypingIndicator();
+        addMessage('Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng.', 'bot');
+      }
+    }
+  }
+
+  function addMessage(message, sender) {
+    const messagesDiv = document.getElementById('chatbot-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = sender + '-message';
+    messageDiv.textContent = message;
+    messagesDiv.appendChild(messageDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function addTypingIndicator() {
+    const messagesDiv = document.getElementById('chatbot-messages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'bot-message typing-indicator';
+    typingDiv.innerHTML = 'Đang trả lời<span class="dots">...</span>';
+    typingDiv.id = 'typing-indicator';
+    messagesDiv.appendChild(typingDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+
+  function updateSuggestions(suggestions) {
+    const suggestionsDiv = document.getElementById('chatbot-suggestions');
+    suggestionsDiv.innerHTML = '';
+    
+    suggestions.forEach(suggestion => {
+      const button = document.createElement('button');
+      button.textContent = suggestion;
+      button.onclick = () => sendMessage(suggestion);
+      suggestionsDiv.appendChild(button);
+    });
+  }
+
+  function sendMessage(message) {
+    document.getElementById('chatbot-input').value = message;
+    sendChatMessage();
+  }
+
+  function handleEnter(event) {
+    if (event.key === 'Enter') {
+      sendChatMessage();
+    }
+  }
+
+  // Auto greetings
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (!chatbotOpen) {
+        const widget = document.getElementById('chatbot-widget');
+        widget.style.animation = 'bounce 0.6s ease-in-out';
+        setTimeout(() => {
+          widget.style.animation = '';
+        }, 600);
+      }
+    }, 3000);
+  });
+  </script>
+
+  <style>
+  @keyframes bounce {
+    0%, 20%, 60%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    80% { transform: translateY(-5px); }
+  }
+
+  .typing-indicator .dots {
+    animation: typing 1.4s infinite;
+  }
+
+  @keyframes typing {
+    0%, 60% { opacity: 0; }
+    30% { opacity: 1; }
+  }
+  </style>
+  <!-- Header -->
+  <header class="header">
+    <div class="overlay"></div>
+    <div class="nav-top-bar">
+      <a href="#"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+      <!-- Cập nhật navigation section -->
+      <div class="nav-bar">
+        <ul>
+          <li class="active"><a href="#" id="current" style="color: #ff6600;">Home</a></li>
+          <li class="active"><a href="aboutus.html">About Us</a></li>
+          <li class="active"><a href="destination.html">Destination</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li class="active"><a href="blog.html">Blog</a></li>
+          <li class="active"><a href="contact.html">Contact</a></li>
+          <li class="active"><a href="feedback.html">Feedback</a></li>
+          
+          <!-- Greeting cho user đã login - Ban đầu ẩn -->
+          <li class="greeting-li" style="display: none;">
+            <span class="user-greeting">
+              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+            </span>
+            <div class="user-dropdown-menu">
+              <a href="#">Thông tin cá nhân</a>
+              <a href="#">Đơn đặt tour</a>
+              <a href="#" onclick="logout()">Đăng xuất</a>
+            </div>
+          </li>
+          
+          <!-- Auth buttons cho user chưa login - Ban đầu hiện - Đặt trong <li> -->
+          <li class="auth-li" id="auth-li">
+            <div class="auth-buttons">
+              <a href="login.html" class="btn-login">Login</a>
+              <a href="create_acc.html" class="btn-register">Register</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <a href="contact.html" class="buttons">Get in Touch</a>
+    </div>
+    <div class="context">
+      <img src="./images/header/wavy.png" alt="" id="wavy" />
+      <h1 class="slogan">
+        No matter where you’re going to, we’ll take you there
+      </h1>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="Where to?" />
+      <select>
+        <option value="">Travel Type</option>
+      </select>
+      <select>
+        <option value="">Duration</option>
+      </select>
+      <button class="submit-btn">Submit</button>
+    </div>
+    <div class="customer">
+      <ul>
+        <li><img src="./images/header/client1.jpg" alt="" /></li>
+        <li><img src="./images/header/client3.jpg" alt="" /></li>
+        <li><img src="./images/header/client1.jpg" alt="" /></li>
+        <li><img src="./images/header/client4.jpg" alt="" /></li>
+        <li><img src="./images/header/client5.jpg" alt="" /></li>
+        <li><img src="./images/header/client6.jpg" alt="" /></li>
+        <li><img src="./images/header/hinhtron.png" alt="" /></li>
+      </ul>
+      <span>2,500 people booked Tommorowland Event in last 24 hours</span>
+    </div>
+  </header>
+  <div class="partner">
+    <ul>
+      <li><img class="reveal" src="./images/header/partner1.png" alt=""></li>
+      <li><img class="reveal" src="./images/header/partner2.png" alt=""></li>
+      <li><img class="reveal" src="./images/header/partner3.png" alt=""></li>
+      <li><img class="reveal" src="./images/header/partner4.png" alt=""></li>
+      <li><img class="reveal" src="./images/header/partner5.png" alt=""></li>
+    </ul>
+  </div>
+
+  <!-- body -->
+  <section class="main-body">
+    <section class="category">
+      <h1 class="title1">Category</h1>
+      <div class="container">
+        <h1 class="title2">We Offer Best Services</h1>
+        <div class="services">
+          <div class="service-item slide-right">
+            <img src="./images/homepage/body/tourguide.png" alt="Guided Tours Icon">
+            <h2>Guided Tours</h2>
+            <p>Explore exciting destinations with expert guides leading the way.</p>
+          </div>
+          <div class="service-item main-service slide-down">
+            <img src="./images/homepage/body/flight.png" alt="Best Flights Icon">
+            <h2>Best Flights Options</h2>
+            <p>Find and book the best deals on flights for your next trip.</p>
+            <div class="square"></div>
+          </div>
+          <div class="service-item slide-up">
+            <img src="./images/homepage/body/hand.png" alt="Religious Tours Icon" class="hand">
+            <h2>Religious Tours</h2>
+            <p>Visit holy sites and spiritual locations around the world.</p>
+          </div>
+          <div class="service-item slide-left">
+            <img src="./images/homepage/body/medical.png" alt="Medical Insurance Icon">
+            <h2>Medical Insurance</h2>
+            <p>Get comprehensive medical insurance for your travels and stay safe.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- fast and easy -->
+    <section class="fast-easy">
+      <div class="left slide-right">
+        <h2 class="title1">Fast and Easy</h2>
+        <h1 class="title2">Get Your Favourite Resort Bookings</h1>
+        <div class="step">
+          <div class="ima">
+            <img src="./images/homepage/body/step1.png" alt="">
+          </div>
+          <div class="cont">
+            <h3>Choose Destination</h3>
+            <p class="content">Explore amazing destinations around the world and choose the ideal place for your
+              vacation. </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="ima">
+            <img src="./images/homepage/body/step2.png" alt="">
+          </div>
+          <div class="cont">
+            <h3>Check Availability</h3>
+            <p class="content">Check availability at top resorts now and plan your perfect trip. </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="ima">
+            <img src="./images/homepage/body/step3.png" alt="">
+          </div>
+          <div class="cont">
+            <h3>Let’s Go</h3>
+            <p class="content">Ready for your adventure? Start your journey and enjoy unforgettable experiences. </p>
+          </div>
+        </div>
+      </div>
+      <div class="right slide-up">
+        <img src="./images/homepage/body/Illustration.png" alt="">
+      </div>
+    </section>
+    <section class="makeholiday reveal">
+    </section>
+    <!-- trendy -->
+    <section class="trending-tours">
+      <h2 class="title1">Trendy</h2>
+      <h1 class="title2">Our Trending Tour Packages</h1>
+      <div class="tour-packages">
+        <!-- Tour Card 1 -->
+        <div id="paris" class="tour-card reveal-delay">
+          <img
+            src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwzfHxQYXJpc3xlbnwwfHx8fDE3MTkyMzUxOTl8MA&ixlib=rb-4.0.3&q=80&w=1080"
+            alt="Paris" class="thumbnail">
+          <div class="tour-info">
+            <div class="tour-header">
+              <div class="country-flag">
+                <img src="./images/homepage/body/france.png" alt="Switzerland Flag">
+              </div>
+              <div class="tour-details">
+                <div class="tour-duration"><img src="./images/homepage/body/calendar.png" alt="Calendar Icon"> 8
+                  Days</div>
+                <div class="tour-people"><img src="./images/homepage/body/people.png" alt="People Icon"> 25
+                  People
+                  Going</div>
+              </div>
+            </div>
+            <div class="tour-title">
+              <h2>Paris</h2>
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half"></i>
+              </div>
+            </div>
+            <p class="location"><img src="./images/homepage/body/location.png" alt="Map Icon"> France</p>
+            <div class="rating-price">
+              <span class="price">7,000$ <del>7,500 $</del></span>
+            </div>
+            <p class="description">Known as the City of Love, Paris enchants visitors with its romantic ambiance and
+              classical architecture. Highlights include the iconic Eiffel Tower, the historic Louvre Museum, and
+              charming sidewalk cafes along the Seine River.
+            </p>
+            <button>Explore Now</button>
+          </div>
+        </div>
+        <!-- Tour Card 2 -->
+        <div id="switzerland" class="tour-card reveal-delay">
+          <img
+            src="https://images.unsplash.com/photo-1559754417-c1304ca2f80f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxOXx8TGF1dGVyYnJ1bm5lbnxlbnwwfDB8fHwxNzE4NjE1NTQ3fDA&ixlib=rb-4.0.3&q=80&w=1080"
+            alt="Amazon" class="thumbnail">
+          <div class="tour-info">
+            <div class="tour-header">
+              <div class="country-flag">
+                <img src="./images/homepage/body/switzerland.png" alt="Brazil Flag">
+              </div>
+              <div class="tour-details">
+                <div class="tour-duration"><img src="./images/homepage/body/calendar.png" alt="Calendar Icon"> 8
+                  Days</div>
+                <div class="tour-people"><img src="./images/homepage/body/people.png" alt="People Icon"> 30
+                  People
+                  Going</div>
+              </div>
+            </div>
+            <div class="tour-title">
+              <h2>Lauterbrunnen</h2>
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star-half"></i>
+              </div>
+            </div>
+            <p class="location"><img src="./images/homepage/body/location.png" alt="Map Icon"> Switzerland</p>
+            <div class="rating-price">
+              <span class="price">5,500$ <del>6,200 $</del></span>
+            </div>
+            <p class="description">Renowned for its stunning Alpine landscapes, Switzerland offers breathtaking scenery
+              year-round. Visitors can explore picturesque villages like Zermatt, enjoy outdoor activities in
+              Interlaken, or indulge in Swiss chocolate and cheese.
+            </p>
+            <button>Explore Now</button>
+          </div>
+        </div>
+        <!-- Tour Card 3 -->
+        <div id="venice" class="tour-card reveal-delay">
+          <img
+            src="https://images.unsplash.com/photo-1511135570219-bbad9a02f103?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHw5fHxWZW5pY2V8ZW58MHx8fHwxNzE5MjM1MzYyfDA&ixlib=rb-4.0.3&q=80&w=1080"
+            alt="Italy" class="thumbnail">
+          <div class="tour-info">
+            <div class="tour-header">
+              <div class="country-flag">
+                <img src="./images/homepage/body/italy.png" alt="Egypt Flag">
+              </div>
+              <div class="tour-details">
+                <div class="tour-duration"><img src="./images/homepage/body/calendar.png" alt="Calendar Icon"> 8
+                  Days</div>
+                <div class="tour-people"><img src="./images/homepage/body/people.png" alt="People Icon"> 155
+                  People Going</div>
+              </div>
+            </div>
+            <div class="tour-title">
+              <h2>Venice</h2>
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <p class="location"><img src="./images/homepage/body/location.png" alt="Map Icon"> Italy</p>
+            <div class="rating-price">
+              <span class="price">5,000$ <del>6,000 $</del></span>
+            </div>
+            <p class="description">Built on a network of canals, Venice is a city like no other. It's famous for its
+              gondola rides along the Grand Canal, intricate Gothic architecture seen in St. Mark's Basilica, and
+              vibrant Venetian masks during the annual Carnival.</p>
+            <button>Explore Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </section>
+  <!-- Scroll Icon -->
+  <div class="icon-container">
+    <i id="scrollDownIcon"><img src="./images/blog/xuong.png" alt="Cuộn xuống"></i>
+    <i id="scrollUpIcon"><img src="./images/blog/len.png" alt="Cuộn lên"></i>
+  </div>
+  <!-- Footer -->
+  <footer></footer>
+  <script>
+    const paris = document.querySelector("#paris")
+    paris.addEventListener("click", function () {
+      window.location.href = "detail.html?id=30"
+    })
+    const switzerland = document.querySelector("#switzerland")
+    switzerland.addEventListener("click", function () {
+      window.location.href = "detail.html?id=36"
+    })
+    const venice = document.querySelector("#venice")
+    venice.addEventListener("click", function () {
+      window.location.href = "detail.html?id=27"
+    })
+    </script>
+  <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
+</html>

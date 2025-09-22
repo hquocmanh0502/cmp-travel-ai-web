@@ -1,0 +1,54 @@
+.nav-bar > ul .greeting-li {
+    position: relative;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.user-greeting {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0px 10px;
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 200px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: none;
+    z-index: 9999;
+}
+
+.greeting-li.active .user-dropdown-menu {
+    display: block;
+}
+
+.user-dropdown-menu a {
+    display: block;
+    padding: 12px 15px;
+    color: #333 !important;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.user-dropdown-menu a:hover {
+    background-color: #f5f5f5;
+    color: #ff6600 !important;
+}
+
+.user-greeting i {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.greeting-li.active .user-greeting i {
+    transform: rotate(180deg);
+}

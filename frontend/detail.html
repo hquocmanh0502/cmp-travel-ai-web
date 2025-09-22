@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/detail.css">
+</head>
+
+
+<body>
+  <!-- Header -->
+  <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
+    <div class="overlay"></div>
+    <div class="header-text">
+      <div id="up-title">EXPLORE</div>
+      <div id="down-title">Landscapes</div>
+    </div>
+    <div class="nav-top-bar">
+      <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+      <div class="nav-bar">
+        <ul>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="aboutus.html">About Us</a></li>
+          <li><a href="destination.html" id="current" style="color: #ff6600;">Destination</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li class="active"><a href="blog.html">Blog</a></li>
+          <li class="active"><a href="contact.html">Contact</a></li>
+          <li class="active"><a href="feedback.html">Feedback</a></li>
+          <li class="greeting-li">
+            <span class="user-greeting">
+              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+            </span>
+            <div class="user-dropdown-menu">
+              <a href="#">Thông tin cá nhân</a>
+              <a href="#">Đơn đặt tour</a>
+              <a href="#">Đăng xuất</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <div class="container p-4 my-5">
+    <div class="row">
+      <div class="col-7">
+        <!-- Information -->
+        <div class="destination-info"></div>
+        <ul class="detail-list row"></ul>
+      </div>
+      <div class="col-5 main-image"></div>
+      <!-- Gallery -->
+      <div class="col-12 px-0 gallery">
+        <h2>From our gallery</h2>
+        <div class="row mt-4 gallery-pictures">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Popup image-->
+  <div id="popup" class="popup">
+    <span class="close"><i class="fa-solid fa-xmark"></i></span>
+    <img class="popup-content" id="popup-img">
+  </div>
+
+  <!-- Footer -->
+  <footer></footer>
+
+  <script src="./js/main.js"></script>
+  <script src="./js/detail.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="./js/erro.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

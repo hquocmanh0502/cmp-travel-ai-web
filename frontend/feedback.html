@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+    <link rel="stylesheet" href="./css/feedback.css">
+    <link rel="stylesheet" href="./css/aboutus.css">
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <header class="header" style="background-image: url('./images/homepage-image/header-image-2.jpg');">
+    <div class="overlay"></div>
+    <div class="header-text">
+      <div id="up-title">READ</div>
+      <div id="down-title">Our Feedback</div>
+    </div>
+    <div class="nav-top-bar">
+      <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+      <div class="nav-bar">
+        <ul>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="aboutus.html">About Us</a></li>
+          <li class="active"><a href="destination.html">Destination</a></li>
+          <li class=" active"><a href="gallery.html">Gallery</a></li>
+          <li class="active"><a href="blog.html">Blog</a></li>
+          <li class="active"><a href="contact.html">Contact</a></li>
+          <li><a href="#" id="current" style="color: #ff6600;">Feedback</a></li>
+          <li class="greeting-li">
+            <span class="user-greeting">
+              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+            </span>
+            <div class="user-dropdown-menu">
+              <a href="#">Thông tin cá nhân</a>
+              <a href="#">Đơn đặt tour</a>
+              <a href="#">Đăng xuất</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+    <div class="main-body">
+        <h1 class="title1">PROMOTION</h1>
+        <h2 class="title2">See What Our Clients Say About Us</h2>
+        <div class="clientfb">
+            <img src="" alt="" class="clientimg">
+            <div class="text">
+                <img src="./images/feedback/big.png" alt="" id="bigicon">
+                <p class="review"><img src="./images/feedback/small.png" alt=""></p>
+                <h3 class="client"></h3>
+                <p class="rating"><i class="fa-solid fa-star"></i></p>
+                <img src="./images/feedback/trai.png" alt="" id="trai">
+                <img src="./images/feedback/phai.png" alt="" id="phai">
+            </div>
+        </div>
+        <img src="./images/feedback/Travel_Concepts_2 1.png" alt="" id="travel">
+        
+        <!-- Form feedback -->
+        <div class="container mt-5">
+          <h2 class="mb-4 title2">Tell us about your experience</h2>
+          <form>
+              <div class="form-group">
+                  <label for="name">Name *</label>
+                  <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+              </div>
+              <div class="form-group">
+                  <label for="email">Email address *</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+              </div>
+              <div class="form-group">
+                  <label for="travelDate">Date of Travel</label>
+                  <input type="date" class="form-control" id="travelDate">
+              </div>
+              <div class="form-group">
+                  <label for="rating">Rating*</label>
+                  <select class="form-control" id="rating" required>
+                      <option value="">-- Choose --</option>
+                      <option value="1">★ - Very Poor</option>
+                      <option value="2">★★ - Poor</option>
+                      <option value="3">★★★ - Average</option>
+                      <option value="4">★★★★ - Good</option>
+                      <option value="5">★★★★★ - Excellent</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="feedback">Feedback</label>
+                  <textarea class="form-control" id="feedback" rows="4" placeholder="Write your feedback here"></textarea>
+              </div>
+
+              <div class="alert alert-success d-none" role="alert">
+                Your information was sent successfully!
+              </div>
+              <div class="alert alert-danger d-none" role="alert">
+                Please enter complete information in the required fields
+              </div>
+
+              <div class="col text-center">
+                <button type="submit" class="btn text-center">Submit</button>      
+              </div>
+          </form>
+      </div>
+    </div>
+    <div class="icon-container">
+      <i id="scrollDownIcon"><img src="./images/blog/xuong.png" alt="Cuộn xuống"></i>
+      <i id="scrollUpIcon"><img src="./images/blog/len.png" alt="Cuộn lên"></i>
+    </div>
+    <!-- Footer -->
+    <footer></footer>
+  
+    <script src="./js/main.js"></script>
+    <script src="./js/feedback.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="./js/erro.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/destination.css">
+  <link rel="stylesheet" href="./css/erro.css">
+</head>
+
+
+
+<body>
+  <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
+    <div class="overlay"></div>
+    <div class="header-text">
+      <div id="up-title">EXPLORE</div>
+      <div id="down-title">Landscapes</div>
+    </div>
+    <div class="nav-top-bar">
+      <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+      <div class="nav-bar">
+        <ul>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="aboutus.html">About Us</a></li>
+          <!-- Thêm class active vào đây -->
+          <li class="active"><a href="#" id="current" style="color: #ff6600;">Destination</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li class="active"><a href="blog.html">Blog</a></li>
+          <li class="active"><a href="contact.html">Contact</a></li>
+          <li class="active"><a href="feedback.html">Feedback</a></li>
+          <li class="greeting-li">
+            <span class="user-greeting">
+              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+            </span>
+            <div class="user-dropdown-menu">
+              <a href="#">Thông tin cá nhân</a>
+              <a href="#">Đơn đặt tour</a>
+              <a href="#">Đăng xuất</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="action-section">
+      <!-- Search box -->
+      <div class="search py-3">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Enter your destination...   " name="keyword" class="form-control search-input">
+      </div>
+      <div class="alert alert-danger d-none" role="alert">
+        There are no results matching your search!!
+      </div>
+
+      <!-- Sort -->
+      <div class="sort-option">
+        <div class="option">
+          <button class="btn btn-sort low-to-high"><i class="fa-solid fa-arrow-up-long mr-0"></i><i
+              class="fa-solid fa-sack-dollar"></i>Low To High</button>
+        </div>
+        <div class="option">
+          <button class="btn btn-sort high-to-low"><i class="fa-solid fa-arrow-down-long mr-0"></i><i
+              class="fa-solid fa-sack-dollar"></i>High To Low</button>
+        </div>
+        <div class="option">
+          <button class="btn btn-sort name"><i class="fa-solid fa-arrow-down-a-z"></i>Name (A-Z)</button>
+        </div>
+        <div class="option">
+          <button class="btn btn-sort rate"><i class="fa-solid fa-star"></i></i>Rate</button>
+        </div>
+        <div class="option">
+          <button class="btn btn-sort reset"><i class="fa-solid fa-rotate"></i></i>Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="loader-box">
+      <div class="loader"></div>
+    </div>
+    <!-- Cards -->
+    <div class="destination mt-4 px-4 py-3">
+      <!-- Render from destination.js -->
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center py-3 pagination-container">
+      <!-- Render from destination.js -->
+    </div>
+
+    <!-- Popup image-->
+    <div id="popup" class="popup">
+      <span class="close">&times;</span>
+      <img class="popup-content" id="popup-img">
+  </div>
+  </div>
+
+  <footer></footer>
+  
+  <script src="./js/main.js"></script>
+  <script src="./js/destination.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="./js/erro.js"></script>
+</body>
+
+</html>
