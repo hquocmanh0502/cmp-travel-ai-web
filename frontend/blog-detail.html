@@ -14,6 +14,330 @@
 </head>
 
 <body>
+    <!-- AI Chatbot Widget -->
+  <div id="chatbot-widget" class="chatbot-widget">
+    <div class="chatbot-header" onclick="toggleChatbot()">
+      <i class="fas fa-robot"></i>
+      <span>CMP Travel Assistant</span>
+      <i class="fas fa-chevron-up" id="chatbot-toggle"></i>
+    </div>
+    <div class="chatbot-body" id="chatbot-body">
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="bot-message">
+          Xin chào! Tôi là trợ lý AI của CMP Travel. Tôi có thể giúp bạn tìm tour phù hợp, tư vấn giá cả và hỗ trợ đặt tour. Bạn cần hỗ trợ gì?
+        </div>
+      </div>
+      <div class="chatbot-suggestions" id="chatbot-suggestions">
+        <button onclick="sendMessage('Gợi ý tour phù hợp với tôi')">Gợi ý tour</button>
+        <button onclick="sendMessage('Tour nào đang hot nhất?')">Tour hot</button>
+        <button onclick="sendMessage('Giá tour như thế nào?')">Về giá cả</button>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." onkeypress="handleEnter(event)">
+        <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+  .chatbot-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 350px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    z-index: 1000;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .chatbot-header {
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 15px 15px 0 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+
+  .chatbot-header:hover {
+    background: linear-gradient(135deg, #ff5500, #ff7722);
+  }
+
+  .chatbot-header i:first-child {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  .chatbot-body {
+    height: 450px;
+    display: none;
+    flex-direction: column;
+    background: #f8f9fa;
+  }
+
+  .chatbot-body.open {
+    display: flex;
+  }
+
+  .chatbot-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 300px;
+    background: white;
+  }
+
+  .bot-message, .user-message {
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-radius: 18px;
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  .bot-message {
+    background: #f1f3f5;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+  }
+
+  .user-message {
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    margin-left: auto;
+    text-align: right;
+    border-bottom-right-radius: 4px;
+  }
+
+  .chatbot-suggestions {
+    padding: 15px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .chatbot-suggestions button {
+    background: white;
+    border: 1px solid #dee2e6;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #666;
+  }
+
+  .chatbot-suggestions button:hover {
+    background: #ff6600;
+    color: white;
+    border-color: #ff6600;
+  }
+
+  .chatbot-input {
+    display: flex;
+    padding: 20px;
+    background: white;
+    border-radius: 0 0 15px 15px;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .chatbot-input input {
+    flex: 1;
+    border: 1px solid #dee2e6;
+    border-radius: 25px;
+    padding: 12px 18px;
+    margin-right: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .chatbot-input input:focus {
+    border-color: #ff6600;
+  }
+
+  .chatbot-input button {
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chatbot-input button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #ff5500, #ff7722);
+  }
+
+  /* Scrollbar styling */
+  .chatbot-messages::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .chatbot-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .chatbot-messages::-webkit-scrollbar-thumb {
+    background: #ff6600;
+    border-radius: 2px;
+  }
+  </style>
+
+  <script>
+  let chatbotOpen = false;
+  let sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+  function toggleChatbot() {
+    const body = document.getElementById('chatbot-body');
+    const toggle = document.getElementById('chatbot-toggle');
+    
+    if (chatbotOpen) {
+      body.classList.remove('open');
+      toggle.classList.remove('fa-chevron-down');
+      toggle.classList.add('fa-chevron-up');
+      chatbotOpen = false;
+    } else {
+      body.classList.add('open');
+      toggle.classList.remove('fa-chevron-up');
+      toggle.classList.add('fa-chevron-down');
+      chatbotOpen = true;
+    }
+  }
+
+  async function sendChatMessage() {
+    const input = document.getElementById('chatbot-input');
+    const message = input.value.trim();
+    
+    if (message) {
+      addMessage(message, 'user');
+      input.value = '';
+      
+      // Show typing indicator
+      addTypingIndicator();
+      
+      try {
+        const userId = localStorage.getItem('userId');
+        const response = await fetch('/api/chatbot/message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId, message, userId })
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          removeTypingIndicator();
+          addMessage(data.message, 'bot');
+          
+          if (data.suggestions && data.suggestions.length > 0) {
+            updateSuggestions(data.suggestions);
+          }
+        } else {
+          removeTypingIndicator();
+          addMessage('Xin lỗi, tôi đang gặp sự cố. Vui lòng thử lại sau.', 'bot');
+        }
+      } catch (error) {
+        console.error('Chatbot error:', error);
+        removeTypingIndicator();
+        addMessage('Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng.', 'bot');
+      }
+    }
+  }
+
+  function addMessage(message, sender) {
+    const messagesDiv = document.getElementById('chatbot-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = sender + '-message';
+    messageDiv.textContent = message;
+    messagesDiv.appendChild(messageDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function addTypingIndicator() {
+    const messagesDiv = document.getElementById('chatbot-messages');
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'bot-message typing-indicator';
+    typingDiv.innerHTML = 'Đang trả lời<span class="dots">...</span>';
+    typingDiv.id = 'typing-indicator';
+    messagesDiv.appendChild(typingDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const typingIndicator = document.getElementById('typing-indicator');
+    if (typingIndicator) {
+      typingIndicator.remove();
+    }
+  }
+
+  function updateSuggestions(suggestions) {
+    const suggestionsDiv = document.getElementById('chatbot-suggestions');
+    suggestionsDiv.innerHTML = '';
+    
+    suggestions.forEach(suggestion => {
+      const button = document.createElement('button');
+      button.textContent = suggestion;
+      button.onclick = () => sendMessage(suggestion);
+      suggestionsDiv.appendChild(button);
+    });
+  }
+
+  function sendMessage(message) {
+    document.getElementById('chatbot-input').value = message;
+    sendChatMessage();
+  }
+
+  function handleEnter(event) {
+    if (event.key === 'Enter') {
+      sendChatMessage();
+    }
+  }
+
+  // Auto greetings
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      if (!chatbotOpen) {
+        const widget = document.getElementById('chatbot-widget');
+        widget.style.animation = 'bounce 0.6s ease-in-out';
+        setTimeout(() => {
+          widget.style.animation = '';
+        }, 600);
+      }
+    }, 3000);
+  });
+  </script>
+
+  <style>
+  @keyframes bounce {
+    0%, 20%, 60%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    80% { transform: translateY(-5px); }
+  }
+
+  .typing-indicator .dots {
+    animation: typing 1.4s infinite;
+  }
+
+  @keyframes typing {
+    0%, 60% { opacity: 0; }
+    30% { opacity: 1; }
+  }
+  </style>
     <header class="header" style="background-image: url('./images/header-bg/blog-bg.jpg');">
         <div class="overlay"></div>
         <div class="header-text">
