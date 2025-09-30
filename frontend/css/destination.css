@@ -55,7 +55,7 @@ i {
 }
 
 .option {
-  width: 33.33333%;
+  width: 16.66667%;
   display: flex;
   justify-content: center;
 }
@@ -72,6 +72,16 @@ i {
   background-color: white;
 }
 
+/* Style riêng cho nút For You */
+.for-you button {
+  background: linear-gradient(135deg, #ff6600, #ff8533);
+  color: white !important;
+}
+
+.for-you button:hover, .for-you button.selected {
+  background: white !important;
+  color: #ff6600 !important;
+}
 
 .card {
   margin-bottom: 30px;
@@ -139,3 +149,27 @@ i {
   background-color: #ff6f61;
   color: white;
 }
+
+
+/* ...existing code... */
+.ai-recommend-banner {
+  display: none;
+  background: linear-gradient(90deg, #ffb86b, #ff8533);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+  margin: 12px auto;
+  max-width: 900px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-6px);
+}
+.ai-recommend-banner.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+/* ...existing code... */

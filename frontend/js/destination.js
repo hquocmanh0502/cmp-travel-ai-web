@@ -93,8 +93,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Track view and navigate to detail
         card.addEventListener("click", () => {
-          trackTourView(destination._id || destination.id);
-          window.location.href = `detail.html?id=${destination.id}`;
+          // Sử dụng _id MongoDB hoặc fallback về id string
+          const tourId = destination._id || destination.id;
+          console.log("Clicking tour with ID:", tourId); // Debug log
+          
+          trackTourView(tourId);
+          // Chuyển đến detail với id
+          window.location.href = `detail.html?id=${tourId}`;
         });
       });
 
@@ -256,45 +261,107 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   // Keep existing sorting code...
-  const buttonsSort = document.querySelectorAll(".btn-sort");
-  
-  const lowToHigh = (data) => {
-    return data.sort((a, b) => a.estimatedCost - b.estimatedCost);
-  };
-  const highToLow = (data) => {
-    return data.sort((a, b) => b.estimatedCost - a.estimatedCost);
-  };
-  const sortByName = (data) => {
-    return data.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
-      return 0;
-    });
-  };
-  const sortByRate = (data) => {
-    return data.sort((a, b) => b.rating - a.rating);
-  };
+  // Keep existing sorting code...
+const buttonsSort = document.querySelectorAll(".btn-sort");
 
-  buttonsSort.forEach((button) => {
-    button.addEventListener("click", () => {
-      buttonsSort.forEach(btn => btn.classList.remove("selected"));
-      button.classList.add("selected");
-
-      let sortedData = data;
-      const buttonClass = button.classList;
-
-      if (buttonClass.contains("low-to-high")) {
-        sortedData = lowToHigh([...data]);
-      } else if (buttonClass.contains("high-to-low")) {
-        sortedData = highToLow([...data]);
-      } else if (buttonClass.contains("name")) {
-        sortedData = sortByName([...data]);
-      } else if (buttonClass.contains("rate")) {
-        sortedData = sortByRate([...data]);
-      }
-
-      displayPage(sortedData, 1);
-      createPagination(Math.ceil(sortedData.length / itemsPerPage), sortedData);
-    });
+const lowToHigh = (data) => {
+  return data.sort((a, b) => a.estimatedCost - b.estimatedCost);
+};
+const highToLow = (data) => {
+  return data.sort((a, b) => b.estimatedCost - a.estimatedCost);
+};
+const sortByName = (data) => {
+  return data.sort((a, b) => {
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
   });
+};
+const sortByRate = (data) => {
+  return data.sort((a, b) => b.rating - a.rating);
+};
+
+buttonsSort.forEach((button) => {
+  button.addEventListener("click", () => {
+    buttonsSort.forEach(btn => btn.classList.remove("selected"));
+    button.classList.add("selected");
+
+    let sortedData = data;
+    const buttonClass = button.classList;
+
+    // Xử lý tất cả các loại sort
+    if (buttonClass.contains("low-to-high")) {
+      sortedData = lowToHigh([...data]);
+      // Ẩn banner AI khi sort khác
+      const banner = document.querySelector('.ai-recommend-banner');
+      if (banner) {
+        banner.classList.remove('visible');
+      }
+    } else if (buttonClass.contains("high-to-low")) {
+      sortedData = highToLow([...data]);
+      // Ẩn banner AI khi sort khác
+      const banner = document.querySelector('.ai-recommend-banner');
+      if (banner) {
+        banner.classList.remove('visible');
+      }
+    } else if (buttonClass.contains("name")) {
+      sortedData = sortByName([...data]);
+      // Ẩn banner AI khi sort khác
+      const banner = document.querySelector('.ai-recommend-banner');
+      if (banner) {
+        banner.classList.remove('visible');
+      }
+    } else if (buttonClass.contains("rate")) {
+      sortedData = sortByRate([...data]);
+      // Ẩn banner AI khi sort khác
+      const banner = document.querySelector('.ai-recommend-banner');
+      if (banner) {
+        banner.classList.remove('visible');
+      }
+    } else if (buttonClass.contains("reset")) {
+      // Reset về data gốc (không sort)
+      sortedData = [...data];
+      // Ẩn banner AI Recommend khi reset
+      const banner = document.querySelector('.ai-recommend-banner');
+      if (banner) {
+        banner.classList.remove('visible');
+      }
+    } else if (buttonClass.contains("for-you")) {
+      // Xử lý nút For You
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        // Nếu đã đăng nhập: Hiển thị banner AI Recommend và giữ data hiện tại
+        const banner = document.querySelector('.ai-recommend-banner');
+        if (banner) {
+          banner.classList.add('visible');
+        }
+        // Giữ data gốc, không sort (tính năng recommend sẽ phát triển sau)
+        sortedData = [...data];
+      } else {
+        // Nếu chưa đăng nhập: chuyển hướng đến trang login
+        alert('Vui lòng đăng nhập để sử dụng tính năng này!');
+        window.location.href = 'login.html';
+        return; // Dừng xử lý
+      }
+    }
+
+    // Áp dụng sort và hiển thị cho TẤT CẢ các trường hợp
+    displayPage(sortedData, 1);
+    createPagination(Math.ceil(sortedData.length / itemsPerPage), sortedData);
+  });
+});
+
+  // Track user views for AI
+  const trackUserViews = async (userId) => {
+    // Simple view tracking for AI recommendations
+    try {
+      await fetch('/api/track/page-view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, page: 'destination' })
+      });
+    } catch (error) {
+      console.log('Error tracking page view:', error);
+    }
+  };
 });

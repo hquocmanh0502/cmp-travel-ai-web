@@ -1,52 +1,69 @@
+/* filepath: e:\cmp-travel-main\frontend\css\homepage.css */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins";
 }
+
 body, html {
-    overflow-x: hidden; /* Ngăn chặn cuộn ngang nếu không cần thiết */
-    overflow-y: auto;   /* Cho phép cuộn dọc nếu có nội dung dài */
+    overflow-x: hidden;
+    overflow-y: auto;
 }
+
 a {
     text-decoration: none;
     color: white;
 }
 
-.header{
-  animation-name: changeImages;
-  animation-duration: 30s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease;
+/* HEADER */
+.header {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url("../images/homepage-image/header-image-4.jpg");
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    animation: smoothSlideshow 20s infinite;
+}
+
+@keyframes smoothSlideshow {
+    0% {
+        background-image: url("../images/homepage-image/header-image-4.jpg");
+    }
+    25% {
+        background-image: url("../images/homepage-image/header-image-1.jpg");
+    }
+    50% {
+        background-image: url("../images/homepage-image/header-image-2.jpg");
+    }
+    75% {
+        background-image: url("../images/homepage-image/header-image-3.jpg");
+    }
+    100% {
+        background-image: url("../images/homepage-image/header-image-4.jpg");
+    }
 }
 
 .overlay {
-  background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
-@keyframes changeImages {
-  0% {
-    background-image: url("../images/homepage-image/header-image-4.jpg");
-  }
-  25% {
-    background-image: url("../images/homepage-image/header-image-2.jpg");
-  }
-  50% {
-    background-image: url("../images/homepage-image/header-image-3.jpg");
-  }
-  75% {
-    background-image: url("../images/homepage-image/header-image-1.jpg");
-  }
-  100% {
-    background-image: url("../images/homepage-image/header-image-4.jpg");
-  }
-}
-
+/* CONTEXT AND SLOGAN */
 .context {
     margin: 20vh 0px 50px 305px;
     position: relative;
     z-index: 2;
 }
+
 .slogan {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
@@ -54,80 +71,248 @@ a {
     font-size: 65px;
     line-height: 70px;
     text-shadow: 
-    -1px -1px 0 #000,  
-    1px -1px 0 #000,  
-    -1px 1px 0 #000,  
-    1px 1px 0 #000;
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,  
+        -1px 1px 0 #000,  
+        1px 1px 0 #000;
     width: 750px;
-    transition: transform 0.3s ease-in-out
+    transition: transform 0.3s ease-in-out;
 }
-.slogan:hover{
+
+.slogan:hover {
     transform: scale(1.05);
 }
+
+/* SEARCH BOX */
 .search-box {
     display: flex;
-    gap: 10px;
-    margin: 0px 305px;
-    position: relative;
-    z-index: 2;
-    background-color: #afafafd7;
-    width: 850px;
-    height: 102px;
-    border-radius: 6px;
-    padding: 10px;
     align-items: center;
-    justify-content: center;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 30px 305px;
+    position: relative;
+    z-index: 100;
 }
 
 .search-box input,
-.search-box select{
+.search-box select {
     font-family: 'Poppins', sans-serif;
-    background-color: #afafafab;
     background-color: transparent;
     border: none;
     border-left: 3px solid white;
-    padding: 10px;
-    font-size: 1em;
-    color: white;
-    height: 75%; /* Đảm bảo chiều cao bằng nhau */
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1; /* Cho phép chia sẻ không gian đều giữa các phần tử */
+    flex: 1;
+    outline: none;
+    border-radius: 0;
 }
 
 .search-box input {
     border-left: none;
+    background-color: #fff;
+    color: #333;
+    border-radius: 10px 0 0 10px;
 }
 
 .search-box input::placeholder {
-    color: white;
+    color: #999;
+}
+
+.search-box select {
+    padding: 10px 15px;
+    outline: none;
+    border: none;
+    font-size: 14px;
+    color: #333 !important;
+    background-color: #fff;
+    cursor: pointer;
+    appearance: auto;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+    height: 45px;
+    max-width: 150px;
+}
+
+.search-box select:enabled {
+    cursor: pointer !important;
+    background-color: #fff !important;
+    color: #333 !important;
+    opacity: 1 !important;
+}
+
+.search-box select:disabled {
+    background-color: #f5f5f5 !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+
+.search-box select option {
+    color: #333 !important;
+    background-color: #fff;
+    padding: 8px;
 }
 
 .submit-btn {
-    padding: 5px 10px;
-    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    height: 45px;
+    width: auto;
+    min-width: 80px;
+    font-size: 14px;
     background-color: #DF6951;
     color: white;
     border: none;
+    border-radius: 0 10px 10px 0;
     cursor: pointer;
-    border-radius: 5px;
-    width: 140px;
-    height: 55px; 
-    border-radius: 10px;
-    font-size: 1em;
-    flex: 0 0 auto;
-    margin-right: 10px;
-    transition: transform 0.3s ease-in-out, background-color 0.3 ease-in-out;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
-.submit-btn:hover{
+
+.submit-btn:hover {
     transform: scale(1.05);
     background-color: #ff4d29;
 }
+
+/* SEARCH SUGGESTIONS */
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    z-index: 9999;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    display: none;
+}
+
+.suggestion-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+    display: grid; /* Changed to grid */
+    grid-template-columns: 1fr auto; /* Left content takes remaining space, price takes auto */
+    grid-template-rows: auto auto; /* Two rows for name and country */
+    gap: 2px 15px; /* Row gap 2px, column gap 15px */
+    align-items: start;
+    color: #000 !important;
+    position: relative;
+    height: 60px;
+    box-sizing: border-box;
+}
+
+.suggestion-item:hover,
+.suggestion-item.suggestion-active {
+    background-color: #f8f9fa;
+    border-left: 3px solid #DF6951;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item * {
+    color: #000 !important;
+}
+
+.suggestion-name {
+    grid-column: 1; /* First column */
+    grid-row: 1; /* First row */
+    font-weight: 600;
+    color: #000 !important;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    align-self: end; /* Align to bottom of its grid cell */
+}
+
+.suggestion-country {
+    grid-column: 1; /* First column */
+    grid-row: 2; /* Second row */
+    color: #666 !important;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    align-self: start; /* Align to top of its grid cell */
+}
+
+.suggestion-price {
+    grid-column: 2; /* Second column */
+    grid-row: 1 / 3; /* Span both rows */
+    color: #DF6951 !important;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    line-height: 1.2;
+    align-self: center; /* Center vertically in the spanned area */
+}
+
+/* Remove the suggestion-left class styling since we're using grid now */
+
+/* Custom scrollbar cho suggestions */
+.search-suggestions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-suggestions::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Force black color on all text elements within suggestions */
+.search-suggestions .suggestion-item,
+.search-suggestions .suggestion-item div,
+.search-suggestions .suggestion-item span,
+.search-suggestions .suggestion-item p {
+    color: #000 !important;
+}
+
+/* Make country text gray for better hierarchy */
+.search-suggestions .suggestion-country {
+    color: #666 !important;
+}
+
+/* Make price orange for better visibility */
+.search-suggestions .suggestion-price {
+    color: #DF6951 !important;
+}
+
+/* CUSTOMER SECTION */
 .customer {
     margin: 30px 305px;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -138,15 +323,18 @@ a {
     list-style: none;
     margin: 20px 0;
 }
-.customer ul li:not(:first-child){
+
+.customer ul li:not(:first-child) {
     text-indent: -12px;
     position: relative;
 }
+
 .customer ul li img {
     width: 30px;
     height: 30px;
     border-radius: 50%;
 }
+
 .customer ul li:last-child::after {
     content: "+";
     font-size: 12px; 
@@ -156,13 +344,16 @@ a {
     left: 65%;
     transform: translate(-50%, -50%);
 }
+
 .customer span {
-    margin-top: 0px; /* Căn khoảng cách giữa span và các hình ảnh */
+    margin-top: 0px;
     font-family: 'Poppins', sans-serif;
     text-align: center;
     margin-left: 20px;
     font-size: 13px;
 }
+
+/* SCROLL */
 .scroll {
     width: 100%;
     position: relative;
@@ -171,50 +362,50 @@ a {
     display: block;
 }
 
-.partner{
+/* PARTNER */
+.partner {
     height: 150px;
     width: 100%;
     background-color: #F7F7F7;
 }
 
-.partner ul{
-  height: 100%;
-  list-style: none;
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-
+.partner ul {
+    height: 100%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
 }
 
-.partner ul li{
-  display: flex;
-  align-items: center;
-  opacity: 44%;
-  transition: all 0.3s ease;
-  margin: 0 auto;
+.partner ul li {
+    display: flex;
+    align-items: center;
+    opacity: 44%;
+    transition: all 0.3s ease;
+    margin: 0 auto;
 }
-.partner ul li:hover{
+
+.partner ul li:hover {
     opacity: 100%;
     transform: scale(1.1);
 }
 
-/* Body------------------------------------------------------------------------ */
-/* Category */
+/* CATEGORY SECTION */
 .category {
     margin: 70px 0;
     height: 400px;
     transition: transform 0.3s ease-in-out;
     position: relative;
-  }
-  .title1 {
+}
+
+.title1 {
     text-align: center;
     color: #df6951;
     font-size: 18px;
     font-weight: 600;
     line-height: 27px;
-    text-align: center;
-  }
+}
 
-  .title2 {
+.title2 {
     font-family: "Volkhov", serif;
     font-size: 50px;
     font-weight: 700;
@@ -223,35 +414,35 @@ a {
     color: #293462;
     font-size: 36px;
     margin-bottom: 40px;
-  }
-  
-  .services {
+}
+
+.services {
     width: 100%;
     display: flex;
     justify-content: center;
     gap: 150px;
-  }
-  
-  .service-item {
+}
+
+.service-item {
     background: white;
     border-radius: 30px;
     padding: 20px;
     width: 235px;
     height: 315px;
-    display: flex; /* Bật Flexbox */
-    flex-direction: column; /* Sắp xếp các phần tử con theo chiều dọc */
-    justify-content: center; /* Căn giữa theo chiều dọc */
-    align-items: center; /* Căn giữa theo chiều ngang */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transition: all .5s ease-in-out;
-  }
-  
-  .service-item img {
+}
+
+.service-item img {
     width: 72px;
     height: 72px;
     margin-bottom: 30px;
-  }
+}
 
-  .category h2 {
+.category h2 {
     font-size: 20px;
     font-weight: 600;
     line-height: 30px;
@@ -259,9 +450,9 @@ a {
     color: #1e1d4c;
     margin: 10px 0;
     white-space: nowrap;
-  }
-  
-  .category p {
+}
+
+.category p {
     font-size: 16px;
     font-weight: 500;
     line-height: 26px;
@@ -269,15 +460,15 @@ a {
     color: #666;
     width: 187px;
     margin: 0;
-  }
-  
-  .main-service {
+}
+
+.main-service {
     width: 227px;
     height: 315px;
     position: relative;
-  }
-  
-  .main-service .square {
+}
+
+.main-service .square {
     position: absolute;
     top: 260px;
     left: -30px;
@@ -286,126 +477,134 @@ a {
     background-color: #df6951;
     border-radius: 30px;
     z-index: -2;
-  }
-  
-  .service-item:hover {
+}
+
+.service-item:hover {
     transform: scale(1.1) !important;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  }
-  /* fast and easy */
-  .fast-easy{
+}
+
+/* FAST AND EASY SECTION */
+.fast-easy {
     display: flex;
     justify-content: space-evenly;
     padding-top: 130px;
-  }
+}
 
-  .left{
+.left {
     width: 30%;
-  }
+}
 
-  .left h2{
+.left h2 {
     text-align: left;
-  }
+}
 
-  .left h1{
+.left h1 {
     text-align: left;
-  }
+}
 
-  .step{
+.step {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 30px;
-  }
-  .ima{
+}
+
+.ima {
     margin-right: 20px;
-  }
-  
-  .ima img{
+}
+
+.ima img {
     width: 40px;
     height: 40px;
-  }
-  .right{
+}
+
+.right {
     overflow: hidden;
-  }
-  .right img{
+}
+
+.right img {
     height: 600px;
     position: relative;
     bottom: 50px;
-  }
+}
 
-  .content{
-  font-family: "Poppins", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19.92px;
-  text-align: left;
-  color:#5E6282;
-  }
-  .cont h3{
-  font-family: "Poppins", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 19.92px;
-  text-align: left;
-  color:#5E6282;
-  margin-bottom: 8px;
-  }
+.content {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.92px;
+    text-align: left;
+    color: #5E6282;
+}
 
-  /* make holiday */
-  .makeholiday{
+.cont h3 {
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.92px;
+    text-align: left;
+    color: #5E6282;
+    margin-bottom: 8px;
+}
+
+/* MAKE HOLIDAY */
+.makeholiday {
     height: 400px;
     background-image: url("../images/homepage/body/holiday.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     margin-bottom: 100px;
-  }
+}
 
-  /* Trendy */
-  .trending-tours {
+/* TRENDY TOURS SECTION */
+.trending-tours {
     padding: 20px;
     font-family: "Poppins", sans-serif;
-  }
-  
-  .tour-packages {
+}
+
+.tour-packages {
     display: flex;
     justify-content: space-between;
     margin: 0px 50px;
     margin-bottom: 150px;
-  }
-  
-  .tour-card {
+}
+
+.tour-card {
     background: #fff;
     border-radius: 25px;
     overflow: hidden;
     width: calc(31% - 20px);
     transition: all 0.5s ease;
     position: relative;
-  }
-  
-  .tour-card:hover {
+}
+
+.tour-card:hover {
     transform: scale(1.05) !important;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .tour-card img {
-    width: 100%;
-  }
+}
 
-  .thumbnail{
+.tour-card img {
+    width: 100%;
+}
+
+.thumbnail {
     height: 244px;
-  }
-  
-  .tour-info {
+}
+
+.tour-info {
     padding: 15px;
-  }
-  
-  .tour-header {
+}
+
+.tour-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
-  }
+}
 
-  .country-flag {
+.country-flag {
     position: absolute;
     top: 210px;
     width: 60px;
@@ -414,53 +613,55 @@ a {
     border: 2px solid white;
 }
 
-  .tour-details {
+.tour-details {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
-  }
-  
-  .tour-duration,
-  .tour-people {
+}
+
+.tour-duration,
+.tour-people {
     margin-right: 50px;
     display: flex;
     align-items: center;
     font-size: 0.9em;
     color: #777;
-  }
-  
-  .tour-duration img,
-  .tour-people img {
+}
+
+.tour-duration img,
+.tour-people img {
     width: 16px;
     height: 16px;
     margin-right: 5px;
-  }
-  
-  .tour-title {
+}
+
+.tour-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .rating i{
+}
+
+.rating i {
     color: #FFBA0A;
-  }
-  .tour-title h2 {
+}
+
+.tour-title h2 {
     font-size: 29.03px;
     font-weight: 700;
     line-height: 43.55px;
     text-align: center;
     margin: 10px 0;
     color: #333;
-  }
-  
-  .location p {
+}
+
+.location p {
     margin: 5px 0px;
     color: #555;
     text-align: start;
     width: 393px;
-  }
-  .location {
+}
+
+.location {
     display: flex;
     align-items: center;
     color: #777;
@@ -468,35 +669,35 @@ a {
     font-weight: 400;
     line-height: 25.21px;
     text-align: center;
-  }
-  
-  .location img {
+}
+
+.location img {
     width: 16px;
     height: 16px;
     margin-right: 5px;
-  }
-  
-  .rating-price {
+}
+
+.rating-price {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
-  }
-  
-  .price {
+}
+
+.price {
     color: #e67e22;
     font-size: 29.03px;
     font-weight: 550;
     line-height: 43.55px;
     text-align: center;
-  }
-  
-  .price del {
+}
+
+.price del {
     font-size: 0.8em;
     color: #bbb;
-  }
-  
-  .description{
+}
+
+.description {
     color: #000000;
     margin-bottom: 15px;
     font-size: 12.22px;
@@ -504,9 +705,9 @@ a {
     line-height: 24.45px;
     letter-spacing: 0.05em;
     text-align: left;
-  }
-  
-  button {
+}
+
+button {
     display: block;
     height: 45px;
     width: 134.9px;
@@ -521,10 +722,8 @@ a {
     font-weight: 600;
     line-height: 19.16px;
     text-align: center;
-  }
-  
-  button:hover {
-    background-color: #d35400;
-  }
-  
+}
 
+button:hover {
+    background-color: #d35400;
+}

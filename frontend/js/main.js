@@ -9,41 +9,50 @@ function checkAuthStatus() {
   const greetingElements = document.querySelectorAll('.greeting-li');
   const authElements = document.querySelectorAll('.auth-li, #auth-li');
   
-  console.log('🔍 Checking auth status:', { userId, username });
+  console.log('🔍 Checking auth status:', { userId, username, greetingCount: greetingElements.length, authCount: authElements.length });
   
   if (userId && username) {
     // User đã đăng nhập - HIỆN greeting, ẨN auth buttons
     usernameElements.forEach(el => {
       if (el) el.textContent = username;
     });
+    
     greetingElements.forEach(el => {
       if (el) {
+        el.classList.add('logged-in');
         el.style.display = 'inline-block';
         el.style.visibility = 'visible';
       }
     });
+    
     authElements.forEach(el => {
       if (el) {
-        el.style.display = 'none';
-      }
-    });
-    
-    console.log('✅ User logged in:', username);
-  } else {
-    // User CHƯA đăng nhập - ẨN greeting, HIỆN auth buttons
-    greetingElements.forEach(el => {
-      if (el) {
+        el.classList.add('hide-auth');
         el.style.display = 'none';
         el.style.visibility = 'hidden';
       }
     });
-    authElements.forEach(el => {
+    
+    console.log('✅ User logged in, UI updated for:', username);
+  } else {
+    // User CHƯA đăng nhập - ẨN greeting, HIỆN auth buttons
+    greetingElements.forEach(el => {
       if (el) {
-        el.style.display = 'inline-block';
+        el.classList.remove('logged-in');
+        el.style.display = 'none';
+        el.style.visibility = 'hidden';
       }
     });
     
-    console.log('❌ User not logged in');
+    authElements.forEach(el => {
+      if (el) {
+        el.classList.remove('hide-auth');
+        el.style.display = 'inline-block';
+        el.style.visibility = 'visible';
+      }
+    });
+    
+    console.log('❌ User not logged in, showing auth buttons');
   }
 }
 
@@ -56,8 +65,10 @@ function logout() {
   console.log('🚪 User logged out');
   alert('Đăng xuất thành công!');
   
-  // Refresh auth status immediately
-  checkAuthStatus();
+  // Force refresh auth status immediately
+  setTimeout(() => {
+    checkAuthStatus();
+  }, 100);
   
   // Redirect to home page
   window.location.href = 'index.html';
@@ -67,48 +78,66 @@ function logout() {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🚀 DOM loaded, initializing...');
   
-  // Check auth status first
-  checkAuthStatus();
-  
-  // Handle dropdown functionality
-  const userGreeting = document.querySelector('.user-greeting');
-  const greetingLi = document.querySelector('.greeting-li');
-  
-  if (userGreeting && greetingLi) {
-    userGreeting.addEventListener('click', (e) => {
-      e.stopPropagation();
-      greetingLi.classList.toggle('active');
-      console.log('🔽 Dropdown toggled');
-    });
+  // Wait a bit for all elements to load
+  setTimeout(() => {
+    // Check auth status first
+    checkAuthStatus();
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!greetingLi.contains(e.target)) {
-        greetingLi.classList.remove('active');
-      }
-    });
+    // Initialize dropdown functionality
+    initializeDropdown();
     
-    // Handle logout - Find logout link
-    const logoutLinks = document.querySelectorAll('.user-dropdown-menu a');
-    logoutLinks.forEach((link) => {
-      if (link.textContent.includes('Đăng xuất') || link.textContent.includes('Logout')) {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          logout();
-        });
-      }
-    });
-  }
-  
-  // Initialize other components
-  initializeFooter();
-  initializeScrollReveal();
-  initializeImagePopup();
-  initializeFormSubmit();
-  initializeScrollIcons(); // 🔥 KHÔI PHỤC SCROLL ICONS
+    // Initialize other components
+    initializeFooter();
+    initializeScrollReveal();
+    initializeImagePopup();
+    initializeFormSubmit();
+    initializeScrollIcons();
+  }, 200);
 });
 
-// 🔥 KHÔI PHỤC SCROLL FUNCTIONS
+// Dropdown functionality
+function initializeDropdown() {
+  // Remove any existing event listeners to prevent conflicts
+  document.removeEventListener('click', handleDocumentClick);
+  
+  // Add new event listener
+  document.addEventListener('click', handleDocumentClick);
+  
+  console.log('🔽 Dropdown initialized');
+}
+
+// frontend/js/main.js
+function handleDocumentClick(e) {
+  const greetingLi = document.querySelector('.greeting-li');
+  const userGreeting = document.querySelector('.user-greeting');
+  
+  if (!greetingLi || !userGreeting) return;
+  
+  // If clicked on user greeting
+  if (e.target.closest('.user-greeting')) {
+    e.preventDefault();
+    e.stopPropagation();
+    greetingLi.classList.toggle('active');
+    console.log('🔽 Dropdown toggled:', greetingLi.classList.contains('active'));
+    return; // QUAN TRỌNG: return sớm
+  }
+  
+  // Handle logout clicks - CHỈ với class logout-link
+  if (e.target.classList.contains('logout-link') || 
+      e.target.closest('.logout-link')) {
+    e.preventDefault();
+    e.stopPropagation();
+    logout();
+    return;
+  }
+  
+  // If clicked outside dropdown - CHỈ đóng dropdown
+  if (!greetingLi.contains(e.target)) {
+    greetingLi.classList.remove('active');
+  }
+}
+
+// Scroll icons initialization
 function initializeScrollIcons() {
   const scrollDownIcon = document.getElementById('scrollDownIcon');
   const scrollUpIcon = document.getElementById('scrollUpIcon');

@@ -22,25 +22,35 @@
         </div>
         <div class="nav-top-bar">
             <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+            <!-- Cập nhật navigation section -->
             <div class="nav-bar">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="aboutus.html">About Us</a></li>
-                    <li><a href="destination.html">Destination</a></li>
-                    <li><a href="gallery.html">Gallery</a></li>
-                    <li><a href="#" id="current" style="color: #ff6600;">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="feedback.html">Feedback</a></li>
-                    <div class="greeting-li">  <!-- ← Selector JS bắt đây, position relative từ CSS! -->
-                        <span class="user-greeting">
-                        Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
-                        </span>  <!-- ← Click vào span này toggle! Flex center từ CSS -->
-                        <div class="user-dropdown-menu">  <!-- ← Menu ẩn, display block khi .active -->
-                            <a href="#">Thông tin cá nhân</a>
-                            <a href="#">Đơn đặt tour</a>
-                            <a href="#">Đăng xuất</a>
-                        </div>
+                <li class="active"><a href="index.html">Home</a></li>
+                <li class="active"><a href="aboutus.html">About Us</a></li>
+                <li class="active"><a href="destination.html">Destination</a></li>
+                <li class="active"><a href="gallery.html">Gallery</a></li>
+                <li class="active"><a href="#" id="current" style="color: #ff6600;">Blog</a></li>
+                <li class="active"><a href="contact.html">Contact</a></li>
+                <li class="active"><a href="feedback.html">Feedback</a></li>
+                <!-- Greeting cho user đã login - Ban đầu ẩn -->
+                <li class="greeting-li" style="display: none;">
+                    <span class="user-greeting">
+                    Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+                    </span>
+                    <div class="user-dropdown-menu">
+                    <a href="#">Thông tin cá nhân</a>
+                    <a href="#">Đơn đặt tour</a>
+                    <a href="#" onclick="logout()">Đăng xuất</a>
                     </div>
+                </li>
+                
+                <!-- Auth buttons cho user chưa login - Ban đầu hiện - Đặt trong <li> -->
+                <li class="auth-li" id="auth-li">
+                    <div class="auth-buttons">
+                    <a href="login.html" class="btn-login">Login</a>
+                    <a href="create_acc.html" class="btn-register">Register</a>
+                    </div>
+                </li>
                 </ul>
             </div>
         </div>

@@ -15,9 +15,13 @@ const tourSchema = new mongoose.Schema({
   
   // AI Classification fields
   categories: {
-    travelStyle: [String], // ['adventure', 'cultural', 'relaxation']
+    travelStyle: [{ 
+      type: String, 
+      enum: ['adventure', 'cultural', 'relaxation', 'luxury', 'budget'] 
+    }],
     difficulty: { type: String, enum: ['easy', 'moderate', 'challenging'] },
     bestFor: [String], // ['couples', 'families', 'solo', 'groups']
+    travelTypes: [String], // ['adventure', 'cultural', 'relaxation', 'family', 'luxury', 'budget']
     season: [String], // ['spring', 'summer', 'fall', 'winter']
     climate: { type: String, enum: ['tropical', 'temperate', 'cold', 'desert'] }
   },

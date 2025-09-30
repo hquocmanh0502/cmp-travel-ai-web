@@ -362,7 +362,7 @@
             <div class="user-dropdown-menu">
               <a href="#">Thông tin cá nhân</a>
               <a href="#">Đơn đặt tour</a>
-              <a href="#" onclick="logout()">Đăng xuất</a>
+              <a href="#" class="logout-link">Đăng xuất</a>
             </div>
           </li>
           
@@ -375,7 +375,7 @@
           </li>
         </ul>
       </div>
-      <a href="contact.html" class="buttons">Get in Touch</a>
+      <!-- <a href="contact.html" class="buttons">Get in Touch</a> -->
     </div>
     <div class="context">
       <img src="./images/header/wavy.png" alt="" id="wavy" />
@@ -383,15 +383,18 @@
         No matter where you’re going to, we’ll take you there
       </h1>
     </div>
+    <!-- Tìm và sửa search box (khoảng dòng 600-610) -->
     <div class="search-box">
-      <input type="text" placeholder="Where to?" />
-      <select>
+      <input type="text" placeholder="Where to?" id="search-input" />
+      <select id="travel-type-select">
         <option value="">Travel Type</option>
       </select>
-      <select>
+      <select id="duration-select">
         <option value="">Duration</option>
       </select>
       <button class="submit-btn">Submit</button>
+      <!-- Thêm container cho suggestions -->
+      <div class="search-suggestions" id="search-suggestions"></div>
     </div>
     <div class="customer">
       <ul>
@@ -632,8 +635,10 @@
       window.location.href = "detail.html?id=27"
     })
     </script>
+  <script src="./js/search.js"></script>
   <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/erro.js"></script>
 </body>
 
 </html>
