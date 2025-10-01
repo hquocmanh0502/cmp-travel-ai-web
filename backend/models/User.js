@@ -1,4 +1,3 @@
-// backend/models/User.js
 const mongoose = require('mongoose');
 let bcrypt;
 
@@ -14,42 +13,66 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   fullName: { type: String, required: true },
   phone: { type: String },
+  avatar: { type: String, default: '' },
+  verified: { type: Boolean, default: false },
   
-  // AI Recommendation fields
+  // AI Preferences (mở rộng)
   preferences: {
     budgetRange: { min: Number, max: Number },
     favoriteCountries: [String],
-    travelStyle: { 
-      type: String, 
-      enum: ['adventure', 'relaxation', 'cultural', 'luxury', 'budget', 'family', 'solo', 'romantic'] 
+    favoriteDestinations: [String],
+    travelStyle: [String], // có thể chọn nhiều: ['adventure', 'luxury', 'budget', 'cultural']
+    hotelPreferences: {
+      rating: { type: Number, min: 1, max: 5 },
+      amenities: [String], // wifi, pool, gym, spa, breakfast
+      roomType: { type: String, enum: ['single', 'double', 'suite', 'family'] }
     },
-    activities: [String],
+    activities: [String], // sightseeing, shopping, food, adventure, culture
+    dietaryRestrictions: [String],
+    languagePreference: { type: String, default: 'vi' },
     climatePreference: { type: String, enum: ['tropical', 'temperate', 'cold', 'desert'] }
   },
   
-  // User behavior tracking
-  viewHistory: [{
-    tourId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tour' },
-    viewedAt: { type: Date, default: Date.now },
-    duration: Number
-  }],
+  // Behavior Tracking (cho AI)
+  behavior: {
+    searchHistory: [{
+      query: String,
+      filters: Object,
+      timestamp: { type: Date, default: Date.now }
+    }],
+    viewHistory: [{
+      tourId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tour' },
+      duration: Number, // seconds
+      timestamp: { type: Date, default: Date.now }
+    }],
+    wishlist: [{ 
+      tourId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tour' },
+      addedAt: { type: Date, default: Date.now }
+    }],
+    bookingHistory: [{ 
+      tourId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tour' },
+      bookingId: String,
+      bookedAt: Date,
+      status: { type: String, enum: ['confirmed', 'cancelled', 'completed', 'pending'] }
+    }]
+  },
   
-  searchHistory: [{
-    query: String,
-    filters: Object,
-    searchedAt: { type: Date, default: Date.now }
-  }],
-  
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
 });
 
-// Hash password trước khi lưu (chỉ khi có bcryptjs)
+// Hash password trước khi lưu
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   
   if (bcrypt) {
     this.password = await bcrypt.hash(this.password, 12);
   }
+  next();
+});
+
+userSchema.pre('save', function(next) {
+  this.updatedAt = Date.now();
   next();
 });
 

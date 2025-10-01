@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Hanoi Luxury Hotel",
+    "location": {
+      "address": "123 Hoan Kiem Street, Hanoi",
+      "coordinates": [105.8542, 21.0285],
+      "city": "Hanoi",
+      "country": "Vietnam",
+      "distanceToCenter": 0.5
+    },
+    "details": {
+      "rating": 4.5,
+      "starRating": 5,
+      "priceRange": { "min": 80, "max": 200 },
+      "amenities": ["wifi", "pool", "gym", "spa", "breakfast", "parking"],
+      "roomTypes": [
+        {
+          "type": "deluxe",
+          "price": 120,
+          "capacity": 2,
+          "size": 35,
+          "amenities": ["wifi", "ac", "minibar", "balcony"]
+        }
+      ],
+      "images": [
+        "https://example.com/hotel1-lobby.jpg"
+      ],
+      "description": "Luxury hotel in heart of Hanoi Old Quarter",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00"
+    },
+    "reviewsSummary": {
+      "totalReviews": 250,
+      "averageRating": 4.5,
+      "ratings": {
+        "cleanliness": 4.6,
+        "comfort": 4.4,
+        "location": 4.8,
+        "service": 4.5,
+        "value": 4.2
+      }
+    },
+    "aiScore": {
+      "valueForMoney": 8.5,
+      "locationScore": 9.2,
+      "serviceScore": 8.8,
+      "overallScore": 8.8
+    },
+    "verifiedPartner": true
+  }
+]

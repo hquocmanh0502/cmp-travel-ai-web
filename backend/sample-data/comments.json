@@ -1,0 +1,40 @@
+[
+  {
+    "content": {
+      "text": "Tour tuyệt vời! Hướng dẫn viên rất nhiệt tình và am hiểu. Cảnh đẹp, đồ ăn ngon. Sẽ quay lại chắc chắn!",
+      "rating": 5,
+      "images": ["https://example.com/review1-img1.jpg"],
+      "detailedRating": {
+        "guide": 5,
+        "accommodation": 4,
+        "transportation": 4,
+        "food": 5,
+        "activities": 5,
+        "valueForMoney": 4
+      }
+    },
+    "verified": {
+      "isVerified": true,
+      "bookingId": "BK001"
+    },
+    "aiAnalysis": {
+      "sentiment": {
+        "score": 0.85,
+        "label": "positive",
+        "confidence": 0.92
+      },
+      "keywords": ["tuyệt vời", "nhiệt tình", "cảnh đẹp", "ngon"],
+      "categories": ["guide", "food", "activities"],
+      "emotions": ["happy", "excited"],
+      "language": "vi"
+    },
+    "tripDetails": {
+      "groupSize": 2,
+      "travelCompanions": "couple"
+    },
+    "moderation": {
+      "status": "approved",
+      "autoModerated": true
+    }
+  }
+]

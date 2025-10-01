@@ -1,0 +1,39 @@
+[
+  {
+    "username": "john_doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "fullName": "John Doe",
+    "phone": "+84123456789",
+    "avatar": "https://example.com/avatar1.jpg",
+    "verified": true,
+    "preferences": {
+      "budgetRange": { "min": 500, "max": 2000 },
+      "favoriteCountries": ["Vietnam", "Thailand", "Japan"],
+      "favoriteDestinations": ["Hanoi", "Bangkok", "Tokyo"],
+      "travelStyle": ["cultural", "adventure"],
+      "hotelPreferences": {
+        "rating": 4,
+        "amenities": ["wifi", "pool", "breakfast"],
+        "roomType": "double"
+      },
+      "activities": ["sightseeing", "food", "culture"],
+      "languagePreference": "en"
+    }
+  },
+  {
+    "username": "nguyen_van_a",
+    "email": "nguyenvana@example.com", 
+    "password": "password123",
+    "fullName": "Nguyễn Văn A",
+    "phone": "+84987654321",
+    "verified": true,
+    "preferences": {
+      "budgetRange": { "min": 300, "max": 1000 },
+      "favoriteCountries": ["Vietnam"],
+      "travelStyle": ["budget", "family"],
+      "activities": ["sightseeing", "shopping"],
+      "languagePreference": "vi"
+    }
+  }
+]

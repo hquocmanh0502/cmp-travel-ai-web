@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách yêu thích - CMP Travel</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/my-wishlist.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
+        <div class="overlay"></div>
+        <div class="header-text">
+            <div id="up-title">YÊU THÍCH</div>
+            <div id="down-title">Danh sách yêu thích</div>
+        </div>
+        <div class="nav-top-bar">
+            <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+            <div class="nav-bar">
+                <ul>
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="active"><a href="aboutus.html">About Us</a></li>
+                    <li class="active"><a href="destination.html">Destination</a></li>
+                    <li class="active"><a href="gallery.html">Gallery</a></li>
+                    <li class="active"><a href="blog.html">Blog</a></li>
+                    <li class="active"><a href="contact.html">Contact</a></li>
+                    <li class="active"><a href="feedback.html">Feedback</a></li>
+                    
+                    <!-- Greeting cho user đã login -->
+                    <li class="greeting-li" style="display: none;">
+                        <span class="user-greeting">
+                            Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+                        </span>
+                        <div class="user-dropdown-menu">
+                            <a href="profile.html"><i class="fas fa-user"></i> Thông tin cá nhân</a>
+                            <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> Đơn đặt tour</a>
+                            <a href="my-wishlist.html"><i class="fas fa-heart"></i> Danh sách yêu thích</a>
+                            <a href="preferences.html"><i class="fas fa-cog"></i> Tùy chọn AI</a>
+                            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                        </div>
+                    </li>
+                    
+                    <li class="auth-li" id="auth-li">
+                        <div class="auth-buttons">
+                            <a href="login.html" class="btn-login">Login</a>
+                            <a href="create_acc.html" class="btn-register">Register</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="wishlist-container">
+        <!-- Page Header -->
+        <div class="wishlist-header">
+            <h1><i class="fas fa-heart"></i> Danh sách yêu thích</h1>
+            <p>Quản lý các tour du lịch yêu thích của bạn</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="wishlist-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-number" id="totalItems">0</div>
+                <div class="stat-label">Tour yêu thích</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-number" id="totalValue">$0</div>
+                <div class="stat-label">Tổng giá trị</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number" id="averageRating">0</div>
+                <div class="stat-label">Đánh giá trung bình</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="stat-number" id="topDestination">N/A</div>
+                <div class="stat-label">Điểm đến hàng đầu</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="wishlist-filters">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <div class="filter-item">
+                        <label for="searchInput">Tìm kiếm</label>
+                        <input type="text" id="searchInput" placeholder="Tìm theo tên tour, điểm đến...">
+                    </div>
+                    <div class="filter-item">
+                        <label for="categoryFilter">Loại tour</label>
+                        <select id="categoryFilter">
+                            <option value="">Tất cả loại</option>
+                            <option value="Cultural">Văn hóa</option>
+                            <option value="Adventure">Phiêu lưu</option>
+                            <option value="Beach">Bi// filepath: frontend/my-wishlist.html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách yêu thích - CMP Travel</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/my-wishlist.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
+        <div class="overlay"></div>
+        <div class="header-text">
+            <div id="up-title">YÊU THÍCH</div>
+            <div id="down-title">Danh sách yêu thích</div>
+        </div>
+        <div class="nav-top-bar">
+            <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+            <div class="nav-bar">
+                <ul>
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="active"><a href="aboutus.html">About Us</a></li>
+                    <li class="active"><a href="destination.html">Destination</a></li>
+                    <li class="active"><a href="gallery.html">Gallery</a></li>
+                    <li class="active"><a href="blog.html">Blog</a></li>
+                    <li class="active"><a href="contact.html">Contact</a></li>
+                    <li class="active"><a href="feedback.html">Feedback</a></li>
+                    
+                    <!-- Greeting cho user đã login -->
+                    <li class="greeting-li" style="display: none;">
+                        <span class="user-greeting">
+                            Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+                        </span>
+                        <div class="user-dropdown-menu">
+                            <a href="profile.html"><i class="fas fa-user"></i> Thông tin cá nhân</a>
+                            <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> Đơn đặt tour</a>
+                            <a href="my-wishlist.html"><i class="fas fa-heart"></i> Danh sách yêu thích</a>
+                            <a href="preferences.html"><i class="fas fa-cog"></i> Tùy chọn AI</a>
+                            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                        </div>
+                    </li>
+                    
+                    <li class="auth-li" id="auth-li">
+                        <div class="auth-buttons">
+                            <a href="login.html" class="btn-login">Login</a>
+                            <a href="create_acc.html" class="btn-register">Register</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="wishlist-container">
+        <!-- Page Header -->
+        <div class="wishlist-header">
+            <h1><i class="fas fa-heart"></i> Danh sách yêu thích</h1>
+            <p>Quản lý các tour du lịch yêu thích của bạn</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="wishlist-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-number" id="totalItems">0</div>
+                <div class="stat-label">Tour yêu thích</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-number" id="totalValue">$0</div>
+                <div class="stat-label">Tổng giá trị</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number" id="averageRating">0</div>
+                <div class="stat-label">Đánh giá trung bình</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="stat-number" id="topDestination">N/A</div>
+                <div class="stat-label">Điểm đến hàng đầu</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="wishlist-filters">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <div class="filter-item">
+                        <label for="searchInput">Tìm kiếm</label>
+                        <input type="text" id="searchInput" placeholder="Tìm theo tên tour, điểm đến...">
+                    </div>
+                    <div class="filter-item">
+                        <label for="categoryFilter">Loại tour</label>
+                        <select id="categoryFilter">
+                            <option value="">Tất cả loại</option>
+                            <option value="Cultural">Văn hóa</option>
+                            <option value="Adventure">Phiêu lưu</option>
+                            <option value="Beach">Biển đảo</option>
+                            <option value="Romance">Lãng mạn</option>
+                            <option value="Nature">Thiên nhiên</option>
+                            <option value="City">Thành phố</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="priceRange">Giá tối đa</label>
+                        <input type="range" id="priceRange" min="0" max="10000" value="10000" step="100">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #666;">
+                            <span>$0</span>
+                            <span id="priceValue">$10,000</span>
+                        </div>
+                    </div>
+                    <div class="filter-item">
+                        <label for="sortBy">Sắp xếp theo</label>
+                        <select id="sortBy">
+                            <option value="dateAdded-desc">Mới thêm nhất</option>
+                            <option value="dateAdded-asc">Cũ nhất</option>
+                            <option value="price-asc">Giá thấp đến cao</option>
+                            <option value="price-desc">Giá cao đến thấp</option>
+                            <option value="rating-desc">Đánh giá cao nhất</option>
+                            <option value="name-asc">Tên A-Z</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="btn" id="clearFilters">
+                    <i class="fas fa-eraser"></i> Xóa bộ lọc
+                </button>
+            </div>
+            <div id="resultsCount" style="margin-top: 1rem; color: #666; font-size: 0.9rem;"></div>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="view-toggle">
+            <button class="view-btn active" id="gridView">
+                <i class="fas fa-th-large"></i> Lưới
+            </button>
+            <button class="view-btn" id="listView">
+                <i class="fas fa-list"></i> Danh sách
+            </button>
+        </div>
+
+        <!-- Bulk Actions -->
+        <div class="bulk-actions" id="bulkActions">
+            <label class="select-all">
+                <input type="checkbox" id="selectAll"> Chọn tất cả
+            </label>
+            <span id="selectedCount">0 mục đã chọn</span>
+            <button class="btn btn-danger bulk-action-btn" id="removeSelected">
+                <i class="fas fa-trash"></i> Xóa đã chọn
+            </button>
+            <button class="btn btn-outline bulk-action-btn" id="shareSelected">
+                <i class="fas fa-share"></i> Chia sẻ
+            </button>
+        </div>
+
+        <!-- Wishlist Content -->
+        <div class="wishlist-content">
+            <div class="wishlist-grid" id="wishlistContainer">
+                <!-- Wishlist items will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer></footer>
+
+    <!-- Scripts -->
+    <script src="./js/main.js"></script>
+    <script src="./js/my-wishlist.js"></script>
+    <script src="./js/erro.js"></script>
+</body>
+</html>

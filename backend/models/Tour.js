@@ -1,37 +1,88 @@
-// backend/models/Tour.js
 const mongoose = require('mongoose');
 
 const tourSchema = new mongoose.Schema({
-  id: { type: String, unique: true, required: true },
   name: { type: String, required: true },
   country: { type: String, required: true },
   description: { type: String, required: true },
-  attractions: [String],
-  estimatedCost: { type: Number, required: true },
-  rating: { type: Number, min: 1, max: 5 },
-  activity: [String],
-  food: [String],
   img: { type: String, required: true },
+  rating: { type: Number, default: 0 },
+  estimatedCost: { type: Number, required: true },
+  attractions: [String],
+  food: [String],
   
-  // AI Classification fields
-  categories: {
-    travelStyle: [{ 
-      type: String, 
-      enum: ['adventure', 'cultural', 'relaxation', 'luxury', 'budget'] 
-    }],
-    difficulty: { type: String, enum: ['easy', 'moderate', 'challenging'] },
-    bestFor: [String], // ['couples', 'families', 'solo', 'groups']
-    travelTypes: [String], // ['adventure', 'cultural', 'relaxation', 'family', 'luxury', 'budget']
-    season: [String], // ['spring', 'summer', 'fall', 'winter']
-    climate: { type: String, enum: ['tropical', 'temperate', 'cold', 'desert'] }
+  // Detail information (mở rộng)
+  itinerary: [{
+    day: Number,
+    title: String,
+    activities: [String],
+    meals: [String],
+    accommodation: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }
+  }],
+  
+  duration: { type: String, required: true }, // "3 days", "1 week"
+  type: { type: String, required: true }, // domestic, international
+  maxGroupSize: { type: Number, default: 20 },
+  minAge: { type: Number, default: 0 },
+  
+  inclusions: [String],
+  exclusions: [String],
+  
+  // Pricing (mở rộng)
+  pricing: {
+    adult: { type: Number, required: true },
+    child: { type: Number },
+    infant: { type: Number },
+    groupDiscount: { type: Number, default: 0 }
   },
   
-  // Analytics
-  viewCount: { type: Number, default: 0 },
-  bookingCount: { type: Number, default: 0 },
-  popularityScore: { type: Number, default: 0 }, // Calculated field
+  // Location details
+  location: {
+    coordinates: [Number], // [lng, lat]
+    address: String,
+    region: String
+  },
   
-  createdAt: { type: Date, default: Date.now }
+  // Availability
+  availability: [{
+    startDate: Date,
+    endDate: Date,
+    availableSlots: Number,
+    price: Number
+  }],
+  
+  // SEO and categorization
+  tags: [String],
+  difficulty: { type: String, enum: ['easy', 'moderate', 'challenging'] },
+  bestTimeToVisit: [String], // months
+  
+  // AI Analytics (mở rộng)
+  analytics: {
+    viewCount: { type: Number, default: 0 },
+    wishlistCount: { type: Number, default: 0 },
+    bookingCount: { type: Number, default: 0 },
+    averageRating: { type: Number, default: 0 },
+    sentimentScore: { type: Number, default: 0 }, // -1 to 1
+    popularityScore: { type: Number, default: 0 },
+    seasonalTrends: Object
+  },
+  
+  // Content moderation
+  status: { type: String, enum: ['active', 'inactive', 'draft'], default: 'active' },
+  featured: { type: Boolean, default: false },
+  
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now }
+});
+
+// Indexes for better performance
+tourSchema.index({ country: 1, type: 1 });
+tourSchema.index({ 'pricing.adult': 1 });
+tourSchema.index({ 'analytics.popularityScore': -1 });
+tourSchema.index({ 'location.coordinates': '2dsphere' });
+
+tourSchema.pre('save', function(next) {
+  this.updatedAt = Date.now();
+  next();
 });
 
 module.exports = mongoose.model('Tour', tourSchema);

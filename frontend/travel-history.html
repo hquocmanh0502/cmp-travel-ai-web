@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel History - CMP Travel</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/travel-history.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 50vh;">
+    <div class="overlay"></div>
+    <div class="header-text">
+      <div id="up-title">TRAVEL HISTORY</div>
+      <div id="down-title">Your Journey</div>
+    </div>
+    <div class="nav-top-bar">
+      <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+      <div class="nav-bar">
+        <ul>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="aboutus.html">About Us</a></li>
+          <li class="active"><a href="destination.html">Destination</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li class="active"><a href="blog.html">Blog</a></li>
+          <li class="active"><a href="contact.html">Contact</a></li>
+          <li class="active"><a href="feedback.html">Feedback</a></li>
+          
+          <li class="greeting-li">
+            <span class="user-greeting">
+              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+            </span>
+            <div class="user-dropdown-menu">
+              <a href="profile.html"><i class="fas fa-user"></i> Thông tin cá nhân</a>
+              <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> Đơn đặt tour</a>
+              <a href="my-wishlist.html"><i class="fas fa-heart"></i> Danh sách yêu thích</a>
+              <a href="travel-history.html" style="color: #ff6600;"><i class="fas fa-history"></i> Lịch sử du lịch</a>
+              <a href="preferences.html"><i class="fas fa-cog"></i> Tùy chọn AI</a>
+              <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container history-container">
+    <!-- Travel Stats -->
+    <div class="travel-stats">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-map-marked-alt"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="totalTours">0</h3>
+          <p>Tours đã đi</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-globe"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="totalCountries">0</h3>
+          <p>Quốc gia</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="totalDays">0</h3>
+          <p>Ngày du lịch</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="totalSpent">$0</h3>
+          <p>Tổng chi phí</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Travel Timeline -->
+    <div class="timeline-section">
+      <h3><i class="fas fa-route"></i> Hành trình của bạn</h3>
+      <div class="timeline" id="travelTimeline">
+        <!-- Dynamic timeline content -->
+      </div>
+    </div>
+
+    <!-- Travel Map -->
+    <div class="map-section">
+      <h3><i class="fas fa-map"></i> Bản đồ chuyến đi</h3>
+      <div class="travel-map" id="travelMap">
+        <!-- Map will be rendered here -->
+        <div class="map-placeholder">
+          <i class="fas fa-map-marked-alt"></i>
+          <p>Bản đồ hiển thị các địa điểm bạn đã đến</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Gallery -->
+    <div class="gallery-section">
+      <h3><i class="fas fa-camera"></i> Kỷ niệm của bạn</h3>
+      <div class="photo-gallery" id="photoGallery">
+        <!-- Dynamic photo gallery -->
+      </div>
+    </div>
+
+    <!-- Travel Insights -->
+    <div class="insights-section">
+      <h3><i class="fas fa-chart-line"></i> Thống kê thú vị</h3>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4>Địa điểm yêu thích</h4>
+          <div class="favorite-destination">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=100&h=100&fit=crop" alt="Paris">
+            <div class="destination-info">
+              <h5>Paris, France</h5>
+              <p>3 lần đến thăm</p>
+            </div>
+          </div>
+        </div>
+        <div class="insight-card">
+          <h4>Tháng du lịch nhiều nhất</h4>
+          <div class="travel-month">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Tháng 7</span>
+          </div>
+        </div>
+        <div class="insight-card">
+          <h4>Kiểu du lịch ưa thích</h4>
+          <div class="travel-style">
+            <i class="fas fa-heart"></i>
+            <span>Văn hóa & Lịch sử</span>
+          </div>
+        </div>
+        <div class="insight-card">
+          <h4>Mùa du lịch</h4>
+          <div class="travel-season">
+            <i class="fas fa-sun"></i>
+            <span>Mùa hè</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer></footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/travel-history.js"></script>
+</body>
+</html>

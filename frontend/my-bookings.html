@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking History - CMP Travel</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/my-bookings.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
+        <div class="overlay"></div>
+        <div class="header-text">
+            <div id="up-title">MANAGEMENT</div>
+            <div id="down-title">Booking History</div>
+        </div>
+        <div class="nav-top-bar">
+            <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+            <div class="nav-bar">
+                <ul>
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="active"><a href="aboutus.html">About Us</a></li>
+                    <li class="active"><a href="destination.html">Destination</a></li>
+                    <li class="active"><a href="gallery.html">Gallery</a></li>
+                    <li class="active"><a href="blog.html">Blog</a></li>
+                    <li class="active"><a href="contact.html">Contact</a></li>
+                    <li class="active"><a href="feedback.html">Feedback</a></li>
+                    
+                    <!-- User greeting for logged in users -->
+                    <li class="greeting-li" style="display: none;">
+                        <span class="user-greeting">
+                            Hello, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+                        </span>
+                        <div class="user-dropdown-menu">
+                            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a>
+                            <a href="my-wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+                            <a href="preferences.html"><i class="fas fa-cog"></i> AI Preferences</a>
+                            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </li>
+                    
+                    <li class="auth-li" id="auth-li">
+                        <div class="auth-buttons">
+                            <a href="login.html" class="btn-login">Login</a>
+                            <a href="create_acc.html" class="btn-register">Register</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="bookings-container">
+        <!-- Page Header -->
+        <div class="bookings-header">
+            <h1><i class="fas fa-ticket-alt"></i> Booking History</h1>
+            <p>Manage and track all your tour bookings</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="bookings-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-list"></i>
+                </div>
+                <div class="stat-number" id="totalBookings">0</div>
+                <div class="stat-label">Total Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-number" id="confirmedBookings">0</div>
+                <div class="stat-label">Confirmed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-number" id="pendingBookings">0</div>
+                <div class="stat-label">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-flag-checkered"></i>
+                </div>
+                <div class="stat-number" id="completedBookings">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bookings-filters">
+            <form id="filterForm">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <div class="filter-item">
+                            <label for="searchInput">Search</label>
+                            <input type="text" id="searchInput" placeholder="Search by tour name, destination or booking ID...">
+                        </div>
+                        <div class="filter-item">
+                            <label for="statusFilter">Status</label>
+                            <select id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label for="startDate">From Date</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        <div class="filter-item">
+                            <label for="endDate">To Date</label>
+                            <input type="date" id="endDate">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="resetFilters">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                </div>
+            </form>
+            <div id="resultsCount" style="margin-top: 1rem; color: #666; font-size: 0.9rem;"></div>
+        </div>
+
+        <!-- Bookings List -->
+        <div class="bookings-list" id="bookingsContainer">
+            <!-- Bookings will be loaded here by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer></footer>
+
+    <!-- Scripts -->
+    <script src="./js/main.js"></script>
+    <script src="./js/my-bookings.js"></script>
+    <script src="./js/erro.js"></script>
+</body>
+</html>

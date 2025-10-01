@@ -76,23 +76,22 @@ function logout() {
 
 // Main DOM initialization
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 DOM loaded, initializing...');
+  // Check auth status first
+  checkAuthStatus();
   
-  // Wait a bit for all elements to load
-  setTimeout(() => {
-    // Check auth status first
-    checkAuthStatus();
-    
-    // Initialize dropdown functionality
-    initializeDropdown();
-    
-    // Initialize other components
-    initializeFooter();
-    initializeScrollReveal();
-    initializeImagePopup();
-    initializeFormSubmit();
-    initializeScrollIcons();
-  }, 200);
+  // Initialize other components
+  initializeFooter();
+  initializeDropdown();
+  
+  // Initialize scroll reveal
+  if (typeof ScrollReveal !== 'undefined') {
+    ScrollReveal().reveal('.reveal', { 
+      delay: 200,
+      distance: '50px',
+      origin: 'bottom',
+      duration: 1000
+    });
+  }
 });
 
 // Dropdown functionality
@@ -138,41 +137,114 @@ function handleDocumentClick(e) {
 }
 
 // Scroll icons initialization
-function initializeScrollIcons() {
-  const scrollDownIcon = document.getElementById('scrollDownIcon');
-  const scrollUpIcon = document.getElementById('scrollUpIcon');
+// ...existing code...
+
+// Enhanced Dropdown functionality
+function initializeDropdown() {
+  // Remove any existing event listeners to prevent conflicts
+  document.removeEventListener('click', handleDocumentClick);
   
-  if (scrollDownIcon) {
-    scrollDownIcon.addEventListener('click', () => {
-      window.scrollBy({
-        top: window.innerHeight,
-        behavior: 'smooth'
-      });
+  // Add new event listener
+  document.addEventListener('click', handleDocumentClick);
+  
+  // Add logout functionality to all logout links
+  document.querySelectorAll('.logout-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      handleLogout();
     });
-  }
-  
-  if (scrollUpIcon) {
-    scrollUpIcon.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-  }
-  
-  // Show/hide scroll icons based on scroll position
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    if (scrollUpIcon) {
-      if (scrollTop > 300) {
-        scrollUpIcon.style.display = 'block';
-      } else {
-        scrollUpIcon.style.display = 'none';
-      }
-    }
   });
+  
+  console.log('🔽 Enhanced dropdown initialized');
 }
+
+function handleDocumentClick(e) {
+  const greetingLi = document.querySelector('.greeting-li');
+  const userGreeting = document.querySelector('.user-greeting');
+  
+  if (!greetingLi || !userGreeting) return;
+  
+  // Toggle dropdown when clicking on greeting
+  if (userGreeting.contains(e.target)) {
+    e.stopPropagation();
+    greetingLi.classList.toggle('active');
+    
+    // Add animation class
+    const dropdown = greetingLi.querySelector('.user-dropdown-menu');
+    if (dropdown && greetingLi.classList.contains('active')) {
+      dropdown.style.animation = 'dropdownSlideIn 0.3s ease';
+    }
+    return;
+  }
+  
+  // Close dropdown when clicking outside
+  if (!greetingLi.contains(e.target)) {
+    greetingLi.classList.remove('active');
+  }
+  
+  // Prevent dropdown from closing when clicking inside menu
+  if (greetingLi.contains(e.target)) {
+    e.stopPropagation();
+  }
+}
+
+function handleLogout() {
+  // Show confirmation dialog
+  if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+    // Clear user data
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userFullName');
+    
+    // Show success message
+    showNotification('Đăng xuất thành công!', 'success');
+    
+    // Update UI
+    setTimeout(() => {
+      checkAuthStatus();
+      window.location.href = 'index.html';
+    }, 1000);
+  }
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.innerHTML = `
+    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+    <span>${message}</span>
+  `;
+  
+  // Add notification styles
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#27ae60' : type === 'error' ? '#e74c3c' : '#ff6600'};
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    animation: slideInRight 0.3s ease;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease';
+    setTimeout(() => notification.remove(), 300);
+  }, 3000);
+}
+
+// ...existing code...
 
 // Footer initialization
 function initializeFooter() {

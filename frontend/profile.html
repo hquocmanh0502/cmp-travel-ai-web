@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - CMP Travel</title>
+  <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/profile.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 50vh;">
+    <div class="overlay"></div>
+    <div class="header-text">
+      <div id="up-title">PROFILE</div>
+      <div id="down-title">My Account</div>
+    </div>
+    <div class="nav-top-bar">
+      <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+      <div class="nav-bar">
+        <ul>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li class="active"><a href="aboutus.html">About Us</a></li>
+          <li class="active"><a href="destination.html">Destination</a></li>
+          <li class="active"><a href="gallery.html">Gallery</a></li>
+          <li class="active"><a href="blog.html">Blog</a></li>
+          <li class="active"><a href="contact.html">Contact</a></li>
+          <li class="active"><a href="feedback.html">Feedback</a></li>
+          
+          <li class="greeting-li">
+            <span class="user-greeting">
+              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+            </span>
+            <div class="user-dropdown-menu">
+              <a href="profile.html" style="color: #ff6600;"><i class="fas fa-user"></i> Thông tin cá nhân</a>
+              <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> Đơn đặt tour</a>
+              <a href="my-wishlist.html"><i class="fas fa-heart"></i> Danh sách yêu thích</a>
+              <a href="travel-history.html"><i class="fas fa-history"></i> Lịch sử du lịch</a>
+              <a href="preferences.html"><i class="fas fa-cog"></i> Tùy chọn AI</a>
+              <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <!-- Update the profile container section -->
+  <div class="profile-container">
+      <!-- Profile Header -->
+      <div class="profile-header">
+          <div class="profile-header-content">
+              <div class="profile-avatar-section">
+                  <div class="profile-avatar" id="userAvatar"></div>
+                  <div class="avatar-upload-btn" id="avatarUpload">
+                      <i class="fas fa-camera"></i>
+                  </div>
+                  <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+              </div>
+              
+              <div class="profile-info">
+                  <h1 id="userName">Loading...</h1>
+                  <p class="subtitle" id="userEmail">Loading...</p>
+                  <div class="profile-badges">
+                      <span class="badge">
+                          <i class="fas fa-star"></i>
+                          VIP Member
+                      </span>
+                      <span class="badge">
+                          <i class="fas fa-calendar"></i>
+                          <span id="memberSince">2024</span>
+                      </span>
+                  </div>
+              </div>
+              
+              <div class="profile-stats">
+                  <div class="stat-item">
+                      <span class="number" id="toursBooked">0</span>
+                      <span class="label">Tours đã đặt</span>
+                  </div>
+                  <div class="stat-item">
+                      <span class="number" id="wishlistItems">0</span>
+                      <span class="label">Yêu thích</span>
+                  </div>
+                  <div class="stat-item">
+                      <span class="number" id="reviewsWritten">0</span>
+                      <span class="label">Đánh giá</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Wallet Section -->
+      <div class="wallet-section">
+          <div class="wallet-header">
+              <div class="wallet-title">
+                  <div class="wallet-icon">
+                      <i class="fas fa-wallet"></i>
+                  </div>
+                  <span>Ví CMP Travel</span>
+              </div>
+          </div>
+          
+          <div class="wallet-balance">
+              <div class="balance-label">Số dư khả dụng</div>
+              <div class="balance-amount">
+                  <span id="walletBalance">0</span>
+                  <span class="balance-currency">VNĐ</span>
+              </div>
+          </div>
+          
+          <div class="wallet-actions">
+              <button class="wallet-btn primary" id="topUpBtn">
+                  <i class="fas fa-plus"></i>
+                  Nạp tiền
+              </button>
+              <button class="wallet-btn" id="transactionHistoryBtn">
+                  <i class="fas fa-history"></i>
+                  Lịch sử giao dịch
+              </button>
+          </div>
+      </div>
+
+      <!-- Profile Content -->
+      <div class="profile-content">
+          <!-- ...existing profile cards... -->
+          
+          <!-- Transaction History Card -->
+          <div class="profile-card" id="transactionHistoryCard" style="display: none;">
+              <div class="card-header">
+                  <div class="card-icon">
+                      <i class="fas fa-receipt"></i>
+                  </div>
+                  <h3>Lịch sử giao dịch</h3>
+              </div>
+              
+              <div id="transactionList">
+                  <!-- Transactions will be loaded by JavaScript -->
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Top-up Modal -->
+  <div id="topUpModal" class="modal">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h3 class="modal-title">
+                  <i class="fas fa-credit-card"></i>
+                  Nạp tiền vào ví
+              </h3>
+              <button class="close-btn" id="closeModal">
+                  <i class="fas fa-times"></i>
+              </button>
+          </div>
+          
+          <form id="topUpForm">
+              <div class="amount-options">
+                  <div class="amount-option" data-amount="100000">
+                      <div class="amount-value">100,000</div>
+                      <div class="amount-label">VNĐ</div>
+                  </div>
+                  <div class="amount-option" data-amount="200000">
+                      <div class="amount-value">200,000</div>
+                      <div class="amount-label">VNĐ</div>
+                  </div>
+                  <div class="amount-option" data-amount="500000">
+                      <div class="amount-value">500,000</div>
+                      <div class="amount-label">VNĐ</div>
+                  </div>
+                  <div class="amount-option" data-amount="1000000">
+                      <div class="amount-value">1,000,000</div>
+                      <div class="amount-label">VNĐ</div>
+                  </div>
+                  <div class="amount-option" data-amount="2000000">
+                      <div class="amount-value">2,000,000</div>
+                      <div class="amount-label">VNĐ</div>
+                  </div>
+                  <div class="amount-option" data-amount="5000000">
+                      <div class="amount-value">5,000,000</div>
+                      <div class="amount-label">VNĐ</div>
+                  </div>
+              </div>
+              
+              <div class="custom-amount">
+                  <label for="customAmountInput">Hoặc nhập số tiền khác:</label>
+                  <input type="number" id="customAmountInput" placeholder="Nhập số tiền (VNĐ)" min="10000" max="50000000">
+              </div>
+              
+              <div class="payment-methods">
+                  <h4>Chọn phương thức thanh toán:</h4>
+                  
+                  <label class="payment-method" for="momo">
+                      <input type="radio" id="momo" name="paymentMethod" value="momo">
+                      <div class="payment-method-icon momo">
+                          <i class="fas fa-mobile-alt"></i>
+                      </div>
+                      <div class="payment-method-info">
+                          <h5>MoMo</h5>
+                          <p>Thanh toán qua ví điện tử MoMo</p>
+                      </div>
+                  </label>
+                  
+                  <label class="payment-method" for="zalopay">
+                      <input type="radio" id="zalopay" name="paymentMethod" value="zalopay">
+                      <div class="payment-method-icon zalopay">
+                          <i class="fab fa-paypal"></i>
+                      </div>
+                      <div class="payment-method-info">
+                          <h5>ZaloPay</h5>
+                          <p>Thanh toán qua ví điện tử ZaloPay</p>
+                      </div>
+                  </label>
+                  
+                  <label class="payment-method" for="vnpay">
+                      <input type="radio" id="vnpay" name="paymentMethod" value="vnpay">
+                      <div class="payment-method-icon vnpay">
+                          <i class="fas fa-credit-card"></i>
+                      </div>
+                      <div class="payment-method-info">
+                          <h5>VNPay</h5>
+                          <p>Thanh toán qua thẻ ngân hàng</p>
+                      </div>
+                  </label>
+                  
+                  <label class="payment-method" for="bank">
+                      <input type="radio" id="bank" name="paymentMethod" value="bank">
+                      <div class="payment-method-icon bank">
+                          <i class="fas fa-university"></i>
+                      </div>
+                      <div class="payment-method-info">
+                          <h5>Chuyển khoản ngân hàng</h5>
+                          <p>Chuyển khoản trực tiếp qua ngân hàng</p>
+                      </div>
+                  </label>
+              </div>
+              
+              <div class="modal-actions">
+                  <button type="button" class="btn-cancel" id="cancelTopUp">Hủy</button>
+                  <button type="submit" class="btn">
+                      <i class="fas fa-credit-card"></i>
+                      Nạp tiền
+                  </button>
+              </div>
+          </form>
+      </div>
+  </div>
+
+      <!-- Profile Content -->
+      <div class="profile-content">
+          <!-- Personal Information Card -->
+          <div class="profile-card">
+              <div class="card-header">
+                  <div class="card-icon">
+                      <i class="fas fa-user"></i>
+                  </div>
+                  <h3>Thông tin cá nhân</h3>
+              </div>
+              
+              <form id="profileForm">
+                  <div class="form-group">
+                      <label for="fullName">Họ và tên</label>
+                      <input type="text" id="fullName" name="fullName" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" id="email" name="email" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="phone">Số điện thoại</label>
+                      <input type="tel" id="phone" name="phone">
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="birthday">Ngày sinh</label>
+                      <input type="date" id="birthday" name="birthday">
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="gender">Giới tính</label>
+                      <select id="gender" name="gender">
+                          <option value="male">Nam</option>
+                          <option value="female">Nữ</option>
+                          <option value="other">Khác</option>
+                      </select>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="address">Địa chỉ</label>
+                      <textarea id="address" name="address" rows="3"></textarea>
+                  </div>
+                  
+                  <button type="submit" class="btn">
+                      <i class="fas fa-save"></i>
+                      Cập nhật thông tin
+                  </button>
+              </form>
+          </div>
+
+          <!-- Password Change Card -->
+          <div class="profile-card">
+              <div class="card-header">
+                  <div class="card-icon">
+                      <i class="fas fa-lock"></i>
+                  </div>
+                  <h3>Đổi mật khẩu</h3>
+              </div>
+              
+              <form id="passwordForm">
+                  <div class="form-group">
+                      <label for="currentPassword">Mật khẩu hiện tại</label>
+                      <input type="password" id="currentPassword" name="currentPassword" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="newPassword">Mật khẩu mới</label>
+                      <input type="password" id="newPassword" name="newPassword" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+                      <input type="password" id="confirmPassword" name="confirmPassword" required>
+                  </div>
+                  
+                  <button type="submit" class="btn">
+                      <i class="fas fa-key"></i>
+                      Đổi mật khẩu
+                  </button>
+              </form>
+          </div>
+
+          <!-- Quick Actions Card -->
+          <div class="profile-card">
+              <div class="card-header">
+                  <div class="card-icon">
+                      <i class="fas fa-bolt"></i>
+                  </div>
+                  <h3>Thao tác nhanh</h3>
+              </div>
+              
+              <div style="display: grid; gap: 1rem;">
+                  <a href="my-bookings.html" class="btn">
+                      <i class="fas fa-ticket-alt"></i>
+                      Xem đơn đặt tour
+                  </a>
+                  
+                  <a href="my-wishlist.html" class="btn btn-secondary">
+                      <i class="fas fa-heart"></i>
+                      Danh sách yêu thích
+                  </a>
+                  
+                  <a href="preferences.html" class="btn btn-secondary">
+                      <i class="fas fa-cog"></i>
+                      Tùy chỉnh sở thích
+                  </a>
+              </div>
+          </div>
+
+          <!-- Recent Activity Card -->
+          <div class="profile-card recent-activity">
+              <div class="card-header">
+                  <div class="card-icon">
+                      <i class="fas fa-history"></i>
+                  </div>
+                  <h3>Hoạt động gần đây</h3>
+              </div>
+              
+              <ul class="activity-list" id="activityList">
+                  <!-- Activities will be loaded by JavaScript -->
+              </ul>
+          </div>
+      </div>
+  </div>
+
+  <!-- Footer -->
+  <footer></footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/profile.js"></script>
+  <script src="./js/erro.js"></script>
+</body>
+</html>

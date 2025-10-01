@@ -9,14 +9,17 @@ i {
 }
 
 .container {
-  max-width: 1000px;
-  margin: auto;
-  background: white;
-  padding: 0;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  z-index: 5;
-  position: relative;
-  top: -102px;
+  max-width: 1000px !important;
+  margin: auto !important;
+  background: white !important;
+  padding: 0 !important;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2) !important;
+  z-index: 5 !important;
+  position: relative !important;
+  top: -102px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .action-section{
@@ -173,3 +176,22 @@ i {
   transform: translateY(0);
 }
 /* ...existing code... */
+
+/* Fix for destination page when user is logged in */
+body.logged-in .container {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.destination {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Override any potential hiding styles */
+.logged-in .destination,
+.greeting-li ~ * .destination {
+  display: block !important;
+}
