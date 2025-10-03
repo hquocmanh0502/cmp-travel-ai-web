@@ -59,12 +59,20 @@
 }
 
 .fab-wishlist {
-  background: linear-gradient(135deg, #ff6b9d, #ff8a9d);
-  color: white;
+    background: white;
+    color: #ff6600;
+    border: 2px solid #ff6600;
+    transition: all 0.3s ease;
 }
 
 .fab-wishlist.active {
-  background: linear-gradient(135deg, #e91e63, #f48fb1);
+    background: #ff6600;
+    color: white;
+}
+
+.fab-wishlist:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
 }
 
 .fab-share {

@@ -85,75 +85,32 @@ async function loadWishlistData() {
 }
 
 async function loadToursFromWishlist(wishlistIds) {
-    // Mock function to load tours - replace with actual API call
-    const mockTours = [
-        {
-            _id: 'tour-001',
-            name: 'Tokyo Cherry Blossom Adventure',
-            country: 'Japan',
-            estimatedCost: 4500,
-            rating: 4.8,
-            img: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400',
-            duration: '7 ngày 6 đêm',
-            category: 'Cultural',
-            description: 'Khám phá vẻ đẹp của hoa anh đào Nhật Bản'
-        },
-        {
-            _id: 'tour-002',
-            name: 'Maldives Paradise Escape',
-            country: 'Maldives',
-            estimatedCost: 6200,
-            rating: 4.9,
-            img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400',
-            duration: '5 ngày 4 đêm',
-            category: 'Beach',
-            description: 'Thiên đường biển xanh với resort cao cấp'
-        },
-        {
-            _id: 'tour-003',
-            name: 'Swiss Alps Mountain Trek',
-            country: 'Switzerland',
-            estimatedCost: 3800,
-            rating: 4.7,
-            img: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400',
-            duration: '6 ngày 5 đêm',
-            category: 'Adventure',
-            description: 'Chinh phục đỉnh núi Alps hùng vĩ'
-        },
-        {
-            _id: 'tour-004',
-            name: 'Paris Romance Getaway',
-            country: 'France',
-            estimatedCost: 4100,
-            rating: 4.6,
-            img: 'https://images.unsplash.com/photo-1502602898536-47ad22581b52?w=400',
-            duration: '4 ngày 3 đêm',
-            category: 'Romance',
-            description: 'Thành phố tình yêu với những trải nghiệm lãng mạn'
-        },
-        {
-            _id: 'tour-005',
-            name: 'Bali Cultural Journey',
-            country: 'Indonesia',
-            estimatedCost: 2800,
-            rating: 4.5,
-            img: 'https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=400',
-            duration: '8 ngày 7 đêm',
-            category: 'Cultural',
-            description: 'Khám phá văn hóa độc đáo của đảo Bali'
-        }
-    ];
-    
-    // Filter tours that are in wishlist and add dateAdded
-    const wishlistItems = mockTours
-        .filter(tour => wishlistIds.includes(tour._id))
-        .map(tour => ({
-            ...tour,
-            dateAdded: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
-            originalPrice: tour.estimatedCost + Math.floor(Math.random() * 1000)
-        }));
-    
-    return wishlistItems;
+    try {
+        // Get saved wishlist data from localStorage
+        const wishlistData = JSON.parse(localStorage.getItem('wishlistData') || '{}');
+        
+        // Map wishlist IDs to full tour data
+        const tours = wishlistIds.map(id => {
+            const tourData = wishlistData[id];
+            if (!tourData) return null;
+            
+            return {
+                _id: tourData._id,
+                name: tourData.name,
+                country: tourData.country,
+                description: tourData.description,
+                estimatedCost: tourData.estimatedCost,
+                rating: tourData.rating,
+                img: tourData.img,
+                dateAdded: tourData.dateAdded
+            };
+        }).filter(tour => tour !== null);
+
+        return tours;
+    } catch (error) {
+        console.error('Error loading wishlist tours:', error);
+        return [];
+    }
 }
 
 function updateWishlistStats() {

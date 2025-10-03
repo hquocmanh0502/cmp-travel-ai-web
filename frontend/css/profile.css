@@ -6,7 +6,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ff6600 0%, #ff8533 50%, #ffa366 100%);
+  background: white;
   min-height: 100vh;
   position: relative;
 }
@@ -26,7 +26,9 @@ body::before {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
-  margin-top: 100px;
+  margin-top: -100px; 
+  position: relative;
+  z-index: 2;
 }
 
 /* Profile Header Card */
@@ -335,6 +337,7 @@ body::before {
 /* Recent Activity */
 .recent-activity {
   grid-column: 1 / -1;
+  margin-bottom: 70px;
 }
 
 .activity-list {

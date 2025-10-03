@@ -135,11 +135,11 @@ document.addEventListener('DOMContentLoaded', function() {
             ]);
             
             hideLoadingState();
+            checkWishlistStatus();
             
         } catch (error) {
             console.error('Error loading tour data:', error);
-            showAlert('Failed to load tour data. Please try again.', 'error');
-            hideLoadingState();
+            showAlert('Không thể tải thông tin tour', 'error');
         }
     }
     
@@ -1249,7 +1249,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Wishlist functionality
     function toggleWishlist() {
         if (!currentUser) {
-            showAlert('Please login to add to wishlist', 'warning');
+            showAlert('Vui lòng đăng nhập để thêm vào danh sách yêu thích', 'warning');
             return;
         }
         
@@ -1258,27 +1258,60 @@ document.addEventListener('DOMContentLoaded', function() {
         const wishlistBtn = document.getElementById('wishlistBtn');
         const tourId = currentTour._id;
         
-        if (wishlistItems.includes(tourId)) {
+        // Get current wishlist from localStorage
+        let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        
+        if (wishlist.includes(tourId)) {
             // Remove from wishlist
-            wishlistItems = wishlistItems.filter(id => id !== tourId);
+            wishlist = wishlist.filter(id => id !== tourId);
             wishlistBtn.classList.remove('active');
             wishlistBtn.innerHTML = '<i class="far fa-heart"></i>';
-            showAlert('Removed from wishlist', 'info');
+            showAlert('Đã xóa khỏi danh sách yêu thích', 'info');
         } else {
-            // Add to wishlist
-            wishlistItems.push(tourId);
+            // Add to wishlist with full tour data
+            wishlist.push(tourId);
             wishlistBtn.classList.add('active');
             wishlistBtn.innerHTML = '<i class="fas fa-heart"></i>';
-            showAlert('Added to wishlist', 'success');
+            showAlert('Đã thêm vào danh sách yêu thích', 'success');
+            
+            // Save tour data to localStorage for wishlist
+            let wishlistData = JSON.parse(localStorage.getItem('wishlistData') || '{}');
+            wishlistData[tourId] = {
+                _id: currentTour._id,
+                name: currentTour.name,
+                country: currentTour.country,
+                description: currentTour.description,
+                estimatedCost: currentTour.estimatedCost,
+                rating: currentTour.rating,
+                img: currentTour.img,
+                dateAdded: new Date().toISOString()
+            };
+            localStorage.setItem('wishlistData', JSON.stringify(wishlistData));
         }
         
-        localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+        // Update localStorage
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
         
         // Animate button
         wishlistBtn.style.transform = 'scale(1.2)';
         setTimeout(() => {
             wishlistBtn.style.transform = 'scale(1)';
         }, 200);
+    }
+
+    function checkWishlistStatus() {
+        const wishlistBtn = document.getElementById('wishlistBtn');
+        if (!wishlistBtn || !currentTour) return;
+        
+        const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        
+        if (wishlist.includes(currentTour._id)) {
+            wishlistBtn.classList.add('active');
+            wishlistBtn.innerHTML = '<i class="fas fa-heart"></i>';
+        } else {
+            wishlistBtn.classList.remove('active');
+            wishlistBtn.innerHTML = '<i class="far fa-heart"></i>';
+        }
     }
     
     // Share functionality
