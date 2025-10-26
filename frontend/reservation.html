@@ -579,16 +579,20 @@
       <div class="form-group">
         <label class="label-title">Do you need the transfer?</label>
         <div class="form-check">
-          <input type="radio" class="form-check-input" id="transfer-1" name="transfer" value="self">
-          <label class="form-check-label" for="transfer-1">I will arrange by myself or ask for advice</label>
+          <input type="radio" class="form-check-input" id="transfer-1" name="transfer" value="none" checked>
+          <label class="form-check-label" for="transfer-1">No Transfer</label>
         </div>
         <div class="form-check">
-          <input type="radio" class="form-check-input" id="transfer-2" name="transfer" value="private-car">
-          <label class="form-check-label" for="transfer-2">Private Car</label>
+          <input type="radio" class="form-check-input" id="transfer-2" name="transfer" value="airport">
+          <label class="form-check-label" for="transfer-2">Airport Transfer</label>
         </div>
         <div class="form-check">
-          <input type="radio" class="form-check-input" id="transfer-3" name="transfer" value="shuttle-bus">
-          <label class="form-check-label">Shuttle Bus</label>
+          <input type="radio" class="form-check-input" id="transfer-3" name="transfer" value="hotel">
+          <label class="form-check-label" for="transfer-3">Hotel Transfer</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" id="transfer-4" name="transfer" value="both">
+          <label class="form-check-label" for="transfer-4">Both (Airport + Hotel)</label>
         </div>
       </div>
 
@@ -617,10 +621,11 @@
       <label class="label-title">Guest Information</label>
       <div class="row">
         <div class="form-group col-md-4">
-          <select name="" class="form-control">
+          <select name="title" id="customer-title" class="form-control">
             <option value="Mr">Mr</option>
             <option value="Ms">Ms</option>
             <option value="Mrs">Mrs</option>
+            <option value="Dr">Dr</option>
           </select>
         </div>
         <div class="form-group col-md-8">
