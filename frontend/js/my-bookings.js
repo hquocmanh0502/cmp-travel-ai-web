@@ -68,35 +68,65 @@ async function loadUserBookings() {
         
         if (data.success && data.bookings) {
             // ✅ Transform API data to match frontend format
-            allBookings = data.bookings.map(booking => ({
-                id: booking.bookingId || booking._id,
-                tourId: booking.tourId?._id || booking.tourId,
-                tourName: booking.tourId?.title || 'Unknown Tour',
-                tourImage: booking.tourId?.images?.[0] || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300',
-                destination: booking.tourId?.destination || 'Unknown',
-                duration: booking.tourId?.duration || 'N/A',
-                status: booking.status,
-                bookingDate: new Date(booking.bookingDate).toISOString().split('T')[0],
-                departureDate: new Date(booking.departureDate).toISOString().split('T')[0],
-                checkinDate: new Date(booking.checkinDate).toISOString().split('T')[0],
-                checkoutDate: new Date(booking.checkoutDate).toISOString().split('T')[0],
-                adults: booking.adults,
-                children: booking.children,
-                infants: booking.infants,
-                totalAmount: booking.totalAmount,
-                paymentStatus: booking.paymentStatus,
-                paymentMethod: booking.paymentMethod,
-                rooms: booking.rooms,
-                services: booking.services,
-                customerInfo: {
-                    name: booking.customerInfo?.fullName || 'N/A',
-                    email: booking.customerInfo?.email || 'N/A',
-                    phone: booking.customerInfo?.phone || 'N/A',
-                    title: booking.customerInfo?.title || 'Mr'
-                },
-                hotelName: booking.hotelId?.name || 'No hotel selected',
-                _rawBooking: booking // Keep original data for reference
-            }));
+            allBookings = data.bookings.map(booking => {
+                console.log('🔍 Processing booking:', booking.bookingId, booking);
+                
+                // ✅ Extract tour info - handle both populated and non-populated cases
+                const tourInfo = booking.tourId;
+                const isTourPopulated = tourInfo && typeof tourInfo === 'object' && tourInfo.name;
+                
+                // ✅ Fallback to stored tour name if tour not populated
+                const tourName = isTourPopulated ? tourInfo.name : (booking.tourName || 'Unknown Tour');
+                const tourImage = isTourPopulated && tourInfo.img 
+                    ? tourInfo.img 
+                    : 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600';
+                const destination = isTourPopulated ? tourInfo.country : 'Unknown Destination';
+                const duration = isTourPopulated ? tourInfo.duration : `${Math.ceil((new Date(booking.checkoutDate) - new Date(booking.checkinDate)) / (1000 * 60 * 60 * 24))} days`;
+                
+                // ✅ Extract hotel info
+                const hotelInfo = booking.hotelId;
+                const isHotelPopulated = hotelInfo && typeof hotelInfo === 'object' && hotelInfo.name;
+                const hotelName = isHotelPopulated ? hotelInfo.name : (booking.hotelName || 'No hotel selected');
+                
+                console.log('🏨 Hotel debug:', { 
+                    hotelId: booking.hotelId, 
+                    hotelInfo, 
+                    isHotelPopulated, 
+                    storedHotelName: booking.hotelName,
+                    finalHotelName: hotelName 
+                });
+                console.log('📊 Processed data:', { tourName, tourImage, destination, duration, hotelName });
+                
+                return {
+                    id: booking.bookingId || booking._id,
+                    tourId: isTourPopulated ? tourInfo._id : booking.tourId,
+                    tourName: tourName,
+                    tourImage: tourImage,
+                    destination: destination,
+                    duration: duration,
+                    status: booking.status,
+                    bookingDate: new Date(booking.bookingDate).toISOString().split('T')[0],
+                    departureDate: new Date(booking.departureDate).toISOString().split('T')[0],
+                    checkinDate: new Date(booking.checkinDate).toISOString().split('T')[0],
+                    checkoutDate: new Date(booking.checkoutDate).toISOString().split('T')[0],
+                    adults: booking.adults,
+                    children: booking.children || 0,
+                    infants: booking.infants || 0,
+                    totalAmount: booking.totalAmount,
+                    paymentStatus: booking.paymentStatus,
+                    paymentMethod: booking.paymentMethod || 'Not specified',
+                    rooms: booking.rooms,
+                    services: booking.services,
+                    customerInfo: {
+                        name: booking.customerInfo?.fullName || 'N/A',
+                        email: booking.customerInfo?.email || 'N/A',
+                        phone: booking.customerInfo?.phone || 'N/A',
+                        title: booking.customerInfo?.title || 'Mr'
+                    },
+                    hotelName: hotelName,
+                    _rawBooking: booking // Keep original data for reference
+                };
+            });
             
             filteredBookings = [...allBookings];
             
@@ -297,10 +327,16 @@ function displayBookings(bookings) {
                         </button>
                     ` : ''}
                     ${booking.status === 'completed' ? `
-                        <button class="btn btn-outline" onclick="writeReview('${booking.tourId}')">
-                            <i class="fas fa-star"></i> Write Review
-                        </button>
-                        <button class="btn btn-primary" onclick="rebookTour('${booking.tourId}')">
+                        ${!booking.hasReviewed ? `
+                            <button class="btn btn-primary" onclick="writeReview('${booking.tourId}', '${booking.id}')">
+                                <i class="fas fa-star"></i> Write Review
+                            </button>
+                        ` : `
+                            <button class="btn btn-outline" disabled>
+                                <i class="fas fa-check-circle"></i> Reviewed
+                            </button>
+                        `}
+                        <button class="btn btn-outline" onclick="rebookTour('${booking.tourId}')">
                             <i class="fas fa-redo"></i> Book Again
                         </button>
                     ` : ''}
@@ -443,6 +479,9 @@ function viewBookingDetails(bookingId) {
 }
 
 function showBookingModal(booking) {
+    console.log('🔍 Opening modal for booking:', booking);
+    console.log('🏨 Hotel Name in modal:', booking.hotelName);
+    
     // Format rooms information
     const roomsList = booking.rooms ? Object.entries(booking.rooms)
         .filter(([key, value]) => value > 0)
@@ -491,21 +530,33 @@ function showBookingModal(booking) {
             </div>
             <div class="modal-body">
                 <div class="booking-detail-info">
+                    <!-- Tour Image -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <img src="${booking.tourImage}" alt="${booking.tourName}" 
+                             style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    
                     <h4>${booking.tourName}</h4>
                     <p><strong>Booking ID:</strong> #${booking.id}</p>
-                    <p><strong>Hotel:</strong> ${booking.hotelName || 'Not selected'}</p>
-                    <p><strong>Destination:</strong> ${booking.destination}</p>
-                    <p><strong>Duration:</strong> ${booking.duration}</p>
+                    <p><strong>Destination:</strong> <i class="fas fa-map-marker-alt"></i> ${booking.destination}</p>
+                    <p><strong>Duration:</strong> <i class="fas fa-clock"></i> ${booking.duration}</p>
+                    
+                    <h5 style="margin-top: 1.5rem;">Accommodation</h5>
+                    <p><strong>Hotel:</strong> ${booking.hotelName || 'Not booked'}</p>
                     <p><strong>Check-in Date:</strong> ${formatDate(booking.checkinDate)}</p>
                     <p><strong>Check-out Date:</strong> ${formatDate(booking.checkoutDate)}</p>
                     <p><strong>Departure Date:</strong> ${formatDate(booking.departureDate)}</p>
-                    <p><strong>Guests:</strong> ${booking.adults} adult${booking.adults > 1 ? 's' : ''}${booking.children > 0 ? `, ${booking.children} child${booking.children > 1 ? 'ren' : ''}` : ''}${booking.infants > 0 ? `, ${booking.infants} infant${booking.infants > 1 ? 's' : ''}` : ''}</p>
+                    
+                    <h5 style="margin-top: 1.5rem;">Guests Information</h5>
+                    <p><strong>Adults:</strong> ${booking.adults} person${booking.adults > 1 ? 's' : ''}</p>
+                    ${booking.children > 0 ? `<p><strong>Children:</strong> ${booking.children} child${booking.children > 1 ? 'ren' : ''}</p>` : ''}
+                    ${booking.infants > 0 ? `<p><strong>Infants:</strong> ${booking.infants} infant${booking.infants > 1 ? 's' : ''}</p>` : ''}
                     
                     <h5 style="margin-top: 1.5rem;">Rooms</h5>
                     <p>${roomsList}</p>
                     
                     ${servicesList.length > 0 ? `
-                        <h5 style="margin-top: 1.5rem;">Services</h5>
+                        <h5 style="margin-top: 1.5rem;">Additional Services</h5>
                         <ul style="padding-left: 1.5rem;">
                             ${servicesList.map(s => `<li>${s}</li>`).join('')}
                         </ul>
@@ -514,7 +565,7 @@ function showBookingModal(booking) {
                     <h5 style="margin-top: 1.5rem;">Payment Information</h5>
                     <p><strong>Total Amount:</strong> <span style="font-size: 1.3rem; color: #ff6600;">$${booking.totalAmount.toLocaleString()}</span></p>
                     <p><strong>Payment Status:</strong> <span class="payment-status payment-${booking.paymentStatus}">${getPaymentStatusBadge(booking.paymentStatus)}</span></p>
-                    ${booking.paymentMethod ? `<p><strong>Payment Method:</strong> ${booking.paymentMethod.replace('_', ' ').toUpperCase()}</p>` : ''}
+                    ${booking.paymentMethod && booking.paymentMethod !== 'Not specified' ? `<p><strong>Payment Method:</strong> ${booking.paymentMethod.replace('_', ' ').toUpperCase()}</p>` : ''}
                     <p><strong>Booking Status:</strong> <span class="booking-status status-${booking.status}">${getStatusText(booking.status)}</span></p>
                     
                     <h5 style="margin-top: 1.5rem;">Customer Information</h5>
@@ -576,10 +627,10 @@ function downloadTicket(bookingId) {
     }, 2000);
 }
 
-function writeReview(tourId) {
+function writeReview(tourId, bookingId) {
     showNotification('Redirecting to review page...', 'info');
     setTimeout(() => {
-        window.location.href = `detail.html?id=${tourId}#reviews`;
+        window.location.href = `detail.html?id=${tourId}&writeReview=true&bookingId=${bookingId}#reviews`;
     }, 1000);
 }
 

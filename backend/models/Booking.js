@@ -15,11 +15,23 @@ const bookingSchema = new mongoose.Schema({
     required: true
   },
   
+  // ✅ Store tour name for display (fallback if tour deleted)
+  tourName: {
+    type: String,
+    default: 'Tour'
+  },
+  
   // Hotel Information
   hotelId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Hotel',
     default: null
+  },
+  
+  // ✅ Store hotel name for display (fallback if hotel deleted)
+  hotelName: {
+    type: String,
+    default: 'No hotel selected'
   },
   
   // Dates
@@ -179,6 +191,17 @@ const bookingSchema = new mongoose.Schema({
     type: String,
     enum: ['pending', 'confirmed', 'cancelled', 'completed'],
     default: 'pending'
+  },
+  
+  // Review tracking
+  hasReviewed: {
+    type: Boolean,
+    default: false
+  },
+  reviewId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment',
+    default: null
   },
   
   // Payment

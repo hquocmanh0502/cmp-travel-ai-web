@@ -650,3 +650,74 @@ select:disabled:hover::after {
     padding: 1.5rem;
   }
 }
+
+/* ========================================
+   ROOM SUGGESTION BOX
+   ======================================== */
+
+.room-suggestion-box {
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe9db 100%);
+  border: 2px solid var(--primary-orange);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 15px rgba(255, 102, 0, 0.1);
+}
+
+.room-suggestion-box strong {
+  color: var(--primary-orange);
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.suggestion-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.suggestion-list li {
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--text-dark);
+}
+
+.suggestion-list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--success-green);
+  font-weight: bold;
+}
+
+.btn-auto-select {
+  background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-orange) 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btn-auto-select:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+  background: linear-gradient(135deg, var(--secondary-orange) 0%, var(--primary-orange) 100%);
+}
+
+.btn-auto-select:active {
+  transform: translateY(0);
+}
+
+.btn-auto-select i {
+  font-size: 1.1rem;
+}

@@ -10,6 +10,17 @@ const tourSchema = new mongoose.Schema({
   attractions: [String],
   food: [String],
   
+  // Gallery images
+  gallery: [{
+    url: { type: String, required: true },
+    category: { 
+      type: String, 
+      enum: ['all', 'attractions', 'accommodation', 'activities', 'food', 'landscape'],
+      default: 'all'
+    },
+    caption: String
+  }],
+  
   // Detail information (mở rộng)
   itinerary: [{
     day: Number,

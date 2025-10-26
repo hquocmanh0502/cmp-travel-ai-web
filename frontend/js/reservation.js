@@ -142,6 +142,11 @@ document.addEventListener('DOMContentLoaded', () => {
         userId: userId,
         tourId: pendingBooking.tourId,
         hotelId: isValidObjectId ? hotelId : null, // ✅ Only send valid ObjectId
+        
+        // ✅ Store tour and hotel names for display purposes
+        tourName: pendingBooking.tourName || 'Tour',
+        hotelName: pendingBooking.selectedHotel?.name || 'No hotel',
+        
         checkinDate: checkinDate,
         checkoutDate: checkoutDate || checkinDate, // ✅ Default to checkin if not provided
         departureDate: checkinDate, // ✅ Use checkin date as departure
@@ -335,27 +340,67 @@ function loadBookingData() {
     
     // Set checkout date and apply constraints
     if (checkoutInput && pendingBooking.checkinDate) {
-      const checkout = new Date(pendingBooking.checkinDate);
-      checkout.setDate(checkout.getDate() + 1);
-      checkoutInput.value = checkout.toISOString().split('T')[0];
+      // ✅ Calculate checkout date based on tour duration
+      let checkoutDate;
+      
+      if (pendingBooking.tourDuration) {
+        // Parse duration like "7 days 6 nights" or "5 days" or "1 week"
+        const durationMatch = pendingBooking.tourDuration.match(/(\d+)\s*(day|week)/i);
+        let days = 1; // Default 1 day
+        
+        if (durationMatch) {
+          const value = parseInt(durationMatch[1]);
+          const unit = durationMatch[2].toLowerCase();
+          
+          if (unit === 'week') {
+            days = value * 7;
+          } else {
+            days = value;
+          }
+        }
+        
+        checkoutDate = new Date(pendingBooking.checkinDate);
+        checkoutDate.setDate(checkoutDate.getDate() + days);
+        
+        console.log(`✅ Calculated checkout from duration: ${pendingBooking.tourDuration} = ${days} days`);
+      } else {
+        // Fallback: default 1 day
+        checkoutDate = new Date(pendingBooking.checkinDate);
+        checkoutDate.setDate(checkoutDate.getDate() + 1);
+      }
+      
+      checkoutInput.value = checkoutDate.toISOString().split('T')[0];
       
       console.log('✅ Check-out date set:', checkoutInput.value);
       
       // ✅ Set minimum checkout date (must be after check-in)
-      checkoutInput.min = checkout.toISOString().split('T')[0];
+      const minCheckoutDate = new Date(pendingBooking.checkinDate);
+      minCheckoutDate.setDate(minCheckoutDate.getDate() + 1);
+      checkoutInput.min = minCheckoutDate.toISOString().split('T')[0];
       
-      // ✅ Add validation on checkout date change
-      checkoutInput.addEventListener('change', function() {
-        const checkinDate = new Date(checkinInput.value);
-        const checkoutDate = new Date(this.value);
-        
-        if (checkoutDate <= checkinDate) {
-          showNotification('Ngày check-out phải sau ngày check-in!', 'error');
-          const minCheckout = new Date(checkinDate);
-          minCheckout.setDate(minCheckout.getDate() + 1);
-          this.value = minCheckout.toISOString().split('T')[0];
-        }
-      });
+      // ✅ Lock checkout if tour has fixed duration
+      if (pendingBooking.tourDuration) {
+        checkoutInput.readOnly = true;
+        checkoutInput.style.backgroundColor = '#f0f0f0 !important';
+        checkoutInput.style.cursor = 'not-allowed';
+        checkoutInput.style.opacity = '0.7';
+        checkoutInput.style.border = '2px solid #ff6600';
+        checkoutInput.title = `Ngày check-out tự động tính từ tour duration: ${pendingBooking.tourDuration}`;
+        console.log('🔒 Check-out date LOCKED based on tour duration');
+      } else {
+        // Allow manual adjustment if no fixed duration
+        checkoutInput.addEventListener('change', function() {
+          const checkinDate = new Date(checkinInput.value);
+          const checkoutDate = new Date(this.value);
+          
+          if (checkoutDate <= checkinDate) {
+            showNotification('Ngày check-out phải sau ngày check-in!', 'error');
+            const minCheckout = new Date(checkinDate);
+            minCheckout.setDate(minCheckout.getDate() + 1);
+            this.value = minCheckout.toISOString().split('T')[0];
+          }
+        });
+      }
     } else {
       console.warn('⚠️ Check-out input not found or no date');
     }
@@ -638,23 +683,114 @@ function updateRoomSuggestion() {
     return;
   }
   
-  let suggestion = '';
+  // ✅ Room capacity definition
+  const roomCapacity = {
+    superior: 2,
+    juniorDeluxe: 2,
+    deluxe: 3,
+    suite: 3,
+    family: 4,
+    president: 6
+  };
+  
+  // ✅ Smart room suggestion algorithm
+  let suggestions = [];
+  let suggestedRooms = {};
   
   if (totalGuests <= 2) {
-    suggestion = '1 phòng Superior hoặc Deluxe';
-  } else if (totalGuests <= 3) {
-    suggestion = '1 phòng Deluxe, Suite hoặc Family';
-  } else if (totalGuests <= 4) {
-    suggestion = '1 phòng Family, 1 Suite hoặc 2 phòng Superior';
-  } else if (totalGuests <= 6) {
-    suggestion = '1 phòng President, 2 phòng Deluxe hoặc 1 Suite + 1 Family';
+    suggestions.push('1 phòng Superior hoặc Junior Deluxe (2 người)');
+    suggestedRooms = { superior: 1 };
+  } else if (totalGuests === 3) {
+    suggestions.push('1 phòng Deluxe hoặc Suite (3 người)');
+    suggestedRooms = { deluxe: 1 };
+  } else if (totalGuests === 4) {
+    suggestions.push('1 phòng Family (4 người)');
+    suggestions.push('Hoặc: 2 phòng Superior (4 người)');
+    suggestedRooms = { family: 1 };
+  } else if (totalGuests === 5) {
+    suggestions.push('1 phòng Family + 1 phòng Superior (6 người)');
+    suggestions.push('Hoặc: 1 phòng Deluxe + 1 phòng Superior (5 người)');
+    suggestedRooms = { family: 1, superior: 1 };
+  } else if (totalGuests === 6) {
+    suggestions.push('1 phòng President (6 người)');
+    suggestions.push('Hoặc: 2 phòng Family (8 người)');
+    suggestions.push('Hoặc: 2 phòng Deluxe (6 người)');
+    suggestedRooms = { president: 1 };
   } else if (totalGuests <= 8) {
-    suggestion = `2-3 phòng (hỗn hợp các loại) cho ${totalGuests} khách`;
+    const familyRooms = Math.floor(totalGuests / 4);
+    const remaining = totalGuests % 4;
+    suggestions.push(`${familyRooms} phòng Family${remaining > 0 ? ` + 1 phòng ${remaining <= 2 ? 'Superior' : 'Deluxe'}` : ''}`);
+    suggestedRooms = { family: familyRooms };
+    if (remaining > 0) {
+      suggestedRooms[remaining <= 2 ? 'superior' : 'deluxe'] = 1;
+    }
   } else {
-    suggestion = `Tối thiểu ${Math.ceil(totalGuests / 3)} phòng cho ${totalGuests} khách`;
+    // For large groups
+    const presidentRooms = Math.floor(totalGuests / 6);
+    const remaining = totalGuests % 6;
+    suggestions.push(`${presidentRooms} phòng President${remaining > 0 ? ` + phòng khác cho ${remaining} người còn lại` : ''}`);
+    suggestedRooms = { president: presidentRooms };
+    if (remaining > 0) {
+      if (remaining <= 2) suggestedRooms.superior = 1;
+      else if (remaining <= 3) suggestedRooms.deluxe = 1;
+      else suggestedRooms.family = 1;
+    }
   }
   
-  suggestionText.innerHTML = `${suggestion} <small class="text-muted">(${totalGuests} khách: ${adults} người lớn${children > 0 ? `, ${children} trẻ em` : ''})</small>`;
+  // Display suggestions with auto-select button
+  const suggestionHTML = `
+    <div class="room-suggestion-box">
+      <strong>💡 Gợi ý chọn phòng cho ${totalGuests} khách (${adults} người lớn${children > 0 ? `, ${children} trẻ em` : ''}):</strong>
+      <ul class="suggestion-list">
+        ${suggestions.map(s => `<li>${s}</li>`).join('')}
+      </ul>
+      <button type="button" class="btn-auto-select" onclick="autoSelectRooms(${JSON.stringify(suggestedRooms).replace(/"/g, '&quot;')})">
+        <i class="fas fa-magic"></i> Tự động chọn phòng
+      </button>
+    </div>
+  `;
+  
+  suggestionText.innerHTML = suggestionHTML;
+}
+
+// ✅ NEW: Auto-select rooms based on suggestion
+function autoSelectRooms(suggestedRooms) {
+  console.log('🔄 Auto-selecting rooms:', suggestedRooms);
+  
+  // Room mapping
+  const roomMapping = {
+    superior: 'room-superior',
+    juniorDeluxe: 'room-junior-deluxe',
+    deluxe: 'room-deluxe',
+    suite: 'room-suite',
+    family: 'room-family',
+    president: 'room-president'
+  };
+  
+  // Reset all room selections first
+  Object.values(roomMapping).forEach(roomId => {
+    const select = document.getElementById(roomId);
+    if (select) select.value = '0';
+  });
+  
+  // Apply suggested selections
+  Object.entries(suggestedRooms).forEach(([roomType, count]) => {
+    const roomId = roomMapping[roomType];
+    const select = document.getElementById(roomId);
+    if (select) {
+      select.value = count.toString();
+      // Add visual feedback
+      select.style.backgroundColor = '#fff3cd';
+      setTimeout(() => {
+        select.style.backgroundColor = '';
+      }, 1000);
+    }
+  });
+  
+  // Trigger validation
+  validateRoomCapacity();
+  
+  showNotification('✅ Đã tự động chọn phòng theo gợi ý!', 'success');
 }
 
 function setupRoomValidation() {

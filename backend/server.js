@@ -10,6 +10,7 @@ const Blog = require('./models/Blog');
 const User = require('./models/User');
 const Feedback = require('./models/Feedback');
 const ChatConversation = require('./models/ChatConversation');
+const Hotel = require('./models/Hotel');
 
 // Import services
 const recommendationService = require('./services/recommendationService');
@@ -19,6 +20,7 @@ const chatbotService = require('./services/chatbotService');
 // Import routes
 const bookingsRoutes = require('./routes/bookings');
 const authRoutes = require('./routes/auth');
+const commentsRoutes = require('./routes/comments');
 
 const app = express();
 
@@ -36,6 +38,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 // =============================================
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/comments', commentsRoutes);
 
 // API Routes
 
@@ -74,6 +77,120 @@ app.get('/api/tours/:id', async (req, res) => {
     res.json(tour);
   } catch (err) {
     res.status(500).json({ error: 'Error fetching tour details' });
+  }
+});
+
+// Gallery API - Get gallery images for a tour
+app.get('/api/tours/:id/gallery', async (req, res) => {
+  try {
+    const { id } = req.params;
+    let tour = null;
+    
+    // Try string id first
+    tour = await Tour.findOne({ id: id });
+    
+    // Try number id
+    if (!tour && !isNaN(id)) {
+      tour = await Tour.findOne({ id: parseInt(id) });
+    }
+    
+    // Try ObjectId
+    if (!tour && id.match(/^[0-9a-fA-F]{24}$/)) {
+      tour = await Tour.findById(id);
+    }
+    
+    if (!tour) {
+      return res.status(404).json({ error: 'Tour not found' });
+    }
+    
+    // Return gallery images from the gallery array
+    let gallery = [];
+    if (tour.gallery && Array.isArray(tour.gallery) && tour.gallery.length > 0) {
+      // Gallery exists with proper structure
+      gallery = tour.gallery;
+    } else if (tour.img) {
+      // Fallback: use main image only
+      gallery = [{ url: tour.img, category: 'all', caption: tour.name }];
+    }
+    
+    console.log(`📸 Returning ${gallery.length} gallery images for tour: ${tour.name}`);
+    res.json({ success: true, gallery });
+  } catch (err) {
+    console.error('Error fetching tour gallery:', err);
+    res.status(500).json({ error: 'Error fetching tour gallery' });
+  }
+});
+
+// =============================================
+// Hotels API
+// =============================================
+
+// Get all hotels (with optional filters)
+app.get('/api/hotels', async (req, res) => {
+  try {
+    const { limit, country, city } = req.query;
+    let query = {};
+    
+    if (country) {
+      query['location.country'] = country;
+    }
+    if (city) {
+      query['location.city'] = city;
+    }
+    
+    let hotelsQuery = Hotel.find(query);
+    
+    if (limit) {
+      hotelsQuery = hotelsQuery.limit(parseInt(limit));
+    }
+    
+    const hotels = await hotelsQuery;
+    console.log(`📍 Found ${hotels.length} hotels (country: ${country || 'all'})`);
+    res.json(hotels);
+  } catch (err) {
+    console.error('Error fetching hotels:', err);
+    res.status(500).json({ error: 'Error fetching hotels' });
+  }
+});
+
+// Get hotels by destination (country)
+app.get('/api/hotels/destination/:destination', async (req, res) => {
+  try {
+    const { destination } = req.params;
+    console.log(`🔍 Searching hotels for destination: ${destination}`);
+    
+    // Search by country name (case-insensitive)
+    const hotels = await Hotel.find({
+      'location.country': { $regex: new RegExp(destination, 'i') }
+    });
+    
+    console.log(`📍 Found ${hotels.length} hotels in ${destination}`);
+    res.json(hotels);
+  } catch (err) {
+    console.error('Error fetching hotels by destination:', err);
+    res.status(500).json({ error: 'Error fetching hotels by destination' });
+  }
+});
+
+// Get single hotel by ID
+app.get('/api/hotels/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ error: 'Invalid hotel ID format' });
+    }
+    
+    const hotel = await Hotel.findById(id);
+    
+    if (!hotel) {
+      return res.status(404).json({ error: 'Hotel not found' });
+    }
+    
+    res.json(hotel);
+  } catch (err) {
+    console.error('Error fetching hotel:', err);
+    res.status(500).json({ error: 'Error fetching hotel details' });
   }
 });
 

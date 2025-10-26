@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Hotels API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #ff6600;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover { background: #e55a00; }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .hotel-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #ff6600;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🏨 Test Hotels API</h1>
+    
+    <div class="test-section">
+        <h2>Test by Country</h2>
+        <button onclick="testCountry('Japan')">Japan Hotels</button>
+        <button onclick="testCountry('France')">France Hotels</button>
+        <button onclick="testCountry('Maldives')">Maldives Hotels</button>
+        <button onclick="testCountry('Switzerland')">Switzerland Hotels</button>
+        <button onclick="testCountry('Indonesia')">Indonesia Hotels</button>
+        <div id="countryResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test All Hotels</h2>
+        <button onclick="testAllHotels()">Get All Hotels</button>
+        <button onclick="testAllHotels(5)">Get 5 Hotels</button>
+        <div id="allResult"></div>
+    </div>
+
+    <script>
+        async function testCountry(country) {
+            const resultDiv = document.getElementById('countryResult');
+            resultDiv.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                const response = await fetch(`/api/hotels/destination/${country}`);
+                const hotels = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <h3>Hotels in ${country}: ${hotels.length} found</h3>
+                    ${hotels.map(hotel => `
+                        <div class="hotel-card">
+                            <h4>${hotel.name}</h4>
+                            <p><strong>City:</strong> ${hotel.location?.city || 'N/A'}</p>
+                            <p><strong>Country:</strong> ${hotel.location?.country || 'N/A'}</p>
+                            <p><strong>ID:</strong> ${hotel._id}</p>
+                        </div>
+                    `).join('')}
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        async function testAllHotels(limit) {
+            const resultDiv = document.getElementById('allResult');
+            resultDiv.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                const url = limit ? `/api/hotels?limit=${limit}` : '/api/hotels';
+                const response = await fetch(url);
+                const hotels = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <h3>All Hotels: ${hotels.length} found</h3>
+                    ${hotels.map(hotel => `
+                        <div class="hotel-card">
+                            <h4>${hotel.name}</h4>
+                            <p><strong>City:</strong> ${hotel.location?.city || 'N/A'}</p>
+                            <p><strong>Country:</strong> ${hotel.location?.country || 'N/A'}</p>
+                            <p><strong>ID:</strong> ${hotel._id}</p>
+                        </div>
+                    `).join('')}
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

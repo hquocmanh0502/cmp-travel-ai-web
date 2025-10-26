@@ -77,8 +77,9 @@ router.post('/', verifyAuth, async (req, res) => {
     }
     
     // Verify hotel exists (if provided)
+    let hotel = null;
     if (hotelId) {
-      const hotel = await Hotel.findById(hotelId);
+      hotel = await Hotel.findById(hotelId);
       if (!hotel) {
         return res.status(404).json({
           success: false,
@@ -100,7 +101,9 @@ router.post('/', verifyAuth, async (req, res) => {
     const booking = new Booking({
       userId,
       tourId,
+      tourName: tour.name, // ✅ Store tour name
       hotelId,
+      hotelName: hotel ? hotel.name : 'No hotel selected', // ✅ Store hotel name
       checkinDate: new Date(checkinDate),
       checkoutDate: new Date(checkoutDate || checkinDate),
       departureDate: new Date(departureDate || checkinDate),
@@ -132,7 +135,7 @@ router.post('/', verifyAuth, async (req, res) => {
     await booking.save();
     
     // Populate tour and hotel details
-    await booking.populate('tourId', 'title destination price images');
+    await booking.populate('tourId', 'name country img rating estimatedCost duration pricing');
     if (hotelId) {
       await booking.populate('hotelId', 'name address rating');
     }
@@ -167,7 +170,7 @@ router.get('/user/:userId', async (req, res) => {
     }
     
     const bookings = await Booking.find(query)
-      .populate('tourId', 'title destination price images duration')
+      .populate('tourId', 'name country description img rating estimatedCost duration pricing')
       .populate('hotelId', 'name address rating')
       .sort({ bookingDate: -1 })
       .limit(parseInt(limit))

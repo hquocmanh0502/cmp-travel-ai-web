@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Comment = require('../models/Comment');
 const Booking = require('../models/Booking');
 const User = require('../models/User');
@@ -27,8 +28,20 @@ router.get('/', async (req, res) => {
       return res.status(400).json({ error: 'Tour ID is required' });
     }
 
-    // Build query
-    let query = { tourId };
+    // Convert tourId string to ObjectId if valid
+    let tourObjectId;
+    try {
+      if (mongoose.Types.ObjectId.isValid(tourId)) {
+        tourObjectId = new mongoose.Types.ObjectId(tourId);
+      } else {
+        return res.status(400).json({ error: 'Invalid Tour ID format' });
+      }
+    } catch (err) {
+      return res.status(400).json({ error: 'Invalid Tour ID' });
+    }
+
+    // Build query with ObjectId
+    let query = { tourId: tourObjectId };
     
     if (rating) {
       query['content.rating'] = parseInt(rating);
@@ -93,28 +106,23 @@ router.post('/', authenticate, async (req, res) => {
       });
     }
 
-    // Kiểm tra xem user đã book tour này chưa
+    // Kiểm tra xem user đã complete tour này chưa
     const booking = await Booking.findOne({
       userId: userId,
       tourId: tourId,
-      status: { $in: ['completed', 'confirmed'] }
+      status: 'completed' // Chỉ completed mới được review
     });
 
     if (!booking) {
       return res.status(403).json({ 
-        error: 'Bạn cần đặt và hoàn thành tour này trước khi có thể viết đánh giá' 
+        error: 'You need to complete this tour before writing a review' 
       });
     }
 
     // Kiểm tra xem đã review chưa
-    const existingReview = await Comment.findOne({
-      userId: userId,
-      tourId: tourId
-    });
-
-    if (existingReview) {
+    if (booking.hasReviewed) {
       return res.status(400).json({ 
-        error: 'Bạn đã đánh giá tour này rồi' 
+        error: 'You have already reviewed this tour' 
       });
     }
 
@@ -140,6 +148,11 @@ router.post('/', authenticate, async (req, res) => {
     });
 
     await newComment.save();
+
+    // Update booking: mark as reviewed and save reviewId
+    booking.hasReviewed = true;
+    booking.reviewId = newComment._id;
+    await booking.save();
 
     // Populate user info
     await newComment.populate('userId', 'fullName avatar');
@@ -249,6 +262,49 @@ router.delete('/:commentId', authenticate, async (req, res) => {
   } catch (error) {
     console.error('Error deleting review:', error);
     res.status(500).json({ error: 'Error deleting review' });
+  }
+});
+
+// GET - Check if user can review this tour
+router.get('/can-review/:tourId', authenticate, async (req, res) => {
+  try {
+    const { tourId } = req.params;
+    const userId = req.userId;
+
+    // Check if user has completed booking for this tour
+    const completedBooking = await Booking.findOne({
+      userId: userId,
+      tourId: tourId,
+      status: 'completed'
+    });
+
+    if (!completedBooking) {
+      return res.json({
+        canReview: false,
+        reason: 'not_completed',
+        message: 'You need to complete this tour before writing a review'
+      });
+    }
+
+    // Check if already reviewed
+    if (completedBooking.hasReviewed) {
+      return res.json({
+        canReview: false,
+        reason: 'already_reviewed',
+        message: 'You have already reviewed this tour',
+        reviewId: completedBooking.reviewId
+      });
+    }
+
+    // User can review!
+    res.json({
+      canReview: true,
+      bookingId: completedBooking._id,
+      message: 'You can write a review for this tour'
+    });
+  } catch (error) {
+    console.error('Error checking review eligibility:', error);
+    res.status(500).json({ error: 'Error checking review eligibility' });
   }
 });
 

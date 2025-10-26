@@ -1,5 +1,642 @@
 // Enhanced Detail Page JavaScript with Orange Theme & AI Features
 
+// ==================== GLOBAL VARIABLES (Outside DOMContentLoaded) ====================
+let globalCurrentTour = null;
+let globalCurrentUser = null;
+
+// ==================== GLOBAL HELPER FUNCTIONS ====================
+function generateStarsHTML(rating) {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    
+    let starsHTML = '';
+    for (let i = 0; i < fullStars; i++) {
+        starsHTML += '<i class="fas fa-star"></i>';
+    }
+    if (hasHalfStar) {
+        starsHTML += '<i class="fas fa-star-half-alt"></i>';
+    }
+    for (let i = 0; i < emptyStars; i++) {
+        starsHTML += '<i class="far fa-star"></i>';
+    }
+    return starsHTML;
+}
+
+function getAmenityName(amenity) {
+    const amenityNames = {
+        'wifi': 'WiFi',
+        'pool': 'Pool',
+        'spa': 'Spa',
+        'gym': 'Gym',
+        'restaurant': 'Restaurant',
+        'parking': 'Parking',
+        'breakfast': 'Breakfast',
+        'bar': 'Bar',
+        'ac': 'Air Conditioning',
+        'tv': 'TV',
+        'minibar': 'Minibar',
+        'safe': 'Safe',
+        'laundry': 'Laundry',
+        'beach_access': 'Beach Access',
+        'airport_shuttle': 'Airport Shuttle',
+        'room_service': 'Room Service',
+        'rooftop_bar': 'Rooftop Bar',
+        'business_center': 'Business Center'
+    };
+    return amenityNames[amenity] || amenity.charAt(0).toUpperCase() + amenity.slice(1).replace(/_/g, ' ');
+}
+
+// ==================== GLOBAL REVIEW REPLY FUNCTIONS ====================
+function toggleReplyForm(reviewId) {
+    console.log('🔄 Toggle reply form for:', reviewId);
+    const replyForm = document.getElementById(`reply-form-${reviewId}`);
+    if (!replyForm) {
+        console.error('❌ Reply form not found:', reviewId);
+        return;
+    }
+    
+    console.log('Current display:', replyForm.style.display);
+    if (replyForm.style.display === 'none' || !replyForm.style.display) {
+        replyForm.style.display = 'block';
+        const textarea = document.getElementById(`reply-text-${reviewId}`);
+        if (textarea) {
+            textarea.focus();
+            console.log('✅ Reply form shown');
+        }
+    } else {
+        replyForm.style.display = 'none';
+        const textarea = document.getElementById(`reply-text-${reviewId}`);
+        if (textarea) textarea.value = '';
+        console.log('✅ Reply form hidden');
+    }
+}
+
+async function submitReply(reviewId) {
+    console.log('📤 Submitting reply for:', reviewId);
+    
+    // Get user from localStorage - using separate keys
+    const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
+    
+    console.log('👤 User info:', { userId, username });
+    
+    if (!userId) {
+        alert('Please login to reply');
+        console.log('❌ User not logged in');
+        return;
+    }
+    
+    const textarea = document.getElementById(`reply-text-${reviewId}`);
+    const text = textarea?.value.trim();
+    
+    console.log('Reply text:', text);
+    
+    if (!text) {
+        alert('Please write something before submitting');
+        return;
+    }
+    
+    try {
+        console.log('Calling API...');
+        const response = await fetch(`http://localhost:3000/api/comments/${reviewId}/reply`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'user-id': userId
+            },
+            body: JSON.stringify({ text })
+        });
+        
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('❌ API Error:', errorData);
+            throw new Error(errorData.message || 'Failed to submit reply');
+        }
+        
+        const result = await response.json();
+        console.log('✅ Reply submitted:', result);
+        alert('Reply submitted successfully!');
+        
+        // Hide form and clear textarea
+        toggleReplyForm(reviewId);
+        
+        // Reload page to show new reply
+        window.location.reload();
+    } catch (error) {
+        console.error('❌ Error submitting reply:', error);
+        alert('Failed to submit reply. Please try again.');
+    }
+}
+
+// ✅ WRITE REVIEW MODAL
+function openReviewModal() {
+    console.log('📝 Opening review modal');
+    
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        alert('Please login to write a review');
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    // Get booking ID from URL if redirected from My Bookings
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookingId = urlParams.get('bookingId');
+    
+    const modal = document.createElement('div');
+    modal.className = 'review-modal-overlay';
+    modal.id = 'reviewModal';
+    
+    modal.innerHTML = `
+        <div class="review-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-star"></i> Write Your Review</h3>
+                <button class="modal-close" onclick="closeReviewModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="reviewForm">
+                    <!-- Rating -->
+                    <div class="form-group">
+                        <label>Overall Rating <span class="required">*</span></label>
+                        <div class="star-rating-input" id="starRating">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                        <span class="rating-text" id="ratingText">Select a rating</span>
+                    </div>
+                    
+                    <!-- Review Text -->
+                    <div class="form-group">
+                        <label for="reviewText">Your Review <span class="required">*</span></label>
+                        <textarea 
+                            id="reviewText" 
+                            placeholder="Share your experience with this tour. What did you love? What could be improved?"
+                            rows="6"
+                            required
+                        ></textarea>
+                        <small class="char-count"><span id="charCount">0</span>/1000 characters</small>
+                    </div>
+                    
+                    <!-- Detailed Ratings (Optional) -->
+                    <div class="form-group">
+                        <label>Detailed Ratings (Optional)</label>
+                        <div class="detailed-ratings">
+                            <div class="rating-item">
+                                <span>Guide</span>
+                                <select id="guideRating">
+                                    <option value="">Not rated</option>
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+                            <div class="rating-item">
+                                <span>Accommodation</span>
+                                <select id="accommodationRating">
+                                    <option value="">Not rated</option>
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+                            <div class="rating-item">
+                                <span>Transportation</span>
+                                <select id="transportationRating">
+                                    <option value="">Not rated</option>
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+                            <div class="rating-item">
+                                <span>Food</span>
+                                <select id="foodRating">
+                                    <option value="">Not rated</option>
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+                            <div class="rating-item">
+                                <span>Activities</span>
+                                <select id="activitiesRating">
+                                    <option value="">Not rated</option>
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+                            <div class="rating-item">
+                                <span>Value for Money</span>
+                                <select id="valueRating">
+                                    <option value="">Not rated</option>
+                                    <option value="1">1 - Poor</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="5">5 - Excellent</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="closeReviewModal()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Review
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Star rating interaction
+    let selectedRating = 0;
+    const stars = modal.querySelectorAll('.star-rating-input i');
+    const ratingText = modal.getElementById('ratingText');
+    
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            selectedRating = parseInt(this.dataset.rating);
+            updateStarDisplay();
+        });
+        
+        star.addEventListener('mouseenter', function() {
+            const hoverRating = parseInt(this.dataset.rating);
+            stars.forEach((s, idx) => {
+                s.classList.toggle('active', idx < hoverRating);
+            });
+        });
+    });
+    
+    modal.querySelector('.star-rating-input').addEventListener('mouseleave', updateStarDisplay);
+    
+    function updateStarDisplay() {
+        stars.forEach((s, idx) => {
+            s.classList.toggle('active', idx < selectedRating);
+        });
+        
+        const ratingLabels = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+        ratingText.textContent = selectedRating > 0 ? ratingLabels[selectedRating] : 'Select a rating';
+    }
+    
+    // Character counter
+    const textarea = modal.getElementById('reviewText');
+    const charCount = modal.getElementById('charCount');
+    
+    textarea.addEventListener('input', function() {
+        const length = this.value.length;
+        charCount.textContent = length;
+        
+        if (length > 1000) {
+            this.value = this.value.substring(0, 1000);
+            charCount.textContent = '1000';
+        }
+    });
+    
+    // Form submission
+    const form = modal.getElementById('reviewForm');
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await submitReview(selectedRating, bookingId);
+    });
+}
+
+function closeReviewModal() {
+    const modal = document.getElementById('reviewModal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+async function submitReview(rating, bookingId) {
+    console.log('📤 Submitting review with rating:', rating);
+    
+    if (!rating || rating < 1) {
+        alert('Please select a rating');
+        return;
+    }
+    
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        alert('Please login to submit review');
+        return;
+    }
+    
+    const reviewText = document.getElementById('reviewText').value.trim();
+    if (!reviewText) {
+        alert('Please write your review');
+        return;
+    }
+    
+    // Get detailed ratings (optional)
+    const detailedRating = {
+        guide: parseInt(document.getElementById('guideRating').value) || undefined,
+        accommodation: parseInt(document.getElementById('accommodationRating').value) || undefined,
+        transportation: parseInt(document.getElementById('transportationRating').value) || undefined,
+        food: parseInt(document.getElementById('foodRating').value) || undefined,
+        activities: parseInt(document.getElementById('activitiesRating').value) || undefined,
+        valueForMoney: parseInt(document.getElementById('valueRating').value) || undefined
+    };
+    
+    // Remove undefined values
+    Object.keys(detailedRating).forEach(key => {
+        if (detailedRating[key] === undefined) delete detailedRating[key];
+    });
+    
+    const reviewData = {
+        content: {
+            text: reviewText,
+            rating: rating,
+            detailedRating: Object.keys(detailedRating).length > 0 ? detailedRating : undefined
+        },
+        bookingId: bookingId || undefined
+    };
+    
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tourId = urlParams.get('id');
+        
+        console.log('Submitting to API:', reviewData);
+        
+        const response = await fetch('http://localhost:3000/api/comments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'user-id': userId
+            },
+            body: JSON.stringify({
+                tourId: tourId,
+                ...reviewData
+            })
+        });
+        
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('❌ API Error:', errorData);
+            alert(errorData.message || 'Failed to submit review');
+            return;
+        }
+        
+        const result = await response.json();
+        console.log('✅ Review submitted:', result);
+        
+        alert('Thank you for your review!');
+        closeReviewModal();
+        
+        // Reload page to show new review
+        window.location.reload();
+    } catch (error) {
+        console.error('❌ Error submitting review:', error);
+        alert('Failed to submit review. Please try again.');
+    }
+}
+
+// Test if functions are accessible
+console.log('✅ Global functions loaded:', {
+    toggleReplyForm: typeof toggleReplyForm,
+    submitReply: typeof submitReply,
+    openReviewModal: typeof openReviewModal,
+    closeReviewModal: typeof closeReviewModal,
+    submitReview: typeof submitReview
+});
+
+// ==================== GLOBAL HOTEL MODAL FUNCTIONS ====================
+async function showSidebarHotelDetailModal(hotelId) {
+    try {
+        console.log('🏨 Loading sidebar hotel details for:', hotelId);
+        
+        // Try to fetch hotel details from API
+        let hotel = null;
+        try {
+            const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
+            if (response.ok) {
+                hotel = await response.json();
+                console.log('✅ Sidebar hotel loaded from API:', hotel.name);
+            }
+        } catch (fetchError) {
+            console.warn('❌ API fetch failed:', fetchError.message);
+        }
+        
+        // Fallback to sample data if API fails
+        if (!hotel) {
+            console.log('💡 Using sample hotel data');
+            hotel = {
+                name: 'Sample Hotel',
+                details: {
+                    rating: 4.5,
+                    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'],
+                    description: 'Luxury hotel with excellent service.',
+                    amenities: ['wifi', 'pool', 'spa', 'restaurant'],
+                    priceRange: { min: 2000000, max: 5000000 },
+                    roomTypes: [
+                        { type: 'Deluxe Room', capacity: 2, size: 35, price: 2500000, amenities: ['king_bed', 'city_view'] }
+                    ]
+                },
+                location: { city: 'Prime Location', address: 'City Center' },
+                reviewsSummary: { totalReviews: 120, averageRating: 4.5 }
+            };
+        }
+        
+        // Prepare hotel images
+        const hotelImages = hotel.details?.images || [];
+        const galleryImages = hotelImages.length > 0 ? hotelImages : [
+            'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+            'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
+            'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'
+        ];
+        
+        const priceRange = hotel.details?.priceRange;
+        // Convert VND to USD
+        const minUSD = priceRange && priceRange.min ? Math.round(priceRange.min / 25000) : 0;
+        const maxUSD = priceRange && priceRange.max ? Math.round(priceRange.max / 25000) : 0;
+        const priceText = (minUSD > 0 && maxUSD > 0) ? `$${minUSD} - $${maxUSD}` : 'Contact for price';
+        
+        const modal = document.createElement('div');
+        modal.className = 'sidebar-hotel-detail-modal-overlay';
+        modal.innerHTML = `
+            <div class="sidebar-hotel-detail-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-hotel"></i> ${hotel.name}</h3>
+                    <button class="modal-close" onclick="closeSidebarHotelDetailModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="hotel-detail-content">
+                        <div class="hotel-images">
+                            <div class="main-image-container">
+                                <img src="${galleryImages[0]}" alt="${hotel.name}" class="main-hotel-image" id="sidebarMainHotelImage">
+                                <div class="image-nav-buttons">
+                                    <button class="nav-btn prev-btn" onclick="navigateSidebarHotelImage(-1)">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button class="nav-btn next-btn" onclick="navigateSidebarHotelImage(1)">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="image-counter">
+                                    <span id="sidebarCurrentImageIndex">1</span> / <span id="sidebarTotalImages">${galleryImages.length}</span>
+                                </div>
+                            </div>
+                            <div class="image-thumbnails">
+                                ${galleryImages.map((img, index) => 
+                                    `<img src="${img}" alt="Hotel ${index + 1}" class="thumb-image ${index === 0 ? 'active' : ''}" 
+                                        onclick="changeSidebarHotelImage(${index})" data-index="${index}">`
+                                ).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="hotel-info-detailed">
+                            <div class="hotel-rating-detailed">
+                                ${generateStarsHTML(hotel.details?.rating || 4.5)}
+                                <span class="rating-score">${hotel.details?.rating || 4.5}</span>
+                                <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
+                            </div>
+                            
+                            <div class="hotel-location-detailed">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${hotel.location?.address || hotel.location?.city || 'Prime Location'}</span>
+                            </div>
+                            
+                            <div class="hotel-price-range">
+                                <i class="fas fa-tag"></i>
+                                <span>Price per night: <strong>${priceText}</strong></span>
+                            </div>
+                            
+                            <div class="hotel-description">
+                                <h4>Description</h4>
+                                <p>${hotel.details?.description || 'Luxury hotel with excellent service and convenient location.'}</p>
+                            </div>
+                            
+                            <div class="hotel-amenities-detailed">
+                                <h4>Amenities</h4>
+                                <div class="amenities-grid">
+                                    ${(hotel.details?.amenities || ['wifi', 'pool', 'spa', 'restaurant']).map(amenity => 
+                                        `<div class="amenity-item">
+                                            <i class="fas fa-check"></i>
+                                            <span>${getAmenityName(amenity)}</span>
+                                        </div>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="room-types">
+                                <h4>Room Types</h4>
+                                <div class="room-types-list">
+                                    ${(hotel.details?.roomTypes || hotel.rooms || [
+                                        { type: 'Deluxe Room', capacity: 2, size: 35, amenities: ['king_bed', 'city_view'] }
+                                    ]).map(room => 
+                                        `<div class="room-type-item">
+                                            <div class="room-info">
+                                                <h5>${room.type}</h5>
+                                                <p><i class="fas fa-users"></i> ${room.capacity} guests</p>
+                                                <p><i class="fas fa-expand"></i> ${room.size || 30}m²</p>
+                                            </div>
+                                            <div class="room-amenities">
+                                                ${(room.amenities || ['wifi', 'tv', 'ac']).slice(0, 3).map(amenity => 
+                                                    `<span class="room-amenity">${getAmenityName(amenity)}</span>`
+                                                ).join('')}
+                                            </div>
+                                        </div>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" onclick="closeSidebarHotelDetailModal()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Store gallery images globally for navigation
+        window.currentSidebarHotelGallery = galleryImages;
+        window.currentSidebarHotelImageIndex = 0;
+        
+        // Close on outside click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeSidebarHotelDetailModal();
+            }
+        });
+        
+    } catch (error) {
+        console.error('❌ Error loading sidebar hotel details:', error);
+        alert('Không thể tải thông tin khách sạn. Vui lòng thử lại.');
+    }
+}
+
+function closeSidebarHotelDetailModal() {
+    const modal = document.querySelector('.sidebar-hotel-detail-modal-overlay');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function changeSidebarHotelImage(index) {
+    const mainImage = document.getElementById('sidebarMainHotelImage');
+    const currentIndex = document.getElementById('sidebarCurrentImageIndex');
+    const thumbnails = document.querySelectorAll('.sidebar-hotel-detail-modal .thumb-image');
+    
+    if (mainImage && window.currentSidebarHotelGallery) {
+        mainImage.src = window.currentSidebarHotelGallery[index];
+        currentIndex.textContent = index + 1;
+        window.currentSidebarHotelImageIndex = index;
+        
+        // Update thumbnail active state
+        thumbnails.forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === index);
+        });
+    }
+}
+
+function navigateSidebarHotelImage(direction) {
+    if (!window.currentSidebarHotelGallery) return;
+    
+    let newIndex = window.currentSidebarHotelImageIndex + direction;
+    
+    // Loop around
+    if (newIndex >= window.currentSidebarHotelGallery.length) {
+        newIndex = 0;
+    } else if (newIndex < 0) {
+        newIndex = window.currentSidebarHotelGallery.length - 1;
+    }
+    
+    changeSidebarHotelImage(newIndex);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Global variables
     let currentTour = null;
@@ -123,6 +760,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             currentTour = await response.json();
             
+            // ✅ Update global variable for functions outside DOMContentLoaded scope
+            globalCurrentTour = currentTour;
+            
             // Populate tour information
             populateTourData(currentTour);
             
@@ -137,9 +777,31 @@ document.addEventListener('DOMContentLoaded', function() {
             hideLoadingState();
             checkWishlistStatus();
             
+            // Check if redirected from My Bookings to write review
+            checkAutoOpenReviewModal();
+            
         } catch (error) {
             console.error('Error loading tour data:', error);
             showAlert('Không thể tải thông tin tour', 'error');
+        }
+    }
+    
+    // Auto-open review modal if redirected from My Bookings
+    function checkAutoOpenReviewModal() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const writeReview = urlParams.get('writeReview');
+        
+        if (writeReview === 'true') {
+            console.log('🎯 Auto-opening review modal from My Bookings');
+            setTimeout(() => {
+                openReviewModal();
+                
+                // Scroll to reviews section
+                const reviewsSection = document.getElementById('reviews');
+                if (reviewsSection) {
+                    reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
         }
     }
     
@@ -757,14 +1419,125 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
     }
     
+    // ✅ CHECK IF USER CAN WRITE REVIEW
+    async function checkReviewEligibility() {
+        try {
+            // Get user from localStorage - using separate keys (userId, username, etc.)
+            const userId = localStorage.getItem('userId');
+            const username = localStorage.getItem('username');
+            
+            console.log('👤 User from localStorage:', { userId, username });
+            
+            if (!userId) {
+                console.log('❌ User not logged in');
+                return { canReview: false, reason: 'not_logged_in' };
+            }
+            
+            const tourId = currentTour._id || currentTour.id;
+            console.log('🎯 Tour ID:', tourId);
+            
+            if (!tourId) {
+                console.log('❌ No tour ID');
+                return { canReview: false, reason: 'no_tour_id' };
+            }
+            
+            console.log('🔍 Checking review eligibility for user:', userId, 'tour:', tourId);
+            
+            const response = await fetch(`http://localhost:3000/api/comments/can-review/${tourId}`, {
+                headers: {
+                    'user-id': userId
+                }
+            });
+            
+            console.log('📡 API Response status:', response.status);
+            
+            if (!response.ok) {
+                console.log('❌ API error:', response.status);
+                return { canReview: false, reason: 'api_error' };
+            }
+            
+            const data = await response.json();
+            console.log('✅ Review eligibility:', data);
+            return data;
+        } catch (error) {
+            console.error('❌ Error checking review eligibility:', error);
+            return { canReview: false, reason: 'error' };
+        }
+    }
+    
+    // ✅ SHOW WRITE REVIEW BUTTON IF ELIGIBLE
+    async function showWriteReviewButton() {
+        const eligibility = await checkReviewEligibility();
+        
+        if (eligibility.canReview) {
+            const reviewsSection = document.querySelector('.reviews-section');
+            if (!reviewsSection) return;
+            
+            // Check if button already exists
+            if (document.getElementById('writeReviewBtn')) return;
+            
+            const writeReviewHTML = `
+                <div class="write-review-banner" id="writeReviewBtn">
+                    <div class="banner-content">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h4>Share Your Experience</h4>
+                            <p>You've completed this tour! Help others by writing a review.</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="openReviewModal()">
+                        <i class="fas fa-pencil-alt"></i> Write Review
+                    </button>
+                </div>
+            `;
+            
+            // Insert before reviews header
+            const reviewsHeader = reviewsSection.querySelector('.reviews-header');
+            if (reviewsHeader) {
+                reviewsHeader.insertAdjacentHTML('beforebegin', writeReviewHTML);
+            }
+        }
+    }
+    
     async function loadReviews() {
         try {
-            const response = await fetch(`http://localhost:3000/api/comments?tourId=${currentTour._id}`);
+            // Use tour id or _id (MongoDB ObjectId)
+            const tourIdParam = currentTour._id || currentTour.id;
+            console.log('🎯 Loading reviews for tour:', tourIdParam);
+            console.log('📦 Current tour object:', currentTour);
+            
+            if (!tourIdParam) {
+                console.warn('⚠️ Tour ID not found, using sample reviews');
+                displaySampleReviews();
+                return;
+            }
+            
+            const apiUrl = `http://localhost:3000/api/comments?tourId=${tourIdParam}`;
+            console.log('🌐 Calling API:', apiUrl);
+            
+            const response = await fetch(apiUrl);
+            console.log('📡 Response status:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`API responded with ${response.status}`);
+            }
+            
             const reviews = await response.json();
+            console.log('✅ Reviews received:', reviews);
+            
+            // Verify reviews is array
+            if (!Array.isArray(reviews)) {
+                console.error('❌ Reviews is not an array:', reviews);
+                displaySampleReviews();
+                return;
+            }
             
             displayReviews(reviews);
+            
+            // Check if user can write review
+            await showWriteReviewButton();
         } catch (error) {
-            console.error('Error loading reviews:', error);
+            console.error('❌ Error loading reviews:', error);
             displaySampleReviews();
         }
     }
@@ -772,6 +1545,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function displayReviews(reviews) {
         const reviewsList = document.getElementById('reviewsList');
         if (!reviewsList) return;
+        
+        console.log('📝 Displaying reviews:', reviews.length);
         
         if (reviews.length === 0) {
             displaySampleReviews();
@@ -781,6 +1556,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reviewsList.innerHTML = '';
         
         reviews.forEach(review => {
+            console.log('Review:', review._id, 'Replies:', review.replies?.length || 0);
             const starsHTML = generateStarsHTML(review.content?.rating || 5);
             const date = new Date(review.createdAt).toLocaleDateString();
             
@@ -805,12 +1581,46 @@ document.addEventListener('DOMContentLoaded', function() {
                     ${review.content?.images ? generateReviewPhotosHTML(review.content.images) : ''}
                     <div class="review-actions">
                         <button class="review-action" onclick="likeReview('${review._id}')">
-                            <i class="fas fa-thumbs-up"></i> Helpful
+                            <i class="fas fa-thumbs-up"></i> Helpful (${review.helpfulCount || 0})
+                        </button>
+                        <button class="review-action" onclick="toggleReplyForm('${review._id}')">
+                            <i class="fas fa-reply"></i> Reply (${review.replyCount || 0})
                         </button>
                         <button class="review-action" onclick="reportReview('${review._id}')">
                             <i class="fas fa-flag"></i> Report
                         </button>
                     </div>
+                    
+                    <!-- Reply Form (hidden by default) -->
+                    <div class="reply-form" id="reply-form-${review._id}" style="display: none;">
+                        <textarea class="reply-input" id="reply-text-${review._id}" placeholder="Write your reply..."></textarea>
+                        <div class="reply-actions">
+                            <button class="btn btn-secondary" onclick="toggleReplyForm('${review._id}')">Cancel</button>
+                            <button class="btn btn-primary" onclick="submitReply('${review._id}')">
+                                <i class="fas fa-paper-plane"></i> Send Reply
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Replies List -->
+                    ${review.replies && review.replies.length > 0 ? `
+                        <div class="replies-list">
+                            ${review.replies.map(reply => `
+                                <div class="reply-item">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" 
+                                         alt="Replier" class="reply-avatar">
+                                    <div class="reply-content">
+                                        <div class="reply-header">
+                                            <strong>${reply.userId?.fullName || 'Anonymous'}</strong>
+                                            ${reply.isAdmin ? '<span class="admin-badge">Staff</span>' : ''}
+                                            <span class="reply-date">${new Date(reply.timestamp).toLocaleDateString()}</span>
+                                        </div>
+                                        <p>${reply.text}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
                 </div>
             `;
         });
@@ -960,74 +1770,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check if there's a static h3 header in HTML
         const staticHeader = gallerySection.querySelector('h3');
         
-        // Always add controls after static header (if exists) or create full header
-        if (staticHeader) {
-            // Static header exists, just add controls
-            const controlsHTML = `
-                <div class="gallery-controls">
-                    <div class="gallery-counter">
-                        <i class="fas fa-camera"></i> ${images.length} Photos
-                    </div>
-                    <div class="gallery-filters">
-                        <button class="gallery-filter-btn active" data-category="all">
-                            <i class="fas fa-th"></i> All
-                        </button>
-                        <button class="gallery-filter-btn" data-category="attractions">
-                            <i class="fas fa-map-marked-alt"></i> Attractions
-                        </button>
-                        <button class="gallery-filter-btn" data-category="accommodation">
-                            <i class="fas fa-bed"></i> Hotels
-                        </button>
-                        <button class="gallery-filter-btn" data-category="activities">
-                            <i class="fas fa-hiking"></i> Activities
-                        </button>
-                        <button class="gallery-filter-btn" data-category="food">
-                            <i class="fas fa-utensils"></i> Food
-                        </button>
-                        <button class="gallery-filter-btn" data-category="landscape">
-                            <i class="fas fa-mountain"></i> Landscape
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            staticHeader.insertAdjacentHTML('afterend', controlsHTML);
-        } else {
-            // No static header, create full header
-            const headerHTML = `
-                <div class="gallery-header">
-                    <div class="gallery-title">
-                        <h3><i class="fas fa-images"></i> Photo Gallery</h3>
-                        <div class="gallery-counter">
-                            <i class="fas fa-camera"></i> ${images.length} Photos
-                        </div>
-                    </div>
-                    <div class="gallery-filters">
-                        <button class="gallery-filter-btn active" data-category="all">
-                            <i class="fas fa-th"></i> All
-                        </button>
-                        <button class="gallery-filter-btn" data-category="attractions">
-                            <i class="fas fa-map-marked-alt"></i> Attractions
-                        </button>
-                        <button class="gallery-filter-btn" data-category="accommodation">
-                            <i class="fas fa-bed"></i> Hotels
-                        </button>
-                        <button class="gallery-filter-btn" data-category="activities">
-                            <i class="fas fa-hiking"></i> Activities
-                        </button>
-                        <button class="gallery-filter-btn" data-category="food">
-                            <i class="fas fa-utensils"></i> Food
-                        </button>
-                        <button class="gallery-filter-btn" data-category="landscape">
-                            <i class="fas fa-mountain"></i> Landscape
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            gallerySection.insertAdjacentHTML('afterbegin', headerHTML);
-        }
-        
         // Add loading state
         galleryGrid.classList.add('loading');
         
@@ -1035,14 +1777,86 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             galleryGrid.classList.remove('loading');
             
-            images.forEach((image, index) => {
+            // Always add controls after static header (if exists) or create full header
+            if (staticHeader) {
+                // Static header exists, just add controls
+                const controlsHTML = `
+                    <div class="gallery-controls">
+                        <div class="gallery-counter">
+                            <i class="fas fa-camera"></i> ${images.length} Photos
+                        </div>
+                        <div class="gallery-filters">
+                            <button class="filter-btn active" data-category="all">
+                                <i class="fas fa-th"></i> All
+                            </button>
+                            <button class="filter-btn" data-category="attractions">
+                                <i class="fas fa-map-marked-alt"></i> Attractions
+                            </button>
+                            <button class="filter-btn" data-category="accommodation">
+                                <i class="fas fa-bed"></i> Hotels
+                            </button>
+                            <button class="filter-btn" data-category="activities">
+                                <i class="fas fa-hiking"></i> Activities
+                            </button>
+                            <button class="filter-btn" data-category="food">
+                                <i class="fas fa-utensils"></i> Food
+                            </button>
+                            <button class="filter-btn" data-category="landscape">
+                                <i class="fas fa-mountain"></i> Landscape
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                staticHeader.insertAdjacentHTML('afterend', controlsHTML);
+            } else {
+                // No static header, create full header
+                const headerHTML = `
+                    <div class="gallery-header">
+                        <div class="gallery-title">
+                            <h3><i class="fas fa-images"></i> Photo Gallery</h3>
+                            <div class="gallery-counter">
+                                <i class="fas fa-camera"></i> ${images.length} Photos
+                            </div>
+                        </div>
+                        <div class="gallery-filters">
+                            <button class="filter-btn active" data-category="all">
+                                <i class="fas fa-th"></i> All
+                            </button>
+                            <button class="filter-btn" data-category="attractions">
+                                <i class="fas fa-map-marked-alt"></i> Attractions
+                            </button>
+                            <button class="filter-btn" data-category="accommodation">
+                                <i class="fas fa-bed"></i> Hotels
+                            </button>
+                            <button class="filter-btn" data-category="activities">
+                                <i class="fas fa-hiking"></i> Activities
+                            </button>
+                            <button class="filter-btn" data-category="food">
+                                <i class="fas fa-utensils"></i> Food
+                            </button>
+                            <button class="filter-btn" data-category="landscape">
+                                <i class="fas fa-mountain"></i> Landscape
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                gallerySection.insertAdjacentHTML('afterbegin', headerHTML);
+            }
+            
+            images.forEach((item, index) => {
+                // Handle both old format (string) and new format (object)
+                const imageUrl = typeof item === 'string' ? item : (item.url || item);
+                const caption = typeof item === 'object' ? (item.caption || '') : '';
+                
                 const isWide = index % 5 === 0;
                 const isTall = index % 7 === 0;
                 
                 galleryGrid.innerHTML += `
                     <div class="gallery-item ${isWide ? 'gallery-wide' : ''} ${isTall ? 'gallery-tall' : ''}" 
-                        onclick="openLightbox('${image}', ${index})">
-                        <img src="${image}" alt="Tour Gallery ${index + 1}" class="gallery-img">
+                        onclick="openLightbox('${imageUrl}', ${index})">
+                        <img src="${imageUrl}" alt="${caption || 'Tour Gallery ' + (index + 1)}" class="gallery-img">
                         <div class="gallery-overlay">
                             <i class="fas fa-search-plus"></i>
                             <span class="image-number">${index + 1}</span>
@@ -1051,8 +1865,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             });
             
-            // Store for lightbox navigation
-            window.currentGalleryImages = images;
+            // Store for lightbox navigation (extract URLs only)
+            window.currentGalleryImages = images.map(item => 
+                typeof item === 'string' ? item : (item.url || item)
+            );
             
             // Add gallery filter listeners
             addGalleryFilterListeners();
@@ -1062,23 +1878,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ✅ GALLERY FILTER FUNCTIONALITY
     function addGalleryFilterListeners() {
-        const filterButtons = document.querySelectorAll('.gallery-filter-btn');
+        const filterButtons = document.querySelectorAll('.gallery-filters .filter-btn');
         
         filterButtons.forEach(btn => {
             btn.addEventListener('click', async function() {
                 const category = this.dataset.category;
                 
-                // Update active button
-                filterButtons.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Load category images
+                // Load category images (this will call updateActiveFilterButton internally)
                 await loadGalleryByCategory(category);
             });
         });
     }
 
-    // ✅ CẬP NHẬT LOAD GALLERY BY CATEGORY - VỚI FALLBACK VÀ CLIENT-SIDE FILTERING
+    // ✅ CẬP NHẬT LOAD GALLERY BY CATEGORY - CLIENT-SIDE FILTERING
     async function loadGalleryByCategory(category) {
         const galleryGrid = document.getElementById('galleryGrid');
         
@@ -1086,31 +1898,57 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hiển thị loading state
             galleryGrid.innerHTML = '<div class="gallery-loading"><i class="fas fa-spinner fa-spin"></i> Đang tải ảnh...</div>';
             
-            let images = [];
+            let allImages = [];
             
-            // Thử gọi API trước
-            if (currentTour && currentTour._id) {
-                try {
-                    const response = await fetch(`http://localhost:3000/api/tours/${currentTour._id}/gallery/${category}`);
-                    if (response.ok) {
-                        images = await response.json();
-                        console.log(`✅ Đã tải ${images.length} ảnh cho category: ${category}`);
-                    } else {
-                        throw new Error(`API trả về ${response.status}`);
+            // Load all images from API or use cached data
+            if (!window.allGalleryImages) {
+                // Thử gọi API lần đầu
+                if (currentTour && (currentTour._id || currentTour.id)) {
+                    try {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const tourId = urlParams.get('id') || currentTour.id || currentTour._id;
+                        const response = await fetch(`http://localhost:3000/api/tours/${tourId}/gallery`);
+                        if (response.ok) {
+                            const data = await response.json();
+                            allImages = data.gallery || data || [];
+                            window.allGalleryImages = allImages; // Cache for filtering
+                            console.log(`✅ Đã tải ${allImages.length} ảnh gallery từ API`);
+                        } else {
+                            throw new Error(`API trả về ${response.status}`);
+                        }
+                    } catch (apiError) {
+                        console.log(`⚠️ API thất bại, sử dụng dữ liệu mẫu:`, apiError.message);
+                        allImages = getSampleGalleryByCategory('all');
+                        window.allGalleryImages = allImages;
                     }
-                } catch (apiError) {
-                    console.log(`⚠️ API thất bại cho category ${category}, sử dụng dữ liệu mẫu:`, apiError.message);
-                    // Fallback về sample data
-                    images = getSampleGalleryByCategory(category);
+                } else {
+                    // Không có tour ID, dùng sample data
+                    allImages = getSampleGalleryByCategory('all');
+                    window.allGalleryImages = allImages;
                 }
             } else {
-                // Không có tour ID, dùng sample data
-                images = getSampleGalleryByCategory(category);
+                // Use cached images
+                allImages = window.allGalleryImages;
             }
             
+            // Filter by category
+            let filteredImages = allImages;
+            if (category !== 'all') {
+                filteredImages = allImages.filter(item => {
+                    if (typeof item === 'object' && item.category) {
+                        return item.category === category;
+                    }
+                    return false; // If it's just a string, exclude it from category filter
+                });
+            }
+            
+            console.log(`📸 Filtered ${filteredImages.length} images for category: ${category}`);
+            
             // Hiển thị ảnh
-            if (images && images.length > 0) {
-                displayGalleryImages(images);
+            if (filteredImages && filteredImages.length > 0) {
+                displayGalleryImages(filteredImages);
+                // Cập nhật nút filter active sau khi display xong
+                setTimeout(() => updateActiveFilterButton(category), 350);
             } else {
                 // Hiển thị thông báo không có ảnh
                 galleryGrid.innerHTML = `
@@ -1119,10 +1957,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p>Không có ảnh nào cho ${category === 'all' ? 'tour này' : category}</p>
                     </div>
                 `;
+                // Cập nhật nút filter active
+                setTimeout(() => updateActiveFilterButton(category), 350);
             }
-            
-            // Cập nhật nút filter active
-            updateActiveFilterButton(category);
             
         } catch (error) {
             console.error('Lỗi khi tải gallery:', error);
@@ -1133,6 +1970,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         }
+    }
+
+    // ✅ UPDATE ACTIVE FILTER BUTTON
+    function updateActiveFilterButton(category) {
+        const filterButtons = document.querySelectorAll('.gallery-filters .filter-btn');
+        filterButtons.forEach(btn => {
+            if (btn.dataset.category === category) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
     }
 
     // ✅ FUNCTION MỚI - LẤY SAMPLE GALLERY THEO CATEGORY
@@ -1350,40 +2199,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Kiểm tra có h3 static trong HTML không
         const staticHeader = gallerySection.querySelector('h3');
         
-        // Luôn thêm controls sau static header (nếu có) hoặc tạo header đầy đủ
-        if (staticHeader) {
-            // Chèn controls sau h3 hiện có
-            const controls = document.createElement('div');
-            controls.className = 'gallery-controls';
-            controls.innerHTML = `
-                <div class="gallery-filters">
-                    <button class="gallery-filter-btn active" onclick="loadGalleryByCategory('all')">Tất cả</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('attractions')">Điểm tham quan</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('accommodation')">Chỗ ở</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('activities')">Hoạt động</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('food')">Ẩm thực</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('landscape')">Phong cảnh</button>
-                </div>
-            `;
-            staticHeader.insertAdjacentElement('afterend', controls);
-        } else {
-            // Tạo header đầy đủ nếu không có h3 static
-            const header = document.createElement('div');
-            header.className = 'gallery-header';
-            header.innerHTML = `
-                <h3>Thư viện ảnh</h3>
-                <div class="gallery-filters">
-                    <button class="gallery-filter-btn active" onclick="loadGalleryByCategory('all')">Tất cả</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('attractions')">Điểm tham quan</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('accommodation')">Chỗ ở</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('activities')">Hoạt động</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('food')">Ẩm thực</button>
-                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('landscape')">Phong cảnh</button>
-                </div>
-            `;
-            galleryGrid.insertAdjacentElement('beforebegin', header);
-        }
-        
         // Thêm loading state
         galleryGrid.classList.add('loading');
         
@@ -1433,29 +2248,34 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!galleryGrid) return;
         
         try {
-            let images = [];
+            let galleryData = [];
             
             // Thử tải từ API
-            if (currentTour && currentTour._id) {
+            if (currentTour && (currentTour._id || currentTour.id)) {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/tours/${currentTour._id}/gallery`);
+                    // Use tour id from URL params or tour object
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const tourId = urlParams.get('id') || currentTour.id || currentTour._id;
+                    
+                    const response = await fetch(`http://localhost:3000/api/tours/${tourId}/gallery`);
                     if (response.ok) {
-                        images = await response.json();
-                        console.log(`✅ Đã tải ${images.length} ảnh gallery từ API`);
+                        const data = await response.json();
+                        galleryData = data.gallery || data || [];
+                        console.log(`✅ Đã tải ${galleryData.length} ảnh gallery từ API`);
                     } else {
                         throw new Error('API không khả dụng');
                     }
                 } catch (apiError) {
                     console.log('⚠️ Gallery API thất bại, dùng dữ liệu mẫu:', apiError.message);
-                    images = getSampleGalleryByCategory('all');
+                    galleryData = getSampleGalleryByCategory('all');
                 }
             } else {
                 // Không có dữ liệu tour, dùng sample
-                images = getSampleGalleryByCategory('all');
+                galleryData = getSampleGalleryByCategory('all');
             }
             
             // Hiển thị ảnh
-            displayGalleryImages(images);
+            displayGalleryImages(galleryData);
             
         } catch (error) {
             console.error('Lỗi khi tải gallery:', error);
@@ -1614,6 +2434,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Form validations
         setupFormValidations();
+        
+        // View All Hotels button
+        setupViewAllHotelsButton();
     }
     
     function setupFloatingButtons() {
@@ -2834,255 +3657,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Thêm function mới cho hotel detail từ sidebar (không có nút Select):
 
-    // ✅ HOTEL DETAIL MODAL FOR SIDEBAR - VIEW ONLY (NO SELECT BUTTON)
+    // ✅ NOTE: HOTEL DETAIL MODAL FUNCTIONS MOVED TO GLOBAL SCOPE (LINE 51-240)
+    // These functions are now available globally outside DOMContentLoaded
+    // - showSidebarHotelDetailModal()
+    // - closeSidebarHotelDetailModal()
+    // - changeSidebarHotelImage()
+    // - navigateSidebarHotelImage()
+
+    /*
+    // OLD CODE - COMMENTED OUT (Now in global scope)
     async function showSidebarHotelDetailModal(hotelId) {
-        try {
-            console.log('🏨 Loading sidebar hotel details for:', hotelId);
-            
-            // Try to fetch hotel details from API
-            let hotel = null;
-            try {
-                const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
-                if (response.ok) {
-                    hotel = await response.json();
-                    console.log('✅ Sidebar hotel loaded from API:', hotel.name);
-                } else {
-                    console.log('❌ API response not ok:', response.status);
-                }
-            } catch (fetchError) {
-                console.log('❌ API fetch failed:', fetchError.message);
-            }
-            
-            // Fallback to sample data if API fails
-            if (!hotel) {
-                console.log('💡 Using sample hotel data for:', hotelId);
-                hotel = getSampleHotelDetail(hotelId);
-            }
-            
-            // Ensure hotel object has required properties
-            if (!hotel || !hotel.name) {
-                console.error('❌ Invalid hotel data:', hotel);
-                showAlert('Unable to load hotel information. Please try again.', 'error');
-                return;
-            }
-            
-            // Prepare hotel images (minimum 6 images for gallery)
-            const hotelImages = hotel.details?.images || [];
-            const galleryImages = [
-                ...hotelImages,
-                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
-                'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800',
-                'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800',
-                'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800',
-                'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800',
-                'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
-                'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800'
-            ].slice(0, 8);
-            
-            const modal = document.createElement('div');
-            modal.className = 'sidebar-hotel-detail-modal-overlay';
-            modal.innerHTML = `
-                <div class="sidebar-hotel-detail-modal">
-                    <div class="modal-header">
-                        <h3><i class="fas fa-hotel"></i> ${hotel.name}</h3>
-                        <button class="modal-close" onclick="closeSidebarHotelDetailModal()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="hotel-detail-content">
-                            <div class="hotel-images">
-                                <div class="main-image-container">
-                                    <img src="${galleryImages[0]}" alt="${hotel.name}" class="main-hotel-image" id="sidebarMainHotelImage">
-                                    <div class="image-nav-buttons">
-                                        <button class="nav-btn prev-btn" onclick="navigateSidebarHotelImage(-1)">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </button>
-                                        <button class="nav-btn next-btn" onclick="navigateSidebarHotelImage(1)">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="image-counter">
-                                        <span id="sidebarCurrentImageIndex">1</span> / <span id="sidebarTotalImages">${galleryImages.length}</span>
-                                    </div>
-                                    <button class="fullscreen-btn" onclick="openSidebarHotelGallery(0)">
-                                        <i class="fas fa-expand"></i>
-                                    </button>
-                                </div>
-                                <div class="image-thumbnails">
-                                    ${galleryImages.map((img, index) => 
-                                        `<img src="${img}" alt="Hotel ${index + 1}" class="thumb-image ${index === 0 ? 'active' : ''}" 
-                                            onclick="changeSidebarHotelImage(${index})" data-index="${index}">`
-                                    ).join('')}
-                                </div>
-                            </div>
-                            
-                            <div class="hotel-info-detailed">
-                                <div class="hotel-rating-detailed">
-                                    ${generateStarsHTML(hotel.details?.rating || 4.5)}
-                                    <span class="rating-score">${hotel.details?.rating || 4.5}</span>
-                                    <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
-                                </div>
-                                
-                                <div class="hotel-location-detailed">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>${hotel.location?.address || hotel.location?.city || 'Prime Location'}</span>
-                                </div>
-                                
-                                <div class="hotel-description">
-                                    <h4>Description</h4>
-                                    <p>${hotel.details?.description || 'Luxury hotel with excellent service and convenient location.'}</p>
-                                </div>
-                                
-                                <div class="hotel-amenities-detailed">
-                                    <h4>Amenities</h4>
-                                    <div class="amenities-grid">
-                                        ${(hotel.details?.amenities || ['wifi', 'pool', 'spa', 'restaurant']).map(amenity => 
-                                            `<div class="amenity-item">
-                                                <i class="fas fa-check"></i>
-                                                <span>${getAmenityName(amenity)}</span>
-                                            </div>`
-                                        ).join('')}
-                                    </div>
-                                </div>
-                                
-                                <div class="room-types">
-                                    <h4>Room Types</h4>
-                                    <div class="room-types-list">
-                                        ${(hotel.details?.roomTypes || getSampleRoomTypes()).map(room => 
-                                            `<div class="room-type-item">
-                                                <div class="room-info">
-                                                    <h5>${room.type}</h5>
-                                                    <p><i class="fas fa-users"></i> ${room.capacity} guests</p>
-                                                    <p><i class="fas fa-expand"></i> ${room.size || 30}m²</p>
-                                                </div>
-                                                <div class="room-amenities">
-                                                    ${(room.amenities || ['wifi', 'tv', 'ac']).slice(0, 3).map(amenity => 
-                                                        `<span class="room-amenity">${getAmenityName(amenity)}</span>`
-                                                    ).join('')}
-                                                </div>
-                                            </div>`
-                                        ).join('')}
-                                    </div>
-                                </div>
-                                
-                                <div class="hotel-contact-info">
-                                    <h4>Contact Information</h4>
-                                    <div class="contact-details">
-                                        <div class="contact-item">
-                                            <i class="fas fa-phone"></i>
-                                            <span>+1 (555) 123-4567</span>
-                                        </div>
-                                        <div class="contact-item">
-                                            <i class="fas fa-envelope"></i>
-                                            <span>info@${hotel.name.toLowerCase().replace(/\s+/g, '')}.com</span>
-                                        </div>
-                                        <div class="contact-item">
-                                            <i class="fas fa-globe"></i>
-                                            <span>www.${hotel.name.toLowerCase().replace(/\s+/g, '')}.com</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" onclick="closeSidebarHotelDetailModal()">
-                            <i class="fas fa-times"></i> Close
-                        </button>
-                        <button class="btn btn-info" onclick="window.open('https://www.booking.com', '_blank')">
-                            <i class="fas fa-external-link-alt"></i> View on Booking.com
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Sidebar Hotel Gallery Popup -->
-                <div class="sidebar-hotel-gallery-popup" id="sidebarHotelGalleryPopup" style="display: none;">
-                    <div class="gallery-content">
-                        <button class="gallery-close" onclick="closeSidebarHotelGallery()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                        <div class="gallery-main">
-                            <img src="" alt="Hotel Gallery" id="sidebarGalleryMainImage">
-                            <button class="gallery-nav prev" onclick="navigateSidebarGallery(-1)">
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="gallery-nav next" onclick="navigateSidebarGallery(1)">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
-                            <div class="gallery-counter">
-                                <span id="sidebarGalleryCurrentIndex">1</span> / <span id="sidebarGalleryTotalImages">${galleryImages.length}</span>
-                            </div>
-                        </div>
-                        <div class="gallery-thumbnails">
-                            ${galleryImages.map((img, index) => 
-                                `<img src="${img}" alt="Gallery ${index + 1}" class="gallery-thumb ${index === 0 ? 'active' : ''}" 
-                                    onclick="goToSidebarGalleryImage(${index})" data-index="${index}">`
-                            ).join('')}
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Store gallery images globally for navigation
-            window.currentSidebarHotelGallery = galleryImages;
-            window.currentSidebarHotelImageIndex = 0;
-            
-            // Close on outside click
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    closeSidebarHotelDetailModal();
-                }
-            });
-            
-        } catch (error) {
-            console.error('❌ Error loading sidebar hotel details:', error);
-            showAlert('Unable to load hotel details. Please try again.', 'error');
-        }
+        // ... moved to global scope ...
     }
-
-    // ✅ SIDEBAR HOTEL IMAGE NAVIGATION FUNCTIONS
+    
     function closeSidebarHotelDetailModal() {
-        const modal = document.querySelector('.sidebar-hotel-detail-modal-overlay');
-        if (modal) {
-            modal.remove();
-        }
+        // ... moved to global scope ...
     }
-
+    
     function changeSidebarHotelImage(index) {
-        const mainImage = document.getElementById('sidebarMainHotelImage');
-        const currentIndex = document.getElementById('sidebarCurrentImageIndex');
-        const thumbnails = document.querySelectorAll('.sidebar-hotel-detail-modal .thumb-image');
-        
-        if (mainImage && window.currentSidebarHotelGallery) {
-            mainImage.src = window.currentSidebarHotelGallery[index];
-            currentIndex.textContent = index + 1;
-            window.currentSidebarHotelImageIndex = index;
-            
-            // Update thumbnail active state
-            thumbnails.forEach((thumb, i) => {
-                thumb.classList.toggle('active', i === index);
-            });
-        }
+        // ... moved to global scope ...
     }
-
+    
     function navigateSidebarHotelImage(direction) {
-        if (!window.currentSidebarHotelGallery) return;
-        
-        let newIndex = window.currentSidebarHotelImageIndex + direction;
-        
-        // Loop around
-        if (newIndex >= window.currentSidebarHotelGallery.length) {
-            newIndex = 0;
-        } else if (newIndex < 0) {
-            newIndex = window.currentSidebarHotelGallery.length - 1;
-        }
-        
-        changeSidebarHotelImage(newIndex);
+        // ... moved to global scope ...
     }
+    */
 
     function openSidebarHotelGallery(startIndex = 0) {
         const popup = document.getElementById('sidebarHotelGalleryPopup');
@@ -3552,6 +4151,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const bookingData = {
             tourId: currentTour?.id || currentTour?._id,
             tourName: currentTour?.name || 'Selected Tour',
+            tourDuration: currentTour?.duration || null, // ✅ Add tour duration
             selectedHotel: {
                 id: hotelId,
                 name: hotelName
@@ -4375,3 +4975,152 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ==================== VIEW ALL HOTELS FUNCTIONALITY ====================
+
+function setupViewAllHotelsButton() {
+    const viewAllBtn = document.querySelector('.btn-view-hotels');
+    if (viewAllBtn) {
+        viewAllBtn.addEventListener('click', showAllHotelsModal);
+        console.log('✅ View All Hotels button setup complete');
+    }
+}
+
+async function showAllHotelsModal() {
+    try {
+        const destination = globalCurrentTour?.country || 'general';
+        console.log(`🏨 Loading all hotels for destination: ${destination}`);
+        
+        // Fetch hotels from API
+        let hotels = [];
+        try {
+            const response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
+            if (response.ok) {
+                hotels = await response.json();
+                console.log(`✅ Found ${hotels.length} hotels for ${destination}`);
+            }
+        } catch (error) {
+            console.warn('❌ API error:', error);
+        }
+        
+        // Fallback to all hotels if no destination-specific hotels
+        if (!hotels || hotels.length === 0) {
+            console.log('🔄 No destination-specific hotels, loading all hotels...');
+            try {
+                const response = await fetch('http://localhost:3000/api/hotels');
+                if (response.ok) {
+                    hotels = await response.json();
+                    console.log(`✅ Loaded ${hotels.length} hotels (all destinations)`);
+                }
+            } catch (error) {
+                console.warn('❌ API error:', error);
+            }
+        }
+        
+        // Final fallback to sample data
+        if (!hotels || hotels.length === 0) {
+            console.log('💡 Using sample hotel data');
+            hotels = [
+                {
+                    _id: 'sample1',
+                    name: 'Sample Hotel 1',
+                    details: {
+                        rating: 4.5,
+                        images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'],
+                        amenities: ['wifi', 'pool', 'spa', 'restaurant'],
+                        priceRange: { min: 100, max: 300 }
+                    },
+                    location: { city: destination, address: 'Prime Location' }
+                },
+                {
+                    _id: 'sample2',
+                    name: 'Sample Hotel 2',
+                    details: {
+                        rating: 4.8,
+                        images: ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400'],
+                        amenities: ['wifi', 'gym', 'parking', 'breakfast'],
+                        priceRange: { min: 150, max: 400 }
+                    },
+                    location: { city: destination, address: 'Downtown' }
+                }
+            ];
+        }
+        
+        // Create modal
+        const modal = document.createElement('div');
+        modal.className = 'all-hotels-modal-overlay';
+        modal.innerHTML = `
+            <div class="all-hotels-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-hotel"></i> Hotels in ${destination}</h3>
+                    <button class="modal-close" onclick="this.closest('.all-hotels-modal-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="hotels-grid">
+                        ${hotels.map(hotel => createHotelCard(hotel)).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close on outside click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+        
+    } catch (error) {
+        console.error('❌ Error showing all hotels:', error);
+        showAlert('Error loading hotels', 'error');
+    }
+}
+
+function createHotelCard(hotel) {
+    const rating = hotel.details?.rating || 4.5;
+    const starsHTML = generateStarsHTML(rating);
+    const image = hotel.details?.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400';
+    const priceRange = hotel.details?.priceRange;
+    
+    // Convert VND to USD (approximate rate: 1 USD = 25,000 VND)
+    const minUSD = priceRange && priceRange.min ? Math.round(priceRange.min / 25000) : 0;
+    const maxUSD = priceRange && priceRange.max ? Math.round(priceRange.max / 25000) : 0;
+    const priceText = (minUSD > 0 && maxUSD > 0) ? `$${minUSD} - $${maxUSD}` : 'Contact for price';
+    
+    return `
+        <div class="hotel-card" onclick="event.stopPropagation(); showSidebarHotelDetailModal('${hotel._id || hotel.id}')">
+            <div class="hotel-card-image">
+                <img src="${image}" alt="${hotel.name}">
+                <div class="hotel-card-badge">
+                    <div class="stars">${starsHTML}</div>
+                    <span class="rating-score">${rating}</span>
+                </div>
+            </div>
+            <div class="hotel-card-content">
+                <h4>${hotel.name}</h4>
+                <div class="hotel-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    ${hotel.location?.city || hotel.location?.address || 'Prime Location'}
+                </div>
+                <div class="hotel-amenities">
+                    ${(hotel.details?.amenities || ['wifi', 'restaurant']).slice(0, 4).map(amenity => 
+                        `<span class="amenity-tag"><i class="fas fa-check"></i> ${getAmenityName(amenity)}</span>`
+                    ).join('')}
+                </div>
+                <div class="hotel-card-footer">
+                    <div class="hotel-price">
+                        <span class="price-label">Price per night</span>
+                        <span class="price-value">${priceText}</span>
+                    </div>
+                    <button class="btn-view-details" onclick="event.stopPropagation(); showSidebarHotelDetailModal('${hotel._id || hotel.id}')">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}

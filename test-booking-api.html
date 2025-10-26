@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Booking API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .booking-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Booking API</h1>
+    
+    <div>
+        <label>User ID: <input type="text" id="userId" value="6731d61ba2c22a9936f2ec1e" style="width: 300px;"></label>
+        <button onclick="testAPI()">Test API</button>
+    </div>
+
+    <div class="result">
+        <h2>Raw API Response:</h2>
+        <pre id="rawResponse">Click "Test API" button to see response...</pre>
+        
+        <h2>Processed Bookings:</h2>
+        <div id="bookings"></div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const userId = document.getElementById('userId').value;
+            const rawResponseEl = document.getElementById('rawResponse');
+            const bookingsEl = document.getElementById('bookings');
+            
+            try {
+                rawResponseEl.textContent = 'Loading...';
+                bookingsEl.innerHTML = 'Loading...';
+                
+                const response = await fetch(`/api/bookings/user/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userId}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                // Show raw response
+                rawResponseEl.textContent = JSON.stringify(data, null, 2);
+                
+                // Show processed bookings
+                if (data.success && data.bookings) {
+                    bookingsEl.innerHTML = data.bookings.map(booking => {
+                        const tourInfo = booking.tourId;
+                        const hotelInfo = booking.hotelId;
+                        
+                        return `
+                            <div class="booking-card">
+                                <h3>Booking ID: ${booking.bookingId}</h3>
+                                <p><strong>Tour ID Type:</strong> ${typeof tourInfo}</p>
+                                <p><strong>Tour Name (stored):</strong> ${booking.tourName || 'N/A'}</p>
+                                <p><strong>Tour Name (populated):</strong> ${tourInfo?.name || 'Not populated'}</p>
+                                <p><strong>Hotel ID Type:</strong> ${typeof hotelInfo}</p>
+                                <p><strong>Hotel ID Value:</strong> ${hotelInfo || 'null'}</p>
+                                <p><strong>Hotel Name (stored):</strong> ${booking.hotelName || 'N/A'}</p>
+                                <p><strong>Hotel Name (populated):</strong> ${hotelInfo?.name || 'Not populated'}</p>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    bookingsEl.innerHTML = '<p>No bookings found</p>';
+                }
+                
+            } catch (error) {
+                rawResponseEl.textContent = 'Error: ' + error.message;
+                bookingsEl.innerHTML = '<p>Error: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>
