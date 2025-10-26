@@ -47,29 +47,79 @@ function initializeBookingsPage() {
 async function loadUserBookings() {
     try {
         const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('authToken') || userId;
         
-        // Simulate API call - replace with actual API endpoint
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log('🔄 Loading bookings for user:', userId);
         
-        // Mock data - replace with actual API response
-        const bookingsData = generateMockBookings(userId);
+        // ✅ Call real API endpoint
+        const response = await fetch(`/api/bookings/user/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
         
-        allBookings = bookingsData;
-        filteredBookings = [...allBookings];
+        if (!response.ok) {
+            throw new Error('Failed to fetch bookings');
+        }
         
-        // Update statistics
-        updateBookingStats();
+        const data = await response.json();
         
-        // Display bookings
-        displayBookings(filteredBookings);
+        if (data.success && data.bookings) {
+            // ✅ Transform API data to match frontend format
+            allBookings = data.bookings.map(booking => ({
+                id: booking.bookingId || booking._id,
+                tourId: booking.tourId?._id || booking.tourId,
+                tourName: booking.tourId?.title || 'Unknown Tour',
+                tourImage: booking.tourId?.images?.[0] || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300',
+                destination: booking.tourId?.destination || 'Unknown',
+                duration: booking.tourId?.duration || 'N/A',
+                status: booking.status,
+                bookingDate: new Date(booking.bookingDate).toISOString().split('T')[0],
+                departureDate: new Date(booking.departureDate).toISOString().split('T')[0],
+                checkinDate: new Date(booking.checkinDate).toISOString().split('T')[0],
+                checkoutDate: new Date(booking.checkoutDate).toISOString().split('T')[0],
+                adults: booking.adults,
+                children: booking.children,
+                infants: booking.infants,
+                totalAmount: booking.totalAmount,
+                paymentStatus: booking.paymentStatus,
+                paymentMethod: booking.paymentMethod,
+                rooms: booking.rooms,
+                services: booking.services,
+                customerInfo: {
+                    name: booking.customerInfo?.fullName || 'N/A',
+                    email: booking.customerInfo?.email || 'N/A',
+                    phone: booking.customerInfo?.phone || 'N/A',
+                    title: booking.customerInfo?.title || 'Mr'
+                },
+                hotelName: booking.hotelId?.name || 'No hotel selected',
+                _rawBooking: booking // Keep original data for reference
+            }));
+            
+            filteredBookings = [...allBookings];
+            
+            // Update statistics
+            updateBookingStats();
+            
+            // Display bookings
+            displayBookings(filteredBookings);
+            
+            console.log('✅ Bookings loaded from API:', allBookings.length);
+        } else {
+            // No bookings found
+            allBookings = [];
+            filteredBookings = [];
+            updateBookingStats();
+            showEmptyState('You have no bookings yet');
+        }
         
         // Hide loading state
         hideLoadingState();
         
-        console.log('✅ Bookings loaded:', allBookings.length);
-        
     } catch (error) {
-        console.error('Error loading bookings:', error);
+        console.error('❌ Error loading bookings:', error);
         showNotification('Failed to load booking history', 'error');
         hideLoadingState();
         showEmptyState('An error occurred while loading data');
@@ -183,8 +233,13 @@ function displayBookings(bookings) {
             <div class="booking-card-header">
                 <div class="booking-header-row">
                     <div class="booking-id">Booking ID: #${booking.id}</div>
-                    <div class="booking-status status-${booking.status}">
-                        ${getStatusText(booking.status)}
+                    <div class="booking-badges">
+                        <div class="booking-status status-${booking.status}">
+                            ${getStatusText(booking.status)}
+                        </div>
+                        <div class="payment-status payment-${booking.paymentStatus}">
+                            ${getPaymentStatusBadge(booking.paymentStatus)}
+                        </div>
                     </div>
                 </div>
                 <div class="booking-tour-info">
@@ -226,6 +281,11 @@ function displayBookings(bookings) {
                     <button class="btn btn-outline" onclick="viewBookingDetails('${booking.id}')">
                         <i class="fas fa-eye"></i> View Details
                     </button>
+                    ${booking.paymentStatus === 'unpaid' && booking.status === 'pending' ? `
+                        <button class="btn btn-primary" onclick="payNow('${booking.id}')">
+                            <i class="fas fa-credit-card"></i> Pay Now
+                        </button>
+                    ` : ''}
                     ${booking.status === 'confirmed' ? `
                         <button class="btn btn-outline" onclick="downloadTicket('${booking.id}')">
                             <i class="fas fa-download"></i> Download Ticket
@@ -383,6 +443,42 @@ function viewBookingDetails(bookingId) {
 }
 
 function showBookingModal(booking) {
+    // Format rooms information
+    const roomsList = booking.rooms ? Object.entries(booking.rooms)
+        .filter(([key, value]) => value > 0)
+        .map(([key, value]) => {
+            const roomNames = {
+                superior: 'Superior',
+                juniorDeluxe: 'Junior Deluxe',
+                deluxe: 'Deluxe',
+                suite: 'Suite',
+                family: 'Family',
+                president: 'President'
+            };
+            return `${value} x ${roomNames[key] || key}`;
+        }).join(', ') : 'No rooms selected';
+    
+    // Format services
+    const servicesList = [];
+    if (booking.services?.meals) {
+        const meals = [];
+        if (booking.services.meals.breakfast) meals.push('Breakfast');
+        if (booking.services.meals.lunch) meals.push('Lunch');
+        if (booking.services.meals.dinner) meals.push('Dinner');
+        if (meals.length > 0) servicesList.push(`Meals: ${meals.join(', ')}`);
+    }
+    if (booking.services?.transfer && booking.services.transfer !== 'none') {
+        const transferNames = {
+            'airport': 'Airport Transfer',
+            'hotel': 'Hotel Transfer',
+            'both': 'Airport + Hotel Transfer'
+        };
+        servicesList.push(`Transfer: ${transferNames[booking.services.transfer] || booking.services.transfer}`);
+    }
+    if (booking.services?.tourGuide) {
+        servicesList.push('Tour Guide included');
+    }
+    
     const modal = document.createElement('div');
     modal.className = 'modal-overlay active';
     modal.innerHTML = `
@@ -397,28 +493,50 @@ function showBookingModal(booking) {
                 <div class="booking-detail-info">
                     <h4>${booking.tourName}</h4>
                     <p><strong>Booking ID:</strong> #${booking.id}</p>
+                    <p><strong>Hotel:</strong> ${booking.hotelName || 'Not selected'}</p>
                     <p><strong>Destination:</strong> ${booking.destination}</p>
                     <p><strong>Duration:</strong> ${booking.duration}</p>
+                    <p><strong>Check-in Date:</strong> ${formatDate(booking.checkinDate)}</p>
+                    <p><strong>Check-out Date:</strong> ${formatDate(booking.checkoutDate)}</p>
                     <p><strong>Departure Date:</strong> ${formatDate(booking.departureDate)}</p>
-                    <p><strong>Guests:</strong> ${booking.adults} adult${booking.adults > 1 ? 's' : ''}${booking.children > 0 ? `, ${booking.children} child${booking.children > 1 ? 'ren' : ''}` : ''}</p>
-                    <p><strong>Total Amount:</strong> $${booking.totalAmount.toLocaleString()}</p>
-                    <p><strong>Status:</strong> <span class="booking-status status-${booking.status}">${getStatusText(booking.status)}</span></p>
+                    <p><strong>Guests:</strong> ${booking.adults} adult${booking.adults > 1 ? 's' : ''}${booking.children > 0 ? `, ${booking.children} child${booking.children > 1 ? 'ren' : ''}` : ''}${booking.infants > 0 ? `, ${booking.infants} infant${booking.infants > 1 ? 's' : ''}` : ''}</p>
+                    
+                    <h5 style="margin-top: 1.5rem;">Rooms</h5>
+                    <p>${roomsList}</p>
+                    
+                    ${servicesList.length > 0 ? `
+                        <h5 style="margin-top: 1.5rem;">Services</h5>
+                        <ul style="padding-left: 1.5rem;">
+                            ${servicesList.map(s => `<li>${s}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                    
+                    <h5 style="margin-top: 1.5rem;">Payment Information</h5>
+                    <p><strong>Total Amount:</strong> <span style="font-size: 1.3rem; color: #ff6600;">$${booking.totalAmount.toLocaleString()}</span></p>
+                    <p><strong>Payment Status:</strong> <span class="payment-status payment-${booking.paymentStatus}">${getPaymentStatusBadge(booking.paymentStatus)}</span></p>
+                    ${booking.paymentMethod ? `<p><strong>Payment Method:</strong> ${booking.paymentMethod.replace('_', ' ').toUpperCase()}</p>` : ''}
+                    <p><strong>Booking Status:</strong> <span class="booking-status status-${booking.status}">${getStatusText(booking.status)}</span></p>
                     
                     <h5 style="margin-top: 1.5rem;">Customer Information</h5>
-                    <p><strong>Name:</strong> ${booking.customerInfo.name}</p>
+                    <p><strong>Name:</strong> ${booking.customerInfo.title || 'Mr'}. ${booking.customerInfo.name}</p>
                     <p><strong>Email:</strong> ${booking.customerInfo.email}</p>
                     <p><strong>Phone:</strong> ${booking.customerInfo.phone}</p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove()">
-                    Close
-                </button>
+                ${booking.paymentStatus === 'unpaid' && booking.status === 'pending' ? `
+                    <button class="btn btn-primary" onclick="payNow('${booking.id}')">
+                        <i class="fas fa-credit-card"></i> Pay Now
+                    </button>
+                ` : ''}
                 ${booking.status === 'confirmed' ? `
                     <button class="btn btn-primary" onclick="downloadTicket('${booking.id}')">
                         <i class="fas fa-download"></i> Download Ticket
                     </button>
                 ` : ''}
+                <button class="btn btn-secondary" onclick="this.closest('.modal-overlay').remove()">
+                    Close
+                </button>
             </div>
         </div>
     `;
@@ -472,6 +590,25 @@ function rebookTour(tourId) {
     }, 1000);
 }
 
+function payNow(bookingId) {
+    const booking = allBookings.find(b => b.id === bookingId);
+    if (!booking) return;
+    
+    showNotification('Payment feature will be available soon!', 'info');
+    
+    // TODO: Implement payment logic with CMP Wallet
+    // For now, just show a placeholder message
+    setTimeout(() => {
+        const confirmPay = confirm(`Pay $${booking.totalAmount.toLocaleString()} for booking #${booking.id}?\n\nNote: Payment feature is under development. This will be connected to your CMP Wallet.`);
+        
+        if (confirmPay) {
+            showNotification('Payment processing... (Feature coming soon)', 'info');
+            // Close modal
+            document.querySelector('.modal-overlay')?.remove();
+        }
+    }, 500);
+}
+
 // Utility functions
 function getStatusText(status) {
     const statusMap = {
@@ -486,10 +623,24 @@ function getStatusText(status) {
 function getPaymentStatusText(status) {
     const statusMap = {
         'paid': 'Paid',
+        'unpaid': 'Unpaid',
+        'partial': 'Partially Paid',
         'pending': 'Pending Payment',
         'refunded': 'Refunded'
     };
     return statusMap[status] || status;
+}
+
+function getPaymentStatusBadge(status) {
+    const icons = {
+        'paid': 'fa-check-circle',
+        'unpaid': 'fa-exclamation-circle',
+        'partial': 'fa-clock',
+        'pending': 'fa-clock',
+        'refunded': 'fa-undo'
+    };
+    const icon = icons[status] || 'fa-question-circle';
+    return `<i class="fas ${icon}"></i> ${getPaymentStatusText(status)}`;
 }
 
 function formatDate(dateString) {

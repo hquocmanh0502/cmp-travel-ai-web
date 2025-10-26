@@ -536,19 +536,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // ✅ LOAD HOTELS BY DESTINATION FOR SIDEBAR
     async function loadHotels() {
         try {
-            const response = await fetch('http://localhost:3000/api/hotels');
-            const hotels = await response.json();
+            const destination = currentTour?.country || 'general';
+            console.log(`🏨 Loading sidebar hotels for destination: ${destination}`);
             
-            displayHotels(hotels.slice(0, 3));
+            // Try destination-specific API first
+            let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
+            let hotels = [];
+            
+            if (response.ok) {
+                hotels = await response.json();
+                console.log(`✅ Found ${hotels.length} hotels for sidebar in ${destination}`);
+            }
+            
+            // Fallback to general hotels if no destination-specific hotels
+            if (!hotels || hotels.length === 0) {
+                console.log(`❌ No hotels found for ${destination}, using general hotels for sidebar`);
+                const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
+                if (fallbackResponse.ok) {
+                    hotels = await fallbackResponse.json();
+                }
+            }
+            
+            // Display hotels or show sample data
+            if (hotels && hotels.length > 0) {
+                displayHotels(hotels.slice(0, 3));
+            } else {
+                console.log('💡 Using sample hotel data for sidebar');
+                displaySampleHotels();
+            }
+            
         } catch (error) {
-            console.error('Error loading hotels:', error);
+            console.error('Error loading hotels for sidebar:', error);
             // Show sample hotels if API fails
             displaySampleHotels();
         }
     }
-    
+
+    // ✅ UPDATE DISPLAY HOTELS FOR SIDEBAR - CHANGE CLICK HANDLER
     function displayHotels(hotels) {
         const hotelsList = document.getElementById('hotelsList');
         if (!hotelsList) return;
@@ -558,46 +585,36 @@ document.addEventListener('DOMContentLoaded', function() {
         hotels.forEach(hotel => {
             const rating = hotel.details?.rating || 4.5;
             const starsHTML = generateStarsHTML(rating);
-            const price = hotel.details?.priceRange?.min || 200;
             
             hotelsList.innerHTML += `
-                <div class="hotel-item">
+                <div class="hotel-item" onclick="showSidebarHotelDetailModal('${hotel._id || hotel.id}')">
                     <img src="${hotel.details?.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100'}" 
-                         alt="${hotel.name}" class="hotel-image">
+                        alt="${hotel.name}" class="hotel-image">
                     <div class="hotel-details">
                         <h6>${hotel.name}</h6>
                         <div class="hotel-rating">
                             <div class="stars">${starsHTML}</div>
                             <span>${rating}</span>
                         </div>
-                        <div class="hotel-price">From $${price}/night</div>
+                        <div class="hotel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${hotel.location?.city || hotel.location?.address || 'Prime Location'}
+                        </div>
+                        <div class="hotel-amenities-preview">
+                            ${(hotel.details?.amenities || ['wifi', 'restaurant']).slice(0, 3).map(amenity => 
+                                `<span class="amenity-preview">${getAmenityName(amenity)}</span>`
+                            ).join(' • ')}
+                        </div>
                     </div>
                 </div>
             `;
         });
     }
-    
+
+    // ✅ UPDATE SAMPLE HOTELS TO MATCH DESTINATION - CHANGE CLICK HANDLER
     function displaySampleHotels() {
-        const sampleHotels = [
-            {
-                name: 'Grand Plaza Hotel',
-                rating: 4.8,
-                price: 250,
-                image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100'
-            },
-            {
-                name: 'Luxury Resort & Spa',
-                rating: 4.6,
-                price: 180,
-                image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=100'
-            },
-            {
-                name: 'Boutique City Hotel',
-                rating: 4.7,
-                price: 220,
-                image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=100'
-            }
-        ];
+        const destination = currentTour?.country || 'general';
+        const sampleHotels = getSampleHotelsByDestination(destination);
         
         const hotelsList = document.getElementById('hotelsList');
         if (!hotelsList) return;
@@ -608,7 +625,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const starsHTML = generateStarsHTML(hotel.rating);
             
             hotelsList.innerHTML += `
-                <div class="hotel-item">
+                <div class="hotel-item" onclick="showSidebarHotelDetailModal('${hotel.id}')">
                     <img src="${hotel.image}" alt="${hotel.name}" class="hotel-image">
                     <div class="hotel-details">
                         <h6>${hotel.name}</h6>
@@ -616,11 +633,128 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="stars">${starsHTML}</div>
                             <span>${hotel.rating}</span>
                         </div>
-                        <div class="hotel-price">From $${hotel.price}/night</div>
+                        <div class="hotel-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${hotel.location}
+                        </div>
+                        <div class="hotel-amenities-preview">
+                            ${hotel.amenities.slice(0, 3).map(amenity => getAmenityName(amenity)).join(' • ')}
+                        </div>
                     </div>
                 </div>
             `;
         });
+    }
+
+    // ✅ GET SAMPLE HOTELS BY DESTINATION FOR SIDEBAR
+    function getSampleHotelsByDestination(destination) {
+        const hotelsByDestination = {
+            'Maldives': [
+                {
+                    id: 'sample-maldives-1',
+                    name: 'Maldives Paradise Resort',
+                    rating: 4.9,
+                    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=100',
+                    location: 'Malé Atoll',
+                    amenities: ['wifi', 'spa', 'water_sports']
+                },
+                {
+                    id: 'sample-maldives-2',
+                    name: 'Overwater Bungalow Resort',
+                    rating: 4.8,
+                    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=100',
+                    location: 'Baa Atoll',
+                    amenities: ['wifi', 'overwater', 'snorkeling']
+                },
+                {
+                    id: 'sample-maldives-3',
+                    name: 'Sunset Island Villa',
+                    rating: 4.7,
+                    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=100',
+                    location: 'Ari Atoll',
+                    amenities: ['wifi', 'private_beach', 'sunset_view']
+                }
+            ],
+            'Japan': [
+                {
+                    id: 'sample-japan-1',
+                    name: 'Tokyo Imperial Hotel',
+                    rating: 4.8,
+                    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100',
+                    location: 'Tokyo',
+                    amenities: ['wifi', 'spa', 'restaurant']
+                },
+                {
+                    id: 'sample-japan-2',
+                    name: 'Osaka Castle View',
+                    rating: 4.6,
+                    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=100',
+                    location: 'Osaka',
+                    amenities: ['wifi', 'city_view', 'bar']
+                },
+                {
+                    id: 'sample-japan-3',
+                    name: 'Kyoto Traditional Ryokan',
+                    rating: 4.9,
+                    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=100',
+                    location: 'Kyoto',
+                    amenities: ['wifi', 'spa', 'traditional']
+                }
+            ],
+            'France': [
+                {
+                    id: 'sample-france-1',
+                    name: 'Paris Romance Hotel',
+                    rating: 4.6,
+                    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=100',
+                    location: 'Paris',
+                    amenities: ['wifi', 'restaurant', 'romantic']
+                },
+                {
+                    id: 'sample-france-2',
+                    name: 'Champs-Élysées Palace',
+                    rating: 4.8,
+                    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100',
+                    location: 'Paris',
+                    amenities: ['wifi', 'luxury', 'spa']
+                },
+                {
+                    id: 'sample-france-3',
+                    name: 'Montmartre Artist Hotel',
+                    rating: 4.4,
+                    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=100',
+                    location: 'Paris',
+                    amenities: ['wifi', 'art', 'boutique']
+                }
+            ]
+        };
+        
+        return hotelsByDestination[destination] || [
+            {
+                id: 'general-1',
+                name: 'Grand Plaza Hotel',
+                rating: 4.8,
+                image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100',
+                location: 'City Center',
+                amenities: ['wifi', 'pool', 'spa']
+            },
+            {
+                id: 'general-2',
+                name: 'Luxury Resort',
+                rating: 4.6,
+                image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=100',
+                location: 'Resort Area',
+                amenities: ['wifi', 'spa', 'luxury']
+            },
+            {
+                id: 'general-3',
+                name: 'Boutique City Hotel',
+                rating: 4.7,
+                image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=100',
+                location: 'Historic District',
+                amenities: ['wifi', 'boutique', 'bar']
+            }
+        ];
     }
     
     async function loadReviews() {
@@ -746,30 +880,717 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Thay thế function loadGallery:
+
+    // ✅ LOAD GALLERY FROM DATABASE
     async function loadGallery() {
         const galleryGrid = document.getElementById('galleryGrid');
         if (!galleryGrid) return;
         
-        // Create sample gallery if no images provided
-        const galleryImages = currentTour.gallery || [
-            currentTour.img,
-            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop',
-            'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=300&h=200&fit=crop',
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&h=200&fit=crop',
-            'https://images.unsplash.com/photo-1502780402662-acc01917476e?w=300&h=200&fit=crop',
-            'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=200&fit=crop'
-        ];
+        try {
+            console.log('🖼️ Loading gallery for tour:', currentTour._id || currentTour.id);
+            
+            let galleryImages = [];
+            
+            // Try to load from database first
+            if (currentTour._id || currentTour.id) {
+                try {
+                    const response = await fetch(`/api/tours/${currentTour._id || currentTour.id}/gallery/all`);
+                    if (response.ok) {
+                        const galleryData = await response.json();
+                        galleryImages = galleryData.images.map(img => img.url);
+                        console.log(`✅ Loaded ${galleryImages.length} images from database`);
+                    }
+                } catch (fetchError) {
+                    console.log('⚠️ Database fetch failed, using fallback');
+                }
+            }
+            
+            // Fallback to tour object gallery
+            if (galleryImages.length === 0 && currentTour.gallery?.images) {
+                galleryImages = currentTour.gallery.images;
+                console.log(`✅ Using tour object gallery: ${galleryImages.length} images`);
+            }
+            
+            // Fallback to imageCategories
+            if (galleryImages.length === 0 && currentTour.imageCategories) {
+                galleryImages = [
+                    ...(currentTour.imageCategories.main ? [currentTour.imageCategories.main] : []),
+                    ...(currentTour.imageCategories.attractions || []),
+                    ...(currentTour.imageCategories.accommodation || []),
+                    ...(currentTour.imageCategories.activities || []),
+                    ...(currentTour.imageCategories.food || []),
+                    ...(currentTour.imageCategories.landscape || []),
+                    ...(currentTour.imageCategories.culture || [])
+                ].filter(Boolean);
+                console.log(`✅ Using categorized images: ${galleryImages.length} images`);
+            }
+            
+            // Final fallback to destination-based gallery
+            if (galleryImages.length === 0) {
+                galleryImages = getGalleryByDestination(currentTour.country || currentTour.destination);
+                console.log(`✅ Using destination fallback: ${galleryImages.length} images`);
+            }
+            
+            // Display gallery
+            displayGalleryImages(galleryImages);
+            
+        } catch (error) {
+            console.error('❌ Error loading gallery:', error);
+            // Ultimate fallback
+            const fallbackImages = getGalleryByDestination(currentTour.country || currentTour.destination);
+            displayGalleryImages(fallbackImages);
+        }
+    }
+
+    // ✅ DISPLAY GALLERY IMAGES - FIXED DUPLICATE HEADER ISSUE
+    function displayGalleryImages(images) {
+        const galleryGrid = document.getElementById('galleryGrid');
+        if (!galleryGrid) return;
         
+        const gallerySection = galleryGrid.closest('.gallery-section');
+        
+        // Clear existing content
         galleryGrid.innerHTML = '';
         
-        galleryImages.forEach((image, index) => {
-            galleryGrid.innerHTML += `
-                <div class="gallery-item" onclick="openLightbox('${image}', ${index})">
-                    <img src="${image}" alt="Tour Gallery ${index + 1}" class="gallery-img">
+        // Remove any existing dynamic headers/controls (keep static h3)
+        const existingControls = gallerySection.querySelectorAll('.gallery-header, .gallery-controls');
+        existingControls.forEach(control => control.remove());
+        
+        // Check if there's a static h3 header in HTML
+        const staticHeader = gallerySection.querySelector('h3');
+        
+        // Always add controls after static header (if exists) or create full header
+        if (staticHeader) {
+            // Static header exists, just add controls
+            const controlsHTML = `
+                <div class="gallery-controls">
+                    <div class="gallery-counter">
+                        <i class="fas fa-camera"></i> ${images.length} Photos
+                    </div>
+                    <div class="gallery-filters">
+                        <button class="gallery-filter-btn active" data-category="all">
+                            <i class="fas fa-th"></i> All
+                        </button>
+                        <button class="gallery-filter-btn" data-category="attractions">
+                            <i class="fas fa-map-marked-alt"></i> Attractions
+                        </button>
+                        <button class="gallery-filter-btn" data-category="accommodation">
+                            <i class="fas fa-bed"></i> Hotels
+                        </button>
+                        <button class="gallery-filter-btn" data-category="activities">
+                            <i class="fas fa-hiking"></i> Activities
+                        </button>
+                        <button class="gallery-filter-btn" data-category="food">
+                            <i class="fas fa-utensils"></i> Food
+                        </button>
+                        <button class="gallery-filter-btn" data-category="landscape">
+                            <i class="fas fa-mountain"></i> Landscape
+                        </button>
+                    </div>
                 </div>
             `;
+            
+            staticHeader.insertAdjacentHTML('afterend', controlsHTML);
+        } else {
+            // No static header, create full header
+            const headerHTML = `
+                <div class="gallery-header">
+                    <div class="gallery-title">
+                        <h3><i class="fas fa-images"></i> Photo Gallery</h3>
+                        <div class="gallery-counter">
+                            <i class="fas fa-camera"></i> ${images.length} Photos
+                        </div>
+                    </div>
+                    <div class="gallery-filters">
+                        <button class="gallery-filter-btn active" data-category="all">
+                            <i class="fas fa-th"></i> All
+                        </button>
+                        <button class="gallery-filter-btn" data-category="attractions">
+                            <i class="fas fa-map-marked-alt"></i> Attractions
+                        </button>
+                        <button class="gallery-filter-btn" data-category="accommodation">
+                            <i class="fas fa-bed"></i> Hotels
+                        </button>
+                        <button class="gallery-filter-btn" data-category="activities">
+                            <i class="fas fa-hiking"></i> Activities
+                        </button>
+                        <button class="gallery-filter-btn" data-category="food">
+                            <i class="fas fa-utensils"></i> Food
+                        </button>
+                        <button class="gallery-filter-btn" data-category="landscape">
+                            <i class="fas fa-mountain"></i> Landscape
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            gallerySection.insertAdjacentHTML('afterbegin', headerHTML);
+        }
+        
+        // Add loading state
+        galleryGrid.classList.add('loading');
+        
+        // Display images with delay for better UX
+        setTimeout(() => {
+            galleryGrid.classList.remove('loading');
+            
+            images.forEach((image, index) => {
+                const isWide = index % 5 === 0;
+                const isTall = index % 7 === 0;
+                
+                galleryGrid.innerHTML += `
+                    <div class="gallery-item ${isWide ? 'gallery-wide' : ''} ${isTall ? 'gallery-tall' : ''}" 
+                        onclick="openLightbox('${image}', ${index})">
+                        <img src="${image}" alt="Tour Gallery ${index + 1}" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                            <span class="image-number">${index + 1}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Store for lightbox navigation
+            window.currentGalleryImages = images;
+            
+            // Add gallery filter listeners
+            addGalleryFilterListeners();
+            
+        }, 300);
+    }
+
+    // ✅ GALLERY FILTER FUNCTIONALITY
+    function addGalleryFilterListeners() {
+        const filterButtons = document.querySelectorAll('.gallery-filter-btn');
+        
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', async function() {
+                const category = this.dataset.category;
+                
+                // Update active button
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Load category images
+                await loadGalleryByCategory(category);
+            });
         });
     }
+
+    // ✅ CẬP NHẬT LOAD GALLERY BY CATEGORY - VỚI FALLBACK VÀ CLIENT-SIDE FILTERING
+    async function loadGalleryByCategory(category) {
+        const galleryGrid = document.getElementById('galleryGrid');
+        
+        try {
+            // Hiển thị loading state
+            galleryGrid.innerHTML = '<div class="gallery-loading"><i class="fas fa-spinner fa-spin"></i> Đang tải ảnh...</div>';
+            
+            let images = [];
+            
+            // Thử gọi API trước
+            if (currentTour && currentTour._id) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/tours/${currentTour._id}/gallery/${category}`);
+                    if (response.ok) {
+                        images = await response.json();
+                        console.log(`✅ Đã tải ${images.length} ảnh cho category: ${category}`);
+                    } else {
+                        throw new Error(`API trả về ${response.status}`);
+                    }
+                } catch (apiError) {
+                    console.log(`⚠️ API thất bại cho category ${category}, sử dụng dữ liệu mẫu:`, apiError.message);
+                    // Fallback về sample data
+                    images = getSampleGalleryByCategory(category);
+                }
+            } else {
+                // Không có tour ID, dùng sample data
+                images = getSampleGalleryByCategory(category);
+            }
+            
+            // Hiển thị ảnh
+            if (images && images.length > 0) {
+                displayGalleryImages(images);
+            } else {
+                // Hiển thị thông báo không có ảnh
+                galleryGrid.innerHTML = `
+                    <div class="no-images-message">
+                        <i class="fas fa-images"></i>
+                        <p>Không có ảnh nào cho ${category === 'all' ? 'tour này' : category}</p>
+                    </div>
+                `;
+            }
+            
+            // Cập nhật nút filter active
+            updateActiveFilterButton(category);
+            
+        } catch (error) {
+            console.error('Lỗi khi tải gallery:', error);
+            galleryGrid.innerHTML = `
+                <div class="gallery-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Không thể tải ảnh. Vui lòng thử lại.</p>
+                </div>
+            `;
+        }
+    }
+
+    // ✅ FUNCTION MỚI - LẤY SAMPLE GALLERY THEO CATEGORY
+    function getSampleGalleryByCategory(category) {
+        const destination = currentTour?.country || 'general';
+        const baseSample = getSampleGalleryForDestination(destination);
+        
+        if (category === 'all') {
+            return baseSample;
+        }
+        
+        // Lọc theo category
+        return baseSample.filter(image => image.category === category);
+    }
+
+    // ✅ FUNCTION MỚI - LẤY SAMPLE GALLERY CHO ĐIỂM ĐẾN
+    function getSampleGalleryForDestination(destination) {
+        const galleries = {
+            'Maldives': [
+                {
+                    id: 'maldives-1',
+                    url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400',
+                    category: 'landscape',
+                    title: 'Vùng nước trong vắt',
+                    description: 'Hồ nước nguyên sơ tuyệt đẹp'
+                },
+                {
+                    id: 'maldives-2',
+                    url: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400',
+                    category: 'accommodation',
+                    title: 'Bungalow trên nước',
+                    description: 'Villa sang trọng trên mặt nước'
+                },
+                {
+                    id: 'maldives-3',
+                    url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400',
+                    category: 'attractions',
+                    title: 'Hoàng hôn tuyệt đẹp',
+                    description: 'Cảnh hoàng hôn ngoạn mục'
+                },
+                {
+                    id: 'maldives-4',
+                    url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400',
+                    category: 'activities',
+                    title: 'Lặn ngắm san hô',
+                    description: 'Khám phá thế giới dưới nước'
+                },
+                {
+                    id: 'maldives-5',
+                    url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400',
+                    category: 'food',
+                    title: 'Hải sản tươi sống',
+                    description: 'Đặc sản địa phương'
+                },
+                {
+                    id: 'maldives-6',
+                    url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400',
+                    category: 'landscape',
+                    title: 'Thiên đường nhiệt đới',
+                    description: 'Hòn đảo thiên đường'
+                }
+            ],
+            'Japan': [
+                {
+                    id: 'japan-1',
+                    url: 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=400',
+                    category: 'attractions',
+                    title: 'Tháp Tokyo',
+                    description: 'Biểu tượng nổi tiếng của thành phố'
+                },
+                {
+                    id: 'japan-2',
+                    url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+                    category: 'accommodation',
+                    title: 'Ryokan truyền thống',
+                    description: 'Nhà trọ truyền thống Nhật Bản'
+                },
+                {
+                    id: 'japan-3',
+                    url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=400',
+                    category: 'landscape',
+                    title: 'Hoa anh đào',
+                    description: 'Mùa sakura mùa xuân'
+                },
+                {
+                    id: 'japan-4',
+                    url: 'https://images.unsplash.com/photo-1591464491306-9f52e73781ac?w=400',
+                    category: 'food',
+                    title: 'Sushi chính thống',
+                    description: 'Ẩm thực Nhật Bản tươi ngon'
+                },
+                {
+                    id: 'japan-5',
+                    url: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400',
+                    category: 'activities',
+                    title: 'Thăm chùa',
+                    description: 'Trải nghiệm văn hóa'
+                },
+                {
+                    id: 'japan-6',
+                    url: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400',
+                    category: 'landscape',
+                    title: 'Núi Phú Sĩ',
+                    description: 'Ngọn núi thiêng liêng'
+                }
+            ],
+            'France': [
+                {
+                    id: 'france-1',
+                    url: 'https://images.unsplash.com/photo-1502602898536-47ad22581b52?w=400',
+                    category: 'attractions',
+                    title: 'Tháp Eiffel',
+                    description: 'Biểu tượng Paris nổi tiếng'
+                },
+                {
+                    id: 'france-2',
+                    url: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400',
+                    category: 'accommodation',
+                    title: 'Khách sạn sang trọng',
+                    description: 'Khách sạn Paris thanh lịch'
+                },
+                {
+                    id: 'france-3',
+                    url: 'https://images.unsplash.com/photo-1549396535-c11d5c55b9df?w=400',
+                    category: 'food',
+                    title: 'Ẩm thực Pháp',
+                    description: 'Trải nghiệm ẩm thực cao cấp'
+                },
+                {
+                    id: 'france-4',
+                    url: 'https://images.unsplash.com/photo-1524821502015-c3c7d3ba32ec?w=400',
+                    category: 'landscape',
+                    title: 'Sông Seine',
+                    description: 'Cảnh đẹp bên sông'
+                },
+                {
+                    id: 'france-5',
+                    url: 'https://images.unsplash.com/photo-1520637836862-4d197d17c916?w=400',
+                    category: 'activities',
+                    title: 'Tham quan bảo tàng',
+                    description: 'Nghệ thuật và văn hóa'
+                },
+                {
+                    id: 'france-6',
+                    url: 'https://images.unsplash.com/photo-1471623320832-752e8bbf8413?w=400',
+                    category: 'attractions',
+                    title: 'Kiến trúc lịch sử',
+                    description: 'Tòa nhà đẹp mắt'
+                }
+            ]
+        };
+        
+        return galleries[destination] || [
+            {
+                id: 'default-1',
+                url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400',
+                category: 'landscape',
+                title: 'Cảnh đẹp thiên nhiên',
+                description: 'Khung cảnh tự nhiên tuyệt đẹp'
+            },
+            {
+                id: 'default-2',
+                url: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+                category: 'accommodation',
+                title: 'Nơi nghỉ ngơi thoải mái',
+                description: 'Chỗ ở chất lượng cao'
+            },
+            {
+                id: 'default-3',
+                url: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400',
+                category: 'attractions',
+                title: 'Điểm tham quan nổi tiếng',
+                description: 'Những địa điểm không thể bỏ qua'
+            },
+            {
+                id: 'default-4',
+                url: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400',
+                category: 'activities',
+                title: 'Hoạt động thú vị',
+                description: 'Trải nghiệm hấp dẫn'
+            },
+            {
+                id: 'default-5',
+                url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400',
+                category: 'food',
+                title: 'Ẩm thực địa phương',
+                description: 'Món ăn ngon tuyệt'
+            },
+            {
+                id: 'default-6',
+                url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400',
+                category: 'landscape',
+                title: 'Vẻ đẹp tự nhiên',
+                description: 'Phong cảnh ngoạn mục'
+            }
+        ];
+    }
+
+    
+
+    // ✅ CẬP NHẬT DISPLAY GALLERY IMAGES - XÓA VẤN ĐỀ DUPLICATE HEADER
+    function displayGalleryImages(images) {
+        const galleryGrid = document.getElementById('galleryGrid');
+        if (!galleryGrid) return;
+        
+        const gallerySection = galleryGrid.closest('.gallery-section');
+        
+        // Xóa nội dung hiện có
+        galleryGrid.innerHTML = '';
+        
+        // Xóa các header/controls động hiện có (giữ h3 static)
+        const existingControls = gallerySection.querySelectorAll('.gallery-header, .gallery-controls');
+        existingControls.forEach(control => control.remove());
+        
+        // Kiểm tra có h3 static trong HTML không
+        const staticHeader = gallerySection.querySelector('h3');
+        
+        // Luôn thêm controls sau static header (nếu có) hoặc tạo header đầy đủ
+        if (staticHeader) {
+            // Chèn controls sau h3 hiện có
+            const controls = document.createElement('div');
+            controls.className = 'gallery-controls';
+            controls.innerHTML = `
+                <div class="gallery-filters">
+                    <button class="gallery-filter-btn active" onclick="loadGalleryByCategory('all')">Tất cả</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('attractions')">Điểm tham quan</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('accommodation')">Chỗ ở</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('activities')">Hoạt động</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('food')">Ẩm thực</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('landscape')">Phong cảnh</button>
+                </div>
+            `;
+            staticHeader.insertAdjacentElement('afterend', controls);
+        } else {
+            // Tạo header đầy đủ nếu không có h3 static
+            const header = document.createElement('div');
+            header.className = 'gallery-header';
+            header.innerHTML = `
+                <h3>Thư viện ảnh</h3>
+                <div class="gallery-filters">
+                    <button class="gallery-filter-btn active" onclick="loadGalleryByCategory('all')">Tất cả</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('attractions')">Điểm tham quan</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('accommodation')">Chỗ ở</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('activities')">Hoạt động</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('food')">Ẩm thực</button>
+                    <button class="gallery-filter-btn" onclick="loadGalleryByCategory('landscape')">Phong cảnh</button>
+                </div>
+            `;
+            galleryGrid.insertAdjacentElement('beforebegin', header);
+        }
+        
+        // Thêm loading state
+        galleryGrid.classList.add('loading');
+        
+        // Hiển thị ảnh với delay để UX tốt hơn
+        setTimeout(() => {
+            galleryGrid.classList.remove('loading');
+            
+            if (!images || images.length === 0) {
+                galleryGrid.innerHTML = `
+                    <div class="no-images">
+                        <i class="fas fa-images"></i>
+                        <p>Không có ảnh nào</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            galleryGrid.innerHTML = '';
+            
+            images.forEach((image, index) => {
+                const imageUrl = image.url || image.src || image;
+                const title = image.title || `Ảnh Gallery ${index + 1}`;
+                const description = image.description || '';
+                
+                const imageElement = document.createElement('div');
+                imageElement.className = 'gallery-item';
+                imageElement.innerHTML = `
+                    <img src="${imageUrl}" alt="${title}" onclick="openLightbox('${imageUrl}', ${index})">
+                    <div class="gallery-overlay">
+                        <h5>${title}</h5>
+                        ${description ? `<p>${description}</p>` : ''}
+                    </div>
+                `;
+                
+                galleryGrid.appendChild(imageElement);
+            });
+            
+            // Thêm lại filter listeners
+            addGalleryFilterListeners();
+            
+        }, 300);
+    }
+
+    // ✅ CẬP NHẬT LOAD GALLERY TỪ DATABASE - VỚI FALLBACK TỐT HỠN
+    async function loadGallery() {
+        const galleryGrid = document.getElementById('galleryGrid');
+        if (!galleryGrid) return;
+        
+        try {
+            let images = [];
+            
+            // Thử tải từ API
+            if (currentTour && currentTour._id) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/tours/${currentTour._id}/gallery`);
+                    if (response.ok) {
+                        images = await response.json();
+                        console.log(`✅ Đã tải ${images.length} ảnh gallery từ API`);
+                    } else {
+                        throw new Error('API không khả dụng');
+                    }
+                } catch (apiError) {
+                    console.log('⚠️ Gallery API thất bại, dùng dữ liệu mẫu:', apiError.message);
+                    images = getSampleGalleryByCategory('all');
+                }
+            } else {
+                // Không có dữ liệu tour, dùng sample
+                images = getSampleGalleryByCategory('all');
+            }
+            
+            // Hiển thị ảnh
+            displayGalleryImages(images);
+            
+        } catch (error) {
+            console.error('Lỗi khi tải gallery:', error);
+            // Hiển thị thông báo lỗi nhưng vẫn cung cấp sample data
+            displayGalleryImages(getSampleGalleryByCategory('all'));
+        }
+    }
+
+    // ✅ ADD GALLERY FILTER STYLES
+    const galleryStyles = `
+        .gallery-loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .gallery-error {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+        }
+        
+        .gallery-error i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .no-images-message {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .no-images-message i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .gallery-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .gallery-filter-btn {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            color: #495057;
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .gallery-filter-btn:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+        
+        .gallery-filter-btn.active {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            border-color: #ff6b35;
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 20px 15px 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-overlay h5 {
+            margin: 0 0 5px 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .gallery-overlay p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+    `;
+
+    // Add gallery styles if not already added
+    if (!document.getElementById('gallery-styles')) {
+        const style = document.createElement('style');
+        style.id = 'gallery-styles';
+        style.textContent = galleryStyles;
+        document.head.appendChild(style);
+    }
+
+    // Update window exports
+    window.loadGallery = loadGallery;
+    window.loadGalleryByCategory = loadGalleryByCategory;
     
     // ==================== EVENT LISTENERS SETUP ====================
     function setupEventListeners() {
@@ -1415,39 +2236,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Booking functionality
     function calculateTotalPrice() {
-        if (!currentTour) return;
+        if (!currentTour) return 0;
         
-        const adults = parseInt(document.querySelector('.traveler-item:first-child .quantity').textContent) || 0;
-        const children = parseInt(document.querySelector('.traveler-item:last-child .quantity').textContent) || 0;
+        const adults = parseInt(document.querySelector('.traveler-item:first-child .quantity')?.textContent) || 0;
+        const children = parseInt(document.querySelector('.traveler-item:last-child .quantity')?.textContent) || 0;
         
-        const adultPrice = currentTour.pricing?.adult || currentTour.estimatedCost;
-        const childPrice = currentTour.pricing?.child || Math.round(adultPrice * 0.7);
-        const servicePrice = 50;
+        const adultPrice = currentTour.estimatedCost || 0;
+        const childPrice = adultPrice * 0.7; // Children get 30% discount
         
-        const subtotal = (adults * adultPrice) + (children * childPrice);
-        const total = subtotal + servicePrice;
+        const total = (adults * adultPrice) + (children * childPrice);
         
-        // Update price breakdown
-        const priceBreakdown = document.querySelector('.price-breakdown');
-        if (priceBreakdown) {
-            priceBreakdown.innerHTML = `
-                <div class="price-row">
-                    <span>Adults x ${adults}</span>
-                    <span>$${(adults * adultPrice).toLocaleString()}</span>
-                </div>
-                <div class="price-row">
-                    <span>Children x ${children}</span>
-                    <span>$${(children * childPrice).toLocaleString()}</span>
-                </div>
-                <div class="price-row">
-                    <span>Service Fee</span>
-                    <span>$${servicePrice}</span>
-                </div>
-                <div class="price-row total">
-                    <span>Total</span>
-                    <span>$${total.toLocaleString()}</span>
-                </div>
-            `;
+        // Update price display
+        const priceRows = document.querySelectorAll('.price-row');
+        if (priceRows.length >= 3) {
+            priceRows[0].querySelector('span:last-child').textContent = `$${(adults * adultPrice).toLocaleString()}`;
+            priceRows[1].querySelector('span:last-child').textContent = `$${(children * childPrice).toLocaleString()}`;
+            priceRows[2].querySelector('span:last-child').textContent = `$${total.toLocaleString()}`;
         }
         
         return total;
@@ -1484,63 +2288,1249 @@ document.addEventListener('DOMContentLoaded', function() {
         return isValid;
     }
     
-    async function handleBookNow() {
-      if (!currentUser) {
-          showAlert('Vui lòng đăng nhập để đặt tour', 'warning');
-          setTimeout(() => {
-              window.location.href = 'login.html';
-          }, 2000);
-          return;
-      }
-      
-      if (!validateBookingForm()) {
-          showAlert('Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
-          return;
-      }
-      
-      const bookingData = {
-          tourId: currentTour._id,
-          userId: currentUser._id || currentUser.id,
-          checkinDate: document.getElementById('checkinDate').value,
-          adults: parseInt(document.querySelector('.traveler-item:first-child .quantity').textContent),
-          children: parseInt(document.querySelector('.traveler-item:last-child .quantity').textContent),
-          totalPrice: calculateTotalPrice(),
-          status: 'pending'
-      };
-      
-      try {
-          showLoadingState();
-          
-          const response = await fetch('http://localhost:3000/api/bookings', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${localStorage.getItem('userId')}` // Sử dụng userId thay vì authToken
-              },
-              body: JSON.stringify(bookingData)
-          });
-          
-          if (response.ok) {
-              const result = await response.json();
-              showAlert('Đặt tour thành công! Chúng tôi sẽ liên hệ với bạn sớm.', 'success');
-              
-              // Track booking event
-              trackEvent('tour_booked', {
-                  tour_id: currentTour._id,
-                  tour_name: currentTour.name,
-                  total_price: bookingData.totalPrice
-              });
-          } else {
-              throw new Error('Booking failed');
-          }
-          
-      } catch (error) {
-          console.error('Booking error:', error);
-          showAlert('Có lỗi xảy ra khi đặt tour. Vui lòng thử lại.', 'error');
-      } finally {
-          hideLoadingState();
-      }
-  }
+    // ✅ GLOBAL VARIABLE TO TRACK BOOKING FLOW
+    let isFromBookingFlow = false;
+
+    // ✅ CẬP NHẬT FUNCTION XỬ LÝ BOOK NOW
+    function handleBookNow() {
+        console.log('📝 Book Now clicked for tour:', currentTour.name);
+        isFromBookingFlow = true; // ✅ Set booking flow flag
+        showHotelSelectionModal();
+    }
+
+   // Tìm và thay thế function showHotelSelectionModal:
+
+    // ✅ HOTEL SELECTION MODAL - FULL ENGLISH VERSION
+    async function showHotelSelectionModal() {
+        try {
+            // Get destination from current tour
+            const destination = currentTour?.country || 'general';
+            
+            console.log(`🏨 Loading hotels for destination: ${destination}`);
+            
+            // Try destination-specific API first
+            let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
+            let destinationHotels = [];
+            
+            if (response.ok) {
+                destinationHotels = await response.json();
+                console.log(`✅ Found ${destinationHotels.length} hotels for ${destination}`);
+            }
+            
+            // Fallback if no hotels found
+            if (!destinationHotels || destinationHotels.length === 0) {
+                console.log(`❌ No hotels found for ${destination}, using general hotels`);
+                const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
+                if (fallbackResponse.ok) {
+                    destinationHotels = await fallbackResponse.json();
+                }
+            }
+            
+            // Final fallback with sample data
+            if (!destinationHotels || destinationHotels.length === 0) {
+                console.log('💡 Using sample hotel data');
+                destinationHotels = getSampleHotels(destination);
+            }
+            
+            const modal = document.createElement('div');
+            modal.className = 'hotel-selection-modal-overlay';
+            modal.innerHTML = `
+                <div class="hotel-selection-modal">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-bed"></i> Select Hotel in ${destination}</h3>
+                        <button class="modal-close" onclick="this.closest('.hotel-selection-modal-overlay').remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="selection-note">
+                            <i class="fas fa-info-circle"></i> 
+                            Choose a suitable hotel for your trip to ${destination}
+                        </p>
+                        <div class="hotels-list">
+                            ${destinationHotels.map(hotel => `
+                                <div class="hotel-option" data-hotel-id="${hotel._id || hotel.id}">
+                                    <div class="hotel-info">
+                                        <img src="${hotel.details?.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=120'}" 
+                                            alt="${hotel.name}" class="hotel-thumb">
+                                        <div class="hotel-details">
+                                            <h4>${hotel.name}</h4>
+                                            <div class="hotel-rating">
+                                                ${generateStarsHTML(hotel.details?.rating || 4.5)}
+                                                <span class="rating-score">${hotel.details?.rating || 4.5}</span>
+                                                <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
+                                            </div>
+                                            <div class="hotel-location">
+                                                <i class="fas fa-map-marker-alt"></i> ${hotel.location?.address || hotel.location?.city || 'Prime Location'}
+                                            </div>
+                                            <div class="hotel-amenities">
+                                                ${(hotel.details?.amenities || ['wifi', 'restaurant', 'pool']).slice(0, 4).map(amenity => 
+                                                    `<span class="amenity-tag">${getAmenityName(amenity)}</span>`
+                                                ).join('')}
+                                            </div>
+                                            <div class="hotel-description">
+                                                <p>${hotel.details?.description?.substring(0, 100) || 'Luxury accommodation with excellent service and convenient location'}...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="hotel-actions">
+                                        <button class="btn-view-hotel-detail" onclick="showHotelDetailModal('${hotel._id || hotel.id}')">
+                                            <i class="fas fa-eye"></i> Details
+                                        </button>
+                                        <button class="btn-select-hotel" onclick="selectHotelAndProceed('${hotel._id || hotel.id}', '${hotel.name.replace(/'/g, "\\'")}')">
+                                            <i class="fas fa-check"></i> Select
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="this.closest('.hotel-selection-modal-overlay').remove()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+            
+        } catch (error) {
+            console.error('Error loading hotels:', error);
+            showAlert('Unable to load hotel list. Please try again.', 'error');
+        }
+    }
+
+    // ✅ FUNCTION ĐÓNG HOTEL DETAIL MODAL
+    function closeHotelDetailModal() {
+        const modal = document.querySelector('.hotel-detail-modal-overlay');
+        if (modal) {
+            modal.remove();
+        }
+    }
+
+    // ✅ FUNCTION SELECT HOTEL FROM DETAIL MODAL
+    function selectHotelFromDetail(hotelId, hotelName) {
+        console.log('✅ Hotel selected from detail:', hotelName);
+        
+        // Close hotel detail modal
+        closeHotelDetailModal();
+        
+        // Close hotel selection modal
+        const selectionModal = document.querySelector('.hotel-selection-modal-overlay');
+        if (selectionModal) {
+            selectionModal.remove();
+        }
+        
+        // Proceed to reservation
+        selectHotelAndProceed(hotelId, hotelName);
+    }
+
+    
+
+    // ✅ HELPER FUNCTION - GET SAMPLE HOTELS BY DESTINATION
+    function getSampleHotels(destination) {
+        const sampleByDestination = {
+            'Maldives': [
+                { 
+                    _id: 'sample-maldives-1', 
+                    id: 'sample-maldives-1',
+                    name: 'Maldives Paradise Resort', 
+                    details: { 
+                        rating: 4.9, 
+                        priceRange: { min: 500 }, 
+                        amenities: ['wifi', 'spa', 'water_sports'], 
+                        images: ['https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120'] 
+                    }, 
+                    location: { address: 'Malé Atoll, Maldives' } 
+                },
+                { 
+                    _id: 'sample-maldives-2', 
+                    id: 'sample-maldives-2',
+                    name: 'Overwater Bungalow Resort', 
+                    details: { 
+                        rating: 4.8, 
+                        priceRange: { min: 600 }, 
+                        amenities: ['wifi', 'overwater', 'snorkeling'], 
+                        images: ['https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=120'] 
+                    }, 
+                    location: { address: 'Baa Atoll, Maldives' } 
+                },
+                { 
+                    _id: 'sample-maldives-3', 
+                    id: 'sample-maldives-3',
+                    name: 'Sunset Island Villa', 
+                    details: { 
+                        rating: 4.7, 
+                        priceRange: { min: 400 }, 
+                        amenities: ['wifi', 'private_beach', 'sunset_view'], 
+                        images: ['https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=120'] 
+                    }, 
+                    location: { address: 'Ari Atoll, Maldives' } 
+                }
+            ],
+            'Japan': [
+                { 
+                    _id: 'sample-japan-1', 
+                    id: 'sample-japan-1',
+                    name: 'Tokyo Imperial Hotel', 
+                    details: { 
+                        rating: 4.8, 
+                        priceRange: { min: 300 }, 
+                        amenities: ['wifi', 'spa', 'restaurant'], 
+                        images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=120'] 
+                    }, 
+                    location: { address: 'Tokyo, Japan' } 
+                },
+                { 
+                    _id: 'sample-japan-2', 
+                    id: 'sample-japan-2',
+                    name: 'Osaka Castle View', 
+                    details: { 
+                        rating: 4.6, 
+                        priceRange: { min: 250 }, 
+                        amenities: ['wifi', 'city_view', 'bar'], 
+                        images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=120'] 
+                    }, 
+                    location: { address: 'Osaka, Japan' } 
+                },
+                { 
+                    _id: 'sample-japan-3', 
+                    id: 'sample-japan-3',
+                    name: 'Kyoto Traditional Ryokan', 
+                    details: { 
+                        rating: 4.9, 
+                        priceRange: { min: 400 }, 
+                        amenities: ['wifi', 'spa', 'traditional'], 
+                        images: ['https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=120'] 
+                    }, 
+                    location: { address: 'Kyoto, Japan' } 
+                }
+            ]
+        };
+        
+        return sampleByDestination[destination] || [
+            { 
+                _id: 'general-1', 
+                id: 'general-1',
+                name: 'Premium City Hotel', 
+                details: { 
+                    rating: 4.5, 
+                    priceRange: { min: 200 }, 
+                    amenities: ['wifi', 'restaurant', 'pool'], 
+                    images: ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=120'] 
+                }, 
+                location: { address: 'City Center' } 
+            },
+            { 
+                _id: 'general-2', 
+                id: 'general-2',
+                name: 'Luxury Resort', 
+                details: { 
+                    rating: 4.7, 
+                    priceRange: { min: 300 }, 
+                    amenities: ['wifi', 'spa', 'luxury'], 
+                    images: ['https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=120'] 
+                }, 
+                location: { address: 'Resort Area' } 
+            },
+            { 
+                _id: 'general-3', 
+                id: 'general-3',
+                name: 'Boutique Hotel', 
+                details: { 
+                    rating: 4.4, 
+                    priceRange: { min: 150 }, 
+                    amenities: ['wifi', 'boutique', 'bar'], 
+                    images: ['https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=120'] 
+                }, 
+                location: { address: 'Historic District' } 
+            }
+        ];
+    }
+
+
+
+    // Thêm vào cuối file, trước phần window exports:
+
+    // ✅ FUNCTION GET SAMPLE HOTEL DETAIL - THÊM FUNCTION NÀY
+    function getSampleHotelDetail(hotelId) {
+        const sampleHotels = {
+            'sample-maldives-1': {
+                _id: 'sample-maldives-1',
+                name: 'Maldives Paradise Resort',
+                location: {
+                    address: 'Malé Atoll, Republic of Maldives',
+                    city: 'Malé',
+                    country: 'Maldives'
+                },
+                details: {
+                    rating: 4.9,
+                    starRating: 5,
+                    priceRange: { min: 500, max: 1500 },
+                    amenities: ['wifi', 'pool', 'spa', 'water_sports', 'diving_center', 'restaurant', 'bar'],
+                    images: [
+                        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600',
+                        'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600',
+                        'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600'
+                    ],
+                    description: 'Exclusive overwater resort in pristine Maldivian waters with unparalleled luxury and natural beauty.',
+                    roomTypes: [
+                        {
+                            type: 'Beach Villa',
+                            price: 500,
+                            capacity: 2,
+                            size: 80,
+                            amenities: ['wifi', 'tv', 'ac', 'private_beach', 'outdoor_shower']
+                        },
+                        {
+                            type: 'Overwater Bungalow',
+                            price: 800,
+                            capacity: 2,
+                            size: 100,
+                            amenities: ['wifi', 'tv', 'ac', 'glass_floor', 'direct_lagoon_access']
+                        },
+                        {
+                            type: 'Presidential Suite',
+                            price: 1500,
+                            capacity: 4,
+                            size: 200,
+                            amenities: ['wifi', 'tv', 'ac', 'private_pool', 'butler_service', 'yacht']
+                        }
+                    ]
+                },
+                reviewsSummary: {
+                    totalReviews: 287,
+                    averageRating: 4.9
+                }
+            },
+            'sample-japan-1': {
+                _id: 'sample-japan-1',
+                name: 'Tokyo Imperial Hotel',
+                location: {
+                    address: 'Shibuya, Tokyo, Japan',
+                    city: 'Tokyo',
+                    country: 'Japan'
+                },
+                details: {
+                    rating: 4.8,
+                    starRating: 5,
+                    priceRange: { min: 300, max: 800 },
+                    amenities: ['wifi', 'spa', 'gym', 'restaurant', 'bar', 'concierge', 'room_service'],
+                    images: [
+                        'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600',
+                        'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600',
+                        'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600'
+                    ],
+                    description: 'Luxury hotel in the heart of Tokyo with stunning city views, world-class amenities, and exceptional service.',
+                    roomTypes: [
+                        {
+                            type: 'Standard Room',
+                            price: 300,
+                            capacity: 2,
+                            size: 25,
+                            amenities: ['wifi', 'tv', 'ac', 'minibar']
+                        },
+                        {
+                            type: 'Deluxe Room',
+                            price: 450,
+                            capacity: 3,
+                            size: 35,
+                            amenities: ['wifi', 'tv', 'ac', 'minibar', 'balcony']
+                        },
+                        {
+                            type: 'Executive Suite',
+                            price: 800,
+                            capacity: 4,
+                            size: 60,
+                            amenities: ['wifi', 'tv', 'ac', 'minibar', 'balcony', 'living_room', 'city_view']
+                        }
+                    ]
+                },
+                reviewsSummary: {
+                    totalReviews: 456,
+                    averageRating: 4.8
+                }
+            }
+        };
+        
+        // Return specific hotel or default hotel
+        return sampleHotels[hotelId] || sampleHotels['sample-maldives-1'];
+    }
+
+    // ✅ FUNCTION GET SAMPLE ROOM TYPES - THÊM FUNCTION NÀY
+    function getSampleRoomTypes() {
+        return [
+            {
+                type: 'Standard Room',
+                capacity: 2,
+                size: 25,
+                amenities: ['wifi', 'tv', 'ac']
+            },
+            {
+                type: 'Deluxe Room',
+                capacity: 3,
+                size: 35,
+                amenities: ['wifi', 'tv', 'ac', 'balcony']
+            },
+            {
+                type: 'Suite',
+                capacity: 4,
+                size: 60,
+                amenities: ['wifi', 'tv', 'ac', 'living_room', 'premium_view']
+            }
+        ];
+    }
+
+    // ✅ FUNCTION GET AMENITY NAME - THÊM FUNCTION NÀY
+    function getAmenityName(amenity) {
+        const amenityNames = {
+            'wifi': 'Free WiFi',
+            'pool': 'Swimming Pool',
+            'spa': 'Spa & Wellness',
+            'gym': 'Fitness Center',
+            'restaurant': 'Restaurant',
+            'bar': 'Bar & Lounge',
+            'concierge': 'Concierge Service',
+            'room_service': '24h Room Service',
+            'water_sports': 'Water Sports',
+            'diving_center': 'Diving Center',
+            'tv': 'Smart TV',
+            'ac': 'Air Conditioning',
+            'minibar': 'Minibar',
+            'balcony': 'Private Balcony',
+            'private_beach': 'Private Beach',
+            'outdoor_shower': 'Outdoor Shower',
+            'glass_floor': 'Glass Floor',
+            'direct_lagoon_access': 'Direct Lagoon Access',
+            'private_pool': 'Private Pool',
+            'butler_service': 'Butler Service',
+            'yacht': 'Private Yacht',
+            'living_room': 'Living Room',
+            'city_view': 'City View',
+            'premium_view': 'Premium View',
+            'traditional_bath': 'Traditional Bath',
+            'garden': 'Garden View',
+            'luxury': 'Luxury Amenities',
+            'ski_storage': 'Ski Storage',
+            'fireplace': 'Fireplace',
+            'mountain_view': 'Mountain View',
+            'hot_tub': 'Hot Tub',
+            'kitchen': 'Kitchen',
+            'overwater': 'Overwater',
+            'snorkeling': 'Snorkeling',
+            'sunset_view': 'Sunset View',
+            'rice_field_view': 'Rice Field View',
+            'private_terrace': 'Private Terrace',
+            'traditional_architecture': 'Traditional Architecture',
+            'yoga_studio': 'Yoga Studio',
+            'cultural_shows': 'Cultural Shows',
+            'aurora_viewing': 'Aurora Viewing',
+            'geothermal_baths': 'Geothermal Baths',
+            'sky_view': 'Sky View',
+            'wake_up_call': 'Aurora Wake-up Call',
+            'panoramic_view': 'Panoramic View',
+            'telescope': 'Telescope',
+            'private_balcony': 'Private Balcony',
+            'beach_access': 'Beach Access',
+            'nightlife': 'Nightlife Access',
+            'golf_course': 'Golf Course',
+            'blue_lagoon_access': 'Blue Lagoon Access',
+            'golden_circle_tours': 'Golden Circle Tours',
+            'boutique': 'Boutique Style',
+            'art_gallery': 'Art Gallery'
+        };
+        
+        return amenityNames[amenity] || amenity.charAt(0).toUpperCase() + amenity.slice(1).replace(/_/g, ' ');
+    }
+    // ✅ FUNCTION CHANGE MAIN IMAGE
+    function changeMainImage(imageSrc) {
+        const mainImage = document.querySelector('.main-hotel-image');
+        if (mainImage) {
+            mainImage.src = imageSrc;
+        }
+    }
+
+    // Thêm function mới cho hotel detail từ sidebar (không có nút Select):
+
+    // ✅ HOTEL DETAIL MODAL FOR SIDEBAR - VIEW ONLY (NO SELECT BUTTON)
+    async function showSidebarHotelDetailModal(hotelId) {
+        try {
+            console.log('🏨 Loading sidebar hotel details for:', hotelId);
+            
+            // Try to fetch hotel details from API
+            let hotel = null;
+            try {
+                const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
+                if (response.ok) {
+                    hotel = await response.json();
+                    console.log('✅ Sidebar hotel loaded from API:', hotel.name);
+                } else {
+                    console.log('❌ API response not ok:', response.status);
+                }
+            } catch (fetchError) {
+                console.log('❌ API fetch failed:', fetchError.message);
+            }
+            
+            // Fallback to sample data if API fails
+            if (!hotel) {
+                console.log('💡 Using sample hotel data for:', hotelId);
+                hotel = getSampleHotelDetail(hotelId);
+            }
+            
+            // Ensure hotel object has required properties
+            if (!hotel || !hotel.name) {
+                console.error('❌ Invalid hotel data:', hotel);
+                showAlert('Unable to load hotel information. Please try again.', 'error');
+                return;
+            }
+            
+            // Prepare hotel images (minimum 6 images for gallery)
+            const hotelImages = hotel.details?.images || [];
+            const galleryImages = [
+                ...hotelImages,
+                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
+                'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800',
+                'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800',
+                'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800',
+                'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800',
+                'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
+                'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800'
+            ].slice(0, 8);
+            
+            const modal = document.createElement('div');
+            modal.className = 'sidebar-hotel-detail-modal-overlay';
+            modal.innerHTML = `
+                <div class="sidebar-hotel-detail-modal">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-hotel"></i> ${hotel.name}</h3>
+                        <button class="modal-close" onclick="closeSidebarHotelDetailModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="hotel-detail-content">
+                            <div class="hotel-images">
+                                <div class="main-image-container">
+                                    <img src="${galleryImages[0]}" alt="${hotel.name}" class="main-hotel-image" id="sidebarMainHotelImage">
+                                    <div class="image-nav-buttons">
+                                        <button class="nav-btn prev-btn" onclick="navigateSidebarHotelImage(-1)">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        <button class="nav-btn next-btn" onclick="navigateSidebarHotelImage(1)">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="image-counter">
+                                        <span id="sidebarCurrentImageIndex">1</span> / <span id="sidebarTotalImages">${galleryImages.length}</span>
+                                    </div>
+                                    <button class="fullscreen-btn" onclick="openSidebarHotelGallery(0)">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                </div>
+                                <div class="image-thumbnails">
+                                    ${galleryImages.map((img, index) => 
+                                        `<img src="${img}" alt="Hotel ${index + 1}" class="thumb-image ${index === 0 ? 'active' : ''}" 
+                                            onclick="changeSidebarHotelImage(${index})" data-index="${index}">`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="hotel-info-detailed">
+                                <div class="hotel-rating-detailed">
+                                    ${generateStarsHTML(hotel.details?.rating || 4.5)}
+                                    <span class="rating-score">${hotel.details?.rating || 4.5}</span>
+                                    <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
+                                </div>
+                                
+                                <div class="hotel-location-detailed">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${hotel.location?.address || hotel.location?.city || 'Prime Location'}</span>
+                                </div>
+                                
+                                <div class="hotel-description">
+                                    <h4>Description</h4>
+                                    <p>${hotel.details?.description || 'Luxury hotel with excellent service and convenient location.'}</p>
+                                </div>
+                                
+                                <div class="hotel-amenities-detailed">
+                                    <h4>Amenities</h4>
+                                    <div class="amenities-grid">
+                                        ${(hotel.details?.amenities || ['wifi', 'pool', 'spa', 'restaurant']).map(amenity => 
+                                            `<div class="amenity-item">
+                                                <i class="fas fa-check"></i>
+                                                <span>${getAmenityName(amenity)}</span>
+                                            </div>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="room-types">
+                                    <h4>Room Types</h4>
+                                    <div class="room-types-list">
+                                        ${(hotel.details?.roomTypes || getSampleRoomTypes()).map(room => 
+                                            `<div class="room-type-item">
+                                                <div class="room-info">
+                                                    <h5>${room.type}</h5>
+                                                    <p><i class="fas fa-users"></i> ${room.capacity} guests</p>
+                                                    <p><i class="fas fa-expand"></i> ${room.size || 30}m²</p>
+                                                </div>
+                                                <div class="room-amenities">
+                                                    ${(room.amenities || ['wifi', 'tv', 'ac']).slice(0, 3).map(amenity => 
+                                                        `<span class="room-amenity">${getAmenityName(amenity)}</span>`
+                                                    ).join('')}
+                                                </div>
+                                            </div>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="hotel-contact-info">
+                                    <h4>Contact Information</h4>
+                                    <div class="contact-details">
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span>+1 (555) 123-4567</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span>info@${hotel.name.toLowerCase().replace(/\s+/g, '')}.com</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-globe"></i>
+                                            <span>www.${hotel.name.toLowerCase().replace(/\s+/g, '')}.com</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeSidebarHotelDetailModal()">
+                            <i class="fas fa-times"></i> Close
+                        </button>
+                        <button class="btn btn-info" onclick="window.open('https://www.booking.com', '_blank')">
+                            <i class="fas fa-external-link-alt"></i> View on Booking.com
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Sidebar Hotel Gallery Popup -->
+                <div class="sidebar-hotel-gallery-popup" id="sidebarHotelGalleryPopup" style="display: none;">
+                    <div class="gallery-content">
+                        <button class="gallery-close" onclick="closeSidebarHotelGallery()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="gallery-main">
+                            <img src="" alt="Hotel Gallery" id="sidebarGalleryMainImage">
+                            <button class="gallery-nav prev" onclick="navigateSidebarGallery(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="gallery-nav next" onclick="navigateSidebarGallery(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <div class="gallery-counter">
+                                <span id="sidebarGalleryCurrentIndex">1</span> / <span id="sidebarGalleryTotalImages">${galleryImages.length}</span>
+                            </div>
+                        </div>
+                        <div class="gallery-thumbnails">
+                            ${galleryImages.map((img, index) => 
+                                `<img src="${img}" alt="Gallery ${index + 1}" class="gallery-thumb ${index === 0 ? 'active' : ''}" 
+                                    onclick="goToSidebarGalleryImage(${index})" data-index="${index}">`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Store gallery images globally for navigation
+            window.currentSidebarHotelGallery = galleryImages;
+            window.currentSidebarHotelImageIndex = 0;
+            
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeSidebarHotelDetailModal();
+                }
+            });
+            
+        } catch (error) {
+            console.error('❌ Error loading sidebar hotel details:', error);
+            showAlert('Unable to load hotel details. Please try again.', 'error');
+        }
+    }
+
+    // ✅ SIDEBAR HOTEL IMAGE NAVIGATION FUNCTIONS
+    function closeSidebarHotelDetailModal() {
+        const modal = document.querySelector('.sidebar-hotel-detail-modal-overlay');
+        if (modal) {
+            modal.remove();
+        }
+    }
+
+    function changeSidebarHotelImage(index) {
+        const mainImage = document.getElementById('sidebarMainHotelImage');
+        const currentIndex = document.getElementById('sidebarCurrentImageIndex');
+        const thumbnails = document.querySelectorAll('.sidebar-hotel-detail-modal .thumb-image');
+        
+        if (mainImage && window.currentSidebarHotelGallery) {
+            mainImage.src = window.currentSidebarHotelGallery[index];
+            currentIndex.textContent = index + 1;
+            window.currentSidebarHotelImageIndex = index;
+            
+            // Update thumbnail active state
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        }
+    }
+
+    function navigateSidebarHotelImage(direction) {
+        if (!window.currentSidebarHotelGallery) return;
+        
+        let newIndex = window.currentSidebarHotelImageIndex + direction;
+        
+        // Loop around
+        if (newIndex >= window.currentSidebarHotelGallery.length) {
+            newIndex = 0;
+        } else if (newIndex < 0) {
+            newIndex = window.currentSidebarHotelGallery.length - 1;
+        }
+        
+        changeSidebarHotelImage(newIndex);
+    }
+
+    function openSidebarHotelGallery(startIndex = 0) {
+        const popup = document.getElementById('sidebarHotelGalleryPopup');
+        const mainImage = document.getElementById('sidebarGalleryMainImage');
+        const currentIndex = document.getElementById('sidebarGalleryCurrentIndex');
+        const thumbnails = document.querySelectorAll('.sidebar-hotel-gallery-popup .gallery-thumb');
+        
+        if (popup && mainImage && window.currentSidebarHotelGallery) {
+            popup.style.display = 'flex';
+            mainImage.src = window.currentSidebarHotelGallery[startIndex];
+            currentIndex.textContent = startIndex + 1;
+            window.currentSidebarHotelImageIndex = startIndex;
+            
+            // Update thumbnail active state
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === startIndex);
+            });
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeSidebarHotelGallery() {
+        const popup = document.getElementById('sidebarHotelGalleryPopup');
+        if (popup) {
+            popup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    function navigateSidebarGallery(direction) {
+        if (!window.currentSidebarHotelGallery) return;
+        
+        let newIndex = window.currentSidebarHotelImageIndex + direction;
+        
+        // Loop around
+        if (newIndex >= window.currentSidebarHotelGallery.length) {
+            newIndex = 0;
+        } else if (newIndex < 0) {
+            newIndex = window.currentSidebarHotelGallery.length - 1;
+        }
+        
+        goToSidebarGalleryImage(newIndex);
+    }
+
+    function goToSidebarGalleryImage(index) {
+        const mainImage = document.getElementById('sidebarGalleryMainImage');
+        const currentIndex = document.getElementById('sidebarGalleryCurrentIndex');
+        const thumbnails = document.querySelectorAll('.sidebar-hotel-gallery-popup .gallery-thumb');
+        
+        if (mainImage && window.currentSidebarHotelGallery) {
+            mainImage.src = window.currentSidebarHotelGallery[index];
+            currentIndex.textContent = index + 1;
+            window.currentSidebarHotelImageIndex = index;
+            
+            // Update thumbnail active state
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        }
+    }
+
+    // ✅ HOTEL DETAIL MODAL WITH GALLERY - ENGLISH VERSION
+    async function showHotelDetailModal(hotelId) {
+        try {
+            console.log('🏨 Loading hotel details for:', hotelId);
+            
+            // Try to fetch hotel details from API
+            let hotel = null;
+            try {
+                const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
+                if (response.ok) {
+                    hotel = await response.json();
+                    console.log('✅ Hotel loaded from API:', hotel.name);
+                } else {
+                    console.log('❌ API response not ok:', response.status);
+                }
+            } catch (fetchError) {
+                console.log('❌ API fetch failed:', fetchError.message);
+            }
+            
+            // Fallback to sample data if API fails
+            if (!hotel) {
+                console.log('💡 Using sample hotel data for:', hotelId);
+                hotel = getSampleHotelDetail(hotelId);
+            }
+            
+            // Ensure hotel object has required properties
+            if (!hotel || !hotel.name) {
+                console.error('❌ Invalid hotel data:', hotel);
+                showAlert('Unable to load hotel information. Please try again.', 'error');
+                return;
+            }
+            
+            // Prepare hotel images (minimum 6 images for gallery)
+            const hotelImages = hotel.details?.images || [];
+            const galleryImages = [
+                ...hotelImages,
+                // Add more sample images if needed
+                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
+                'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800',
+                'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800',
+                'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800',
+                'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800',
+                'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
+                'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800'
+            ].slice(0, 8); // Take maximum 8 images
+            
+            const modal = document.createElement('div');
+            modal.className = 'hotel-detail-modal-overlay';
+            modal.innerHTML = `
+                <div class="hotel-detail-modal">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-hotel"></i> ${hotel.name}</h3>
+                        <button class="modal-close" onclick="closeHotelDetailModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="hotel-detail-content">
+                            <div class="hotel-images">
+                                <div class="main-image-container">
+                                    <img src="${galleryImages[0]}" alt="${hotel.name}" class="main-hotel-image" id="mainHotelImage">
+                                    <div class="image-nav-buttons">
+                                        <button class="nav-btn prev-btn" onclick="navigateHotelImage(-1)">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        <button class="nav-btn next-btn" onclick="navigateHotelImage(1)">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="image-counter">
+                                        <span id="currentImageIndex">1</span> / <span id="totalImages">${galleryImages.length}</span>
+                                    </div>
+                                    <button class="fullscreen-btn" onclick="openHotelGallery(0)">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                </div>
+                                <div class="image-thumbnails">
+                                    ${galleryImages.map((img, index) => 
+                                        `<img src="${img}" alt="Hotel ${index + 1}" class="thumb-image ${index === 0 ? 'active' : ''}" 
+                                            onclick="changeHotelImage(${index})" data-index="${index}">`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="hotel-info-detailed">
+                                <div class="hotel-rating-detailed">
+                                    ${generateStarsHTML(hotel.details?.rating || 4.5)}
+                                    <span class="rating-score">${hotel.details?.rating || 4.5}</span>
+                                    <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
+                                </div>
+                                
+                                <div class="hotel-location-detailed">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${hotel.location?.address || hotel.location?.city || 'Prime Location'}</span>
+                                </div>
+                                
+                                <div class="hotel-description">
+                                    <h4>Description</h4>
+                                    <p>${hotel.details?.description || 'Luxury hotel with excellent service and convenient location.'}</p>
+                                </div>
+                                
+                                <div class="hotel-amenities-detailed">
+                                    <h4>Amenities</h4>
+                                    <div class="amenities-grid">
+                                        ${(hotel.details?.amenities || ['wifi', 'pool', 'spa', 'restaurant']).map(amenity => 
+                                            `<div class="amenity-item">
+                                                <i class="fas fa-check"></i>
+                                                <span>${getAmenityName(amenity)}</span>
+                                            </div>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="room-types">
+                                    <h4>Room Types</h4>
+                                    <div class="room-types-list">
+                                        ${(hotel.details?.roomTypes || getSampleRoomTypes()).map(room => 
+                                            `<div class="room-type-item">
+                                                <div class="room-info">
+                                                    <h5>${room.type}</h5>
+                                                    <p><i class="fas fa-users"></i> ${room.capacity} guests</p>
+                                                    <p><i class="fas fa-expand"></i> ${room.size || 30}m²</p>
+                                                </div>
+                                                <div class="room-amenities">
+                                                    ${(room.amenities || ['wifi', 'tv', 'ac']).slice(0, 3).map(amenity => 
+                                                        `<span class="room-amenity">${getAmenityName(amenity)}</span>`
+                                                    ).join('')}
+                                                </div>
+                                            </div>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeHotelDetailModal()">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-primary" onclick="selectHotelFromDetail('${hotel._id || hotel.id}', '${hotel.name.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-check"></i> Select This Hotel
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Hotel Gallery Popup -->
+                <div class="hotel-gallery-popup" id="hotelGalleryPopup" style="display: none;">
+                    <div class="gallery-content">
+                        <button class="gallery-close" onclick="closeHotelGallery()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="gallery-main">
+                            <img src="" alt="Hotel Gallery" id="galleryMainImage">
+                            <button class="gallery-nav prev" onclick="navigateGallery(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="gallery-nav next" onclick="navigateGallery(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <div class="gallery-counter">
+                                <span id="galleryCurrentIndex">1</span> / <span id="galleryTotalImages">${galleryImages.length}</span>
+                            </div>
+                        </div>
+                        <div class="gallery-thumbnails">
+                            ${galleryImages.map((img, index) => 
+                                `<img src="${img}" alt="Gallery ${index + 1}" class="gallery-thumb ${index === 0 ? 'active' : ''}" 
+                                    onclick="goToGalleryImage(${index})" data-index="${index}">`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Store gallery images globally for navigation
+            window.currentHotelGallery = galleryImages;
+            window.currentHotelImageIndex = 0;
+            
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeHotelDetailModal();
+                }
+            });
+            
+        } catch (error) {
+            console.error('❌ Error loading hotel details:', error);
+            showAlert('Unable to load hotel details. Please try again.', 'error');
+        }
+    }
+
+    // ✅ HOTEL IMAGE NAVIGATION FUNCTIONS
+    function changeHotelImage(index) {
+        const mainImage = document.getElementById('mainHotelImage');
+        const currentIndex = document.getElementById('currentImageIndex');
+        const thumbnails = document.querySelectorAll('.thumb-image');
+        
+        if (mainImage && window.currentHotelGallery) {
+            mainImage.src = window.currentHotelGallery[index];
+            currentIndex.textContent = index + 1;
+            window.currentHotelImageIndex = index;
+            
+            // Update thumbnail active state
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        }
+    }
+
+    function navigateHotelImage(direction) {
+        if (!window.currentHotelGallery) return;
+        
+        let newIndex = window.currentHotelImageIndex + direction;
+        
+        // Loop around
+        if (newIndex >= window.currentHotelGallery.length) {
+            newIndex = 0;
+        } else if (newIndex < 0) {
+            newIndex = window.currentHotelGallery.length - 1;
+        }
+        
+        changeHotelImage(newIndex);
+    }
+
+    function openHotelGallery(startIndex = 0) {
+        const popup = document.getElementById('hotelGalleryPopup');
+        const mainImage = document.getElementById('galleryMainImage');
+        const currentIndex = document.getElementById('galleryCurrentIndex');
+        const thumbnails = document.querySelectorAll('.gallery-thumb');
+        
+        if (popup && mainImage && window.currentHotelGallery) {
+            popup.style.display = 'flex';
+            mainImage.src = window.currentHotelGallery[startIndex];
+            currentIndex.textContent = startIndex + 1;
+            window.currentHotelImageIndex = startIndex;
+            
+            // Update thumbnail active state
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === startIndex);
+            });
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeHotelGallery() {
+        const popup = document.getElementById('hotelGalleryPopup');
+        if (popup) {
+            popup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    function navigateGallery(direction) {
+        if (!window.currentHotelGallery) return;
+        
+        let newIndex = window.currentHotelImageIndex + direction;
+        
+        // Loop around
+        if (newIndex >= window.currentHotelGallery.length) {
+            newIndex = 0;
+        } else if (newIndex < 0) {
+            newIndex = window.currentHotelGallery.length - 1;
+        }
+        
+        goToGalleryImage(newIndex);
+    }
+
+    function goToGalleryImage(index) {
+        const mainImage = document.getElementById('galleryMainImage');
+        const currentIndex = document.getElementById('galleryCurrentIndex');
+        const thumbnails = document.querySelectorAll('.gallery-thumb');
+        
+        if (mainImage && window.currentHotelGallery) {
+            mainImage.src = window.currentHotelGallery[index];
+            currentIndex.textContent = index + 1;
+            window.currentHotelImageIndex = index;
+            
+            // Update thumbnail active state
+            thumbnails.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        }
+    }
+
+    // ✅ CẬP NHẬT WINDOW EXPORTS - THÊM MISSING FUNCTIONS
+    window.showHotelDetailModal = showHotelDetailModal;
+    window.closeHotelDetailModal = closeHotelDetailModal; 
+    window.selectHotelFromDetail = selectHotelFromDetail;
+    window.getSampleHotelDetail = getSampleHotelDetail;
+    window.getSampleRoomTypes = getSampleRoomTypes;
+    window.getAmenityName = getAmenityName;
+    window.changeMainImage = changeMainImage;
+    window.changeHotelImage = changeHotelImage;
+    window.navigateHotelImage = navigateHotelImage;
+    window.openHotelGallery = openHotelGallery;
+    window.closeHotelGallery = closeHotelGallery;
+    window.navigateGallery = navigateGallery;
+    window.goToGalleryImage = goToGalleryImage;
+    window.showAlert = showAlert;
+    window.selectHotelAndProceed = selectHotelAndProceed;
+    window.showSidebarHotelDetailModal = showSidebarHotelDetailModal;
+    window.closeSidebarHotelDetailModal = closeSidebarHotelDetailModal;
+    window.changeSidebarHotelImage = changeSidebarHotelImage;
+    window.navigateSidebarHotelImage = navigateSidebarHotelImage;
+    window.openSidebarHotelGallery = openSidebarHotelGallery;
+    window.closeSidebarHotelGallery = closeSidebarHotelGallery;
+    window.navigateSidebarGallery = navigateSidebarGallery;
+    window.goToSidebarGalleryImage = goToSidebarGalleryImage;
+
+    // ✅ CẬP NHẬT FUNCTION RESET BOOKING FLOW
+    function resetBookingFlow() {
+        isFromBookingFlow = false;
+    }
+
+    // ✅ CẬP NHẬT CSS CHO HOTEL ACTIONS
+    const additionalHotelStyles = `
+    .hotel-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .btn-view-hotel-detail {
+        background: #17a2b8;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex: 1;
+    }
+
+    .btn-view-hotel-detail:hover {
+        background: #138496;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+    }
+
+    .btn-select-hotel {
+        background: linear-gradient(135deg, #ff6b35, #f7931e);
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex: 1;
+        box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    }
+
+    .btn-select-hotel:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    }
+    `;
+
+    // Add the additional styles
+    if (!document.querySelector('#hotel-actions-styles')) {
+        const styleSheet = document.createElement('style');
+        styleSheet.id = 'hotel-actions-styles';
+        styleSheet.textContent = additionalHotelStyles;
+        document.head.appendChild(styleSheet);
+    }
+
+    // Tìm và thay thế function selectHotelAndProceed:
+
+    // ✅ SELECT HOTEL AND PROCEED - ENGLISH VERSION
+    function selectHotelAndProceed(hotelId, hotelName) {
+        console.log('✅ Hotel selected:', hotelName);
+        
+        // Close hotel selection modal
+        const modal = document.querySelector('.hotel-selection-modal-overlay');
+        if (modal) {
+            modal.remove();
+        }
+        
+        // Get current booking data
+        const adults = parseInt(document.querySelector('.traveler-item:first-child .quantity').textContent) || 2;
+        const children = parseInt(document.querySelector('.traveler-item:last-child .quantity').textContent) || 0;
+        const checkinDate = document.getElementById('checkinDate').value;
+        
+        // Validate required fields
+        if (!checkinDate) {
+            showAlert('Please select a check-in date first.', 'warning');
+            return;
+        }
+        
+        if (adults === 0) {
+            showAlert('At least one adult is required.', 'warning');
+            return;
+        }
+        
+        // Calculate total price
+        const basePrice = currentTour?.estimatedCost || 1000;
+        const totalPrice = (basePrice * adults) + (basePrice * 0.7 * children);
+        
+        // Store booking data in session storage
+        const bookingData = {
+            tourId: currentTour?.id || currentTour?._id,
+            tourName: currentTour?.name || 'Selected Tour',
+            selectedHotel: {
+                id: hotelId,
+                name: hotelName
+            },
+            checkinDate: checkinDate,
+            adults: adults,
+            children: children,
+            totalPrice: totalPrice,
+            userId: localStorage.getItem('userId') || 'guest',
+            timestamp: new Date().toISOString()
+        };
+        
+        sessionStorage.setItem('pendingBooking', JSON.stringify(bookingData));
+        
+        // Show confirmation message
+        showAlert(`Hotel "${hotelName}" selected successfully! Proceeding to reservation...`, 'success');
+        
+        // Redirect to reservation page after short delay (with cache buster)
+        setTimeout(() => {
+            window.location.href = 'reservation.html?v=' + Date.now();
+        }, 1500);
+    }
+
+    // ✅ HELPER FUNCTION TẠO STARS HTML
+    function generateStarsHTML(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+        let starsHTML = '';
+        
+        for (let i = 0; i < fullStars; i++) {
+            starsHTML += '<i class="fas fa-star"></i>';
+        }
+        
+        if (hasHalfStar) {
+            starsHTML += '<i class="fas fa-star-half-alt"></i>';
+        }
+        
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+        for (let i = 0; i < emptyStars; i++) {
+            starsHTML += '<i class="far fa-star"></i>';
+        }
+        
+        return starsHTML;
+    }
     
     // Chatbot functionality
     function toggleChatbot() {
@@ -1882,72 +3872,120 @@ document.addEventListener('DOMContentLoaded', function() {
         return photosHTML;
     }
     
+    // Thêm hoặc cập nhật function showAlert:
+
+    // ✅ SHOW ALERT FUNCTION - ENGLISH VERSION
     function showAlert(message, type = 'info') {
         // Remove existing alerts
-        const existingAlerts = document.querySelectorAll('.alert-notification');
+        const existingAlerts = document.querySelectorAll('.custom-alert');
         existingAlerts.forEach(alert => alert.remove());
         
-        // Color scheme for different alert types
-        const alertColors = {
-            success: { bg: '#d4edda', border: '#c3e6cb', text: '#155724', icon: '#28a745' },
-            error: { bg: '#f8d7da', border: '#f5c6cb', text: '#721c24', icon: '#dc3545' },
-            warning: { bg: '#fff3cd', border: '#ffeaa7', text: '#856404', icon: '#ffc107' },
-            info: { bg: '#fff0e6', border: '#ff9666', text: '#cc4400', icon: '#ff6600' }
-        };
-        
-        const colors = alertColors[type] || alertColors.info;
-        
-        // Create new alert
         const alert = document.createElement('div');
-        alert.className = `alert alert-${type} alert-notification`;
+        alert.className = `custom-alert alert-${type}`;
+        
+        const icon = type === 'success' ? 'fa-check-circle' : 
+                    type === 'warning' ? 'fa-exclamation-triangle' : 
+                    type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
+        
+        alert.innerHTML = `
+            <div class="alert-content">
+                <i class="fas ${icon}"></i>
+                <span>${message}</span>
+            </div>
+            <button class="alert-close" onclick="this.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        
         alert.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 9999;
-            min-width: 300px;
+            background: ${type === 'success' ? '#27ae60' : type === 'warning' ? '#f39c12' : type === 'error' ? '#e74c3c' : '#3498db'};
+            color: white;
             padding: 15px 20px;
-            border-radius: 10px;
-            font-weight: 500;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 10001;
+            min-width: 300px;
+            max-width: 500px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
+            gap: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
             animation: slideInRight 0.3s ease;
-            background: ${colors.bg};
-            border: 1px solid ${colors.border};
-            color: ${colors.text};
-        `;
-        
-        // Add icon based on type
-        const icons = {
-            success: 'fas fa-check-circle',
-            error: 'fas fa-exclamation-circle',
-            warning: 'fas fa-exclamation-triangle',
-            info: 'fas fa-info-circle'
-        };
-        
-        alert.innerHTML = `
-            <i class="${icons[type] || icons.info}" style="color: ${colors.icon}"></i>
-            <span>${message}</span>
-            <button class="close-alert" style="margin-left: auto; background: none; border: none; font-size: 18px; cursor: pointer; color: ${colors.text};">&times;</button>
         `;
         
         document.body.appendChild(alert);
         
         // Auto remove after 5 seconds
         setTimeout(() => {
-            if (alert.parentNode) {
+            if (alert.parentElement) {
                 alert.style.animation = 'slideOutRight 0.3s ease';
                 setTimeout(() => alert.remove(), 300);
             }
         }, 5000);
+    }
+
+    // Add CSS animations for alerts
+    const alertStyles = `
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
         
-        // Add close button functionality
-        alert.querySelector('.close-alert').addEventListener('click', () => {
-            alert.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => alert.remove(), 300);
-        });
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .alert-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: background 0.3s ease;
+        }
+        
+        .alert-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    `;
+
+    // Add styles to document if not already added
+    if (!document.getElementById('alert-styles')) {
+        const style = document.createElement('style');
+        style.id = 'alert-styles';
+        style.textContent = alertStyles;
+        document.head.appendChild(style);
     }
     
     function showLoadingState() {
@@ -2188,6 +4226,8 @@ document.addEventListener('DOMContentLoaded', function() {
     window.navigateToTour = navigateToTour;
     window.likeReview = likeReview;
     window.reportReview = reportReview;
+    window.selectHotelAndProceed = selectHotelAndProceed; // ✅ THÊM DÒNG NÀY
+    window.showHotelSelectionModal = showHotelSelectionModal; // ✅ THÊM DÒNG NÀY
     window.logout = logout;
 });
 

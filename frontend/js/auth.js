@@ -1,134 +1,326 @@
-// frontend/js/auth.js
+// Authentication utilities and form handlers
 
-// Password visibility toggle
-function togglePassword(inputId, toggleButton) {
-    const input = document.querySelector(inputId);
-    const isPassword = input.type === 'password';
+// Global variables
+let currentUser = null;
+
+// Initialize auth on page load
+document.addEventListener('DOMContentLoaded', function() {
+    checkAuthStatus();
+    setupAuthForms();
+});
+
+// Handle login form submission
+async function handleLogin(event) {
+    event.preventDefault();
     
-    input.type = isPassword ? 'text' : 'password';
+    const form = event.target;
+    const formData = new FormData(form);
     
-    const svg = toggleButton.querySelector('svg');
-    if (isPassword) {
-        // Show eye-off icon when password is visible
-        svg.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
-    } else {
-        // Show eye icon when password is hidden
-        svg.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+    const loginData = {
+        email: formData.get('email')?.trim(),
+        password: formData.get('password')
+    };
+    
+    console.log('Login data:', { email: loginData.email, hasPassword: !!loginData.password });
+    
+    // Validation
+    if (!loginData.email || !loginData.password) {
+        showNotification('⚠️ Vui lòng nhập đầy đủ email và mật khẩu', 'error');
+        return;
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(loginData.email)) {
+        showNotification('📧 Email không đúng định dạng', 'error');
+        return;
+    }
+    
+    try {
+        showLoading();
+        console.log('Sending login request...');
+        
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        });
+        
+        console.log('Login response status:', response.status);
+        
+        let result;
+        try {
+            result = await response.json();
+            console.log('Login response:', result);
+        } catch (parseError) {
+            console.error('Failed to parse response:', parseError);
+            throw new Error('Server response không hợp lệ');
+        }
+        
+        hideLoading();
+        
+        if (response.ok) {
+            // Save user data to localStorage
+            localStorage.setItem('userId', result.user.id);
+            localStorage.setItem('username', result.user.username);
+            localStorage.setItem('userEmail', result.user.email);
+            localStorage.setItem('userFullName', result.user.fullName);
+
+            localStorage.setItem('authToken', result.token || result.user.id);
+            
+            showNotification('🎉 Đăng nhập thành công! Chào mừng bạn quay trở lại!', 'success');
+            
+            // Update auth status
+            checkAuthStatus();
+            
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+            
+        } else {
+            const errorMessage = result.error || `Lỗi ${response.status}: ${response.statusText}`;
+            showNotification('❌ ' + errorMessage, 'error');
+        }
+        
+    } catch (error) {
+        hideLoading();
+        console.error('Login error:', error);
+        showNotification('🚫 Lỗi kết nối: ' + error.message, 'error');
     }
 }
 
-// Login and Register functionality
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.querySelector('#loginForm');
-    const registerForm = document.querySelector('#registerForm');
+// Handle register form submission
+async function handleRegister(event) {
+    event.preventDefault();
     
-    // Setup password toggle for all password fields
-    document.querySelectorAll('.password-toggle').forEach(toggle => {
-        toggle.addEventListener('click', () => {
-            const input = toggle.closest('.input-group').querySelector('input');
-            togglePassword(`#${input.id}`, toggle);
-        });
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    const registerData = {
+        username: formData.get('username')?.trim(),
+        email: formData.get('email')?.trim(),
+        password: formData.get('password'),
+        confirmPassword: formData.get('confirm-password'),
+        fullName: formData.get('fullName')?.trim(),
+        phone: formData.get('phone')?.trim()
+    };
+    
+    console.log('Register data:', {
+        ...registerData,
+        password: '***',
+        confirmPassword: '***'
     });
     
-    // Login form handler
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.querySelector('#email').value;
-            const password = document.querySelector('#password').value;
-            
-            if (!email || !password) {
-                alert('Vui lòng điền đầy đủ thông tin!');
-                return;
-            }
-            
-            try {
-                const response = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    localStorage.setItem('userId', data.user.id);
-                    localStorage.setItem('username', data.user.username);
-                    localStorage.setItem('userEmail', data.user.email);
-                    localStorage.setItem('userFullName', data.user.fullName);
-                    
-                    alert('Đăng nhập thành công!');
-                    window.location.href = 'index.html';
-                } else {
-                    alert(data.error || 'Đăng nhập thất bại!');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                alert('Lỗi kết nối. Vui lòng thử lại!');
-            }
-        });
+    // Validation
+    if (!registerData.username || !registerData.email || 
+        !registerData.password || !registerData.fullName) {
+        showNotification('⚠️ Vui lòng nhập đầy đủ thông tin bắt buộc', 'error');
+        return;
     }
     
-    // Register form handler
-    if (registerForm) {
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const username = document.querySelector('#username').value;
-            const fullName = document.querySelector('#fullName').value;
-            const email = document.querySelector('#email').value;
-            const phone = document.querySelector('#phone').value;
-            const password = document.querySelector('#password').value;
-            const confirmPassword = document.querySelector('#confirm-password').value;
-            
-            // Validation
-            if (!username || !fullName || !email || !password) {
-                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('Mật khẩu xác nhận không khớp!');
-                return;
-            }
-            
-            if (password.length < 6) {
-                alert('Mật khẩu phải có ít nhất 6 ký tự!');
-                return;
-            }
-            
-            const formData = {
-                username,
-                email,
-                password,
-                fullName,
-                phone
-            };
-            
-            try {
-                const response = await fetch('/api/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    alert('Đăng ký thành công! Vui lòng đăng nhập.');
-                    window.location.href = 'login.html';
-                } else {
-                    alert(data.error || 'Đăng ký thất bại!');
-                }
-            } catch (error) {
-                console.error('Registration error:', error);
-                alert('Lỗi kết nối. Vui lòng thử lại!');
-            }
-        });
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(registerData.email)) {
+        showNotification('📧 Email không đúng định dạng', 'error');
+        return;
     }
-});
+    
+    // Password validation
+    if (registerData.password !== registerData.confirmPassword) {
+        showNotification('🔒 Mật khẩu xác nhận không khớp', 'error');
+        return;
+    }
+    
+    if (registerData.password.length < 6) {
+        showNotification('🔑 Mật khẩu phải có ít nhất 6 ký tự', 'error');
+        return;
+    }
+    
+    try {
+        showLoading();
+        console.log('Sending register request...');
+        
+        const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(registerData)
+        });
+        
+        console.log('Register response status:', response.status);
+        
+        let result;
+        try {
+            result = await response.json();
+            console.log('Register response:', result);
+        } catch (parseError) {
+            console.error('Failed to parse response:', parseError);
+            throw new Error('Server response không hợp lệ');
+        }
+        
+        hideLoading();
+        
+        if (response.ok) {
+            showNotification('🎉 Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.', 'success');
+            
+            // Reset form
+            form.reset();
+            
+            // Clear password strength indicator
+            const strengthIndicator = document.getElementById('passwordStrength');
+            if (strengthIndicator) {
+                strengthIndicator.className = 'password-strength';
+                strengthIndicator.style.width = '0%';
+            }
+            
+            // Redirect to login
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+            
+        } else {
+            const errorMessage = result.error || `Lỗi ${response.status}: ${response.statusText}`;
+            showNotification('❌ ' + errorMessage, 'error');
+        }
+        
+    } catch (error) {
+        hideLoading();
+        console.error('Register error:', error);
+        showNotification('🚫 Lỗi kết nối: ' + error.message, 'error');
+    }
+}
+
+// ...existing code... (các function khác giữ nguyên)
+
+// Check if user is logged in
+function checkAuthStatus() {
+    const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
+    const userEmail = localStorage.getItem('userEmail');
+    const userFullName = localStorage.getItem('userFullName');
+    
+    if (userId && username) {
+        currentUser = {
+            id: userId,
+            username: username,
+            email: userEmail,
+            fullName: userFullName
+        };
+        updateAuthUI(true);
+    } else {
+        currentUser = null;
+        updateAuthUI(false);
+    }
+}
+
+// Update UI based on auth status
+function updateAuthUI(isLoggedIn) {
+    const authButtons = document.querySelector('.auth-buttons');
+    const userMenu = document.querySelector('.user-menu');
+    
+    if (authButtons && userMenu) {
+        if (isLoggedIn) {
+            authButtons.style.display = 'none';
+            userMenu.style.display = 'block';
+            
+            const usernameElement = userMenu.querySelector('.username');
+            if (usernameElement && currentUser) {
+                usernameElement.textContent = currentUser.fullName || currentUser.username;
+            }
+        } else {
+            authButtons.style.display = 'block';
+            userMenu.style.display = 'none';
+        }
+    }
+}
+
+// Setup form event listeners
+function setupAuthForms() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+    
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
+}
+
+// Handle logout
+function handleLogout() {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userFullName');
+    
+    currentUser = null;
+    updateAuthUI(false);
+    
+    showNotification('👋 Đã đăng xuất thành công. Hẹn gặp lại!', 'success');
+    
+    // Redirect to home
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 1000);
+}
+
+// Utility functions
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // Add to document
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    // Auto hide after 4 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 300);
+    }, 4000);
+}
+
+function showLoading() {
+    const loading = document.getElementById('loadingOverlay');
+    if (loading) {
+        loading.classList.add('show');
+    }
+}
+
+function hideLoading() {
+    const loading = document.getElementById('loadingOverlay');
+    if (loading) {
+        loading.classList.remove('show');
+    }
+}
+
+// Export functions for global use
+window.handleLogin = handleLogin;
+window.handleRegister = handleRegister;
+window.handleLogout = handleLogout;
+window.checkAuthStatus = checkAuthStatus;
+window.showNotification = showNotification;
+window.showLoading = showLoading;
+window.hideLoading = hideLoading;
