@@ -16,6 +16,10 @@ const recommendationService = require('./services/recommendationService');
 const sentimentService = require('./services/sentimentService');
 const chatbotService = require('./services/chatbotService');
 
+// Import routes
+const bookingsRoutes = require('./routes/bookings');
+const authRoutes = require('./routes/auth');
+
 const app = express();
 
 // Connect Database
@@ -26,6 +30,12 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, '../frontend')));
+
+// =============================================
+// Mount API Routes
+// =============================================
+app.use('/api/bookings', bookingsRoutes);
+app.use('/api/auth', authRoutes);
 
 // API Routes
 
@@ -469,7 +479,10 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Booking API
+// =============================================
+// DEPRECATED: Old Booking API - Replaced by routes/bookings.js
+// =============================================
+/*
 app.post('/api/bookings', async (req, res) => {
   try {
     const { tourId, numberOfPeople, customerInfo, bookingDate, totalAmount } = req.body;
@@ -489,6 +502,7 @@ app.post('/api/bookings', async (req, res) => {
     res.status(500).json({ error: 'Error creating booking' });
   }
 });
+*/
 
 // Travel Types API
 app.get('/api/tours/:id/travel-types', async (req, res) => {

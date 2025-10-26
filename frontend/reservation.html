@@ -408,65 +408,190 @@
   </header>
   <div class="container my-5">
     <h1 class="text-center mb-4" id="head-tilte"> <i class="fa-regular fa-clipboard mx-4"></i> RESERVATION</h1>
+    
+    <!-- Booking Summary Card -->
+    <div class="booking-summary-card" id="booking-summary-card">
+      <h3 class="summary-title">
+        <i class="fas fa-info-circle"></i>
+        Thông tin đặt tour
+      </h3>
+      <div class="booking-summary-grid">
+        <div class="summary-item">
+          <i class="fas fa-map-marked-alt"></i>
+          <div class="summary-content">
+            <span class="summary-label">Tour</span>
+            <span class="summary-value" id="summary-tour">--</span>
+          </div>
+        </div>
+        <div class="summary-item">
+          <i class="fas fa-hotel"></i>
+          <div class="summary-content">
+            <span class="summary-label">Khách sạn</span>
+            <span class="summary-value" id="summary-hotel">--</span>
+          </div>
+        </div>
+        <div class="summary-item">
+          <i class="fas fa-calendar-check"></i>
+          <div class="summary-content">
+            <span class="summary-label">Check-in</span>
+            <span class="summary-value" id="summary-checkin">--</span>
+          </div>
+        </div>
+        <div class="summary-item">
+          <i class="fas fa-users"></i>
+          <div class="summary-content">
+            <span class="summary-label">Số khách</span>
+            <span class="summary-value" id="summary-guests">--</span>
+          </div>
+        </div>
+        <div class="summary-item summary-price">
+          <i class="fas fa-dollar-sign"></i>
+          <div class="summary-content">
+            <span class="summary-label">Tổng giá</span>
+            <span class="summary-value" id="summary-price">--</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Inline debug script -->
+    <script>
+      // Debug: Check sessionStorage immediately when HTML loads
+      (function() {
+        console.log('🔍 INLINE DEBUG: HTML loaded');
+        const data = sessionStorage.getItem('pendingBooking');
+        console.log('📦 INLINE DEBUG: SessionStorage data:', data);
+        
+        if (data) {
+          try {
+            const parsed = JSON.parse(data);
+            console.log('✅ INLINE DEBUG: Parsed booking data:', parsed);
+            
+            // Try to populate immediately
+            setTimeout(() => {
+              console.log('🎯 INLINE DEBUG: Attempting to populate summary...');
+              
+              const tourEl = document.getElementById('summary-tour');
+              const hotelEl = document.getElementById('summary-hotel');
+              const guestsEl = document.getElementById('summary-guests');
+              const priceEl = document.getElementById('summary-price');
+              const checkinEl = document.getElementById('summary-checkin');
+              
+              if (tourEl) {
+                tourEl.textContent = parsed.tourName || 'N/A';
+                tourEl.style.color = 'white';
+                console.log('✅ Set tour:', tourEl.textContent);
+              }
+              
+              if (hotelEl) {
+                hotelEl.textContent = parsed.selectedHotel?.name || 'N/A';
+                hotelEl.style.color = 'white';
+                console.log('✅ Set hotel:', hotelEl.textContent);
+              }
+              
+              if (guestsEl) {
+                guestsEl.textContent = `${parsed.adults || 0} người lớn${parsed.children ? ', ' + parsed.children + ' trẻ em' : ''}`;
+                guestsEl.style.color = 'white';
+                console.log('✅ Set guests:', guestsEl.textContent);
+              }
+              
+              if (priceEl) {
+                priceEl.textContent = '$' + (parsed.totalPrice || 0).toLocaleString();
+                priceEl.style.color = 'white';
+                priceEl.style.fontSize = '1.8rem';
+                console.log('✅ Set price:', priceEl.textContent);
+              }
+              
+              if (checkinEl && parsed.checkinDate) {
+                const date = new Date(parsed.checkinDate);
+                checkinEl.textContent = date.toLocaleDateString('vi-VN');
+                checkinEl.style.color = 'white';
+                console.log('✅ Set checkin:', checkinEl.textContent);
+              }
+              
+              // Make sure card is visible
+              const card = document.getElementById('booking-summary-card');
+              if (card) {
+                card.style.display = 'block';
+                card.style.visibility = 'visible';
+                card.style.opacity = '1';
+                console.log('✅ Card visibility set');
+              }
+              
+              console.log('✅ INLINE DEBUG: Summary populated successfully!');
+            }, 50);
+          } catch (e) {
+            console.error('❌ INLINE DEBUG: Error parsing data:', e);
+          }
+        } else {
+          console.warn('⚠️ INLINE DEBUG: No booking data found!');
+          // Hide card if no data
+          const card = document.getElementById('booking-summary-card');
+          if (card) {
+            card.style.display = 'none';
+          }
+        }
+      })();
+    </script>
+
     <form class="form-section py-3 px-4" action="#">
       <!-- Check-in and Check-out -->
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label class="label-title">Check-in date *</label>
-          <input type="date" class="form-control" required>
+          <label for="checkin-date" class="label-title">Check-in date *</label>
+          <input type="date" id="checkin-date" class="form-control" required>
         </div>
         <div class="form-group col-md-6">
-          <label class="label-title">Check-out date *</label>
-          <input type="date" class="form-control" required>
+          <label for="checkout-date" class="label-title">Check-out date *</label>
+          <input type="date" id="checkout-date" class="form-control" required>
         </div>
       </div>
 
       <!-- Member -->
       <div class="form-row">
         <div class="form-group col-md-4">
-          <label for="adult" class="inner-label">Adult</label>
-          <select class="form-control" name="adult">
-            <option>--Choose--</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <!-- Options for adults -->
+          <label for="adult" class="inner-label">Adult *</label>
+          <select class="form-control" id="adult" name="adult" required>
+            <option value="">--Choose--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
           </select>
         </div>
         <div class="form-group col-md-4">
           <label for="children" class="inner-label">Children</label>
-          <select class="form-control" name="children">
-            <option>--Choose--</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
+          <select class="form-control" id="children" name="children">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
           </select>
         </div>
         <div class="form-group col-md-4">
           <label for="infant" class="inner-label">Infant</label>
-          <select class="form-control" name="infant">
-            <option>--Choose--</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
+          <select class="form-control" id="infant" name="infant">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
           </select>
         </div>
       </div>
@@ -479,8 +604,8 @@
         <label class="label-title">How many rooms do you need?</label>
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label class="inner-label">Superior</label>
-            <select class="form-control" name="superior">
+            <label for="room-superior" class="inner-label">Superior</label>
+            <select class="form-control" id="room-superior" name="superior">
               <option>0</option>
               <option>1</option>
               <option>2</option>
@@ -494,8 +619,8 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label class="inner-label">Junior Deluxe</label>
-            <select class="form-control" name="junior-deluxe">
+            <label for="room-junior-deluxe" class="inner-label">Junior Deluxe</label>
+            <select class="form-control" id="room-junior-deluxe" name="junior-deluxe">
               <option>0</option>
               <option>1</option>
               <option>2</option>
@@ -509,8 +634,8 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label class="inner-label">Deluxe</label>
-            <select class="form-control" name="deluxe">
+            <label for="room-deluxe" class="inner-label">Deluxe</label>
+            <select class="form-control" id="room-deluxe" name="deluxe">
               <option>0</option>
               <option>1</option>
               <option>2</option>
@@ -526,8 +651,8 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label class="inner-label">Suite</label>
-            <select class="form-control" name="suite">
+            <label for="room-suite" class="inner-label">Suite</label>
+            <select class="form-control" id="room-suite" name="suite">
               <option>0</option>
               <option>1</option>
               <option>2</option>
@@ -541,8 +666,8 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label class="inner-label">Family</label>
-            <select class="form-control" name="family">
+            <label for="room-family" class="inner-label">Family</label>
+            <select class="form-control" id="room-family" name="family">
               <option>0</option>
               <option>1</option>
               <option>2</option>
@@ -556,8 +681,8 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label class="inner-label">President</label>
-            <select class="form-control" name="president">
+            <label for="room-president" class="inner-label">President</label>
+            <select class="form-control" id="room-president" name="president">
               <option>0</option>
               <option>1</option>
               <option>2</option>
@@ -621,6 +746,7 @@
       <label class="label-title">Guest Information</label>
       <div class="row">
         <div class="form-group col-md-4">
+          <label for="customer-title" class="sr-only">Title</label>
           <select name="title" id="customer-title" class="form-control">
             <option value="Mr">Mr</option>
             <option value="Ms">Ms</option>
@@ -629,16 +755,20 @@
           </select>
         </div>
         <div class="form-group col-md-8">
-          <input type="text" placeholder="Full Name *" class="form-control" required>
+          <label for="customer-fullname" class="sr-only">Full Name</label>
+          <input type="text" id="customer-fullname" name="fullname" placeholder="Full Name *" class="form-control" required>
         </div>
         <div class="form-group col-md-12">
-          <input type="email" placeholder="Email" class="form-control">
+          <label for="customer-email" class="sr-only">Email</label>
+          <input type="email" id="customer-email" name="email" placeholder="Email" class="form-control">
         </div>
         <div class="form-group col-md-12">
-          <input type="number" placeholder="Phone Number *" class="form-control" required>
+          <label for="customer-phone" class="sr-only">Phone Number</label>
+          <input type="number" id="customer-phone" name="phone" placeholder="Phone Number *" class="form-control" required>
         </div>
         <div class="form-group col-md-12">
-          <textarea id="other-request" class="form-control" placeholder="Other Request"></textarea>
+          <label for="other-request" class="sr-only">Other Request</label>
+          <textarea id="other-request" name="specialRequests" class="form-control" placeholder="Other Request"></textarea>
         </div>
       </div>
 
@@ -660,6 +790,7 @@
   <footer></footer>
 
   <script src="./js/main.js"></script>
+  <script src="./js/reservation.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

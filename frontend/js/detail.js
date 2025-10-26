@@ -2308,22 +2308,28 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log(`🏨 Loading hotels for destination: ${destination}`);
             
-            // Try destination-specific API first
-            let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
             let destinationHotels = [];
             
-            if (response.ok) {
-                destinationHotels = await response.json();
-                console.log(`✅ Found ${destinationHotels.length} hotels for ${destination}`);
-            }
-            
-            // Fallback if no hotels found
-            if (!destinationHotels || destinationHotels.length === 0) {
-                console.log(`❌ No hotels found for ${destination}, using general hotels`);
-                const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
-                if (fallbackResponse.ok) {
-                    destinationHotels = await fallbackResponse.json();
+            // Try to fetch hotels from API
+            try {
+                // Try destination-specific API first
+                let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
+                
+                if (response.ok) {
+                    destinationHotels = await response.json();
+                    console.log(`✅ Found ${destinationHotels.length} hotels for ${destination}`);
                 }
+                
+                // Fallback if no hotels found
+                if (!destinationHotels || destinationHotels.length === 0) {
+                    console.log(`❌ No hotels found for ${destination}, using general hotels`);
+                    const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
+                    if (fallbackResponse.ok) {
+                        destinationHotels = await fallbackResponse.json();
+                    }
+                }
+            } catch (apiError) {
+                console.warn('⚠️ API not available, using sample data:', apiError.message);
             }
             
             // Final fallback with sample data
@@ -2687,6 +2693,74 @@ document.addEventListener('DOMContentLoaded', function() {
                 amenities: ['wifi', 'tv', 'ac', 'living_room', 'premium_view']
             }
         ];
+    }
+
+    // ✅ FUNCTION TO GENERATE ROOM TYPES HTML FROM DATABASE
+    function getRoomTypesHTML(hotel) {
+        // Get room types from hotel.rooms object in database
+        const roomTypes = [];
+        
+        if (hotel.rooms) {
+            // Map database room structure to display format
+            const roomTypeMap = {
+                'superior': { name: 'Superior Room', basePrice: 150, capacity: 2 },
+                'juniorDeluxe': { name: 'Junior Deluxe', basePrice: 200, capacity: 2 },
+                'deluxe': { name: 'Deluxe Room', basePrice: 250, capacity: 3 },
+                'suite': { name: 'Suite', basePrice: 400, capacity: 4 },
+                'family': { name: 'Family Room', basePrice: 350, capacity: 5 },
+                'president': { name: 'Presidential Suite', basePrice: 800, capacity: 6 }
+            };
+            
+            // Generate HTML for each room type available
+            Object.keys(hotel.rooms).forEach(roomKey => {
+                const roomData = hotel.rooms[roomKey];
+                const roomInfo = roomTypeMap[roomKey];
+                
+                if (roomData && roomData.available > 0 && roomInfo) {
+                    roomTypes.push(`
+                        <div class="room-type-item">
+                            <div class="room-info">
+                                <h5>${roomInfo.name}</h5>
+                                <div class="room-capacity">
+                                    <i class="fas fa-users"></i> Up to ${roomInfo.capacity} guests
+                                </div>
+                                <div class="room-available">
+                                    <i class="fas fa-door-open"></i> ${roomData.available} rooms available
+                                </div>
+                            </div>
+                            <div class="room-price">
+                                $${roomData.pricePerNight || roomInfo.basePrice}
+                                <span>/night</span>
+                            </div>
+                        </div>
+                    `);
+                }
+            });
+        }
+        
+        // Fallback if no rooms data
+        if (roomTypes.length === 0) {
+            return getSampleRoomTypes().map(room => `
+                <div class="room-type-item">
+                    <div class="room-info">
+                        <h5>${room.type}</h5>
+                        <div class="room-capacity">
+                            <i class="fas fa-users"></i> ${room.capacity} guests
+                        </div>
+                        <div class="room-size">
+                            <i class="fas fa-expand"></i> ${room.size}m²
+                        </div>
+                    </div>
+                    <div class="room-amenities-tags">
+                        ${room.amenities.slice(0, 3).map(amenity => 
+                            `<span class="amenity-badge">${getAmenityName(amenity)}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        return roomTypes.join('');
     }
 
     // ✅ FUNCTION GET AMENITY NAME - THÊM FUNCTION NÀY
@@ -3104,20 +3178,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Prepare hotel images (minimum 6 images for gallery)
-            const hotelImages = hotel.details?.images || [];
-            const galleryImages = [
-                ...hotelImages,
-                // Add more sample images if needed
-                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
-                'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800',
-                'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800',
-                'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800',
-                'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800',
-                'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
-                'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800'
-            ].slice(0, 8); // Take maximum 8 images
+            // ✅ USE IMAGES FROM DATABASE
+            let galleryImages = [];
+            if (hotel.details?.images && hotel.details.images.length > 0) {
+                // Use images from database
+                galleryImages = hotel.details.images;
+                console.log('✅ Using', galleryImages.length, 'images from database');
+            } else {
+                // Fallback to sample images
+                console.log('⚠️ No images in database, using sample images');
+                galleryImages = [
+                    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
+                    'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800',
+                    'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800',
+                    'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800',
+                    'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800'
+                ];
+            }
             
             const modal = document.createElement('div');
             modal.className = 'hotel-detail-modal-overlay';
@@ -3187,22 +3265,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                 </div>
                                 
                                 <div class="room-types">
-                                    <h4>Room Types</h4>
+                                    <h4><i class="fas fa-bed"></i> Available Room Types</h4>
                                     <div class="room-types-list">
-                                        ${(hotel.details?.roomTypes || getSampleRoomTypes()).map(room => 
-                                            `<div class="room-type-item">
-                                                <div class="room-info">
-                                                    <h5>${room.type}</h5>
-                                                    <p><i class="fas fa-users"></i> ${room.capacity} guests</p>
-                                                    <p><i class="fas fa-expand"></i> ${room.size || 30}m²</p>
-                                                </div>
-                                                <div class="room-amenities">
-                                                    ${(room.amenities || ['wifi', 'tv', 'ac']).slice(0, 3).map(amenity => 
-                                                        `<span class="room-amenity">${getAmenityName(amenity)}</span>`
-                                                    ).join('')}
-                                                </div>
-                                            </div>`
-                                        ).join('')}
+                                        ${getRoomTypesHTML(hotel)}
                                     </div>
                                 </div>
                             </div>

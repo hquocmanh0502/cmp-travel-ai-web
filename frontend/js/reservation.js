@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // ✅ DEBUG: Check session storage immediately
+  console.log('🔍 DOMContentLoaded fired');
+  console.log('📦 SessionStorage pendingBooking:', sessionStorage.getItem('pendingBooking'));
+  
   // ✅ DEBUG: Check if validation functions are loaded
   console.log('🔍 Reservation.js loaded successfully');
   console.log('✅ Validation functions available:', {
@@ -7,22 +11,52 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRoomSuggestion: typeof updateRoomSuggestion
   });
   
-  // ✅ LOAD BOOKING DATA TỪ SESSION STORAGE
-  loadBookingData();
+  // ✅ POPULATE BOOKING SUMMARY CARD (first for visual feedback)
+  setTimeout(() => {
+    console.log('⏰ Running populateBookingSummary after 100ms delay');
+    populateBookingSummary();
+  }, 100);
+  
+  // ✅ LOAD BOOKING DATA AND APPLY CONSTRAINTS (with delay to ensure DOM is ready)
+  setTimeout(() => {
+    console.log('⏰ Running loadBookingData after 200ms delay');
+    loadBookingData();
+  }, 200);
   
   // ✅ SETUP ROOM VALIDATION
   setupRoomValidation();
   
+  // ✅ SETUP INPUT VALIDATION
+  setupInputValidation();
+  
   const reservationForm = document.querySelector('form');
   
+  console.log('🔍 Form found:', !!reservationForm);
+  
   if (reservationForm) {
+    console.log('✅ Attaching submit event listener to form');
+    
     reservationForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      console.log('🚀 FORM SUBMIT EVENT FIRED!');
+      console.log('📝 Event details:', e);
       
       const pendingBooking = JSON.parse(sessionStorage.getItem('pendingBooking'));
       if (!pendingBooking) {
         showNotification('Không tìm thấy thông tin đặt tour. Vui lòng quay lại trang chi tiết tour.', 'error');
         window.location.href = 'destination.html';
+        return;
+      }
+      
+      // ✅ VALIDATE ALL INPUT FIELDS
+      if (!validateAllFields()) {
+        showNotification('Vui lòng điền đầy đủ và chính xác thông tin!', 'error');
+        // Scroll to first error
+        const firstError = document.querySelector('.field-error');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         return;
       }
       
@@ -36,6 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const token = localStorage.getItem('authToken');
       const userId = localStorage.getItem('userId');
       
+      console.log('🔐 Auth Check:', {
+        hasToken: !!token,
+        hasUserId: !!userId,
+        userId: userId,
+        userIdType: typeof userId
+      });
 
       if (!token && !userId) {
         console.error('❌ Authentication failed - Missing credentials');
@@ -74,27 +114,48 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('✅ Authentication OK - Proceeding with booking');
       
       // Collect form data
-      const checkinDate = document.querySelector('input[type="date"]').value;
-      const checkoutDate = document.querySelectorAll('input[type="date"]')[1].value;
+      const checkinDate = document.querySelector('#checkin-date')?.value || pendingBooking.checkinDate;
+      const checkoutDate = document.querySelector('#checkout-date')?.value;
       
+      // Get adult/children values - prefer pendingBooking if form is locked
+      const adultValue = document.querySelector('#adult')?.value;
+      const childrenValue = document.querySelector('#children')?.value;
+      
+      const adults = adultValue ? parseInt(adultValue) : (pendingBooking.adults || 1);
+      const children = childrenValue ? parseInt(childrenValue) : (pendingBooking.children || 0);
+      
+      console.log('📋 Form values:', { checkinDate, checkoutDate, adults, children });
+      
+      // ✅ Validate hotelId - must be valid MongoDB ObjectId (24 hex chars)
+      const hotelId = pendingBooking.selectedHotel?.id;
+      const isValidObjectId = hotelId && /^[0-9a-fA-F]{24}$/.test(hotelId);
+      
+      console.log('🏨 Hotel validation:', {
+        hotelId: hotelId,
+        isValidObjectId: isValidObjectId,
+        willSend: isValidObjectId ? hotelId : null
+      });
+      
+      // ✅ CRITICAL: Ensure ALL required fields are present
+      // Backend requires: userId, tourId, checkinDate, checkoutDate, departureDate, adults, customerInfo
       const formData = {
-        userId: userId, // ✅ Add userId for backend
+        userId: userId,
         tourId: pendingBooking.tourId,
-        hotelId: pendingBooking.selectedHotel?.id || null,
+        hotelId: isValidObjectId ? hotelId : null, // ✅ Only send valid ObjectId
         checkinDate: checkinDate,
-        checkoutDate: checkoutDate,
-        departureDate: checkinDate, // Same as checkin for now
-        adults: parseInt(document.querySelector('select[name="adult"]')?.value) || pendingBooking.adults || 1,
-        children: parseInt(document.querySelector('select[name="children"]')?.value) || pendingBooking.children || 0,
+        checkoutDate: checkoutDate || checkinDate, // ✅ Default to checkin if not provided
+        departureDate: checkinDate, // ✅ Use checkin date as departure
+        adults: adults,
+        children: children,
         infants: 0,
         
         rooms: {
-          superior: parseInt(document.querySelector('select[name="superior"]')?.value) || 0,
-          juniorDeluxe: parseInt(document.querySelector('select[name="junior-deluxe"]')?.value) || 0,
-          deluxe: parseInt(document.querySelector('select[name="deluxe"]')?.value) || 0,
-          suite: parseInt(document.querySelector('select[name="suite"]')?.value) || 0,
-          family: parseInt(document.querySelector('select[name="family"]')?.value) || 0,
-          president: parseInt(document.querySelector('select[name="president"]')?.value) || 0
+          superior: parseInt(document.querySelector('#room-superior')?.value) || 0,
+          juniorDeluxe: parseInt(document.querySelector('#room-junior-deluxe')?.value) || 0,
+          deluxe: parseInt(document.querySelector('#room-deluxe')?.value) || 0,
+          suite: parseInt(document.querySelector('#room-suite')?.value) || 0,
+          family: parseInt(document.querySelector('#room-family')?.value) || 0,
+          president: parseInt(document.querySelector('#room-president')?.value) || 0
         },
         
         services: {
@@ -110,9 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         customerInfo: {
           title: document.querySelector('#customer-title')?.value || 'Mr',
-          fullName: document.querySelector('input[placeholder="Full Name *"]')?.value || '',
-          email: document.querySelector('input[type="email"]')?.value || '',
-          phone: document.querySelector('input[type="number"]')?.value || '',
+          fullName: document.querySelector('#customer-fullname')?.value || '',
+          email: document.querySelector('#customer-email')?.value || '',
+          phone: document.querySelector('#customer-phone')?.value || '',
           specialRequests: document.querySelector('#other-request')?.value || ''
         },
         
@@ -123,15 +184,44 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       
       // Validation
+      console.log('🔍 =============== VALIDATION START ===============');
+      console.log('  - userId:', userId, typeof userId);
+      console.log('  - tourId:', formData.tourId, typeof formData.tourId);
+      console.log('  - hotelId:', formData.hotelId, typeof formData.hotelId);
+      console.log('  - checkinDate:', formData.checkinDate, typeof formData.checkinDate);
+      console.log('  - checkoutDate:', formData.checkoutDate, typeof formData.checkoutDate);
+      console.log('  - departureDate:', formData.departureDate, typeof formData.departureDate);
+      console.log('  - adults:', formData.adults, typeof formData.adults);
+      console.log('  - customerInfo:', formData.customerInfo);
+      console.log('🔍 =============== VALIDATION END ===============');
+      
+      if (!userId) {
+        showNotification('User ID is missing. Please login again.', 'error');
+        return;
+      }
+      
+      if (!formData.tourId) {
+        showNotification('Tour ID is missing. Please select tour again.', 'error');
+        setTimeout(() => window.location.href = 'destination.html', 2000);
+        return;
+      }
+      
       if (!formData.customerInfo.fullName || !formData.customerInfo.email || !formData.customerInfo.phone) {
-        showNotification('Vui lòng điền đầy đủ thông tin khách hàng', 'error');
+        showNotification('Please fill in all customer information', 'error');
         return;
       }
       
       if (!checkinDate) {
-        showNotification('Vui lòng chọn ngày khởi hành', 'error');
+        showNotification('Please select check-in date', 'error');
         return;
       }
+      
+      if (!formData.checkoutDate) {
+        showNotification('Please select check-out date', 'error');
+        return;
+      }
+      
+      console.log('📤 Sending booking data:', formData);
       
       try {
         showLoading();
@@ -145,7 +235,17 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify(formData)
         });
         
+        console.log('📥 Response status:', response.status);
+        
         const data = await response.json();
+        
+        console.log('📥 =============== BACKEND RESPONSE ===============');
+        console.log('Status:', response.status);
+        console.log('Success:', data.success);
+        console.log('Message:', data.message);
+        console.log('Error:', data.error);
+        console.log('Full response:', data);
+        console.log('📥 =============== END RESPONSE ===============');
         
         hideLoading();
         
@@ -169,83 +269,248 @@ document.addEventListener('DOMContentLoaded', () => {
         showNotification('Có lỗi xảy ra: ' + error.message, 'error');
       }
     });
+    
+    // ✅ DEBUG: Add click listener to submit button
+    const submitBtn = reservationForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      console.log('✅ Submit button found:', submitBtn);
+      submitBtn.addEventListener('click', (e) => {
+        console.log('🖱️ SUBMIT BUTTON CLICKED!');
+        console.log('Button element:', e.target);
+        console.log('Button disabled:', submitBtn.disabled);
+      });
+    } else {
+      console.warn('⚠️ Submit button NOT found in form');
+    }
+  } else {
+    console.error('❌ Form NOT found on page');
   }
 });
 
 // ✅ FUNCTION LOAD BOOKING DATA VÀ HIỂN THỊ THÔNG TIN
 function loadBookingData() {
-  const pendingBooking = JSON.parse(sessionStorage.getItem('pendingBooking'));
-  
-  if (pendingBooking) {
-    // Display tour info
-    const tourInfo = document.createElement('div');
-    tourInfo.className = 'booking-summary';
-    tourInfo.innerHTML = `
-      <div class="booking-info-card">
-        <h4><i class="fas fa-map-marked-alt"></i> Thông tin tour đã chọn</h4>
-        <div class="tour-summary">
-          <p><strong>Tour:</strong> ${pendingBooking.tourName}</p>
-          <p><strong>Khách sạn:</strong> ${pendingBooking.selectedHotel.name}</p>
-          <p><strong>Ngày khởi hành:</strong> ${pendingBooking.checkinDate}</p>
-          <p><strong>Số khách:</strong> ${pendingBooking.adults} người lớn${pendingBooking.children > 0 ? `, ${pendingBooking.children} trẻ em` : ''}</p>
-          <p><strong>Tổng tiền tour:</strong> <span class="price-highlight">$${pendingBooking.totalPrice.toLocaleString()}</span></p>
-        </div>
-      </div>
-    `;
+  try {
+    console.log('🔄 loadBookingData() called');
+    const bookingDataString = sessionStorage.getItem('pendingBooking');
+    console.log('📦 Raw sessionStorage data:', bookingDataString);
     
-    // Insert before form
-    const container = document.querySelector('.container');
-    const form = container.querySelector('form');
-    container.insertBefore(tourInfo, form);
-    
-    // Pre-fill form data
-    const checkinInput = document.querySelector('input[type="date"]');
-    if (checkinInput) {
-      checkinInput.value = pendingBooking.checkinDate;
+    if (!bookingDataString) {
+      console.warn('⚠️ No pendingBooking in sessionStorage');
+      return;
     }
     
-    // Set checkout date (1 day after checkin for default)
-    const checkoutInput = document.querySelectorAll('input[type="date"]')[1];
+    const pendingBooking = JSON.parse(bookingDataString);
+    console.log('📦 loadBookingData - pendingBooking:', pendingBooking);
+  
+    if (pendingBooking) {
+      console.log('✅ Booking data found, applying constraints...');
+    
+    // ✅ APPLY BOOKING CONSTRAINTS - Lock dates, guests from booking data
+    const checkinInput = document.querySelector('#checkin-date');
+    const checkoutInput = document.querySelector('#checkout-date');
+    
+    console.log('🔍 Found elements:', {
+      checkinInput: !!checkinInput,
+      checkoutInput: !!checkoutInput
+    });
+    
+    // Set and LOCK check-in date from booking
+    if (checkinInput && pendingBooking.checkinDate) {
+      checkinInput.value = pendingBooking.checkinDate;
+      checkinInput.readOnly = true;
+      checkinInput.style.backgroundColor = '#f0f0f0 !important';
+      checkinInput.style.cursor = 'not-allowed';
+      checkinInput.style.opacity = '0.7';
+      checkinInput.style.border = '2px solid #ff6600';
+      checkinInput.title = 'Ngày check-in đã được chọn từ booking';
+      
+      console.log('✅ Check-in date locked:', checkinInput.value, 'readOnly:', checkinInput.readOnly);
+      
+      // ✅ Set minimum date to prevent past dates
+      const today = new Date().toISOString().split('T')[0];
+      checkinInput.min = today;
+    } else {
+      console.warn('⚠️ Check-in input not found or no date');
+    }
+    
+    // Set checkout date and apply constraints
     if (checkoutInput && pendingBooking.checkinDate) {
       const checkout = new Date(pendingBooking.checkinDate);
       checkout.setDate(checkout.getDate() + 1);
       checkoutInput.value = checkout.toISOString().split('T')[0];
+      
+      console.log('✅ Check-out date set:', checkoutInput.value);
+      
+      // ✅ Set minimum checkout date (must be after check-in)
+      checkoutInput.min = checkout.toISOString().split('T')[0];
+      
+      // ✅ Add validation on checkout date change
+      checkoutInput.addEventListener('change', function() {
+        const checkinDate = new Date(checkinInput.value);
+        const checkoutDate = new Date(this.value);
+        
+        if (checkoutDate <= checkinDate) {
+          showNotification('Ngày check-out phải sau ngày check-in!', 'error');
+          const minCheckout = new Date(checkinDate);
+          minCheckout.setDate(minCheckout.getDate() + 1);
+          this.value = minCheckout.toISOString().split('T')[0];
+        }
+      });
+    } else {
+      console.warn('⚠️ Check-out input not found or no date');
     }
     
-    // Pre-select guest numbers
-    const adultSelect = document.querySelector('select[name="adult"]');
-    const childrenSelect = document.querySelector('select[name="children"]');
+    // ✅ LOCK guest numbers from booking
+    const adultSelect = document.querySelector('#adult');
+    const childrenSelect = document.querySelector('#children');
     
-    if (adultSelect && pendingBooking.adults > 0) {
-      adultSelect.value = pendingBooking.adults;
-      // ✅ LOCK ADULTS SELECT (không cho thay đổi)
+    console.log('🔍 Found guest selects:', {
+      adultSelect: !!adultSelect,
+      childrenSelect: !!childrenSelect,
+      adults: pendingBooking.adults,
+      children: pendingBooking.children
+    });
+    
+    if (adultSelect) {
+      if (pendingBooking.adults > 0) {
+        adultSelect.value = pendingBooking.adults.toString();
+      }
+      // LOCK - không cho thay đổi số người đã đặt
       adultSelect.disabled = true;
-      adultSelect.style.backgroundColor = '#f0f0f0';
+      adultSelect.style.backgroundColor = '#f0f0f0 !important';
       adultSelect.style.cursor = 'not-allowed';
+      adultSelect.style.opacity = '0.7';
+      adultSelect.style.border = '2px solid #ff6600';
+      adultSelect.title = 'Số người lớn đã được chọn từ booking';
+      
+      console.log('✅ Adult select locked:', adultSelect.value, 'disabled:', adultSelect.disabled);
+    } else {
+      console.error('❌ Adult select not found!');
     }
-    if (childrenSelect && pendingBooking.children > 0) {
-      childrenSelect.value = pendingBooking.children;
-      // ✅ LOCK CHILDREN SELECT (không cho thay đổi)
+    
+    if (childrenSelect) {
+      if (pendingBooking.children > 0) {
+        childrenSelect.value = pendingBooking.children.toString();
+      } else {
+        childrenSelect.value = '0';
+      }
+      // LOCK - không cho thay đổi số trẻ em đã đặt
       childrenSelect.disabled = true;
-      childrenSelect.style.backgroundColor = '#f0f0f0';
+      childrenSelect.style.backgroundColor = '#f0f0f0 !important';
       childrenSelect.style.cursor = 'not-allowed';
+      childrenSelect.style.opacity = '0.7';
+      childrenSelect.style.border = '2px solid #ff6600';
+      childrenSelect.title = 'Số trẻ em đã được chọn từ booking';
+      
+      console.log('✅ Children select locked:', childrenSelect.value, 'disabled:', childrenSelect.disabled);
+    } else {
+      console.error('❌ Children select not found!');
     }
     
     // ✅ SHOW INITIAL ROOM SUGGESTION
-    updateRoomSuggestion();
-  } else {
-    // No booking data - redirect back
-    const urlParams = new URLSearchParams(window.location.search);
-    const tourId = urlParams.get('tourId');
-    
-    if (tourId) {
-      alert('Vui lòng chọn khách sạn trước khi đặt tour.');
-      window.location.href = `detail.html?id=${tourId}`;
-    } else {
-      alert('Không tìm thấy thông tin đặt tour. Vui lòng chọn tour từ trang chủ.');
-      window.location.href = 'destination.html';
+    try {
+      updateRoomSuggestion();
+      console.log('✅ Room suggestion updated');
+    } catch (err) {
+      console.error('⚠️ Error updating room suggestion:', err);
     }
+    
+    console.log('✅ loadBookingData completed - all constraints applied');
+    }
+  } catch (error) {
+    console.error('❌ Error in loadBookingData():', error);
+    console.error('Stack trace:', error.stack);
   }
+}
+
+// ✅ POPULATE BOOKING SUMMARY CARD AT TOP OF PAGE
+function populateBookingSummary() {
+  console.log('🔍 populateBookingSummary called');
+  
+  const pendingBooking = JSON.parse(sessionStorage.getItem('pendingBooking'));
+  
+  console.log('📦 pendingBooking data:', pendingBooking);
+  
+  if (!pendingBooking) {
+    console.warn('⚠️ No pendingBooking found in sessionStorage');
+    // Hide summary card if no booking data
+    const summaryCard = document.getElementById('booking-summary-card');
+    if (summaryCard) {
+      summaryCard.style.display = 'none';
+    }
+    return;
+  }
+  
+  console.log('✅ Found booking data, populating summary card...');
+  
+  // Populate tour name
+  const tourName = document.getElementById('summary-tour');
+  if (tourName) {
+    tourName.textContent = pendingBooking.tourName || 'Chưa chọn tour';
+    console.log('✅ Set tour name:', tourName.textContent);
+  } else {
+    console.error('❌ Element #summary-tour not found');
+  }
+  
+  // Populate hotel name
+  const hotelName = document.getElementById('summary-hotel');
+  if (hotelName) {
+    hotelName.textContent = pendingBooking.selectedHotel?.name || 'Chưa chọn khách sạn';
+    console.log('✅ Set hotel name:', hotelName.textContent);
+  } else {
+    console.error('❌ Element #summary-hotel not found');
+  }
+  
+  // Populate check-in date
+  const checkinDate = document.getElementById('summary-checkin');
+  if (checkinDate && pendingBooking.checkinDate) {
+    const date = new Date(pendingBooking.checkinDate);
+    checkinDate.textContent = date.toLocaleDateString('vi-VN', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+    console.log('✅ Set check-in date:', checkinDate.textContent);
+  } else if (checkinDate) {
+    checkinDate.textContent = 'Chưa chọn ngày';
+    console.warn('⚠️ No checkinDate in pendingBooking');
+  } else {
+    console.error('❌ Element #summary-checkin not found');
+  }
+  
+  // Populate guests
+  const guests = document.getElementById('summary-guests');
+  if (guests) {
+    const adults = pendingBooking.adults || 0;
+    const children = pendingBooking.children || 0;
+    let guestText = '';
+    
+    if (adults > 0) {
+      guestText += `${adults} người lớn`;
+    }
+    if (children > 0) {
+      if (guestText) guestText += ', ';
+      guestText += `${children} trẻ em`;
+    }
+    
+    guests.textContent = guestText || 'Chưa chọn số khách';
+    console.log('✅ Set guests:', guests.textContent);
+  } else {
+    console.error('❌ Element #summary-guests not found');
+  }
+  
+  // Populate total price
+  const price = document.getElementById('summary-price');
+  if (price) {
+    const totalPrice = pendingBooking.totalPrice || 0;
+    price.textContent = `$${totalPrice.toLocaleString()}`;
+    console.log('✅ Set price:', price.textContent);
+  } else {
+    console.error('❌ Element #summary-price not found');
+  }
+  
+  console.log('✅ Booking summary populated successfully!');
 }
 
 function showSuccessMessage(bookingId) {
@@ -275,8 +540,8 @@ function showSuccessMessage(bookingId) {
 
 // ✅ ROOM CAPACITY VALIDATION FUNCTIONS
 function validateRoomCapacity() {
-  const adults = parseInt(document.querySelector('select[name="adult"]')?.value) || 0;
-  const children = parseInt(document.querySelector('select[name="children"]')?.value) || 0;
+  const adults = parseInt(document.querySelector('#adult')?.value) || 0;
+  const children = parseInt(document.querySelector('#children')?.value) || 0;
   const totalGuests = adults + children;
   
   if (totalGuests === 0) {
@@ -332,12 +597,12 @@ function validateRoomCapacity() {
 
 function getTotalRoomsSelected() {
   return (
-    parseInt(document.querySelector('select[name="superior"]')?.value || 0) +
-    parseInt(document.querySelector('select[name="junior-deluxe"]')?.value || 0) +
-    parseInt(document.querySelector('select[name="deluxe"]')?.value || 0) +
-    parseInt(document.querySelector('select[name="suite"]')?.value || 0) +
-    parseInt(document.querySelector('select[name="family"]')?.value || 0) +
-    parseInt(document.querySelector('select[name="president"]')?.value || 0)
+    parseInt(document.querySelector('#room-superior')?.value || 0) +
+    parseInt(document.querySelector('#room-junior-deluxe')?.value || 0) +
+    parseInt(document.querySelector('#room-deluxe')?.value || 0) +
+    parseInt(document.querySelector('#room-suite')?.value || 0) +
+    parseInt(document.querySelector('#room-family')?.value || 0) +
+    parseInt(document.querySelector('#room-president')?.value || 0)
   );
 }
 
@@ -360,8 +625,8 @@ function hideRoomWarning() {
 }
 
 function updateRoomSuggestion() {
-  const adults = parseInt(document.querySelector('select[name="adult"]')?.value) || 0;
-  const children = parseInt(document.querySelector('select[name="children"]')?.value) || 0;
+  const adults = parseInt(document.querySelector('#adult')?.value) || 0;
+  const children = parseInt(document.querySelector('#children')?.value) || 0;
   const totalGuests = adults + children;
   
   const suggestionText = document.getElementById('suggestion-text');
@@ -394,13 +659,17 @@ function updateRoomSuggestion() {
 
 function setupRoomValidation() {
   const roomSelects = [
-    'superior', 'junior-deluxe', 'deluxe', 
-    'suite', 'family', 'president'
+    { id: 'room-superior', name: 'superior' },
+    { id: 'room-junior-deluxe', name: 'junior-deluxe' },
+    { id: 'room-deluxe', name: 'deluxe' },
+    { id: 'room-suite', name: 'suite' },
+    { id: 'room-family', name: 'family' },
+    { id: 'room-president', name: 'president' }
   ];
   
   // Add change listeners to all room selects
-  roomSelects.forEach(roomType => {
-    const select = document.querySelector(`select[name="${roomType}"]`);
+  roomSelects.forEach(room => {
+    const select = document.querySelector(`#${room.id}`);
     if (select) {
       select.addEventListener('change', () => {
         validateRoomCapacity();
@@ -410,8 +679,8 @@ function setupRoomValidation() {
   });
   
   // Add change listeners to guest selects (in case they're not locked)
-  const adultSelect = document.querySelector('select[name="adult"]');
-  const childrenSelect = document.querySelector('select[name="children"]');
+  const adultSelect = document.querySelector('#adult');
+  const childrenSelect = document.querySelector('#children');
   
   if (adultSelect) {
     adultSelect.addEventListener('change', () => {
@@ -460,4 +729,167 @@ function hideLoading() {
   if (loadingOverlay) {
     loadingOverlay.style.display = 'none';
   }
+}
+
+// ✅ SETUP INPUT VALIDATION FOR FORM FIELDS
+function setupInputValidation() {
+  // Validate Full Name
+  const fullNameInput = document.querySelector('#customer-fullname');
+  if (fullNameInput) {
+    fullNameInput.addEventListener('blur', function() {
+      const value = this.value.trim();
+      if (value.length < 2) {
+        showFieldError(this, 'Tên phải có ít nhất 2 ký tự');
+      } else if (!/^[a-zA-ZÀ-ỹ\s]+$/.test(value)) {
+        showFieldError(this, 'Tên chỉ được chứa chữ cái');
+      } else {
+        clearFieldError(this);
+      }
+    });
+    
+    fullNameInput.addEventListener('input', function() {
+      clearFieldError(this);
+    });
+  }
+  
+  // Validate Email
+  const emailInput = document.querySelector('#customer-email');
+  if (emailInput) {
+    emailInput.addEventListener('blur', function() {
+      const value = this.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!emailRegex.test(value)) {
+        showFieldError(this, 'Email không hợp lệ');
+      } else {
+        clearFieldError(this);
+      }
+    });
+    
+    emailInput.addEventListener('input', function() {
+      clearFieldError(this);
+    });
+  }
+  
+  // Validate Phone Number
+  const phoneInput = document.querySelector('#customer-phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('blur', function() {
+      const value = this.value.trim();
+      
+      if (value.length < 10 || value.length > 11) {
+        showFieldError(this, 'Số điện thoại phải có 10-11 chữ số');
+      } else if (!/^[0-9]+$/.test(value)) {
+        showFieldError(this, 'Số điện thoại chỉ được chứa số');
+      } else {
+        clearFieldError(this);
+      }
+    });
+    
+    phoneInput.addEventListener('input', function() {
+      // Prevent non-numeric input
+      this.value = this.value.replace(/[^0-9]/g, '');
+      clearFieldError(this);
+    });
+    
+    // Prevent + and - keys
+    phoneInput.addEventListener('keydown', function(e) {
+      if (e.key === '+' || e.key === '-' || e.key === 'e' || e.key === 'E') {
+        e.preventDefault();
+      }
+    });
+  }
+  
+  // Validate Check-out date
+  const checkoutInput = document.querySelectorAll('input[type="date"]')[1];
+  const checkinInput = document.querySelector('input[type="date"]');
+  
+  if (checkoutInput && checkinInput) {
+    checkoutInput.addEventListener('change', function() {
+      const checkinDate = new Date(checkinInput.value);
+      const checkoutDate = new Date(this.value);
+      
+      if (checkoutDate <= checkinDate) {
+        showFieldError(this, 'Ngày check-out phải sau ngày check-in');
+        const minCheckout = new Date(checkinDate);
+        minCheckout.setDate(minCheckout.getDate() + 1);
+        this.value = minCheckout.toISOString().split('T')[0];
+      } else {
+        clearFieldError(this);
+      }
+    });
+  }
+}
+
+// Show field error message
+function showFieldError(field, message) {
+  // Remove existing error
+  clearFieldError(field);
+  
+  // Add error class
+  field.classList.add('field-error');
+  
+  // Create error message
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'field-error-message';
+  errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+  
+  // Insert after field
+  field.parentNode.insertBefore(errorDiv, field.nextSibling);
+}
+
+// Clear field error
+function clearFieldError(field) {
+  field.classList.remove('field-error');
+  
+  // Remove error message
+  const errorMsg = field.parentNode.querySelector('.field-error-message');
+  if (errorMsg) {
+    errorMsg.remove();
+  }
+}
+
+// Validate all fields before submit
+function validateAllFields() {
+  let isValid = true;
+  
+  // Check full name
+  const fullNameInput = document.querySelector('#customer-fullname');
+  if (fullNameInput) {
+    const value = fullNameInput.value.trim();
+    if (value.length < 2 || !/^[a-zA-ZÀ-ỹ\s]+$/.test(value)) {
+      showFieldError(fullNameInput, 'Vui lòng nhập tên hợp lệ');
+      isValid = false;
+    }
+  }
+  
+  // Check email
+  const emailInput = document.querySelector('#customer-email');
+  if (emailInput) {
+    const value = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) {
+      showFieldError(emailInput, 'Vui lòng nhập email hợp lệ');
+      isValid = false;
+    }
+  }
+  
+  // Check phone
+  const phoneInput = document.querySelector('#customer-phone');
+  if (phoneInput) {
+    const value = phoneInput.value.trim();
+    if (value.length < 10 || value.length > 11) {
+      showFieldError(phoneInput, 'Vui lòng nhập số điện thoại hợp lệ (10-11 số)');
+      isValid = false;
+    }
+  }
+  
+  // Check customer title
+  const titleSelect = document.querySelector('#customer-title');
+  if (titleSelect && !titleSelect.value) {
+    showFieldError(titleSelect, 'Vui lòng chọn danh xưng');
+    isValid = false;
+  }
+  
+  return isValid;
 }

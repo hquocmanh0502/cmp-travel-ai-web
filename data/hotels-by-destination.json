@@ -1,0 +1,356 @@
+{
+  "Japan": [
+    {
+      "id": 1,
+      "name": "Tokyo Grand Imperial Hotel",
+      "location": {
+        "address": "1-1-1 Shibuya, Tokyo, Japan",
+        "city": "Tokyo",
+        "country": "Japan"
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 300, "max": 800 },
+        "amenities": ["wifi", "pool", "spa", "gym", "restaurant", "bar"],
+        "images": [
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500",
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=500"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Osaka Castle View Hotel",
+      "location": {
+        "address": "2-2-2 Osaka Castle, Osaka, Japan",
+        "city": "Osaka", 
+        "country": "Japan"
+      },
+      "details": {
+        "rating": 4.6,
+        "starRating": 4,
+        "priceRange": { "min": 250, "max": 600 },
+        "amenities": ["wifi", "restaurant", "bar", "city_view"],
+        "images": [
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=500",
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=500"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Kyoto Traditional Ryokan",
+      "location": {
+        "address": "3-3-3 Gion, Kyoto, Japan",
+        "city": "Kyoto",
+        "country": "Japan"
+      },
+      "details": {
+        "rating": 4.9,
+        "starRating": 5,
+        "priceRange": { "min": 400, "max": 900 },
+        "amenities": ["wifi", "spa", "traditional_bath", "garden"],
+        "images": [
+          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500"
+        ]
+      }
+    }
+  ],
+  "France": [
+    {
+      "id": 4,
+      "name": "Paris Romance Boutique Hotel",
+      "location": {
+        "address": "15 Rue de Rivoli, Paris, France",
+        "city": "Paris",
+        "country": "France"
+      },
+      "details": {
+        "rating": 4.6,
+        "starRating": 4,
+        "priceRange": { "min": 180, "max": 420 },
+        "amenities": ["wifi", "restaurant", "bar", "concierge"],
+        "images": [
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=500",
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=500"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Champs-Élysées Palace",
+      "location": {
+        "address": "Avenue des Champs-Élysées, Paris, France",
+        "city": "Paris",
+        "country": "France"
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 350, "max": 750 },
+        "amenities": ["wifi", "spa", "restaurant", "luxury"],
+        "images": [
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500",
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=500"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Montmartre Artist Hotel",
+      "location": {
+        "address": "Place du Tertre, Montmartre, Paris, France",
+        "city": "Paris",
+        "country": "France"
+      },
+      "details": {
+        "rating": 4.4,
+        "starRating": 3,
+        "priceRange": { "min": 120, "max": 280 },
+        "amenities": ["wifi", "restaurant", "art_gallery"],
+        "images": [
+          "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500"
+        ]
+      }
+    }
+  ],
+  "Maldives": [
+    {
+      "id": 7,
+      "name": "Maldives Paradise Resort",
+      "location": {
+        "address": "Malé Atoll, Republic of Maldives",
+        "city": "Malé",
+        "country": "Maldives"
+      },
+      "details": {
+        "rating": 4.9,
+        "starRating": 5,
+        "priceRange": { "min": 500, "max": 1500 },
+        "amenities": ["wifi", "pool", "spa", "water_sports", "diving"],
+        "images": [
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500",
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "name": "Overwater Bungalow Resort",
+      "location": {
+        "address": "Baa Atoll, Maldives",
+        "city": "Baa Atoll",
+        "country": "Maldives"
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 600, "max": 1200 },
+        "amenities": ["wifi", "overwater", "snorkeling", "spa"],
+        "images": [
+          "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "name": "Sunset Island Villa",
+      "location": {
+        "address": "Ari Atoll, Maldives",
+        "city": "Ari Atoll",
+        "country": "Maldives"
+      },
+      "details": {
+        "rating": 4.7,
+        "starRating": 4,
+        "priceRange": { "min": 400, "max": 900 },
+        "amenities": ["wifi", "private_beach", "sunset_view", "spa"],
+        "images": [
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500",
+          "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500"
+        ]
+      }
+    }
+  ],
+  "Switzerland": [
+    {
+      "id": 10,
+      "name": "Swiss Alps Mountain Lodge",
+      "location": {
+        "address": "Interlaken, Bernese Oberland, Switzerland",
+        "city": "Interlaken",
+        "country": "Switzerland"
+      },
+      "details": {
+        "rating": 4.7,
+        "starRating": 4,
+        "priceRange": { "min": 220, "max": 680 },
+        "amenities": ["wifi", "spa", "gym", "ski_storage", "mountain_view"],
+        "images": [
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500",
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "name": "Zermatt Luxury Chalet",
+      "location": {
+        "address": "Zermatt, Valais, Switzerland",
+        "city": "Zermatt",
+        "country": "Switzerland"
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 400, "max": 1200 },
+        "amenities": ["wifi", "fireplace", "matterhorn_view", "ski_in_out"],
+        "images": [
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500",
+          "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "name": "Lake Geneva Resort",
+      "location": {
+        "address": "Montreux, Lake Geneva, Switzerland",
+        "city": "Montreux",
+        "country": "Switzerland"
+      },
+      "details": {
+        "rating": 4.6,
+        "starRating": 4,
+        "priceRange": { "min": 300, "max": 800 },
+        "amenities": ["wifi", "lake_view", "spa", "restaurant"],
+        "images": [
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500"
+        ]
+      }
+    }
+  ],
+  "Indonesia": [
+    {
+      "id": 13,
+      "name": "Bali Cultural Resort",
+      "location": {
+        "address": "Ubud, Gianyar Regency, Bali, Indonesia",
+        "city": "Ubud",
+        "country": "Indonesia"
+      },
+      "details": {
+        "rating": 4.5,
+        "starRating": 4,
+        "priceRange": { "min": 120, "max": 350 },
+        "amenities": ["wifi", "pool", "spa", "yoga_studio", "rice_field_view"],
+        "images": [
+          "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=500",
+          "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "name": "Seminyak Beach Club",
+      "location": {
+        "address": "Seminyak Beach, Bali, Indonesia",
+        "city": "Seminyak",
+        "country": "Indonesia"
+      },
+      "details": {
+        "rating": 4.6,
+        "starRating": 4,
+        "priceRange": { "min": 200, "max": 500 },
+        "amenities": ["wifi", "beach_access", "pool", "nightlife"],
+        "images": [
+          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500",
+          "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=500"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "name": "Nusa Dua Luxury Villa",
+      "location": {
+        "address": "Nusa Dua, Bali, Indonesia",
+        "city": "Nusa Dua",
+        "country": "Indonesia"
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 350, "max": 900 },
+        "amenities": ["wifi", "private_pool", "butler", "golf_course"],
+        "images": [
+          "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500",
+          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500"
+        ]
+      }
+    }
+  ],
+  "Iceland": [
+    {
+      "id": 16,
+      "name": "Iceland Northern Lights Hotel",
+      "location": {
+        "address": "Reykjavik City Center, Iceland",
+        "city": "Reykjavik",
+        "country": "Iceland"
+      },
+      "details": {
+        "rating": 4.6,
+        "starRating": 4,
+        "priceRange": { "min": 280, "max": 550 },
+        "amenities": ["wifi", "spa", "aurora_viewing", "geothermal_baths"],
+        "images": [
+          "https://images.unsplash.com/photo-1539066436319-6a24b3c7c3a6?w=500",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "name": "Blue Lagoon Retreat",
+      "location": {
+        "address": "Grindavik, Iceland",
+        "city": "Grindavik",
+        "country": "Iceland"
+      },
+      "details": {
+        "rating": 4.9,
+        "starRating": 5,
+        "priceRange": { "min": 500, "max": 1200 },
+        "amenities": ["wifi", "blue_lagoon_access", "spa", "luxury"],
+        "images": [
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500",
+          "https://images.unsplash.com/photo-1539066436319-6a24b3c7c3a6?w=500"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "name": "Golden Circle Lodge",
+      "location": {
+        "address": "Selfoss, South Iceland",
+        "city": "Selfoss",
+        "country": "Iceland"
+      },
+      "details": {
+        "rating": 4.4,
+        "starRating": 3,
+        "priceRange": { "min": 180, "max": 400 },
+        "amenities": ["wifi", "restaurant", "golden_circle_tours"],
+        "images": [
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500",
+          "https://images.unsplash.com/photo-1539066436319-6a24b3c7c3a6?w=500"
+        ]
+      }
+    }
+  ]
+}
