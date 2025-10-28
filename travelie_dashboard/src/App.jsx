@@ -19,12 +19,12 @@ export default function App() {
   const title = active === "dashboard" ? "Dashboard" : active[0].toUpperCase() + active.slice(1);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-gray-800">
-      <div className="max-w-[1400px] mx-auto flex gap-6">
+    <div className="min-h-screen bg-slate-50 text-gray-800 overflow-x-hidden">
+      <div className="max-w-[1400px] mx-auto flex gap-6 px-4">
         <Sidebar active={active} setActive={setActive} />
-        <div className="flex-1 flex flex-col min-h-screen">
+        <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
           <Header title={title} />
-          <main className="p-6">
+          <main className="p-6 overflow-x-hidden">
             {active === "dashboard" && <Dashboard />}
             {active === "bookings" && <BookingsManagement />}
             {active === "tours" && <Tours />}

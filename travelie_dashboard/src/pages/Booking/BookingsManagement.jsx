@@ -167,10 +167,10 @@ function BookingsManagement() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-full">
       {/* Header */}
       <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">Bookings Management</h1>
             <p className="text-gray-600 mt-1">Manage all tour bookings and reservations</p>
@@ -272,34 +272,34 @@ function BookingsManagement() {
       {/* Bookings Table */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-max">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Booking ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Customer
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Tour
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Departure Date
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  Departure
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Guests
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Amount
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Payment
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                   Actions
                 </th>
               </tr>
@@ -323,37 +323,37 @@ function BookingsManagement() {
               ) : (
                 bookings.map((booking) => (
                   <tr key={booking._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-gray-900">
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <span className="text-xs font-medium text-gray-900">
                         {booking.bookingId}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{booking.customerName}</p>
-                        <p className="text-sm text-gray-500">{booking.customerEmail}</p>
+                        <p className="text-xs font-medium text-gray-900 truncate max-w-[150px]">{booking.customerName}</p>
+                        <p className="text-xs text-gray-500 truncate max-w-[150px]">{booking.customerEmail}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-3 py-3">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{booking.tourName}</p>
-                        <p className="text-sm text-gray-500">{booking.tourLocation}</p>
+                        <p className="text-xs font-medium text-gray-900 truncate max-w-[180px]">{booking.tourName}</p>
+                        <p className="text-xs text-gray-500 truncate max-w-[180px]">{booking.tourLocation}</p>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm text-gray-900">
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <span className="text-xs text-gray-900">
                         {formatDate(booking.departureDate)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-1 text-sm text-gray-900">
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <div className="flex items-center gap-1 text-xs text-gray-900">
                         <MdPeople />
                         {booking.totalGuests}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-3 whitespace-nowrap">
                       <div>
-                        <p className="text-sm font-semibold text-gray-900">
+                        <p className="text-xs font-semibold text-gray-900">
                           {formatCurrency(booking.totalAmount)}
                         </p>
                         {booking.paidAmount > 0 && (
@@ -363,34 +363,34 @@ function BookingsManagement() {
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-3 whitespace-nowrap">
                       {getStatusBadge(booking.status)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 py-3 whitespace-nowrap">
                       {getPaymentBadge(booking.paymentStatus)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <div className="flex items-center gap-1">
                         <button
                           onClick={() => handleViewDetail(booking._id)}
-                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="View Details"
                         >
-                          <MdVisibility />
+                          <MdVisibility className="text-sm" />
                         </button>
                         <button
                           onClick={() => handleStatusUpdate(booking)}
-                          className="p-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
+                          className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
                           title="Update Status"
                         >
-                          <MdEdit />
+                          <MdEdit className="text-sm" />
                         </button>
                         <button
                           onClick={() => handlePaymentUpdate(booking)}
-                          className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                          className="p-1.5 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                           title="Update Payment"
                         >
-                          <MdAttachMoney />
+                          <MdAttachMoney className="text-sm" />
                         </button>
                       </div>
                     </td>
@@ -404,7 +404,7 @@ function BookingsManagement() {
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <p className="text-sm text-gray-700">
                 Showing page {currentPage} of {totalPages} ({total} total)
               </p>
