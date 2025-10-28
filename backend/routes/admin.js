@@ -23,9 +23,9 @@ const isAdmin = (req, res, next) => {
 // Get dashboard analytics overview
 router.get('/analytics/overview', isAdmin, async (req, res) => {
   try {
-    // Get total revenue from completed bookings
-    const completedBookings = await Booking.find({ paymentStatus: 'completed' });
-    const totalRevenue = completedBookings.reduce((sum, booking) => sum + (booking.totalPrice || 0), 0);
+    // Get total revenue from paid bookings
+    const paidBookings = await Booking.find({ paymentStatus: 'paid' });
+    const totalRevenue = paidBookings.reduce((sum, booking) => sum + (booking.totalAmount || 0), 0);
 
     // Get revenue growth (compare with previous period)
     const now = new Date();
@@ -35,14 +35,14 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
     const currentPeriodRevenue = await Booking.aggregate([
       {
         $match: {
-          paymentStatus: 'completed',
+          paymentStatus: 'paid',
           createdAt: { $gte: thirtyDaysAgo }
         }
       },
       {
         $group: {
           _id: null,
-          total: { $sum: '$totalPrice' }
+          total: { $sum: '$totalAmount' }
         }
       }
     ]);
@@ -50,14 +50,14 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
     const previousPeriodRevenue = await Booking.aggregate([
       {
         $match: {
-          paymentStatus: 'completed',
+          paymentStatus: 'paid',
           createdAt: { $gte: sixtyDaysAgo, $lt: thirtyDaysAgo }
         }
       },
       {
         $group: {
           _id: null,
-          total: { $sum: '$totalPrice' }
+          total: { $sum: '$totalAmount' }
         }
       }
     ]);
@@ -98,7 +98,7 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
     // Get recent bookings
     const recentBookings = await Booking.find()
       .populate('userId', 'fullName email')
-      .populate('tourId', 'title')
+      .populate('tourId', 'name')
       .sort({ createdAt: -1 })
       .limit(5);
 
@@ -108,7 +108,7 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
         $group: {
           _id: '$tourId',
           bookingCount: { $count: {} },
-          totalRevenue: { $sum: '$totalPrice' }
+          totalRevenue: { $sum: '$totalAmount' }
         }
       },
       {
@@ -132,7 +132,7 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
     const revenueByMonth = await Booking.aggregate([
       {
         $match: {
-          paymentStatus: 'completed',
+          paymentStatus: 'paid',
           createdAt: { $gte: sixMonthsAgo }
         }
       },
@@ -142,7 +142,7 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
             year: { $year: '$createdAt' },
             month: { $month: '$createdAt' }
           },
-          revenue: { $sum: '$totalPrice' },
+          revenue: { $sum: '$totalAmount' },
           bookings: { $count: {} }
         }
       },
@@ -164,15 +164,15 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
         recentBookings: recentBookings.map(b => ({
           _id: b._id,
           customerName: b.userId?.fullName || 'Unknown',
-          tourName: b.tourId?.title || 'Unknown',
-          totalPrice: b.totalPrice,
+          tourName: b.tourId?.name || 'Unknown',
+          totalPrice: b.totalAmount,
           paymentStatus: b.paymentStatus,
-          bookingStatus: b.bookingStatus,
+          bookingStatus: b.status,
           createdAt: b.createdAt
         })),
         topTours: topTours.map(t => ({
           _id: t._id,
-          name: t.tourDetails[0]?.title || 'Unknown',
+          name: t.tourDetails[0]?.name || 'Unknown',
           bookings: t.bookingCount,
           revenue: t.totalRevenue
         })),
@@ -195,6 +195,109 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
 
 // ==================== TOURS MANAGEMENT ====================
 
+// Get full data for export
+router.get('/export/full-data', isAdmin, async (req, res) => {
+  try {
+    // Get ALL bookings with user and tour details
+    const allBookings = await Booking.find()
+      .populate('userId', 'fullName email phoneNumber')
+      .populate('tourId', 'name price')
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Format bookings for export
+    const formattedBookings = allBookings.map(booking => ({
+      _id: booking._id,
+      customerName: booking.userId?.fullName || booking.fullName || 'N/A',
+      email: booking.userId?.email || booking.email || 'N/A',
+      phone: booking.userId?.phoneNumber || booking.phoneNumber || 'N/A',
+      tourName: booking.tourId?.name || booking.tourName || 'N/A',
+      tourDate: booking.tourDate,
+      numberOfGuests: booking.numberOfGuests || 0,
+      totalPrice: booking.totalAmount || 0,
+      paymentStatus: booking.paymentStatus || 'pending',
+      bookingStatus: booking.status || 'pending',
+      bookingDate: booking.createdAt,
+      paymentMethod: booking.paymentMethod || 'N/A'
+    }));
+
+    // Get ALL tours with stats
+    const allTours = await Tour.find().lean();
+    const toursWithStats = await Promise.all(
+      allTours.map(async (tour) => {
+        const bookingCount = await Booking.countDocuments({ tourId: tour._id });
+        const paidBookings = await Booking.find({ 
+          tourId: tour._id, 
+          paymentStatus: 'paid' 
+        });
+        const totalRevenue = paidBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
+
+        return {
+          _id: tour._id,
+          name: tour.name,
+          country: tour.country,
+          city: tour.city,
+          price: tour.price,
+          duration: tour.duration,
+          maxGroupSize: tour.maxGroupSize,
+          rating: tour.rating,
+          totalBookings: bookingCount,
+          totalRevenue: totalRevenue
+        };
+      })
+    );
+
+    // Get revenue by month (last 12 months)
+    const twelveMonthsAgo = new Date();
+    twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+
+    const revenueByMonth = await Booking.aggregate([
+      {
+        $match: {
+          paymentStatus: 'paid',
+          createdAt: { $gte: twelveMonthsAgo }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: '$createdAt' },
+            month: { $month: '$createdAt' }
+          },
+          revenue: { $sum: '$totalAmount' },
+          bookings: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { '_id.year': 1, '_id.month': 1 }
+      }
+    ]);
+
+    const formattedRevenueByMonth = revenueByMonth.map(item => ({
+      month: `${item._id.year}-${String(item._id.month).padStart(2, '0')}`,
+      revenue: item.revenue,
+      bookings: item.bookings
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        bookings: formattedBookings,
+        tours: toursWithStats,
+        revenueByMonth: formattedRevenueByMonth,
+        exportDate: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching export data:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching export data',
+      message: error.message 
+    });
+  }
+});
+
 // Get all tours with filters
 router.get('/tours', isAdmin, async (req, res) => {
   try {
@@ -204,7 +307,7 @@ router.get('/tours', isAdmin, async (req, res) => {
     
     if (search) {
       query.$or = [
-        { title: { $regex: search, $options: 'i' } },
+        { name: { $regex: search, $options: 'i' } },
         { country: { $regex: search, $options: 'i' } },
         { city: { $regex: search, $options: 'i' } }
       ];
@@ -220,11 +323,11 @@ router.get('/tours', isAdmin, async (req, res) => {
     const toursWithStats = await Promise.all(
       tours.map(async (tour) => {
         const bookingCount = await Booking.countDocuments({ tourId: tour._id });
-        const completedBookings = await Booking.find({ 
+        const paidBookings = await Booking.find({ 
           tourId: tour._id, 
-          paymentStatus: 'completed' 
+          paymentStatus: 'paid' 
         });
-        const totalRevenue = completedBookings.reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+        const totalRevenue = paidBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
 
         return {
           ...tour.toObject(),
@@ -355,8 +458,8 @@ router.get('/users', isAdmin, async (req, res) => {
     const usersWithStats = await Promise.all(
       users.map(async (user) => {
         const bookings = await Booking.find({ userId: user._id });
-        const completedBookings = bookings.filter(b => b.paymentStatus === 'completed');
-        const totalSpent = completedBookings.reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+        const completedBookings = bookings.filter(b => b.paymentStatus === 'paid');
+        const totalSpent = completedBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
 
         return {
           ...user.toObject(),
@@ -583,7 +686,7 @@ router.get('/reviews', isAdmin, async (req, res) => {
 
     const reviews = await Feedback.find(query)
       .populate('userId', 'fullName email avatar')
-      .populate('tourId', 'title')
+      .populate('tourId', 'name')
       .sort({ createdAt: -1 });
 
     res.json({
@@ -608,7 +711,7 @@ router.put('/reviews/:id/approve', isAdmin, async (req, res) => {
       { status: 'approved' },
       { new: true }
     ).populate('userId', 'fullName email')
-     .populate('tourId', 'title');
+     .populate('tourId', 'name');
     
     if (!review) {
       return res.status(404).json({ 
@@ -640,7 +743,7 @@ router.put('/reviews/:id/reject', isAdmin, async (req, res) => {
       { status: 'rejected' },
       { new: true }
     ).populate('userId', 'fullName email')
-     .populate('tourId', 'title');
+     .populate('tourId', 'name');
     
     if (!review) {
       return res.status(404).json({ 
@@ -703,7 +806,7 @@ router.post('/reviews/:id/reply', isAdmin, async (req, res) => {
       },
       { new: true }
     ).populate('userId', 'fullName email')
-     .populate('tourId', 'title');
+     .populate('tourId', 'name');
     
     if (!review) {
       return res.status(404).json({ 
@@ -730,13 +833,430 @@ router.post('/reviews/:id/reply', isAdmin, async (req, res) => {
 // ==================== BOOKINGS MANAGEMENT ====================
 
 // Get bookings stats
+// ==================== BOOKINGS MANAGEMENT ====================
+
+// Get all bookings with filters and pagination
+router.get('/bookings', isAdmin, async (req, res) => {
+  try {
+    const { 
+      page = 1, 
+      limit = 20, 
+      search = '', 
+      status = '', 
+      paymentStatus = '',
+      sortBy = 'createdAt',
+      sortOrder = 'desc'
+    } = req.query;
+
+    // Build query
+    const query = {};
+    
+    // Search by customer name, email, tour name
+    if (search) {
+      query.$or = [
+        { 'customerInfo.fullName': { $regex: search, $options: 'i' } },
+        { 'customerInfo.email': { $regex: search, $options: 'i' } },
+        { tourName: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    // Filter by booking status
+    if (status && status !== 'all') {
+      query.status = status;
+    }
+    
+    // Filter by payment status
+    if (paymentStatus && paymentStatus !== 'all') {
+      query.paymentStatus = paymentStatus;
+    }
+
+    // Count total documents
+    const total = await Booking.countDocuments(query);
+    
+    // Sort configuration
+    const sortConfig = {};
+    sortConfig[sortBy] = sortOrder === 'desc' ? -1 : 1;
+    
+    // Fetch bookings with pagination
+    const bookings = await Booking.find(query)
+      .populate('userId', 'fullName email phoneNumber')
+      .populate('tourId', 'name price country city duration')
+      .sort(sortConfig)
+      .limit(parseInt(limit))
+      .skip((parseInt(page) - 1) * parseInt(limit))
+      .lean();
+
+    // Format response
+    const formattedBookings = bookings.map(booking => ({
+      _id: booking._id,
+      bookingId: 'BOOK' + booking._id.toString().slice(-8).toUpperCase(),
+      customerName: booking.customerInfo?.fullName || booking.userId?.fullName || 'N/A',
+      customerEmail: booking.customerInfo?.email || booking.userId?.email || 'N/A',
+      customerPhone: booking.customerInfo?.phone || booking.userId?.phoneNumber || 'N/A',
+      tourName: booking.tourName || booking.tourId?.name || 'N/A',
+      tourLocation: booking.tourId ? `${booking.tourId.city}, ${booking.tourId.country}` : 'N/A',
+      departureDate: booking.departureDate,
+      checkinDate: booking.checkinDate,
+      checkoutDate: booking.checkoutDate,
+      totalGuests: (booking.adults || 0) + (booking.children || 0) + (booking.infants || 0),
+      adults: booking.adults,
+      children: booking.children,
+      infants: booking.infants,
+      totalAmount: booking.totalAmount,
+      paidAmount: booking.paymentDetails?.paidAmount || 0,
+      status: booking.status,
+      paymentStatus: booking.paymentStatus,
+      paymentMethod: booking.paymentMethod,
+      bookingDate: booking.createdAt,
+      updatedAt: booking.updatedAt
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        bookings: formattedBookings,
+        pagination: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          totalPages: Math.ceil(total / parseInt(limit))
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching bookings:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching bookings',
+      message: error.message 
+    });
+  }
+});
+
+// Get single booking detail
+router.get('/bookings/:id', isAdmin, async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id)
+      .populate('userId', 'fullName email phoneNumber avatar')
+      .populate('tourId')
+      .populate('hotelId', 'name address rating')
+      .lean();
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        error: 'Booking not found'
+      });
+    }
+
+    // Format detailed response
+    const detailedBooking = {
+      _id: booking._id,
+      bookingId: 'BOOK' + booking._id.toString().slice(-8).toUpperCase(),
+      
+      // Customer Info
+      customer: {
+        id: booking.userId?._id,
+        name: booking.customerInfo?.fullName || booking.userId?.fullName || 'N/A',
+        email: booking.customerInfo?.email || booking.userId?.email || 'N/A',
+        phone: booking.customerInfo?.phone || booking.userId?.phoneNumber || 'N/A',
+        title: booking.customerInfo?.title || 'Mr',
+        specialRequests: booking.customerInfo?.specialRequests || '',
+        avatar: booking.userId?.avatar
+      },
+      
+      // Tour Info
+      tour: {
+        id: booking.tourId?._id,
+        name: booking.tourName || booking.tourId?.name || 'N/A',
+        price: booking.tourId?.price,
+        duration: booking.tourId?.duration,
+        location: booking.tourId ? `${booking.tourId.city}, ${booking.tourId.country}` : 'N/A',
+        image: booking.tourId?.image
+      },
+      
+      // Hotel Info
+      hotel: booking.hotelId ? {
+        id: booking.hotelId._id,
+        name: booking.hotelName || booking.hotelId.name,
+        address: booking.hotelId.address,
+        rating: booking.hotelId.rating
+      } : null,
+      
+      // Dates
+      dates: {
+        departure: booking.departureDate,
+        checkin: booking.checkinDate,
+        checkout: booking.checkoutDate,
+        booking: booking.createdAt,
+        updated: booking.updatedAt
+      },
+      
+      // Guests
+      guests: {
+        adults: booking.adults,
+        children: booking.children,
+        infants: booking.infants,
+        total: (booking.adults || 0) + (booking.children || 0) + (booking.infants || 0)
+      },
+      
+      // Rooms
+      rooms: booking.rooms,
+      totalRooms: Object.values(booking.rooms || {}).reduce((sum, count) => sum + count, 0),
+      
+      // Services
+      services: booking.services,
+      
+      // Pricing
+      pricing: {
+        tourBaseCost: booking.tourBaseCost,
+        accommodationCost: booking.accommodationCost,
+        servicesCost: booking.servicesCost,
+        totalAmount: booking.totalAmount,
+        paidAmount: booking.paymentDetails?.paidAmount || 0,
+        remainingAmount: booking.totalAmount - (booking.paymentDetails?.paidAmount || 0)
+      },
+      
+      // Status
+      status: booking.status,
+      paymentStatus: booking.paymentStatus,
+      paymentMethod: booking.paymentMethod,
+      
+      // Payment Details
+      paymentDetails: {
+        paidAmount: booking.paymentDetails?.paidAmount || 0,
+        paidAt: booking.paymentDetails?.paidAt,
+        paymentReference: booking.paymentDetails?.paymentReference,
+        paymentNote: booking.paymentDetails?.paymentNote
+      },
+      
+      // CMP Wallet (if used)
+      cmpWalletPayment: booking.paymentMethod === 'cmp_wallet' ? booking.cmpWalletPayment : null,
+      
+      // Review
+      hasReviewed: booking.hasReviewed,
+      reviewId: booking.reviewId,
+      
+      // Admin
+      adminNotes: booking.adminNotes,
+      
+      // Cancellation
+      cancellation: booking.status === 'cancelled' ? {
+        date: booking.cancellationDate,
+        reason: booking.cancellationReason
+      } : null,
+      
+      // Validation
+      roomValidation: booking.roomValidation
+    };
+
+    res.json({
+      success: true,
+      data: detailedBooking
+    });
+  } catch (error) {
+    console.error('Error fetching booking detail:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching booking detail',
+      message: error.message 
+    });
+  }
+});
+
+// Update booking
+router.put('/bookings/:id', isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+    
+    // Don't allow updating certain fields
+    delete updates._id;
+    delete updates.userId;
+    delete updates.tourId;
+    delete updates.createdAt;
+    
+    const booking = await Booking.findByIdAndUpdate(
+      id,
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
+    
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        error: 'Booking not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: booking,
+      message: 'Booking updated successfully'
+    });
+  } catch (error) {
+    console.error('Error updating booking:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error updating booking',
+      message: error.message 
+    });
+  }
+});
+
+// Update booking status
+router.put('/bookings/:id/status', isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, reason } = req.body;
+    
+    if (!['pending', 'confirmed', 'cancelled', 'completed'].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid status'
+      });
+    }
+    
+    const updateData = { status };
+    
+    // If cancelling, save cancellation info
+    if (status === 'cancelled') {
+      updateData.cancellationDate = new Date();
+      updateData.cancellationReason = reason || 'Cancelled by admin';
+    }
+    
+    const booking = await Booking.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true }
+    );
+    
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        error: 'Booking not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      data: booking,
+      message: `Booking status updated to ${status}`
+    });
+  } catch (error) {
+    console.error('Error updating booking status:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error updating booking status',
+      message: error.message 
+    });
+  }
+});
+
+// Update payment status
+router.put('/bookings/:id/payment', isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { paymentStatus, paidAmount, paymentReference, paymentNote } = req.body;
+    
+    if (!['unpaid', 'partial', 'paid', 'refunded'].includes(paymentStatus)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid payment status'
+      });
+    }
+    
+    const booking = await Booking.findById(id);
+    
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        error: 'Booking not found'
+      });
+    }
+    
+    // Update payment info
+    booking.paymentStatus = paymentStatus;
+    
+    if (paidAmount !== undefined) {
+      booking.paymentDetails.paidAmount = paidAmount;
+      booking.paymentDetails.paidAt = new Date();
+    }
+    
+    if (paymentReference) {
+      booking.paymentDetails.paymentReference = paymentReference;
+    }
+    
+    if (paymentNote) {
+      booking.paymentDetails.paymentNote = paymentNote;
+    }
+    
+    await booking.save();
+    
+    res.json({
+      success: true,
+      data: booking,
+      message: 'Payment updated successfully'
+    });
+  } catch (error) {
+    console.error('Error updating payment:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error updating payment',
+      message: error.message 
+    });
+  }
+});
+
+// Delete/Cancel booking
+router.delete('/bookings/:id', isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    
+    // Soft delete by setting status to cancelled
+    const booking = await Booking.findByIdAndUpdate(
+      id,
+      { 
+        $set: { 
+          status: 'cancelled',
+          cancellationDate: new Date(),
+          cancellationReason: reason || 'Cancelled by admin'
+        }
+      },
+      { new: true }
+    );
+    
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        error: 'Booking not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      message: 'Booking cancelled successfully',
+      data: booking
+    });
+  } catch (error) {
+    console.error('Error cancelling booking:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error cancelling booking',
+      message: error.message 
+    });
+  }
+});
+
+// Get booking stats
 router.get('/bookings/stats', isAdmin, async (req, res) => {
   try {
     const totalBookings = await Booking.countDocuments();
-    const pendingBookings = await Booking.countDocuments({ bookingStatus: 'pending' });
-    const confirmedBookings = await Booking.countDocuments({ bookingStatus: 'confirmed' });
-    const completedBookings = await Booking.countDocuments({ bookingStatus: 'completed' });
-    const cancelledBookings = await Booking.countDocuments({ bookingStatus: 'cancelled' });
+    const pendingBookings = await Booking.countDocuments({ status: 'pending' });
+    const confirmedBookings = await Booking.countDocuments({ status: 'confirmed' });
+    const completedBookings = await Booking.countDocuments({ status: 'completed' });
+    const cancelledBookings = await Booking.countDocuments({ status: 'cancelled' });
 
     res.json({
       success: true,
