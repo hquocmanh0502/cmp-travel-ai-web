@@ -2873,9 +2873,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ==================== FUNCTIONALITY IMPLEMENTATIONS ====================
     
     // Wishlist functionality
-    function toggleWishlist() {
+    async function toggleWishlist() {
         if (!currentUser) {
-            showAlert('Please login to add to wishlist', 'warning');
+            showAlert('Vui lòng đăng nhập để thêm vào yêu thích', 'warning');
             return;
         }
         
@@ -2883,46 +2883,88 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const wishlistBtn = document.getElementById('wishlistBtn');
         const tourId = currentTour._id;
+        const userId = localStorage.getItem('userId');
         
         // Get current wishlist from localStorage
         let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
         
-        if (wishlist.includes(tourId)) {
-            // Remove from wishlist
-            wishlist = wishlist.filter(id => id !== tourId);
-            wishlistBtn.classList.remove('active');
-            wishlistBtn.innerHTML = '<i class="far fa-heart"></i>';
-            showAlert('Removed from wishlist', 'info');
-        } else {
-            // Add to wishlist with full tour data
-            wishlist.push(tourId);
-            wishlistBtn.classList.add('active');
-            wishlistBtn.innerHTML = '<i class="fas fa-heart"></i>';
-            showAlert('Added to wishlist', 'success');
+        try {
+            if (wishlist.includes(tourId)) {
+                // Remove from wishlist via API
+                console.log('🗑️ Removing from wishlist:', tourId);
+                
+                const response = await fetch(`http://localhost:3000/api/profile/${userId}/wishlist/${tourId}`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to remove from wishlist');
+                }
+                
+                // Update UI
+                wishlist = wishlist.filter(id => id !== tourId);
+                wishlistBtn.classList.remove('active');
+                wishlistBtn.innerHTML = '<i class="far fa-heart"></i>';
+                showAlert('Đã xóa khỏi danh sách yêu thích', 'info');
+                
+                console.log('✅ Removed from wishlist successfully');
+                
+            } else {
+                // Add to wishlist via API
+                console.log('➕ Adding to wishlist:', tourId);
+                
+                const response = await fetch(`http://localhost:3000/api/profile/${userId}/wishlist`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tourId: tourId })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to add to wishlist');
+                }
+                
+                // Update UI
+                wishlist.push(tourId);
+                wishlistBtn.classList.add('active');
+                wishlistBtn.innerHTML = '<i class="fas fa-heart"></i>';
+                showAlert('Đã thêm vào danh sách yêu thích', 'success');
+                
+                console.log('✅ Added to wishlist successfully');
+                
+                // Save tour data to localStorage for quick access
+                let wishlistData = JSON.parse(localStorage.getItem('wishlistData') || '{}');
+                wishlistData[tourId] = {
+                    _id: currentTour._id,
+                    name: currentTour.name,
+                    country: currentTour.country,
+                    description: currentTour.description,
+                    estimatedCost: currentTour.estimatedCost,
+                    rating: currentTour.rating,
+                    img: currentTour.img,
+                    dateAdded: new Date().toISOString()
+                };
+                localStorage.setItem('wishlistData', JSON.stringify(wishlistData));
+            }
             
-            // Save tour data to localStorage for wishlist
-            let wishlistData = JSON.parse(localStorage.getItem('wishlistData') || '{}');
-            wishlistData[tourId] = {
-                _id: currentTour._id,
-                name: currentTour.name,
-                country: currentTour.country,
-                description: currentTour.description,
-                estimatedCost: currentTour.estimatedCost,
-                rating: currentTour.rating,
-                img: currentTour.img,
-                dateAdded: new Date().toISOString()
-            };
-            localStorage.setItem('wishlistData', JSON.stringify(wishlistData));
+            // Update localStorage
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            
+            // Animate button
+            wishlistBtn.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                wishlistBtn.style.transform = 'scale(1)';
+            }, 200);
+            
+        } catch (error) {
+            console.error('Error toggling wishlist:', error);
+            showAlert(error.message || 'Có lỗi xảy ra. Vui lòng thử lại.', 'error');
         }
-        
-        // Update localStorage
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
-        
-        // Animate button
-        wishlistBtn.style.transform = 'scale(1.2)';
-        setTimeout(() => {
-            wishlistBtn.style.transform = 'scale(1)';
-        }, 200);
     }
 
     function checkWishlistStatus() {

@@ -13,8 +13,26 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   fullName: { type: String, required: true },
   phone: { type: String },
+  dateOfBirth: { type: Date },
+  gender: { type: String, enum: ['male', 'female', 'other'], default: 'male' },
+  address: { type: String },
   avatar: { type: String, default: '' },
   verified: { type: Boolean, default: false },
+  
+  // CMP Wallet (for payments)
+  wallet: {
+    balance: { type: Number, default: 0 }, // USD balance
+    currency: { type: String, default: 'USD' },
+    transactions: [{
+      type: { type: String, enum: ['topup', 'payment', 'refund', 'bonus'], required: true },
+      amount: { type: Number, required: true },
+      description: String,
+      orderId: String,
+      momoTransId: String, // MoMo transaction ID
+      status: { type: String, enum: ['pending', 'completed', 'failed'], default: 'pending' },
+      timestamp: { type: Date, default: Date.now }
+    }]
+  },
   
   // AI Preferences (mở rộng)
   preferences: {

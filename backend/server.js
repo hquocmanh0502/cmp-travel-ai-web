@@ -21,6 +21,8 @@ const chatbotService = require('./services/chatbotService');
 const bookingsRoutes = require('./routes/bookings');
 const authRoutes = require('./routes/auth');
 const commentsRoutes = require('./routes/comments');
+const profileRoutes = require('./routes/profile');
+const walletRoutes = require('./routes/wallet');
 
 const app = express();
 
@@ -39,6 +41,8 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentsRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/wallet', walletRoutes);
 
 // API Routes
 
@@ -646,8 +650,20 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-// Handle frontend routes (SPA routing)
-app.get(/^(?!\/api).*/, (req, res) => {
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({ error: 'Something went wrong!', message: err.message });
+});
+
+// Handle frontend routes (SPA routing) - Must be LAST
+app.use((req, res) => {
+  // If it's an API route that wasn't matched, return 404
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
+  
+  // Otherwise serve frontend files
   const filePath = path.join(__dirname, '../frontend', req.path);
   const fs = require('fs');
   
@@ -655,17 +671,8 @@ app.get(/^(?!\/api).*/, (req, res) => {
     return res.sendFile(filePath);
   }
   
+  // Fallback to index.html for SPA routing
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  res.status(500).json({ error: 'Something went wrong!' });
-});
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: 'Route not found' });
 });
 
 const PORT = process.env.PORT || 3000;
