@@ -933,6 +933,35 @@ router.get('/bookings', isAdmin, async (req, res) => {
   }
 });
 
+// Get booking stats (must be BEFORE /bookings/:id)
+router.get('/bookings/stats', isAdmin, async (req, res) => {
+  try {
+    const totalBookings = await Booking.countDocuments();
+    const pendingBookings = await Booking.countDocuments({ status: 'pending' });
+    const confirmedBookings = await Booking.countDocuments({ status: 'confirmed' });
+    const completedBookings = await Booking.countDocuments({ status: 'completed' });
+    const cancelledBookings = await Booking.countDocuments({ status: 'cancelled' });
+
+    res.json({
+      success: true,
+      data: {
+        total: totalBookings,
+        pending: pendingBookings,
+        confirmed: confirmedBookings,
+        completed: completedBookings,
+        cancelled: cancelledBookings
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching booking stats:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching booking stats',
+      message: error.message 
+    });
+  }
+});
+
 // Get single booking detail
 router.get('/bookings/:id', isAdmin, async (req, res) => {
   try {
@@ -1244,35 +1273,6 @@ router.delete('/bookings/:id', isAdmin, async (req, res) => {
     res.status(500).json({ 
       success: false, 
       error: 'Error cancelling booking',
-      message: error.message 
-    });
-  }
-});
-
-// Get booking stats
-router.get('/bookings/stats', isAdmin, async (req, res) => {
-  try {
-    const totalBookings = await Booking.countDocuments();
-    const pendingBookings = await Booking.countDocuments({ status: 'pending' });
-    const confirmedBookings = await Booking.countDocuments({ status: 'confirmed' });
-    const completedBookings = await Booking.countDocuments({ status: 'completed' });
-    const cancelledBookings = await Booking.countDocuments({ status: 'cancelled' });
-
-    res.json({
-      success: true,
-      data: {
-        total: totalBookings,
-        pending: pendingBookings,
-        confirmed: confirmedBookings,
-        completed: completedBookings,
-        cancelled: cancelledBookings
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching booking stats:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: 'Error fetching booking stats',
       message: error.message 
     });
   }
