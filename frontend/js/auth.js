@@ -25,14 +25,14 @@ async function handleLogin(event) {
     
     // Validation
     if (!loginData.email || !loginData.password) {
-        showNotification('⚠️ Vui lòng nhập đầy đủ email và mật khẩu', 'error');
+        showNotification('⚠️ Please enter email and password', 'error');
         return;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(loginData.email)) {
-        showNotification('📧 Email không đúng định dạng', 'error');
+        showNotification('📧 Invalid email format', 'error');
         return;
     }
     
@@ -71,7 +71,7 @@ async function handleLogin(event) {
 
             localStorage.setItem('authToken', result.token || result.user.id);
             
-            showNotification('🎉 Đăng nhập thành công! Chào mừng bạn quay trở lại!', 'success');
+            showNotification('🎉 Login successful! Welcome back!', 'success');
             
             // Update auth status
             checkAuthStatus();
@@ -82,14 +82,14 @@ async function handleLogin(event) {
             }, 1500);
             
         } else {
-            const errorMessage = result.error || `Lỗi ${response.status}: ${response.statusText}`;
+            const errorMessage = result.error || `Error ${response.status}: ${response.statusText}`;
             showNotification('❌ ' + errorMessage, 'error');
         }
         
     } catch (error) {
         hideLoading();
         console.error('Login error:', error);
-        showNotification('🚫 Lỗi kết nối: ' + error.message, 'error');
+        showNotification('🚫 Connection error: ' + error.message, 'error');
     }
 }
 
@@ -118,25 +118,25 @@ async function handleRegister(event) {
     // Validation
     if (!registerData.username || !registerData.email || 
         !registerData.password || !registerData.fullName) {
-        showNotification('⚠️ Vui lòng nhập đầy đủ thông tin bắt buộc', 'error');
+        showNotification('⚠️ Please fill in all required information', 'error');
         return;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(registerData.email)) {
-        showNotification('📧 Email không đúng định dạng', 'error');
+        showNotification('📧 Invalid email format', 'error');
         return;
     }
     
     // Password validation
     if (registerData.password !== registerData.confirmPassword) {
-        showNotification('🔒 Mật khẩu xác nhận không khớp', 'error');
+        showNotification('🔒 Confirmation password does not match', 'error');
         return;
     }
     
     if (registerData.password.length < 6) {
-        showNotification('🔑 Mật khẩu phải có ít nhất 6 ký tự', 'error');
+        showNotification('🔑 Password must be at least 6 characters', 'error');
         return;
     }
     
@@ -167,7 +167,7 @@ async function handleRegister(event) {
         hideLoading();
         
         if (response.ok) {
-            showNotification('🎉 Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.', 'success');
+            showNotification('🎉 Registration successful! Please login to continue.', 'success');
             
             // Reset form
             form.reset();
@@ -185,14 +185,14 @@ async function handleRegister(event) {
             }, 2000);
             
         } else {
-            const errorMessage = result.error || `Lỗi ${response.status}: ${response.statusText}`;
+            const errorMessage = result.error || `Error ${response.status}: ${response.statusText}`;
             showNotification('❌ ' + errorMessage, 'error');
         }
         
     } catch (error) {
         hideLoading();
         console.error('Register error:', error);
-        showNotification('🚫 Lỗi kết nối: ' + error.message, 'error');
+        showNotification('🚫 Connection error: ' + error.message, 'error');
     }
 }
 
@@ -264,7 +264,7 @@ function handleLogout() {
     currentUser = null;
     updateAuthUI(false);
     
-    showNotification('👋 Đã đăng xuất thành công. Hẹn gặp lại!', 'success');
+    showNotification('👋 Logged out successfully. See you again!', 'success');
     
     // Redirect to home
     setTimeout(() => {

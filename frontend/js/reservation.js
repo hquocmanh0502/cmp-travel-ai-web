@@ -44,14 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const pendingBooking = JSON.parse(sessionStorage.getItem('pendingBooking'));
       if (!pendingBooking) {
-        showNotification('Không tìm thấy thông tin đặt tour. Vui lòng quay lại trang chi tiết tour.', 'error');
+        showNotification('Booking information not found. Please return to tour detail page.', 'error');
         window.location.href = 'destination.html';
         return;
       }
       
       // ✅ VALIDATE ALL INPUT FIELDS
       if (!validateAllFields()) {
-        showNotification('Vui lòng điền đầy đủ và chính xác thông tin!', 'error');
+        showNotification('Please fill in all information accurately!', 'error');
         // Scroll to first error
         const firstError = document.querySelector('.field-error');
         if (firstError) {
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // ✅ VALIDATE ROOM CAPACITY BEFORE SUBMIT
       if (!validateRoomCapacity()) {
-        showNotification('Vui lòng chọn đủ số phòng cho số khách đã đặt!', 'error');
+        showNotification('Please select enough rooms for the number of guests booked!', 'error');
         return;
       }
       
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!token && !userId) {
         console.error('❌ Authentication failed - Missing credentials');
-        showNotification('Vui lòng đăng nhập để đặt tour', 'error');
+        showNotification('Please login to book a tour', 'error');
         
         setTimeout(() => {
           window.location.href = 'login.html?redirect=reservation.html';
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (!token || !userId) {
         console.error('❌ Authentication failed - Missing credentials');
-        showNotification('Vui lòng đăng nhập để đặt tour', 'error');
+        showNotification('Please login to book a tour', 'error');
         
         // ✅ Save current booking data before redirect
         const currentUrl = window.location.pathname + window.location.search;
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (error) {
         hideLoading();
         console.error('Booking error:', error);
-        showNotification('Có lỗi xảy ra: ' + error.message, 'error');
+        showNotification('An error occurred: ' + error.message, 'error');
       }
     });
     
@@ -327,7 +327,7 @@ function loadBookingData() {
       checkinInput.style.cursor = 'not-allowed';
       checkinInput.style.opacity = '0.7';
       checkinInput.style.border = '2px solid #ff6600';
-      checkinInput.title = 'Ngày check-in đã được chọn từ booking';
+      checkinInput.title = 'Check-in date selected from booking';
       
       console.log('✅ Check-in date locked:', checkinInput.value, 'readOnly:', checkinInput.readOnly);
       
@@ -385,7 +385,7 @@ function loadBookingData() {
         checkoutInput.style.cursor = 'not-allowed';
         checkoutInput.style.opacity = '0.7';
         checkoutInput.style.border = '2px solid #ff6600';
-        checkoutInput.title = `Ngày check-out tự động tính từ tour duration: ${pendingBooking.tourDuration}`;
+        checkoutInput.title = `Check-out date auto-calculated from tour duration: ${pendingBooking.tourDuration}`;
         console.log('🔒 Check-out date LOCKED based on tour duration');
       } else {
         // Allow manual adjustment if no fixed duration
@@ -426,7 +426,7 @@ function loadBookingData() {
       adultSelect.style.cursor = 'not-allowed';
       adultSelect.style.opacity = '0.7';
       adultSelect.style.border = '2px solid #ff6600';
-      adultSelect.title = 'Số người lớn đã được chọn từ booking';
+      adultSelect.title = 'Number of adults selected from booking';
       
       console.log('✅ Adult select locked:', adultSelect.value, 'disabled:', adultSelect.disabled);
     } else {
@@ -445,7 +445,7 @@ function loadBookingData() {
       childrenSelect.style.cursor = 'not-allowed';
       childrenSelect.style.opacity = '0.7';
       childrenSelect.style.border = '2px solid #ff6600';
-      childrenSelect.title = 'Số trẻ em đã được chọn từ booking';
+      childrenSelect.title = 'Number of children selected from booking';
       
       console.log('✅ Children select locked:', childrenSelect.value, 'disabled:', childrenSelect.disabled);
     } else {
@@ -491,7 +491,7 @@ function populateBookingSummary() {
   // Populate tour name
   const tourName = document.getElementById('summary-tour');
   if (tourName) {
-    tourName.textContent = pendingBooking.tourName || 'Chưa chọn tour';
+    tourName.textContent = pendingBooking.tourName || 'Tour not selected';
     console.log('✅ Set tour name:', tourName.textContent);
   } else {
     console.error('❌ Element #summary-tour not found');
@@ -500,7 +500,7 @@ function populateBookingSummary() {
   // Populate hotel name
   const hotelName = document.getElementById('summary-hotel');
   if (hotelName) {
-    hotelName.textContent = pendingBooking.selectedHotel?.name || 'Chưa chọn khách sạn';
+    hotelName.textContent = pendingBooking.selectedHotel?.name || 'Hotel not selected';
     console.log('✅ Set hotel name:', hotelName.textContent);
   } else {
     console.error('❌ Element #summary-hotel not found');
@@ -510,7 +510,7 @@ function populateBookingSummary() {
   const checkinDate = document.getElementById('summary-checkin');
   if (checkinDate && pendingBooking.checkinDate) {
     const date = new Date(pendingBooking.checkinDate);
-    checkinDate.textContent = date.toLocaleDateString('vi-VN', {
+    checkinDate.textContent = date.toLocaleDateString('en-US', {
       weekday: 'short',
       year: 'numeric',
       month: 'short',
@@ -518,7 +518,7 @@ function populateBookingSummary() {
     });
     console.log('✅ Set check-in date:', checkinDate.textContent);
   } else if (checkinDate) {
-    checkinDate.textContent = 'Chưa chọn ngày';
+    checkinDate.textContent = 'Date not selected';
     console.warn('⚠️ No checkinDate in pendingBooking');
   } else {
     console.error('❌ Element #summary-checkin not found');
@@ -532,14 +532,14 @@ function populateBookingSummary() {
     let guestText = '';
     
     if (adults > 0) {
-      guestText += `${adults} người lớn`;
+      guestText += `${adults} adult${adults > 1 ? 's' : ''}`;
     }
     if (children > 0) {
       if (guestText) guestText += ', ';
-      guestText += `${children} trẻ em`;
+      guestText += `${children} child${children > 1 ? 'ren' : ''}`;
     }
     
-    guests.textContent = guestText || 'Chưa chọn số khách';
+    guests.textContent = guestText || 'Guests not selected';
     console.log('✅ Set guests:', guests.textContent);
   } else {
     console.error('❌ Element #summary-guests not found');
@@ -566,9 +566,9 @@ function showSuccessMessage(bookingId) {
       <div class="success-icon">
         <i class="fas fa-check-circle"></i>
       </div>
-      <h3>Đặt tour thành công!</h3>
-      <p>Mã đặt tour của bạn: <strong>${bookingId}</strong></p>
-      <p>Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+      <h3>Tour Booking Successful!</h3>
+      <p>Your booking ID: <strong>${bookingId}</strong></p>
+      <p>We will contact you as soon as possible.</p>
       <div class="success-actions">
         <button onclick="window.location.href='my-bookings.html'" class="btn btn-primary">
           <i class="fas fa-list"></i> Xem đơn đặt tour

@@ -14,26 +14,18 @@ window.addEventListener("DOMContentLoaded", async () => {
     } else {
       throw new Error(`API returned ${response.status}`);
     }
-  } catch (error) {
-    console.log("API error, using fallback:", error);
-    try {
-      // Fallback to JSON file với đường dẫn đúng
-      const response = await fetch("../data/blog.json");
-      const data = await response.json();
-      objectBlog = data.find((obj) => obj.id == blogId);
-      console.log("Blog data from JSON:", objectBlog);
-    } catch (fallbackError) {
-      console.log("Fallback also failed:", fallbackError);
-      alert("Không thể tải thông tin blog!");
-      return;
+  } catch (err) {
+      console.error(err);
+      alert("Unable to load blog information!");
     }
-  }
 
   // Kiểm tra xem blog có tồn tại không
   if (!objectBlog) {
     console.log("Blog not found with ID:", blogId);
-    alert("Blog không tồn tại!");
-    window.location.href = "blog.html";
+    } else {
+    alert("Blog does not exist!");
+    window.location.href = "./blog.html";
+  }
     return;
   }
 

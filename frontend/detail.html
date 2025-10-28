@@ -39,11 +39,11 @@
     <div class="chatbot-body" id="chatbot-body">
       <div class="chatbot-messages" id="chatbot-messages">
         <div class="bot-message">
-          Xin chào! Tôi có thể giúp bạn tìm hiểu thêm về tour này, so sánh giá cả hoặc gợi ý tour tương tự. Bạn cần hỗ trợ gì?
+          Hello! Tôi có thể giúp bạn tìm hiểu thêm về tour này, so sánh giá cả hoặc gợi ý tour tương tự. Bạn cần hỗ trợ gì?
         </div>
       </div>
       <div class="chatbot-suggestions" id="chatbot-suggestions">
-        <button onclick="sendMessage('Tôi muốn biết thêm về tour này')">Chi tiết tour</button>
+        <button onclick="sendMessage('Tôi muốn biết thêm về tour này')">Details tour</button>
         <button onclick="sendMessage('Có tour nào tương tự không?')">Tour tương tự</button>
         <button onclick="sendMessage('Giá tour này như thế nào?')">Về giá cả</button>
         <button onclick="sendMessage('Khách sạn ở đây ra sao?')">Về khách sạn</button>
@@ -77,16 +77,16 @@
           <!-- User menu (giữ nguyên) -->
           <li class="greeting-li" style="display: none;">
             <span class="user-greeting">
-              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+              Hello, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
             </span>
             <!-- Dropdown menu should include: -->
             <div class="user-dropdown-menu">
-              <a href="profile.html"><i class="fas fa-user"></i> Thông tin cá nhân</a>
-              <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> Đơn đặt tour</a>
-              <a href="my-wishlist.html"><i class="fas fa-heart"></i> Danh sách yêu thích</a>
-              <a href="travel-history.html"><i class="fas fa-history"></i> Lịch sử du lịch</a>
-              <a href="preferences.html"><i class="fas fa-cog"></i> Tùy chọn AI</a>
-              <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+              <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+              <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a>
+              <a href="my-wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+              <a href="travel-history.html"><i class="fas fa-history"></i> Travel History</a>
+              <a href="preferences.html"><i class="fas fa-cog"></i> AI Preferences</a>
+              <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
           </li>
           
@@ -499,13 +499,6 @@
       <div class="reviews-list" id="reviewsList">
         <!-- Dynamic review content -->
       </div>
-
-      <!-- Add Review Button -->
-      <div class="add-review-section">
-        <button class="btn btn-add-review" id="addReviewBtn">
-          <i class="fas fa-plus"></i> Write a Review
-        </button>
-      </div>
     </div>
 
     <!-- Related Tours Section -->
@@ -519,45 +512,6 @@
 
   <!-- Modals -->
   <!-- Review Modal -->
-  <div class="modal fade" id="reviewModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Write a Review</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="reviewForm">
-            <div class="form-group">
-              <label>Rating</label>
-              <div class="rating-input">
-                <i class="fas fa-star" data-rating="1"></i>
-                <i class="fas fa-star" data-rating="2"></i>
-                <i class="fas fa-star" data-rating="3"></i>
-                <i class="fas fa-star" data-rating="4"></i>
-                <i class="fas fa-star" data-rating="5"></i>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Your Review</label>
-              <textarea class="form-control" rows="5" placeholder="Share your experience..."></textarea>
-            </div>
-            <div class="form-group">
-              <label>Upload Photos</label>
-              <input type="file" class="form-control-file" multiple accept="image/*">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary">Submit Review</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Popup image -->
   <div id="popup" class="popup">
     <span class="close"><i class="fa-solid fa-xmark"></i></span>

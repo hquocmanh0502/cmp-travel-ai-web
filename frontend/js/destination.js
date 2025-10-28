@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (fallbackError) {
       console.log("❌ Fallback also failed:", fallbackError);
       data = [];
-      alert("Không thể tải dữ liệu tour. Vui lòng thử lại sau!");
+      alert("Unable to load tour data. Please try again later!");
     }
   }
 

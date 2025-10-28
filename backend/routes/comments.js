@@ -308,4 +308,57 @@ router.get('/can-review/:tourId', authenticate, async (req, res) => {
   }
 });
 
+// POST - Report a review
+router.post('/:commentId/report', authenticate, async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    const userId = req.userId;
+    const { reason, description } = req.body;
+
+    // Validate reason
+    const validReasons = ['spam', 'inappropriate', 'offensive', 'fake', 'other'];
+    if (!reason || !validReasons.includes(reason)) {
+      return res.status(400).json({ 
+        error: 'Invalid reason. Must be one of: spam, inappropriate, offensive, fake, other' 
+      });
+    }
+
+    const comment = await Comment.findById(commentId);
+    
+    if (!comment) {
+      return res.status(404).json({ error: 'Comment not found' });
+    }
+
+    // Check if user already reported this review
+    const existingReport = comment.reports.find(
+      report => report.userId.toString() === userId && report.status === 'pending'
+    );
+
+    if (existingReport) {
+      return res.status(400).json({ 
+        error: 'You have already reported this review' 
+      });
+    }
+
+    // Add report
+    comment.reports.push({
+      userId: userId,
+      reason: reason,
+      description: description || '',
+      timestamp: new Date(),
+      status: 'pending'
+    });
+
+    await comment.save();
+
+    res.json({
+      message: 'Report submitted successfully',
+      reportCount: comment.reports.length
+    });
+  } catch (error) {
+    console.error('Error reporting review:', error);
+    res.status(500).json({ error: 'Error reporting review' });
+  }
+});
+
 module.exports = router;

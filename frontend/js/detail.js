@@ -277,7 +277,7 @@ function openReviewModal() {
     // Star rating interaction
     let selectedRating = 0;
     const stars = modal.querySelectorAll('.star-rating-input i');
-    const ratingText = modal.getElementById('ratingText');
+    const ratingText = modal.querySelector('#ratingText');
     
     stars.forEach(star => {
         star.addEventListener('click', function() {
@@ -305,8 +305,8 @@ function openReviewModal() {
     }
     
     // Character counter
-    const textarea = modal.getElementById('reviewText');
-    const charCount = modal.getElementById('charCount');
+    const textarea = modal.querySelector('#reviewText');
+    const charCount = modal.querySelector('#charCount');
     
     textarea.addEventListener('input', function() {
         const length = this.value.length;
@@ -319,7 +319,7 @@ function openReviewModal() {
     });
     
     // Form submission
-    const form = modal.getElementById('reviewForm');
+    const form = modal.querySelector('#reviewForm');
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         await submitReview(selectedRating, bookingId);
@@ -594,7 +594,7 @@ async function showSidebarHotelDetailModal(hotelId) {
         
     } catch (error) {
         console.error('❌ Error loading sidebar hotel details:', error);
-        alert('Không thể tải thông tin khách sạn. Vui lòng thử lại.');
+        alert('Unable to load hotel information. Please try again.');
     }
 }
 
@@ -782,7 +782,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
         } catch (error) {
             console.error('Error loading tour data:', error);
-            showAlert('Không thể tải thông tin tour', 'error');
+            showAlert('Unable to load tour information', 'error');
         }
     }
     
@@ -1896,7 +1896,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             // Hiển thị loading state
-            galleryGrid.innerHTML = '<div class="gallery-loading"><i class="fas fa-spinner fa-spin"></i> Đang tải ảnh...</div>';
+            galleryGrid.innerHTML = '<div class="gallery-loading"><i class="fas fa-spinner fa-spin"></i> Loading images...</div>';
             
             let allImages = [];
             
@@ -1962,11 +1962,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
         } catch (error) {
-            console.error('Lỗi khi tải gallery:', error);
+            console.error('Error loading gallery:', error);
             galleryGrid.innerHTML = `
                 <div class="gallery-error">
                     <i class="fas fa-exclamation-triangle"></i>
-                    <p>Không thể tải ảnh. Vui lòng thử lại.</p>
+                    <p>Unable to load images. Please try again.</p>
                 </div>
             `;
         }
@@ -2153,8 +2153,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 id: 'default-3',
                 url: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400',
                 category: 'attractions',
-                title: 'Điểm tham quan nổi tiếng',
-                description: 'Những địa điểm không thể bỏ qua'
+                title: 'Famous attractions',
+                description: 'Must-visit destinations'
             },
             {
                 id: 'default-4',
@@ -2548,24 +2548,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Add review button
-        const addReviewBtn = document.getElementById('addReviewBtn');
-        if (addReviewBtn) {
-            addReviewBtn.addEventListener('click', function() {
-                if (!currentUser) {
-                    showAlert('Please login to write a review', 'warning');
-                    return;
-                }
-                $('#reviewModal').modal('show');
-            });
-        }
-        
-        // Review form submission
-        const reviewForm = document.getElementById('reviewForm');
-        if (reviewForm) {
-            reviewForm.addEventListener('submit', submitReview);
-        }
-        
         // Rating input
         document.querySelectorAll('.rating-input i').forEach((star, index) => {
             star.addEventListener('click', function() {
@@ -2893,7 +2875,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Wishlist functionality
     function toggleWishlist() {
         if (!currentUser) {
-            showAlert('Vui lòng đăng nhập để thêm vào danh sách yêu thích', 'warning');
+            showAlert('Please login to add to wishlist', 'warning');
             return;
         }
         
@@ -2910,13 +2892,13 @@ document.addEventListener('DOMContentLoaded', function() {
             wishlist = wishlist.filter(id => id !== tourId);
             wishlistBtn.classList.remove('active');
             wishlistBtn.innerHTML = '<i class="far fa-heart"></i>';
-            showAlert('Đã xóa khỏi danh sách yêu thích', 'info');
+            showAlert('Removed from wishlist', 'info');
         } else {
             // Add to wishlist with full tour data
             wishlist.push(tourId);
             wishlistBtn.classList.add('active');
             wishlistBtn.innerHTML = '<i class="fas fa-heart"></i>';
-            showAlert('Đã thêm vào danh sách yêu thích', 'success');
+            showAlert('Added to wishlist', 'success');
             
             // Save tour data to localStorage for wishlist
             let wishlistData = JSON.parse(localStorage.getItem('wishlistData') || '{}');
@@ -4319,11 +4301,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function getDefaultResponse(message) {
         const responses = {
-            'chi tiết tour': `Tour ${currentTour?.name} có thời gian ${currentTour?.duration}, giá ${currentTour?.estimatedCost}$. Bao gồm ${currentTour?.inclusions?.length || 4} dịch vụ chính.`,
-            'giá': `Giá tour này là $${currentTour?.estimatedCost?.toLocaleString()} cho người lớn. Trẻ em được giảm 30%.`,
-            'khách sạn': 'Chúng tôi có nhiều khách sạn chất lượng từ 3-5 sao. Bạn có thể xem danh sách khách sạn bên phải.',
-            'đặt tour': 'Để đặt tour, vui lòng chọn ngày và số lượng khách, sau đó nhấn "Book Now".',
-            'default': 'Cảm ơn bạn đã liên hệ! Tôi có thể giúp bạn về thông tin tour, giá cả, đặt phòng. Bạn cần hỗ trợ gì cụ thể?'
+            'tour details': `${currentTour?.name} tour lasts ${currentTour?.duration}, costs ${currentTour?.estimatedCost}$. Includes ${currentTour?.inclusions?.length || 4} main services.`,
+            'price': `The price for this tour is $${currentTour?.estimatedCost?.toLocaleString()} for adults. Children get 30% discount.`,
+            'hotel': 'We have many quality hotels from 3-5 stars. You can view the hotel list on the right.',
+            'book': 'To book a tour, please select date and number of guests, then click "Book Now".',
+            'default': 'Thank you for contacting us! I can help you with tour information, pricing, and booking. What do you need assistance with?'
         };
         
         const lowerMessage = message.toLowerCase();
@@ -4385,89 +4367,163 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    async function submitReview(e) {
-      e.preventDefault();
-      
-      if (!currentUser) {
-          showAlert('Vui lòng đăng nhập để viết đánh giá', 'warning');
-          return;
-      }
-      
-      const form = e.target;
-      const formData = new FormData(form);
-      
-      const reviewData = {
-          tourId: currentTour._id,
-          userId: currentUser._id || currentUser.id,
-          content: {
-              text: formData.get('review'),
-              rating: parseInt(document.querySelector('.rating-input').dataset.rating) || 5
-          },
-          verified: {
-              isVerified: false // Will be verified after booking confirmation
-          }
-      };
-      
-      try {
-          const response = await fetch('http://localhost:3000/api/comments', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${localStorage.getItem('userId')}`
-              },
-              body: JSON.stringify(reviewData)
-          });
-          
-          if (response.ok) {
-              showAlert('Đánh giá đã được gửi thành công!', 'success');
-              $('#reviewModal').modal('hide');
-              
-              // Reload reviews
-              loadReviews();
-          } else {
-              throw new Error('Review submission failed');
-          }
-          
-      } catch (error) {
-          console.error('Review submission error:', error);
-          showAlert('Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại.', 'error');
-      }
-  }
-    
-    function likeReview(reviewId) {
-        // Implement like functionality
+    async function likeReview(reviewId) {
+        // Check authentication
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            showAlert('Please login to mark reviews as helpful', 'warning');
+            window.location.href = 'login.html';
+            return;
+        }
+        
         const likeBtn = event.target.closest('.review-action');
         if (!likeBtn) return;
         
-        likeBtn.classList.toggle('active');
-        
-        const icon = likeBtn.querySelector('i');
-        if (likeBtn.classList.contains('active')) {
-            icon.className = 'fas fa-thumbs-up';
-            showAlert('Thanks for your feedback!', 'success');
-        } else {
-            icon.className = 'far fa-thumbs-up';
+        try {
+            const response = await fetch(`http://localhost:3000/api/comments/${reviewId}/helpful`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'user-id': userId
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to update helpful status');
+            }
+            
+            const result = await response.json();
+            
+            // Update UI
+            likeBtn.classList.toggle('active');
+            const icon = likeBtn.querySelector('i');
+            const text = likeBtn.querySelector('.text') || likeBtn.childNodes[2];
+            
+            if (result.isHelpful) {
+                icon.className = 'fas fa-thumbs-up';
+                showAlert('Thanks for your feedback!', 'success');
+            } else {
+                icon.className = 'far fa-thumbs-up';
+            }
+            
+            // Update count
+            likeBtn.innerHTML = `<i class="${icon.className}"></i> Helpful (${result.helpfulCount})`;
+            
+        } catch (error) {
+            console.error('Error updating helpful:', error);
+            showAlert('Failed to update. Please try again.', 'error');
         }
-        
-        // Track like event
-        trackEvent('review_liked', {
-            review_id: reviewId,
-            tour_id: currentTour?._id
-        });
     }
     
     // ...existing code...
 
-    function reportReview(reviewId) {
-        if (confirm('Are you sure you want to report this review?')) {
-            // Implement report functionality
-            trackEvent('review_reported', {
-                review_id: reviewId,
-                tour_id: currentTour?._id
-            });
-            
-            showAlert('Review reported. We will investigate and take appropriate action.', 'info');
+    async function reportReview(reviewId) {
+        // Check authentication
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            showAlert('Please login to report reviews', 'warning');
+            window.location.href = 'login.html';
+            return;
         }
+        
+        // Create report modal
+        const modal = document.createElement('div');
+        modal.className = 'report-modal-overlay';
+        modal.innerHTML = `
+            <div class="report-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-flag"></i> Report Review</h3>
+                    <button class="modal-close" onclick="this.closest('.report-modal-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <p>Why are you reporting this review?</p>
+                    <form id="reportForm">
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="reason" value="spam" required>
+                                <span>Spam or fake review</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="reason" value="inappropriate" required>
+                                <span>Inappropriate content</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="reason" value="offensive" required>
+                                <span>Offensive or abusive language</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="reason" value="fake" required>
+                                <span>Not a genuine review</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="reason" value="other" required>
+                                <span>Other</span>
+                            </label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reportDescription">Additional details (optional)</label>
+                            <textarea id="reportDescription" placeholder="Please provide more information..." rows="3"></textarea>
+                        </div>
+                        
+                        <div class="modal-actions">
+                            <button type="button" class="btn btn-secondary" onclick="this.closest('.report-modal-overlay').remove()">
+                                Cancel
+                            </button>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-flag"></i> Submit Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Handle form submission
+        const form = modal.querySelector('#reportForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const reason = form.querySelector('input[name="reason"]:checked').value;
+            const description = modal.querySelector('#reportDescription').value;
+            
+            try {
+                const response = await fetch(`http://localhost:3000/api/comments/${reviewId}/report`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'user-id': userId
+                    },
+                    body: JSON.stringify({ reason, description })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Failed to submit report');
+                }
+                
+                const result = await response.json();
+                showAlert('Report submitted successfully. We will review it shortly.', 'success');
+                modal.remove();
+                
+            } catch (error) {
+                console.error('Error reporting review:', error);
+                showAlert(error.message || 'Failed to submit report. Please try again.', 'error');
+            }
+        });
     }
     
     // Gallery functionality

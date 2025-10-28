@@ -63,7 +63,7 @@ function logout() {
   localStorage.removeItem('userFullName');
   
   console.log('🚪 User logged out');
-  alert('Đăng xuất thành công!');
+  alert('Logged out successfully!');
   
   // Force refresh auth status immediately
   setTimeout(() => {
@@ -93,51 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-// Dropdown functionality
-function initializeDropdown() {
-  // Remove any existing event listeners to prevent conflicts
-  document.removeEventListener('click', handleDocumentClick);
-  
-  // Add new event listener
-  document.addEventListener('click', handleDocumentClick);
-  
-  console.log('🔽 Dropdown initialized');
-}
-
-// frontend/js/main.js
-function handleDocumentClick(e) {
-  const greetingLi = document.querySelector('.greeting-li');
-  const userGreeting = document.querySelector('.user-greeting');
-  
-  if (!greetingLi || !userGreeting) return;
-  
-  // If clicked on user greeting
-  if (e.target.closest('.user-greeting')) {
-    e.preventDefault();
-    e.stopPropagation();
-    greetingLi.classList.toggle('active');
-    console.log('🔽 Dropdown toggled:', greetingLi.classList.contains('active'));
-    return; // QUAN TRỌNG: return sớm
-  }
-  
-  // Handle logout clicks - CHỈ với class logout-link
-  if (e.target.classList.contains('logout-link') || 
-      e.target.closest('.logout-link')) {
-    e.preventDefault();
-    e.stopPropagation();
-    logout();
-    return;
-  }
-  
-  // If clicked outside dropdown - CHỈ đóng dropdown
-  if (!greetingLi.contains(e.target)) {
-    greetingLi.classList.remove('active');
-  }
-}
-
-// Scroll icons initialization
-// ...existing code...
 
 // Enhanced Dropdown functionality
 function initializeDropdown() {
@@ -190,7 +145,7 @@ function handleDocumentClick(e) {
 
 function handleLogout() {
   // Show confirmation dialog
-  if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+  if (confirm('Are you sure you want to logout?')) {
     // Clear user data
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
@@ -198,15 +153,15 @@ function handleLogout() {
     localStorage.removeItem('userFullName');
     
     // Show success message
-    showNotification('Đăng xuất thành công!', 'success');
+    alert('Logged out successfully!');
     
-    // Update UI
-    setTimeout(() => {
-      checkAuthStatus();
-      window.location.href = 'index.html';
-    }, 1000);
+    // Redirect to home
+    window.location.href = 'index.html';
   }
 }
+
+// Scroll icons initialization
+// ...existing code...
 
 // Notification system
 function showNotification(message, type = 'info') {

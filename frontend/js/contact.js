@@ -13,12 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.querySelector('#email')?.value || '';
         const message = document.querySelector('#message')?.value || '';
         
-        if (!name || !email || !message) {
-          alert('Vui lòng điền đầy đủ thông tin!');
+      if (!name || !email || !message) {
+          alert('Please fill in all information!');
           return;
-        }
-        
-        try {
+      }        try {
           const response = await fetch('/api/contact', {
             method: 'POST',
             headers: {
@@ -28,16 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
           });
           
           if (response.ok) {
-            alert('Gửi liên hệ thành công!');
+            alert('Contact sent successfully!');
             document.querySelector('#name').value = '';
             document.querySelector('#email').value = '';
             document.querySelector('#message').value = '';
           } else {
-            alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            alert('An error occurred. Please try again!');
           }
         } catch (error) {
           console.error('Contact error:', error);
-          alert('Lỗi kết nối. Vui lòng thử lại!');
+          alert('Connection error. Please try again!');
         }
       });
     }

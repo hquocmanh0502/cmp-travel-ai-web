@@ -27,7 +27,7 @@ packageElements.forEach((packageElement) => {
       // Xử lý trường hợp không tìm thấy hoặc không hợp lệ (tùy chọn)
       console.error("Invalid package ID:", packageId);
       // Ví dụ: Hiển thị thông báo lỗi cho người dùng
-      alert("Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+      alert("An error occurred. Please try again later.");
     }
   });
 });

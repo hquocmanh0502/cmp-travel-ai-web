@@ -1384,31 +1384,6 @@
   margin: 0;
 }
 
-/* Add Review */
-.add-review-section {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.btn-add-review {
-  background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.btn-add-review:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
-}
-
 /* Related Tours */
 .related-tours-section {
   margin: 40px 30px;
@@ -4274,6 +4249,139 @@ input:focus,
 .review-modal .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+}
+
+/* Report Modal */
+.report-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.report-modal {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.report-modal .modal-header {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.report-modal .modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report-modal .modal-body {
+  padding: 2rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.report-modal .modal-body > p {
+  margin-bottom: 1.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.report-modal .form-group {
+  margin-bottom: 1rem;
+}
+
+.report-modal .form-group label {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.report-modal .form-group label:hover {
+  border-color: #dc3545;
+  background: #fff5f5;
+}
+
+.report-modal .form-group input[type="radio"] {
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.report-modal .form-group input[type="radio"]:checked + span {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.report-modal .form-group label:has(input[type="radio"]:checked) {
+  border-color: #dc3545;
+  background: #fff5f5;
+}
+
+.report-modal textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.3s ease;
+}
+
+.report-modal textarea:focus {
+  outline: none;
+  border-color: #dc3545;
+}
+
+.report-modal .modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.report-modal .btn-danger {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.report-modal .btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
 }
 
 /* Responsive */

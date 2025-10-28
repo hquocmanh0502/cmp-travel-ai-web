@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function checkUserAuth() {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-        showNotification('Vui lòng đăng nhập để xem thông tin cá nhân', 'error');
+        showNotification('Please login to view profile information', 'error');
         setTimeout(() => {
             window.location.href = 'login.html';
         }, 2000);
@@ -58,7 +58,7 @@ function loadUserProfile() {
         
     } catch (error) {
         console.error('Error loading profile:', error);
-        showNotification('Không thể tải thông tin người dùng', 'error');
+        showNotification('Unable to load user information', 'error');
     }
 }
 
@@ -70,7 +70,7 @@ function populateProfileData(userData) {
     
     if (userName) userName.textContent = userData.fullName;
     if (userEmail) userEmail.textContent = userData.email;
-    if (memberSince) memberSince.textContent = `Thành viên từ ${userData.memberSince}`;
+    if (memberSince) memberSince.textContent = `Member since ${userData.memberSince}`;
     
     // Update avatar with initials if no image
     const avatar = document.getElementById('userAvatar');
@@ -242,7 +242,7 @@ async function handleProfileUpdate(e) {
             setTimeout(() => group.classList.remove('success'), 2000);
         });
         
-        showNotification('Cập nhật thông tin thành công!', 'success');
+        showNotification('Profile updated successfully!', 'success');
         
         // Update header info
         setTimeout(() => {
@@ -251,7 +251,7 @@ async function handleProfileUpdate(e) {
         
     } catch (error) {
         console.error('Error updating profile:', error);
-        showNotification('Có lỗi xảy ra khi cập nhật thông tin', 'error');
+        showNotification('An error occurred while updating information', 'error');
         
         // Reset button state
         submitBtn.classList.remove('loading');
@@ -274,7 +274,7 @@ function setupFormValidation() {
             
             if (email && !emailRegex.test(email)) {
                 formGroup.classList.add('error');
-                showNotification('Email không hợp lệ', 'error');
+                showNotification('Invalid email', 'error');
             } else if (email) {
                 formGroup.classList.add('success');
             }
@@ -293,7 +293,7 @@ function setupFormValidation() {
             
             if (phone && !phoneRegex.test(phone)) {
                 formGroup.classList.add('error');
-                showNotification('Số điện thoại không hợp lệ', 'error');
+                showNotification('Invalid phone number', 'error');
             } else if (phone) {
                 formGroup.classList.add('success');
             }
@@ -309,12 +309,12 @@ async function handlePasswordChange(e) {
     
     // Validate passwords
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-        showNotification('Mật khẩu xác nhận không khớp', 'error');
+        showNotification('Confirmation password does not match', 'error');
         return;
     }
     
     if (passwordData.newPassword.length < 6) {
-        showNotification('Mật khẩu mới phải có ít nhất 6 ký tự', 'error');
+        showNotification('New password must be at least 6 characters', 'error');
         return;
     }
     
@@ -324,7 +324,7 @@ async function handlePasswordChange(e) {
         if (!submitBtn) return;
         
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Đang thay đổi...';
+        submitBtn.textContent = 'Changing...';
         submitBtn.disabled = true;
         
         // Simulate API call
@@ -337,11 +337,11 @@ async function handlePasswordChange(e) {
         // Clear form
         e.target.reset();
         
-        showNotification('Đổi mật khẩu thành công!', 'success');
+        showNotification('Password changed successfully!', 'success');
         
     } catch (error) {
         console.error('Error changing password:', error);
-        showNotification('Có lỗi xảy ra khi đổi mật khẩu', 'error');
+        showNotification('An error occurred while changing password', 'error');
     }
 }
 
@@ -350,7 +350,7 @@ function handleAvatarChange(e) {
     if (!file) return;
     
     if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        showNotification('Kích thước ảnh không được vượt quá 5MB', 'error');
+        showNotification('Image size must not exceed 5MB', 'error');
         return;
     }
     
@@ -365,7 +365,7 @@ function handleAvatarChange(e) {
             
             // Store in localStorage (in real app, upload to server)
             localStorage.setItem('userAvatar', e.target.result);
-            showNotification('Ảnh đại diện đã được cập nhật!', 'success');
+            showNotification('Profile picture has been updated!', 'success');
         }
     };
     reader.readAsDataURL(file);
@@ -596,17 +596,17 @@ async function handleTopUp(e) {
     e.preventDefault();
     
     if (!selectedAmount || selectedAmount < 10000) {
-        showNotification('Số tiền nạp tối thiểu là 10,000 VNĐ', 'error');
+        showNotification('Minimum top-up amount is 10,000 VND', 'error');
         return;
     }
     
     if (selectedAmount > 50000000) {
-        showNotification('Số tiền nạp tối đa là 50,000,000 VNĐ', 'error');
+        showNotification('Maximum top-up amount is 50,000,000 VND', 'error');
         return;
     }
     
     if (!selectedPaymentMethod) {
-        showNotification('Vui lòng chọn phương thức thanh toán', 'error');
+        showNotification('Please select a payment method', 'error');
         return;
     }
     
@@ -643,7 +643,7 @@ async function handleTopUp(e) {
         loadWalletBalance();
         loadTransactionHistory();
         
-        showNotification(`Nạp tiền thành công ${formatCurrency(selectedAmount)} VNĐ!`, 'success');
+        showNotification(`Top-up successful ${formatCurrency(selectedAmount)} VND!`, 'success');
         
         // Close modal
         setTimeout(() => {
@@ -652,7 +652,7 @@ async function handleTopUp(e) {
         
     } catch (error) {
         console.error('Error processing top-up:', error);
-        showNotification('Có lỗi xảy ra khi nạp tiền. Vui lòng thử lại!', 'error');
+        showNotification('An error occurred while processing top-up. Please try again!', 'error');
         
         const submitBtn = e.target.querySelector('button[type="submit"]');
         submitBtn.classList.remove('loading');
@@ -731,7 +731,7 @@ function toggleTransactionHistory() {
     
     if (transactionCard.style.display === 'none') {
         transactionCard.style.display = 'block';
-        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Ẩn lịch sử';
+        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide history';
         loadTransactionHistory();
         
         // Scroll to transaction card
@@ -740,7 +740,7 @@ function toggleTransactionHistory() {
         }, 100);
     } else {
         transactionCard.style.display = 'none';
-        btn.innerHTML = '<i class="fas fa-history"></i> Lịch sử giao dịch';
+        btn.innerHTML = '<i class="fas fa-history"></i> Transaction history';
     }
 }
 

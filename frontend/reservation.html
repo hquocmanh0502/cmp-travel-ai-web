@@ -46,7 +46,7 @@
     <div class="chatbot-body" id="chatbot-body">
       <div class="chatbot-messages" id="chatbot-messages">
         <div class="bot-message">
-          Xin chào! Tôi là trợ lý AI của CMP Travel. Tôi có thể giúp bạn tìm tour phù hợp, tư vấn giá cả và hỗ trợ đặt tour. Bạn cần hỗ trợ gì?
+          Hello! Tôi là trợ lý AI của CMP Travel. Tôi có thể giúp bạn tìm tour phù hợp, tư vấn giá cả và hỗ trợ đặt tour. Bạn cần hỗ trợ gì?
         </div>
       </div>
       <div class="chatbot-suggestions" id="chatbot-suggestions">
@@ -271,12 +271,12 @@
           }
         } else {
           removeTypingIndicator();
-          addMessage('Xin lỗi, tôi đang gặp sự cố. Vui lòng thử lại sau.', 'bot');
+          addMessage('Xin lỗi, tôi đang gặp sự cố. Please thử lại sau.', 'bot');
         }
       } catch (error) {
         console.error('Chatbot error:', error);
         removeTypingIndicator();
-        addMessage('Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng.', 'bot');
+        addMessage('Không thể kết nối đến server. Please kiểm tra kết nối mạng.', 'bot');
       }
     }
   }
@@ -382,16 +382,16 @@
           <!-- Greeting cho user đã login - Ban đầu ẩn -->
           <li class="greeting-li" style="display: none;">
             <span class="user-greeting">
-              Xin chào, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+              Hello, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
             </span>
             <!-- Dropdown menu should include: -->
             <div class="user-dropdown-menu">
-              <a href="profile.html"><i class="fas fa-user"></i> Thông tin cá nhân</a>
-              <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> Đơn đặt tour</a>
-              <a href="my-wishlist.html"><i class="fas fa-heart"></i> Danh sách yêu thích</a>
-              <a href="travel-history.html"><i class="fas fa-history"></i> Lịch sử du lịch</a>
-              <a href="preferences.html"><i class="fas fa-cog"></i> Tùy chọn AI</a>
-              <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+              <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+              <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a>
+              <a href="my-wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+              <a href="travel-history.html"><i class="fas fa-history"></i> Travel History</a>
+              <a href="preferences.html"><i class="fas fa-cog"></i> AI Preferences</a>
+              <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
           </li>
           

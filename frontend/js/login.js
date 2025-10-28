@@ -55,14 +55,14 @@ async function handleLogin(event) {
     
     // Validation
     if (!loginData.email || !loginData.password) {
-        showNotification('Vui lòng nhập đầy đủ thông tin', 'error');
+        showNotification('Please fill in all information', 'error');
         return;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(loginData.email)) {
-        showNotification('Email không hợp lệ', 'error');
+        showNotification('Invalid email', 'error');
         return;
     }
     
@@ -90,7 +90,7 @@ async function handleLogin(event) {
             
             console.log('✅ Login successful - Token saved:', result.authToken?.substring(0, 20) + '...');
             
-            showNotification('Đăng nhập thành công!', 'success');
+            showNotification('Login successful!', 'success');
             
             // Update UI and redirect
             setTimeout(() => {
@@ -101,13 +101,13 @@ async function handleLogin(event) {
             }, 1000);
             
         } else {
-            showNotification(result.error || 'Đăng nhập thất bại', 'error');
+            showNotification(result.error || 'Login failed', 'error');
         }
         
     } catch (error) {
         hideLoading();
         console.error('Login error:', error);
-        showNotification('Lỗi kết nối server', 'error');
+        showNotification('Server connection error', 'error');
     }
 }
 
@@ -115,7 +115,7 @@ function showLoading() {
     const submitBtn = document.querySelector('.login-btn');
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng nhập...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
     }
 }
 

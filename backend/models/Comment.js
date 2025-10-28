@@ -99,6 +99,17 @@ const commentSchema = new mongoose.Schema({
   isPublic: { type: Boolean, default: true },
   featured: { type: Boolean, default: false }, // highlight exceptional reviews
   
+  // Reports
+  reports: [{
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    reason: { type: String, enum: ['spam', 'inappropriate', 'offensive', 'fake', 'other'], required: true },
+    description: String,
+    timestamp: { type: Date, default: Date.now },
+    status: { type: String, enum: ['pending', 'reviewed', 'resolved', 'dismissed'], default: 'pending' },
+    reviewedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    reviewedAt: Date
+  }],
+  
   // Analytics
   analytics: {
     helpfulCount: { type: Number, default: 0 },
@@ -120,9 +131,10 @@ commentSchema.pre('save', function(next) {
   next();
 });
 
-// Calculate helpful count
+// Calculate helpful count and report count
 commentSchema.pre('save', function(next) {
   this.analytics.helpfulCount = this.reactions.helpful.length;
+  this.analytics.reportCount = this.reports.length;
   next();
 });
 

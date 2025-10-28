@@ -78,7 +78,7 @@ function checkPasswordStrength(password) {
     
     strength = Object.values(checks).filter(Boolean).length;
     
-    const strengthLevels = ['Rất yếu', 'Yếu', 'Trung bình', 'Mạnh', 'Rất mạnh'];
+    const strengthLevels = ['Very weak', 'Weak', 'Medium', 'Strong', 'Very strong'];
     const strengthColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#10b981'];
     
     strengthIndicator.textContent = strengthLevels[strength - 1] || '';
@@ -178,7 +178,7 @@ async function handleRegistration(event) {
     });
     
     if (!isFormValid) {
-        showNotification('Vui lòng kiểm tra lại thông tin', 'error');
+        showNotification('Please check your information again', 'error');
         return;
     }
     
@@ -192,7 +192,7 @@ async function handleRegistration(event) {
     
     // Additional validation
     if (formData.get('password') !== formData.get('confirmPassword')) {
-        showNotification('Mật khẩu xác nhận không khớp', 'error');
+        showNotification('Confirmation password does not match', 'error');
         return;
     }
     
@@ -211,7 +211,7 @@ async function handleRegistration(event) {
         hideLoading();
         
         if (response.ok) {
-            showNotification('Đăng ký thành công! Đang chuyển đến trang đăng nhập...', 'success');
+            showNotification('Registration successful! Redirecting to login page...', 'success');
             
             // Redirect to login page
             setTimeout(() => {
@@ -219,13 +219,13 @@ async function handleRegistration(event) {
             }, 2000);
             
         } else {
-            showNotification(result.error || 'Đăng ký thất bại', 'error');
+            showNotification(result.error || 'Registration failed', 'error');
         }
         
     } catch (error) {
         hideLoading();
         console.error('Registration error:', error);
-        showNotification('Lỗi kết nối server', 'error');
+        showNotification('Server connection error', 'error');
     }
 }
 
@@ -233,7 +233,7 @@ function showLoading() {
     const submitBtn = document.querySelector('.register-btn, .signup-btn, button[type="submit"]');
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
     }
 }
 

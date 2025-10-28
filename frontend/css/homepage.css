@@ -727,3 +727,34 @@ button {
 button:hover {
     background-color: #d35400;
 }
+
+/* ==================== FIX DROPDOWN Z-INDEX FOR HOMEPAGE ==================== */
+.header {
+    position: relative;
+}
+
+.nav-top-bar {
+    z-index: 10000 !important;
+}
+
+.greeting-li {
+    z-index: 10001 !important;
+}
+
+.user-dropdown-menu {
+    z-index: 10002 !important;
+    pointer-events: all !important;
+}
+
+.user-dropdown-menu a {
+    pointer-events: all !important;
+    cursor: pointer !important;
+}
+
+.context {
+    pointer-events: none;
+}
+
+.context * {
+    pointer-events: all;
+}
