@@ -1560,12 +1560,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const starsHTML = generateStarsHTML(review.content?.rating || 5);
             const date = new Date(review.createdAt).toLocaleDateString();
             
+            // Get user avatar or use default
+            const userAvatar = review.userId?.avatar || 
+                              `https://ui-avatars.com/api/?name=${encodeURIComponent(review.userId?.fullName || 'Anonymous')}&background=ff6600&color=fff&size=50`;
+            
             reviewsList.innerHTML += `
                 <div class="review-item">
                     <div class="review-header">
                         <div class="reviewer-info">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face" 
-                                 alt="Reviewer" class="reviewer-avatar">
+                            <img src="${userAvatar}" 
+                                 alt="${review.userId?.fullName || 'Anonymous'}" 
+                                 class="reviewer-avatar"
+                                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(review.userId?.fullName || 'Anonymous')}&background=ff6600&color=fff&size=50'">
                             <div class="reviewer-details">
                                 <h6>${review.userId?.fullName || 'Anonymous'}</h6>
                                 <div class="review-date">${date}</div>
@@ -1605,10 +1611,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     <!-- Replies List -->
                     ${review.replies && review.replies.length > 0 ? `
                         <div class="replies-list">
-                            ${review.replies.map(reply => `
+                            ${review.replies.map(reply => {
+                                const replyAvatar = reply.userId?.avatar || 
+                                                  `https://ui-avatars.com/api/?name=${encodeURIComponent(reply.userId?.fullName || 'Anonymous')}&background=4B5563&color=fff&size=40`;
+                                return `
                                 <div class="reply-item">
-                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face" 
-                                         alt="Replier" class="reply-avatar">
+                                    <img src="${replyAvatar}" 
+                                         alt="${reply.userId?.fullName || 'Anonymous'}" 
+                                         class="reply-avatar"
+                                         onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(reply.userId?.fullName || 'Anonymous')}&background=4B5563&color=fff&size=40'">
                                     <div class="reply-content">
                                         <div class="reply-header">
                                             <strong>${reply.userId?.fullName || 'Anonymous'}</strong>
@@ -1618,7 +1629,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <p>${reply.text}</p>
                                     </div>
                                 </div>
-                            `).join('')}
+                            `}).join('')}
                         </div>
                     ` : ''}
                 </div>

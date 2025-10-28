@@ -47,7 +47,7 @@ const feedbackSchema = new mongoose.Schema({
   }],
   status: {
     type: String,
-    enum: ['pending', 'reviewed', 'resolved', 'rejected'],
+    enum: ['pending', 'reviewed', 'resolved', 'rejected', 'approved'],
     default: 'pending'
   },
   adminResponse: {
@@ -114,6 +114,11 @@ feedbackSchema.index({ 'metadata.location.coordinates': '2dsphere' });
 // Virtual for average rating per tour
 feedbackSchema.virtual('isReview').get(function() {
   return this.type === 'tour_review';
+});
+
+// Virtual for comment (alias for content)
+feedbackSchema.virtual('comment').get(function() {
+  return this.content;
 });
 
 // Pre-save middleware

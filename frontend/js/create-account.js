@@ -178,7 +178,7 @@ async function handleRegistration(event) {
     });
     
     if (!isFormValid) {
-        showNotification('Please check your information again', 'error');
+        showError('Validation Error', 'Please check your information again');
         return;
     }
     
@@ -192,14 +192,14 @@ async function handleRegistration(event) {
     
     // Additional validation
     if (formData.get('password') !== formData.get('confirmPassword')) {
-        showNotification('Confirmation password does not match', 'error');
+        showError('Password Mismatch', 'Confirmation password does not match');
         return;
     }
     
     try {
-        showLoading();
+        const loadingToast = showLoading('Creating Account', 'Please wait...');
         
-        const response = await fetch('/api/auth/register', {
+        const response = await fetch('http://localhost:3000/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -208,10 +208,10 @@ async function handleRegistration(event) {
         });
         
         const result = await response.json();
-        hideLoading();
+        hideToast(loadingToast);
         
         if (response.ok) {
-            showNotification('Registration successful! Redirecting to login page...', 'success');
+            showSuccess('Registration Successful!', `Welcome ${registrationData.fullName}! Redirecting to login...`, 2000);
             
             // Redirect to login page
             setTimeout(() => {
@@ -219,13 +219,12 @@ async function handleRegistration(event) {
             }, 2000);
             
         } else {
-            showNotification(result.error || 'Registration failed', 'error');
+            showError('Registration Failed', result.error || 'Unable to create account');
         }
         
     } catch (error) {
-        hideLoading();
         console.error('Registration error:', error);
-        showNotification('Server connection error', 'error');
+        showError('Connection Error', 'Unable to connect to server. Please try again.');
     }
 }
 
@@ -233,7 +232,7 @@ function showLoading() {
     const submitBtn = document.querySelector('.register-btn, .signup-btn, button[type="submit"]');
     if (submitBtn) {
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
     }
 }
 
@@ -241,68 +240,76 @@ function hideLoading() {
     const submitBtn = document.querySelector('.register-btn, .signup-btn, button[type="submit"]');
     if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Create Account';
+        submitBtn.innerHTML = '<span>Create Account</span>';
     }
 }
 
+// Deprecated - kept for backwards compatibility
 function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotification = document.querySelector('.notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        border-radius: 8px;
-        color: white;
-        font-weight: 500;
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        max-width: 300px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    `;
-    
-    // Set background color based on type
-    const colors = {
-        success: '#10B981',
-        error: '#EF4444',
-        warning: '#F59E0B',
-        info: '#3B82F6'
-    };
-    notification.style.backgroundColor = colors[type] || colors.info;
-    
-    // Add icon
-    const icons = {
-        success: 'fas fa-check-circle',
-        error: 'fas fa-times-circle',
-        warning: 'fas fa-exclamation-triangle',
-        info: 'fas fa-info-circle'
-    };
-    
-    notification.innerHTML = `
-        <i class="${icons[type] || icons.info}"></i>
-        <span style="margin-left: 8px;">${message}</span>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
+    // Use new toast system if available
+    if (typeof showToast !== 'undefined') {
+        const titles = {
+            success: 'Success!',
+            error: 'Error',
+            warning: 'Warning',
+            info: 'Info'
+        };
+        showToast(titles[type] || 'Notification', message, type);
+    } else {
+        // Fallback to old implementation
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
         }
-    }, 4000);
+        
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        `;
+        
+        const colors = {
+            success: '#10B981',
+            error: '#EF4444',
+            warning: '#F59E0B',
+            info: '#3B82F6'
+        };
+        notification.style.backgroundColor = colors[type] || colors.info;
+        
+        const icons = {
+            success: 'fas fa-check-circle',
+            error: 'fas fa-times-circle',
+            warning: 'fas fa-exclamation-triangle',
+            info: 'fas fa-info-circle'
+        };
+        
+        notification.innerHTML = `
+            <i class="${icons[type] || icons.info}"></i>
+            <span style="margin-left: 8px;">${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 4000);
+    }
 }
 
-// Add CSS animations
+// Old CSS animations (kept for fallback)
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideInRight {

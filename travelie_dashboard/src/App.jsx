@@ -5,6 +5,10 @@ import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Booking/Bookings";
 import BookingDetail from "./pages/Booking/BookingDetail";
 import Messages from "./pages/Messages/Messages";
+import Tours from "./pages/Tours/Tours";
+import Users from "./pages/Users/Users";
+import Hotels from "./pages/Hotels/Hotels";
+import Reviews from "./pages/Reviews/Reviews";
 
 export default function App() {
   const [active, setActive] = useState("dashboard");
@@ -30,8 +34,12 @@ export default function App() {
             {active === "bookingDetail" && (
               <BookingDetail bookingId={selectedBooking} setActive={setActive} />
             )}
+            {active === "tours" && <Tours />}
+            {active === "users" && <Users />}
+            {active === "hotels" && <Hotels />}
+            {active === "reviews" && <Reviews />}
             {active === "messages" && <Messages />}
-            {active !== "dashboard" && active !== "bookings" && active !== "messages" && active !== "bookingDetail" && (
+            {!["dashboard", "bookings", "bookingDetail", "tours", "users", "hotels", "reviews", "messages"].includes(active) && (
               <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 Coming soon: {active}
               </div>

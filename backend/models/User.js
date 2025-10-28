@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   phone: { type: String },
   avatar: { type: String, default: '' },
   verified: { type: Boolean, default: false },
+  blocked: { type: Boolean, default: false },
   
   // AI Preferences (mở rộng)
   preferences: {

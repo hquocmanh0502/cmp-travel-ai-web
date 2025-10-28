@@ -21,6 +21,7 @@ const chatbotService = require('./services/chatbotService');
 const bookingsRoutes = require('./routes/bookings');
 const authRoutes = require('./routes/auth');
 const commentsRoutes = require('./routes/comments');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentsRoutes);
+app.use('/api/admin', adminRoutes);
 
 // API Routes
 
