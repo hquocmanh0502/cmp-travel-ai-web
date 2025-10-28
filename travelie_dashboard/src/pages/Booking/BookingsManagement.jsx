@@ -32,6 +32,7 @@ function BookingsManagement() {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   
   // Fetch bookings
   useEffect(() => {
@@ -107,6 +108,21 @@ function BookingsManagement() {
   const handlePaymentUpdate = (booking) => {
     setSelectedBooking(booking);
     setShowPaymentModal(true);
+  };
+
+  const handleEditBooking = async (bookingId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/bookings/${bookingId}`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setSelectedBooking(data.data);
+        setShowEditModal(true);
+      }
+    } catch (err) {
+      console.error('Error fetching booking detail:', err);
+      alert('Failed to load booking details');
+    }
   };
 
   const formatCurrency = (amount) => {
@@ -379,6 +395,13 @@ function BookingsManagement() {
                           <MdVisibility className="text-sm" />
                         </button>
                         <button
+                          onClick={() => handleEditBooking(booking._id)}
+                          className="p-1.5 text-purple-600 hover:bg-purple-50 rounded-lg transition-colors"
+                          title="Edit Booking"
+                        >
+                          <MdEdit className="text-sm" />
+                        </button>
+                        <button
                           onClick={() => handleStatusUpdate(booking)}
                           className="p-1.5 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors"
                           title="Update Status"
@@ -436,6 +459,22 @@ function BookingsManagement() {
           onClose={() => {
             setShowDetailModal(false);
             setSelectedBooking(null);
+          }}
+          formatCurrency={formatCurrency}
+          formatDate={formatDate}
+        />
+      )}
+
+      {showEditModal && selectedBooking && (
+        <EditBookingModal
+          booking={selectedBooking}
+          onClose={() => {
+            setShowEditModal(false);
+            setSelectedBooking(null);
+          }}
+          onUpdate={() => {
+            setShowEditModal(false);
+            fetchBookings();
           }}
           formatCurrency={formatCurrency}
           formatDate={formatDate}
@@ -943,6 +982,333 @@ function PaymentUpdateModal({ booking, onClose, onUpdate, formatCurrency }) {
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  );
+}
+
+// Edit Booking Modal Component
+function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDate }) {
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    // Customer info
+    customerTitle: booking.customer.title || 'Mr',
+    customerName: booking.customer.name || '',
+    customerEmail: booking.customer.email || '',
+    customerPhone: booking.customer.phone || '',
+    specialRequests: booking.customer.specialRequests || '',
+    
+    // Guests
+    adults: booking.guests.adults || 1,
+    children: booking.guests.children || 0,
+    infants: booking.guests.infants || 0,
+    
+    // Dates
+    departureDate: booking.dates.departure ? new Date(booking.dates.departure).toISOString().split('T')[0] : '',
+    checkinDate: booking.dates.checkin ? new Date(booking.dates.checkin).toISOString().split('T')[0] : '',
+    checkoutDate: booking.dates.checkout ? new Date(booking.dates.checkout).toISOString().split('T')[0] : '',
+    
+    // Admin notes
+    adminNotes: booking.adminNotes || ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      setLoading(true);
+      
+      // Prepare update data
+      const updateData = {
+        customerInfo: {
+          title: formData.customerTitle,
+          fullName: formData.customerName,
+          email: formData.customerEmail,
+          phone: formData.customerPhone,
+          specialRequests: formData.specialRequests
+        },
+        adults: parseInt(formData.adults),
+        children: parseInt(formData.children),
+        infants: parseInt(formData.infants),
+        departureDate: new Date(formData.departureDate),
+        checkinDate: new Date(formData.checkinDate),
+        checkoutDate: new Date(formData.checkoutDate),
+        adminNotes: formData.adminNotes
+      };
+      
+      const response = await fetch(`${API_BASE_URL}/bookings/${booking._id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData)
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        alert('✅ Booking updated successfully!');
+        onUpdate();
+      } else {
+        alert('❌ Error: ' + (data.error || 'Failed to update booking'));
+      }
+    } catch (err) {
+      console.error('Error updating booking:', err);
+      alert('❌ Error updating booking: ' + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+        {/* Fixed Header */}
+        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-xl">
+          <div>
+            <h2 className="text-xl font-bold text-gray-800">Edit Booking</h2>
+            <p className="text-sm text-gray-600">ID: {booking.bookingId}</p>
+          </div>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <MdClose className="text-xl" />
+          </button>
+        </div>
+
+        {/* Scrollable Form Content */}
+        <form id="edit-booking-form" onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
+          <div className="p-6 space-y-6">
+          {/* Customer Information */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Customer Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Title
+                </label>
+                <select
+                  name="customerTitle"
+                  value={formData.customerTitle}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  required
+                >
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Ms">Ms</option>
+                  <option value="Dr">Dr</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  name="customerName"
+                  value={formData.customerName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  name="customerEmail"
+                  value={formData.customerEmail}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone *
+                </label>
+                <input
+                  type="tel"
+                  name="customerPhone"
+                  value={formData.customerPhone}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Special Requests
+                </label>
+                <textarea
+                  name="specialRequests"
+                  value={formData.specialRequests}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  rows="2"
+                  placeholder="Any special requests or notes..."
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Travel Dates */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Travel Dates</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Departure Date *
+                </label>
+                <input
+                  type="date"
+                  name="departureDate"
+                  value={formData.departureDate}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Check-in Date *
+                </label>
+                <input
+                  type="date"
+                  name="checkinDate"
+                  value={formData.checkinDate}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Check-out Date *
+                </label>
+                <input
+                  type="date"
+                  name="checkoutDate"
+                  value={formData.checkoutDate}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Number of Guests */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Number of Guests</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Adults *
+                </label>
+                <input
+                  type="number"
+                  name="adults"
+                  value={formData.adults}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  min="1"
+                  max="20"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Children
+                </label>
+                <input
+                  type="number"
+                  name="children"
+                  value={formData.children}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  min="0"
+                  max="20"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Infants
+                </label>
+                <input
+                  type="number"
+                  name="infants"
+                  value={formData.infants}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                  min="0"
+                  max="10"
+                />
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">
+              Total Guests: {parseInt(formData.adults) + parseInt(formData.children) + parseInt(formData.infants)}
+            </p>
+          </div>
+
+          {/* Admin Notes */}
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">Admin Notes</h3>
+            <textarea
+              name="adminNotes"
+              value={formData.adminNotes}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+              rows="3"
+              placeholder="Internal notes for admin reference..."
+            />
+          </div>
+
+          {/* Tour Info (Read-only) */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">Tour Information (Read-only)</h3>
+            <div className="space-y-1">
+              <p className="text-sm text-gray-600">Tour: <span className="font-medium text-gray-900">{booking.tour.name}</span></p>
+              <p className="text-sm text-gray-600">Location: <span className="font-medium text-gray-900">{booking.tour.location}</span></p>
+              <p className="text-sm text-gray-600">Total Amount: <span className="font-medium text-gray-900">{formatCurrency(booking.pricing.totalAmount)}</span></p>
+            </div>
+          </div>
+          </div>
+        </form>
+
+        {/* Fixed Footer */}
+        <div className="flex-shrink-0 bg-white border-t border-gray-200 px-6 py-4 flex gap-3 rounded-b-xl">
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            form="edit-booking-form"
+            disabled={loading}
+            className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-300 transition-colors"
+          >
+            {loading ? 'Saving...' : 'Save Changes'}
+          </button>
+        </div>
       </div>
     </div>
   );
