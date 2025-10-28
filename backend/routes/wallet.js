@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const momoService = require('../services/momoService');
-const mbbankService = require('../services/mbbankService');
+// Payment services removed - using PayOS instead
 
 /**
  * CMP WALLET ROUTES WITH MOMO PAYMENT INTEGRATION
@@ -115,9 +114,11 @@ router.post('/:userId/topup', async (req, res) => {
       };
     }
     
-    // Create MoMo payment
-    const orderInfo = `Nạp ${amount.toLocaleString('vi-VN')} VND vào CMP Wallet`;
-    const paymentResult = await momoService.createPayment(userId, amount, orderInfo);
+    // Payment service removed - return error
+    return res.status(501).json({
+      success: false,
+      error: 'Payment service not configured. Please use PayOS integration.'
+    });
     
     if (!paymentResult.success) {
       return res.status(400).json({
@@ -157,24 +158,16 @@ router.post('/:userId/topup', async (req, res) => {
 // =============================================
 // MOMO IPN CALLBACK (Payment Notification)
 // =============================================
+// MOMO IPN CALLBACK (Deprecated - use PayOS webhook)
+// =============================================
 router.post('/momo-ipn', async (req, res) => {
   try {
-    console.log('MoMo IPN Received:', req.body);
+    console.log('MoMo IPN endpoint called - service deprecated');
     
-    const {
-      orderId,
-      requestId,
-      amount,
-      orderInfo,
-      transId,
-      resultCode,
-      message,
-      responseTime,
-      extraData
-    } = req.body;
-    
-    // Verify signature
-    const isValid = momoService.verifyIPNSignature(req.body);
+    return res.status(501).json({
+      success: false,
+      message: 'MoMo service deprecated. Use PayOS webhook.'
+    });
     if (!isValid) {
       console.error('Invalid MoMo IPN signature');
       return res.status(400).json({
@@ -411,13 +404,17 @@ router.post('/:userId/check-transfer', async (req, res) => {
     const userIdPrefix = userId.substring(0, 6);
     const expectedContent = `CMPTOPUP ${userIdPrefix} ${orderId}`;
     
-    // Check with MB Bank API
-    const result = await mbbankService.checkTransferByContent(
-      '0344868243', // Your MB Bank account number
-      expectedContent,
+    // MB Bank service not available - return pending status
+    console.log(`⏳ Manual verification needed for order ${orderId}`);
+    
+    res.json({
+      success: true,
+      verified: false,
+      message: 'Chưa nhận được giao dịch. Vui lòng liên hệ admin để xác nhận thủ công.',
+      orderId,
       amount,
-      30 // Check last 30 minutes
-    );
+      status: 'pending'
+    });
     
     if (result.found) {
       // Transaction found! Update wallet
