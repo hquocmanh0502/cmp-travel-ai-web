@@ -7,6 +7,7 @@ let currentUser = null;
 document.addEventListener('DOMContentLoaded', function() {
     checkAuthStatus();
     setupAuthForms();
+    setupPasswordToggle();
 });
 
 // Handle login form submission
@@ -25,22 +26,22 @@ async function handleLogin(event) {
     
     // Validation
     if (!loginData.email || !loginData.password) {
-        showNotification('⚠️ Please enter email and password', 'error');
+        showError('Validation Error', 'Please enter email and password');
         return;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(loginData.email)) {
-        showNotification('📧 Invalid email format', 'error');
+        showError('Invalid Email', 'Please enter a valid email address');
         return;
     }
     
     try {
-        showLoading();
+        const loadingToast = showLoading('Logging in...', 'Please wait');
         console.log('Sending login request...');
         
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,21 +58,24 @@ async function handleLogin(event) {
             console.log('Login response:', result);
         } catch (parseError) {
             console.error('Failed to parse response:', parseError);
-            throw new Error('Server response không hợp lệ');
+            hideToast(loadingToast);
+            showError('Server Error', 'Invalid server response');
+            return;
         }
         
-        hideLoading();
+        hideToast(loadingToast);
         
         if (response.ok) {
             // Save user data to localStorage
+            localStorage.setItem('authToken', result.authToken);
             localStorage.setItem('userId', result.user.id);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('userEmail', result.user.email);
             localStorage.setItem('userFullName', result.user.fullName);
-
-            localStorage.setItem('authToken', result.token || result.user.id);
             
-            showNotification('🎉 Login successful! Welcome back!', 'success');
+            console.log('✅ Login successful - Token saved:', result.authToken?.substring(0, 20) + '...');
+            
+            showSuccess('Login Successful!', `Welcome back, ${result.user.fullName}!`, 2000);
             
             // Update auth status
             checkAuthStatus();
@@ -79,17 +83,16 @@ async function handleLogin(event) {
             // Redirect after delay
             setTimeout(() => {
                 window.location.href = 'index.html';
-            }, 1500);
+            }, 2000);
             
         } else {
             const errorMessage = result.error || `Error ${response.status}: ${response.statusText}`;
-            showNotification('❌ ' + errorMessage, 'error');
+            showError('Login Failed', errorMessage);
         }
         
     } catch (error) {
-        hideLoading();
         console.error('Login error:', error);
-        showNotification('🚫 Connection error: ' + error.message, 'error');
+        showError('Connection Error', 'Unable to connect to server. Please try again.');
     }
 }
 
@@ -118,33 +121,33 @@ async function handleRegister(event) {
     // Validation
     if (!registerData.username || !registerData.email || 
         !registerData.password || !registerData.fullName) {
-        showNotification('⚠️ Please fill in all required information', 'error');
+        showError('Validation Error', 'Please fill in all required information');
         return;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(registerData.email)) {
-        showNotification('📧 Invalid email format', 'error');
+        showError('Invalid Email', 'Please enter a valid email address');
         return;
     }
     
     // Password validation
     if (registerData.password !== registerData.confirmPassword) {
-        showNotification('🔒 Confirmation password does not match', 'error');
+        showError('Password Mismatch', 'Confirmation password does not match');
         return;
     }
     
     if (registerData.password.length < 6) {
-        showNotification('🔑 Password must be at least 6 characters', 'error');
+        showWarning('Weak Password', 'Password must be at least 6 characters');
         return;
     }
     
     try {
-        showLoading();
+        const loadingToast = showLoading('Creating Account', 'Please wait...');
         console.log('Sending register request...');
         
-        const response = await fetch('/api/auth/register', {
+        const response = await fetch('http://localhost:3000/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -161,13 +164,15 @@ async function handleRegister(event) {
             console.log('Register response:', result);
         } catch (parseError) {
             console.error('Failed to parse response:', parseError);
-            throw new Error('Server response không hợp lệ');
+            hideToast(loadingToast);
+            showError('Server Error', 'Invalid server response');
+            return;
         }
         
-        hideLoading();
+        hideToast(loadingToast);
         
         if (response.ok) {
-            showNotification('🎉 Registration successful! Please login to continue.', 'success');
+            showSuccess('Registration Successful!', `Welcome ${registerData.fullName}! Redirecting to login...`, 2000);
             
             // Reset form
             form.reset();
@@ -186,13 +191,12 @@ async function handleRegister(event) {
             
         } else {
             const errorMessage = result.error || `Error ${response.status}: ${response.statusText}`;
-            showNotification('❌ ' + errorMessage, 'error');
+            showError('Registration Failed', errorMessage);
         }
         
     } catch (error) {
-        hideLoading();
         console.error('Register error:', error);
-        showNotification('🚫 Connection error: ' + error.message, 'error');
+        showError('Connection Error', 'Unable to connect to server. Please try again.');
     }
 }
 
@@ -254,8 +258,39 @@ function setupAuthForms() {
     }
 }
 
+// Setup password show/hide toggle
+function setupPasswordToggle() {
+    const passwordToggles = document.querySelectorAll('.password-toggle');
+    
+    passwordToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            // Find the password input in the same container
+            const passwordContainer = this.closest('.password-container');
+            if (!passwordContainer) return;
+            
+            const passwordInput = passwordContainer.querySelector('input[type="password"], input[type="text"]');
+            if (!passwordInput) return;
+            
+            const svg = this.querySelector('svg');
+            if (!svg) return;
+            
+            // Toggle password visibility
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                // Change to eye-off icon
+                svg.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+            } else {
+                passwordInput.type = 'password';
+                // Change to eye icon
+                svg.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+            }
+        });
+    });
+}
+
 // Handle logout
 function handleLogout() {
+    localStorage.removeItem('authToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
     localStorage.removeItem('userEmail');
@@ -264,42 +299,49 @@ function handleLogout() {
     currentUser = null;
     updateAuthUI(false);
     
-    showNotification('👋 Logged out successfully. See you again!', 'success');
+    showSuccess('Logged Out', 'See you again!', 1500);
     
     // Redirect to home
     setTimeout(() => {
         window.location.href = 'index.html';
-    }, 1000);
+    }, 1500);
 }
 
-// Utility functions
+// Utility functions - Deprecated (use toast system)
 function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notification => notification.remove());
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    
-    // Add to document
-    document.body.appendChild(notification);
-    
-    // Show notification
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 100);
-    
-    // Auto hide after 4 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
+    // Use new toast system if available
+    if (typeof showToast !== 'undefined') {
+        const titles = {
+            success: 'Success!',
+            error: 'Error',
+            warning: 'Warning',
+            info: 'Info'
+        };
+        showToast(titles[type] || 'Notification', message, type);
+    } else {
+        // Fallback to old implementation
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notification => notification.remove());
+        
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
         setTimeout(() => {
-            if (notification.parentElement) {
-                notification.remove();
-            }
-        }, 300);
-    }, 4000);
+            notification.classList.add('show');
+        }, 100);
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 300);
+        }, 4000);
+    }
 }
 
 function showLoading() {

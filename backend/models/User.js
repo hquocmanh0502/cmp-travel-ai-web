@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   address: { type: String },
   avatar: { type: String, default: '' },
   verified: { type: Boolean, default: false },
+  blocked: { type: Boolean, default: false },
   
   // CMP Wallet (for payments)
   wallet: {

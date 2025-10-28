@@ -23,6 +23,7 @@ const authRoutes = require('./routes/auth');
 const commentsRoutes = require('./routes/comments');
 const profileRoutes = require('./routes/profile');
 const walletRoutes = require('./routes/wallet');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/wallet', walletRoutes);
+app.use('/api/admin', adminRoutes);
 
 // API Routes
 

@@ -144,20 +144,24 @@ function handleDocumentClick(e) {
 }
 
 function handleLogout() {
-  // Show confirmation dialog
-  if (confirm('Are you sure you want to logout?')) {
-    // Clear user data
-    localStorage.removeItem('userId');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('userFullName');
-    
-    // Show success message
+  // Clear user data
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('username');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userFullName');
+  
+  // Show success toast if available, otherwise use alert
+  if (typeof showSuccess !== 'undefined') {
+    showSuccess('Logged Out', 'See you again!', 1500);
+  } else {
     alert('Logged out successfully!');
-    
-    // Redirect to home
-    window.location.href = 'index.html';
   }
+  
+  // Redirect to home
+  setTimeout(() => {
+    window.location.href = 'index.html';
+  }, typeof showSuccess !== 'undefined' ? 1500 : 0);
 }
 
 // Scroll icons initialization

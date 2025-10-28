@@ -55,21 +55,21 @@ async function handleLogin(event) {
     
     // Validation
     if (!loginData.email || !loginData.password) {
-        showNotification('Please fill in all information', 'error');
+        showError('Validation Error', 'Please fill in all information');
         return;
     }
     
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(loginData.email)) {
-        showNotification('Invalid email', 'error');
+        showError('Invalid Email', 'Please enter a valid email address');
         return;
     }
     
     try {
-        showLoading();
+        const loadingToast = showLoading('Logging in...', 'Please wait');
         
-        const response = await fetch('/api/auth/login', {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,11 +78,11 @@ async function handleLogin(event) {
         });
         
         const result = await response.json();
-        hideLoading();
+        hideToast(loadingToast);
         
         if (response.ok) {
             // Save user data to localStorage
-            localStorage.setItem('authToken', result.authToken); // ✅ SAVE TOKEN FIRST
+            localStorage.setItem('authToken', result.authToken);
             localStorage.setItem('userId', result.user.id);
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('userEmail', result.user.email);
@@ -90,7 +90,7 @@ async function handleLogin(event) {
             
             console.log('✅ Login successful - Token saved:', result.authToken?.substring(0, 20) + '...');
             
-            showNotification('Login successful!', 'success');
+            showSuccess('Login Successful!', `Welcome back, ${result.user.fullName}!`, 2000);
             
             // Update UI and redirect
             setTimeout(() => {
@@ -101,13 +101,12 @@ async function handleLogin(event) {
             }, 1000);
             
         } else {
-            showNotification(result.error || 'Login failed', 'error');
+            showError('Login Failed', result.error || 'Invalid email or password');
         }
         
     } catch (error) {
-        hideLoading();
         console.error('Login error:', error);
-        showNotification('Server connection error', 'error');
+        showError('Connection Error', 'Unable to connect to server. Please try again.');
     }
 }
 
@@ -123,68 +122,76 @@ function hideLoading() {
     const submitBtn = document.querySelector('.login-btn');
     if (submitBtn) {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Login';
+        submitBtn.innerHTML = '<span>Login</span>';
     }
 }
 
+// Deprecated - kept for backwards compatibility
 function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotification = document.querySelector('.notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        border-radius: 8px;
-        color: white;
-        font-weight: 500;
-        z-index: 10000;
-        animation: slideInRight 0.3s ease;
-        max-width: 300px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    `;
-    
-    // Set background color based on type
-    const colors = {
-        success: '#10B981',
-        error: '#EF4444',
-        warning: '#F59E0B',
-        info: '#3B82F6'
-    };
-    notification.style.backgroundColor = colors[type] || colors.info;
-    
-    // Add icon
-    const icons = {
-        success: 'fas fa-check-circle',
-        error: 'fas fa-times-circle',
-        warning: 'fas fa-exclamation-triangle',
-        info: 'fas fa-info-circle'
-    };
-    
-    notification.innerHTML = `
-        <i class="${icons[type] || icons.info}"></i>
-        <span style="margin-left: 8px;">${message}</span>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.style.animation = 'slideOutRight 0.3s ease';
-            setTimeout(() => notification.remove(), 300);
+    // Use new toast system if available
+    if (typeof showToast !== 'undefined') {
+        const titles = {
+            success: 'Success!',
+            error: 'Error',
+            warning: 'Warning',
+            info: 'Info'
+        };
+        showToast(titles[type] || 'Notification', message, type);
+    } else {
+        // Fallback to old implementation
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
         }
-    }, 3000);
+        
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        `;
+        
+        const colors = {
+            success: '#10B981',
+            error: '#EF4444',
+            warning: '#F59E0B',
+            info: '#3B82F6'
+        };
+        notification.style.backgroundColor = colors[type] || colors.info;
+        
+        const icons = {
+            success: 'fas fa-check-circle',
+            error: 'fas fa-times-circle',
+            warning: 'fas fa-exclamation-triangle',
+            info: 'fas fa-info-circle'
+        };
+        
+        notification.innerHTML = `
+            <i class="${icons[type] || icons.info}"></i>
+            <span style="margin-left: 8px;">${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, 3000);
+    }
 }
 
-// Add CSS animations
+// Old CSS animations (kept for fallback)
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideInRight {
