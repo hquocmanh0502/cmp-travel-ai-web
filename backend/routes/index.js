@@ -35,10 +35,12 @@ router.get('/tours/:id', async (req, res) => {
   }
 });
 
-// Blogs Routes
+// Blogs Routes - Public endpoint chỉ trả về published blogs
 router.get('/blogs', async (req, res) => {
   try {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find({ status: 'published' })
+      .sort({ publishedDate: -1 })
+      .select('-__v');
     res.json(blogs);
   } catch (err) {
     res.status(500).json({ error: 'Error fetching blogs' });
@@ -47,10 +49,15 @@ router.get('/blogs', async (req, res) => {
 
 router.get('/blogs/:id', async (req, res) => {
   try {
-    const blog = await Blog.findOne({ id: parseInt(req.params.id) });
+    const blog = await Blog.findById(req.params.id);
     if (!blog) {
       return res.status(404).json({ error: 'Blog not found' });
     }
+    
+    // Tăng views khi xem blog
+    blog.views = (blog.views || 0) + 1;
+    await blog.save();
+    
     res.json(blog);
   } catch (err) {
     res.status(500).json({ error: 'Error fetching blog' });

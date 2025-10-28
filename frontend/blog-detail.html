@@ -386,37 +386,36 @@
 
     <div class="container">
         <div class="head">
-            <h1 class="blog-title"></h1>
-            <p class="blog-description"></p>
-        </div>
-        <div class="section">
-            <h2>Geography</h2>
-            <p id="geography"></p>
-            <div class="image">
-                <img id="geography-img" src="" alt="">
+            <h1 class="blog-title">
+                <i class="fas fa-spinner fa-spin" style="color: #ff6600;"></i> Loading...
+            </h1>
+            <div class="blog-meta">
+                <span class="blog-author"><i class="fas fa-user"></i> <span id="author-name">Loading...</span></span>
+                <span class="blog-date"><i class="fas fa-calendar"></i> <span id="publish-date">Loading...</span></span>
+                <span class="blog-category"><i class="fas fa-tag"></i> <span id="category-name">Loading...</span></span>
+                <span class="blog-views"><i class="fas fa-eye"></i> <span id="view-count">0</span> views</span>
             </div>
         </div>
-        <div class="section">
-            <h2>Climate</h2>
-            <p id="climate"></p>
-            <div class="image">
-                <img id="climate-img" src="" alt="">
-            </div>
+
+        <div class="blog-image-container">
+            <img id="blog-main-image" src="" alt="" style="display: none;">
         </div>
-        <div class="section">
-            <h2>Language</h2>
-            <p id="language"></p>
+
+        <div class="blog-excerpt">
+            <p id="blog-excerpt"></p>
         </div>
-        <div class="section">
-            <h2>People & Culture</h2>
-            <p id="culture"></p>
-            <div class="image">
-                <img id="culture-img" src="" alt="">
-            </div>
+
+        <div class="blog-content">
+            <div id="blog-content-text"></div>
         </div>
+
+        <div class="blog-tags" id="blog-tags-container">
+            <!-- Tags will be loaded here -->
+        </div>
+
         <div class="mb-3 back">
-            <a href="blog.html" class="btn btn-back"><i class="fa-solid fa-arrow-left"></i>Back</a>
-          </div>
+            <a href="blog.html" class="btn btn-back"><i class="fa-solid fa-arrow-left"></i> Back to Blog</a>
+        </div>
     </div>
     <!-- Scroll Icon -->
     <div class="icon-container">

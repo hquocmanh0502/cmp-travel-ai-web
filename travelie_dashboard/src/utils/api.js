@@ -160,25 +160,42 @@ export const bookingsAPI = {
  */
 export const blogsAPI = {
   // Get all blogs
-  getAll: () => apiCall('/blogs'),
+  getAll: async () => {
+    const response = await apiCall('/blogs');
+    return response.data || response; // Handle both { data: [] } and direct array
+  },
 
   // Create new blog
-  create: (blogData) => apiCall('/blogs', {
-    method: 'POST',
-    body: JSON.stringify(blogData),
-  }),
+  create: async (blogData) => {
+    const response = await apiCall('/blogs', {
+      method: 'POST',
+      body: JSON.stringify(blogData),
+    });
+    return response.data || response;
+  },
 
   // Update blog
-  update: (id, blogData) => apiCall(`/blogs/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(blogData),
-  }),
+  update: async (id, blogData) => {
+    const response = await apiCall(`/blogs/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(blogData),
+    });
+    return response.data || response;
+  },
 
   // Delete blog
   delete: (id) => apiCall(`/blogs/${id}`, {
     method: 'DELETE',
   }),
 };
+
+/**
+ * Convenience functions for common operations
+ */
+export const fetchBlogs = () => blogsAPI.getAll();
+export const createBlog = (data) => blogsAPI.create(data);
+export const updateBlog = (id, data) => blogsAPI.update(id, data);
+export const deleteBlog = (id) => blogsAPI.delete(id);
 
 /**
  * Export all APIs

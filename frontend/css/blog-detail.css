@@ -1,49 +1,214 @@
 .container {
     width: 85%;
+    max-width: 900px;
     margin: auto;
     overflow: hidden;
-    padding: 20px;
+    padding: 40px;
     background: white;
     margin-top: 30px;
     margin-bottom: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.head, .section {
-    margin-bottom: 50px;
-}
-.head h1 {
-    font-size: 5rem;
-    font-family: "Volkhov";
-    color: #333;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
-.section h2 {
+.head {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.head h1 {
     font-size: 3rem;
     font-family: "Volkhov";
     color: #333;
-    border-bottom: 2px solid #333;
-    padding-bottom: 10px;
+    margin-bottom: 20px;
+    line-height: 1.3;
 }
 
-.section p, .container p{
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-    font-size: 1.2rem;
+.blog-meta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    color: #666;
+    font-size: 0.95rem;
 }
 
-img{
+.blog-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.blog-meta i {
+    color: #ff6600;
+}
+
+.blog-image-container {
+    margin: 30px 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#blog-main-image {
     width: 100%;
-    height: 55vh;
+    height: 500px;
     object-fit: cover;
+    display: block;
 }
 
-.btn-back{
-    border-radius: .25rem;
+.blog-excerpt {
+    background: #f8f9fa;
+    padding: 25px;
+    border-left: 4px solid #ff6600;
+    margin: 30px 0;
+    border-radius: 4px;
 }
+
+.blog-excerpt p {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #555;
+    margin: 0;
+    line-height: 1.7;
+}
+
+.blog-content {
+    margin: 40px 0;
+    line-height: 1.8;
+    color: #333;
+}
+
+.blog-content h2 {
+    font-size: 2rem;
+    font-family: "Volkhov";
+    color: #333;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ff6600;
+}
+
+.blog-content h3 {
+    font-size: 1.5rem;
+    font-family: "Poppins";
+    font-weight: 600;
+    color: #444;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.blog-content p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.blog-content strong {
+    color: #ff6600;
+    font-weight: 600;
+}
+
+.blog-tags {
+    margin: 40px 0;
+    padding-top: 30px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.blog-tags h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+}
+
+.tag-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 102, 0, 0.3);
+}
+
+.tag-badge i {
+    font-size: 0.8rem;
+}
+
+.back {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 12px 30px;
+    background: white;
+    color: #ff6600;
+    border: 2px solid #ff6600;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background: #ff6600;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+}
+
 .btn-back i {
-    color: #DF6951;
-    margin-right: 10px;
+    margin-right: 8px;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .head h1 {
+        font-size: 2rem;
+    }
+
+    .blog-meta {
+        gap: 15px;
+        font-size: 0.85rem;
+    }
+
+    #blog-main-image {
+        height: 300px;
+    }
+
+    .blog-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .blog-content p {
+        font-size: 1rem;
+    }
+}
+
 
 
 

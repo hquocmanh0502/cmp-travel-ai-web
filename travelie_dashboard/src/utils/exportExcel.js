@@ -237,3 +237,62 @@ export const exportToursToExcel = (tours, filename = 'tours-report.xlsx') => {
     return false;
   }
 };
+
+/**
+ * Export blogs data to Excel
+ * @param {Array} blogs - Array of blog objects
+ * @param {string} filename - Output filename
+ */
+export const exportBlogsToExcel = (blogs, filename = 'blogs-export.xlsx') => {
+  try {
+    const workbook = XLSX.utils.book_new();
+
+    // Prepare blogs data
+    const blogsData = [
+      ['Blogs Export Report'],
+      ['Generated on:', new Date().toLocaleString()],
+      ['Total Blogs:', blogs.length],
+      [],
+      ['Title', 'Author', 'Category', 'Status', 'Published Date', 'Views', 'Tags', 'Excerpt']
+    ];
+
+    blogs.forEach(blog => {
+      blogsData.push([
+        blog.title || '',
+        blog.author || '',
+        blog.category || '',
+        blog.status || '',
+        blog.publishedDate ? new Date(blog.publishedDate).toLocaleDateString() : '',
+        blog.views || 0,
+        Array.isArray(blog.tags) ? blog.tags.join(', ') : blog.tags || '',
+        blog.excerpt || ''
+      ]);
+    });
+
+    const blogsSheet = XLSX.utils.aoa_to_sheet(blogsData);
+    
+    // Set column widths
+    blogsSheet['!cols'] = [
+      { wch: 40 }, // Title
+      { wch: 20 }, // Author
+      { wch: 20 }, // Category
+      { wch: 15 }, // Status
+      { wch: 15 }, // Date
+      { wch: 10 }, // Views
+      { wch: 30 }, // Tags
+      { wch: 50 }  // Excerpt
+    ];
+
+    XLSX.utils.book_append_sheet(workbook, blogsSheet, 'Blogs');
+
+    // Generate and download
+    XLSX.writeFile(workbook, filename);
+    
+    console.log('✅ Blogs exported successfully');
+    return true;
+  } catch (error) {
+    console.error('Error exporting blogs to Excel:', error);
+    return false;
+  }
+};
+
