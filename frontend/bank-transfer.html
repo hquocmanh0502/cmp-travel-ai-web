@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyển khoản ngân hàng | CMP Travel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .amount-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .amount-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .amount-value {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .bank-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .bank-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .bank-item:last-child {
+            border-bottom: none;
+        }
+        
+        .bank-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .bank-value {
+            color: #333;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+        
+        .qr-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            background: #f0f0f0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #667eea;
+        }
+        
+        .qr-placeholder {
+            font-size: 48px;
+            color: #667eea;
+        }
+        
+        .instruction {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .instruction-title {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .instruction-list {
+            color: #856404;
+            font-size: 14px;
+            line-height: 1.8;
+            padding-left: 20px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+        
+        .timer {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .timer-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Chuyển Khoản Ngân Hàng</h1>
+        <p class="subtitle">Vui lòng chuyển khoản theo thông tin bên dưới</p>
+        
+        <!-- Amount -->
+        <div class="amount-section">
+            <div class="amount-label">Số tiền cần chuyển</div>
+            <div class="amount-value" id="amount">100,000 VNĐ</div>
+        </div>
+        
+        <!-- Bank Info -->
+        <div class="bank-info">
+            <div class="bank-item">
+                <span class="bank-label">🏦 Ngân hàng</span>
+                <span class="bank-value" id="bankName">Vietcombank</span>
+            </div>
+            <div class="bank-item">
+                <span class="bank-label">👤 Chủ tài khoản</span>
+                <span class="bank-value" id="accountName">
+                    HOANG QUOC MANH
+                    <button class="copy-btn" onclick="copy('accountName')">Sao chép</button>
+                </span>
+            </div>
+            <div class="bank-item">
+                <span class="bank-label">💳 Số tài khoản</span>
+                <span class="bank-value" id="accountNumber">
+                    1234567890
+                    <button class="copy-btn" onclick="copy('accountNumber')">Sao chép</button>
+                </span>
+            </div>
+            <div class="bank-item">
+                <span class="bank-label">📝 Nội dung CK</span>
+                <span class="bank-value" id="content">
+                    CMPTOPUP 68e286 1234567
+                    <button class="copy-btn" onclick="copy('content')">Sao chép</button>
+                </span>
+            </div>
+        </div>
+        
+        <!-- QR Code -->
+        <div class="qr-section">
+            <h3>📱 Quét mã QR để thanh toán</h3>
+            <div class="qr-code">
+                <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; border-radius: 15px; display: none;">
+                <div class="qr-placeholder" id="qrPlaceholder">⏳</div>
+            </div>
+            <p style="color: #666; font-size: 14px;">
+                Mở app MB Bank → Quét QR → Số tiền và nội dung tự động điền
+            </p>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instruction">
+            <div class="instruction-title">
+                ⚠️ Lưu ý quan trọng
+            </div>
+            <ol class="instruction-list">
+                <li><strong>PHẢI ghi đúng nội dung chuyển khoản</strong> để hệ thống tự động xác nhận</li>
+                <li>Sau khi chuyển khoản, chờ <strong>1-5 phút</strong> để hệ thống xử lý</li>
+                <li>Nếu quá 30 phút chưa nhận được tiền, vui lòng liên hệ hỗ trợ</li>
+                <li>Giữ lại ảnh chụp màn hình giao dịch để đối chiếu</li>
+            </ol>
+        </div>
+        
+        <!-- Timer -->
+        <div class="timer">
+            ⏱️ Thời gian chờ xác nhận: <span class="timer-value" id="timer">30:00</span>
+        </div>
+        
+        <!-- Actions -->
+        <button class="btn btn-primary" onclick="checkStatus()">
+            ✓ Tôi đã chuyển khoản
+        </button>
+        <button class="btn btn-secondary" onclick="goBack()">
+            ← Quay lại
+        </button>
+    </div>
+    
+    <script>
+        // Get params from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const amount = urlParams.get('amount') || '100000';
+        const userId = localStorage.getItem('userId') || '68e286';
+        const orderId = Date.now();
+        
+        // Bank info (from config)
+        const bankInfo = {
+            bankCode: 'MB',
+            bankName: 'MB Bank',
+            accountNumber: '0344868243',
+            accountName: 'HOANG QUOC MANH'
+        };
+        
+        // Display amount
+        document.getElementById('amount').textContent = 
+            parseInt(amount).toLocaleString('vi-VN') + ' VNĐ';
+        
+        // Display bank info
+        document.getElementById('bankName').textContent = bankInfo.bankName;
+        document.getElementById('accountName').innerHTML = 
+            `${bankInfo.accountName} <button class="copy-btn" onclick="copy('accountName')">Sao chép</button>`;
+        document.getElementById('accountNumber').innerHTML = 
+            `${bankInfo.accountNumber} <button class="copy-btn" onclick="copy('accountNumber')">Sao chép</button>`;
+        
+        // Generate content
+        const content = `CMPTOPUP ${userId.substring(0, 6)} ${orderId}`;
+        document.getElementById('content').innerHTML = 
+            `${content} <button class="copy-btn" onclick="copy('content')">Sao chép</button>`;
+        
+        // Generate VietQR code (QR động với nội dung tự động)
+        const qrUrl = generateVietQR(bankInfo.bankCode, bankInfo.accountNumber, 
+                                     bankInfo.accountName, amount, content);
+        
+        // Load QR image
+        const qrImage = document.getElementById('qrImage');
+        const qrPlaceholder = document.getElementById('qrPlaceholder');
+        
+        qrImage.onload = function() {
+            qrPlaceholder.style.display = 'none';
+            qrImage.style.display = 'block';
+            console.log('✅ QR Code loaded successfully');
+        };
+        
+        qrImage.onerror = function() {
+            qrPlaceholder.innerHTML = '❌';
+            qrPlaceholder.style.color = '#dc3545';
+            console.error('❌ Failed to load QR code');
+        };
+        
+        qrImage.src = qrUrl;
+        console.log('🔗 QR URL:', qrUrl);
+        
+        /**
+         * Generate VietQR URL
+         * API: https://vietqr.io/
+         */
+        function generateVietQR(bankCode, accountNumber, accountName, amount, content) {
+            const template = 'compact2'; // 'compact', 'compact2', 'qr_only', 'print'
+            const baseURL = 'https://img.vietqr.io/image';
+            
+            const url = `${baseURL}/${bankCode}-${accountNumber}-${template}.jpg?` +
+                `amount=${amount}` +
+                `&addInfo=${encodeURIComponent(content)}` +
+                `&accountName=${encodeURIComponent(accountName)}`;
+            
+            return url;
+        }
+        
+        // Copy function
+        function copy(elementId) {
+            const element = document.getElementById(elementId);
+            let text = element.textContent.trim();
+            
+            // Remove "Sao chép" button text
+            text = text.replace('Sao chép', '').trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✓ Đã sao chép: ' + text);
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        }
+        
+        // Timer countdown
+        let timeLeft = 30 * 60; // 30 minutes
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                alert('⏰ Hết thời gian chờ. Vui lòng tạo giao dịch mới.');
+            }
+        }, 1000);
+        
+        // Check status
+        let checkInterval;
+        async function checkStatus() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Đang kiểm tra...';
+            
+            try {
+                // Start auto-checking every 5 seconds
+                checkInterval = setInterval(async () => {
+                    const response = await fetch(`http://localhost:3000/api/wallet/${userId}/check-transfer`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderId, amount: parseInt(amount) })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success && data.verified) {
+                        clearInterval(checkInterval);
+                        alert('✅ Đã xác nhận thanh toán! Số dư ví đã được cập nhật.');
+                        window.location.href = 'profile.html';
+                    }
+                }, 5000); // Check every 5 seconds
+                
+                // Also show message
+                setTimeout(() => {
+                    btn.textContent = '🔄 Đang tự động kiểm tra...';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                clearInterval(checkInterval);
+                btn.disabled = false;
+                btn.textContent = '✓ Tôi đã chuyển khoản';
+            }
+        }
+        
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

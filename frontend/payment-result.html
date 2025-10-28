@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả thanh toán | CMP Travel</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .result-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            animation: scaleIn 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .icon.success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .icon.failed {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .message {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .details {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Đang xử lý kết quả thanh toán...</p>
+        </div>
+
+        <div id="result" style="display: none;">
+            <div class="icon" id="resultIcon"></div>
+            <h1 id="resultTitle"></h1>
+            <p class="message" id="resultMessage"></p>
+            
+            <div class="details" id="details">
+                <div class="detail-row">
+                    <span class="detail-label">Mã giao dịch:</span>
+                    <span class="detail-value" id="orderId"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Số tiền:</span>
+                    <span class="detail-value" id="amount"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Trạng thái:</span>
+                    <span class="detail-value" id="status"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Thời gian:</span>
+                    <span class="detail-value" id="time"></span>
+                </div>
+            </div>
+
+            <div>
+                <a href="profile.html" class="btn btn-primary">Xem ví của tôi</a>
+                <a href="index.html" class="btn btn-secondary">Về trang chủ</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Parse URL parameters
+        function getUrlParams() {
+            const params = {};
+            const queryString = window.location.search.substring(1);
+            const pairs = queryString.split('&');
+            
+            for (let pair of pairs) {
+                const [key, value] = pair.split('=');
+                params[decodeURIComponent(key)] = decodeURIComponent(value);
+            }
+            
+            return params;
+        }
+
+        // Display result
+        function displayResult(params) {
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const icon = document.getElementById('resultIcon');
+            const title = document.getElementById('resultTitle');
+            const message = document.getElementById('resultMessage');
+            
+            loading.style.display = 'none';
+            result.style.display = 'block';
+
+            // MoMo result codes
+            const resultCode = parseInt(params.resultCode);
+            const isSuccess = resultCode === 0;
+
+            if (isSuccess) {
+                icon.classList.add('success');
+                icon.innerHTML = '✓';
+                title.textContent = 'Nạp tiền thành công!';
+                message.textContent = 'Giao dịch của bạn đã được xử lý thành công. Số dư ví đã được cập nhật.';
+                document.getElementById('status').textContent = 'Thành công';
+            } else {
+                icon.classList.add('failed');
+                icon.innerHTML = '✕';
+                title.textContent = 'Giao dịch thất bại';
+                message.textContent = params.message || 'Giao dịch không thành công. Vui lòng thử lại sau.';
+                document.getElementById('status').textContent = 'Thất bại';
+            }
+
+            // Fill details
+            document.getElementById('orderId').textContent = params.orderId || 'N/A';
+            document.getElementById('amount').textContent = params.amount 
+                ? `${parseInt(params.amount).toLocaleString('vi-VN')} VND`
+                : 'N/A';
+            document.getElementById('time').textContent = new Date().toLocaleString('vi-VN');
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = getUrlParams();
+            
+            console.log('MoMo Callback Params:', params);
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                displayResult(params);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

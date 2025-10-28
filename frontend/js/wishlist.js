@@ -54,17 +54,40 @@ async function loadUserWishlist() {
     try {
         const userId = localStorage.getItem('userId');
         
-        // Get wishlist from localStorage first
-        const wishlistIds = JSON.parse(localStorage.getItem('wishlist')) || [];
+        console.log('🔍 Loading wishlist from backend for userId:', userId);
         
-        // Simulate API call to get full tour details
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Fetch wishlist from backend API
+        const response = await fetch(`http://localhost:3000/api/profile/${userId}/wishlist`);
+        const data = await response.json();
         
-        // Mock data - replace with actual API response
-        const wishlistData = await generateMockWishlistData(wishlistIds);
+        console.log('📥 Wishlist API response:', data);
         
-        allWishlistItems = wishlistData;
+        if (!data.success) {
+            throw new Error(data.message || 'Failed to load wishlist');
+        }
+        
+        // Convert backend data to frontend format
+        allWishlistItems = data.wishlist.map(tour => ({
+            id: tour._id,
+            name: tour.name,
+            image: tour.img || tour.image || 'https://via.placeholder.com/400x300',
+            country: tour.country,
+            city: tour.city || tour.location || 'N/A',
+            price: tour.price || 0,
+            originalPrice: tour.originalPrice || tour.price,
+            rating: tour.rating || 4.5,
+            reviewCount: tour.reviewCount || 0,
+            duration: tour.duration || 'N/A',
+            description: tour.description || '',
+            available: tour.available !== false,
+            tags: tour.tags || []
+        }));
+        
         filteredWishlistItems = [...allWishlistItems];
+        
+        // Update localStorage with tour IDs
+        const tourIds = allWishlistItems.map(item => item.id);
+        localStorage.setItem('wishlist', JSON.stringify(tourIds));
         
         // Update statistics
         updateWishlistStats();
@@ -638,23 +661,46 @@ function showShareModal(tours) {
 }
 
 // Wishlist actions
-function removeFromWishlist(tourId) {
+async function removeFromWishlist(tourId) {
     if (!confirm('Bạn có chắc chắn muốn xóa tour này khỏi danh sách yêu thích?')) return;
     
-    // Remove from arrays
-    allWishlistItems = allWishlistItems.filter(item => item.id !== tourId);
-    filteredWishlistItems = filteredWishlistItems.filter(item => item.id !== tourId);
-    
-    // Update localStorage
-    const currentWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-    const updatedWishlist = currentWishlist.filter(id => id !== tourId);
-    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
-    
-    // Update display
-    updateWishlistStats();
-    displayWishlist(filteredWishlistItems);
-    
-    showNotification('Đã xóa tour khỏi danh sách yêu thích', 'success');
+    try {
+        const userId = localStorage.getItem('userId');
+        
+        console.log('🗑️ Removing tour from wishlist:', tourId);
+        
+        // Call backend API to remove
+        const response = await fetch(`http://localhost:3000/api/profile/${userId}/wishlist/${tourId}`, {
+            method: 'DELETE'
+        });
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.message || 'Failed to remove from wishlist');
+        }
+        
+        // Remove from arrays
+        allWishlistItems = allWishlistItems.filter(item => item.id !== tourId);
+        filteredWishlistItems = filteredWishlistItems.filter(item => item.id !== tourId);
+        
+        // Update localStorage
+        const currentWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const updatedWishlist = currentWishlist.filter(id => id !== tourId);
+        localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+        
+        // Update display
+        updateWishlistStats();
+        displayWishlist(filteredWishlistItems);
+        
+        showNotification('Đã xóa tour khỏi danh sách yêu thích', 'success');
+        
+        console.log('✅ Removed from wishlist successfully');
+        
+    } catch (error) {
+        console.error('Error removing from wishlist:', error);
+        showNotification('Không thể xóa tour. Vui lòng thử lại.', 'error');
+    }
 }
 
 function viewTourDetails(tourId) {

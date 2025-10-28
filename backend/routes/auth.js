@@ -194,4 +194,47 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// =============================================
+// DEBUG: Get or Create Demo User
+// =============================================
+router.get('/demo-user', async (req, res) => {
+  try {
+    console.log('🔍 Looking for demo user...');
+    
+    // Try to find existing demo user
+    let user = await User.findOne({ username: 'demo' });
+    
+    if (!user) {
+      console.log('📝 Creating new demo user...');
+      // Create demo user
+      user = new User({
+        username: 'demo',
+        email: 'demo@example.com',
+        password: 'demo123',
+        fullName: 'Demo User',
+        phone: '0123456789'
+      });
+      await user.save();
+      console.log('✅ Demo user created:', user._id);
+    }
+    
+    res.json({
+      success: true,
+      message: 'Demo user found/created',
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        fullName: user.fullName
+      }
+    });
+  } catch (error) {
+    console.error('Error with demo user:', error);
+    res.status(500).json({ 
+      error: 'Error getting demo user',
+      details: error.message 
+    });
+  }
+});
+
 module.exports = router;

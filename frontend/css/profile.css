@@ -383,6 +383,10 @@ body::before {
   color: #333;
   font-weight: 600;
   font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .activity-content p {
@@ -390,6 +394,37 @@ body::before {
   color: #666;
   font-size: 0.95rem;
   line-height: 1.4;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-confirmed {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
+}
+
+.status-pending {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  color: white;
+}
+
+.status-completed {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.status-cancelled {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
 }
 
 .activity-time {
@@ -1022,9 +1057,34 @@ body::before {
 }
 
 .transaction-details p {
-  margin: 0;
+  margin: 0 0 0.25rem 0;
   font-size: 0.85rem;
   color: #666;
+}
+
+.transaction-status {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.transaction-status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.transaction-status.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.transaction-status.failed {
+  background: #f8d7da;
+  color: #721c24;
 }
 
 .transaction-amount {

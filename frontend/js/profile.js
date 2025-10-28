@@ -32,9 +32,64 @@ function checkUserAuth() {
     return true;
 }
 
-function loadUserProfile() {
+async function loadUserProfile() {
     try {
-        // Get user data from localStorage
+        const userId = localStorage.getItem('userId');
+        
+        if (!userId) {
+            throw new Error('User ID not found');
+        }
+        
+        console.log('🔍 Loading profile for userId:', userId);
+        
+        // Fetch user data from backend
+        const response = await fetch(`http://localhost:3000/api/profile/${userId}`);
+        const data = await response.json();
+        
+        console.log('📥 API Response:', data);
+        
+        if (!data.success) {
+            throw new Error(data.message || 'Failed to load profile');
+        }
+        
+        const user = data.user;
+        
+        // Save to localStorage for offline access
+        localStorage.setItem('username', user.username);
+        localStorage.setItem('userEmail', user.email);
+        localStorage.setItem('userFullName', user.fullName);
+        localStorage.setItem('userPhone', user.phone || '');
+        localStorage.setItem('userAddress', user.address || '');
+        localStorage.setItem('userBirthday', user.dateOfBirth || '');
+        localStorage.setItem('userGender', user.gender || 'male');
+        
+        const userData = {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            fullName: user.fullName,
+            phone: user.phone || '',
+            address: user.address || '',
+            birthday: user.dateOfBirth ? new Date(user.dateOfBirth).toISOString().split('T')[0] : '',
+            gender: user.gender || 'male',
+            memberSince: new Date(user.createdAt).getFullYear(),
+            avatar: user.avatar || '' // Add avatar from database
+        };
+        
+        // Populate profile data only if elements exist
+        populateProfileData(userData);
+        
+        // Load user statistics from backend
+        loadUserStats();
+        
+        // Load recent activity
+        loadRecentActivity();
+        
+    } catch (error) {
+        console.error('Error loading profile:', error);
+        showNotification('Unable to load user information. Using cached data.', 'warning');
+        
+        // Fallback to localStorage if API fails
         const userData = {
             id: localStorage.getItem('userId'),
             username: localStorage.getItem('username'),
@@ -44,21 +99,11 @@ function loadUserProfile() {
             address: localStorage.getItem('userAddress') || '',
             birthday: localStorage.getItem('userBirthday') || '',
             gender: localStorage.getItem('userGender') || 'male',
-            memberSince: localStorage.getItem('userMemberSince') || '2024'
+            memberSince: localStorage.getItem('userMemberSince') || '2024',
+            avatar: localStorage.getItem('userAvatar') || '' // Add avatar fallback
         };
-        
-        // Populate profile data only if elements exist
         populateProfileData(userData);
-        
-        // Load user statistics
         loadUserStats();
-        
-        // Load recent activity
-        loadRecentActivity();
-        
-    } catch (error) {
-        console.error('Error loading profile:', error);
-        showNotification('Unable to load user information', 'error');
     }
 }
 
@@ -72,16 +117,28 @@ function populateProfileData(userData) {
     if (userEmail) userEmail.textContent = userData.email;
     if (memberSince) memberSince.textContent = `Member since ${userData.memberSince}`;
     
-    // Update avatar with initials if no image
+    // Update avatar - prioritize avatar from userData (database), then localStorage
     const avatar = document.getElementById('userAvatar');
     if (avatar) {
-        const initials = userData.fullName.split(' ').map(n => n[0]).join('').toUpperCase();
-        avatar.style.background = `linear-gradient(135deg, #ff6600, #ff8533)`;
-        avatar.style.color = 'white';
-        avatar.style.display = 'flex';
-        avatar.style.alignItems = 'center';
-        avatar.style.justifyContent = 'center';
-        avatar.innerHTML = `<span style="font-size: 2rem; font-weight: bold;">${initials}</span>`;
+        if (userData.avatar) {
+            // Has avatar from database
+            avatar.style.backgroundImage = `url(${userData.avatar})`;
+            avatar.style.backgroundSize = 'cover';
+            avatar.style.backgroundPosition = 'center';
+            avatar.innerHTML = '';
+            // Update localStorage
+            localStorage.setItem('userAvatar', userData.avatar);
+        } else {
+            // No avatar - show initials
+            const initials = userData.fullName.split(' ').map(n => n[0]).join('').toUpperCase();
+            avatar.style.background = `linear-gradient(135deg, #ff6600, #ff8533)`;
+            avatar.style.color = 'white';
+            avatar.style.display = 'flex';
+            avatar.style.alignItems = 'center';
+            avatar.style.justifyContent = 'center';
+            avatar.style.backgroundImage = 'none';
+            avatar.innerHTML = `<span style="font-size: 2rem; font-weight: bold;">${initials}</span>`;
+        }
     }
     
     // Populate form fields only if they exist
@@ -96,8 +153,10 @@ function populateProfileData(userData) {
     
     Object.entries(formFields).forEach(([fieldId, value]) => {
         const field = document.getElementById(fieldId);
-        if (field && value) {
-            field.value = value;
+        if (field) {
+            // Always set value, even if empty
+            field.value = value || '';
+            console.log(`✅ Set ${fieldId} = "${value}"`);
         }
     });
 }
@@ -106,7 +165,29 @@ async function loadUserStats() {
     try {
         const userId = localStorage.getItem('userId');
         
-        // Mock data - replace with actual API calls
+        // Fetch stats from backend
+        const response = await fetch(`http://localhost:3000/api/profile/${userId}/stats`);
+        const data = await response.json();
+        
+        if (data.success) {
+            const stats = data.stats;
+            
+            // Update stats display only if elements exist
+            const toursBookedEl = document.getElementById('toursBooked');
+            const wishlistItemsEl = document.getElementById('wishlistItems');
+            const reviewsWrittenEl = document.getElementById('reviewsWritten');
+            
+            if (toursBookedEl) toursBookedEl.textContent = stats.totalBookings || 0;
+            if (wishlistItemsEl) wishlistItemsEl.textContent = stats.wishlistCount || 0;
+            if (reviewsWrittenEl) reviewsWrittenEl.textContent = stats.completedBookings || 0;
+        } else {
+            throw new Error(data.message);
+        }
+        
+    } catch (error) {
+        console.error('Error loading stats:', error);
+        
+        // Fallback to mock data
         const stats = {
             toursBooked: Math.floor(Math.random() * 10) + 1,
             wishlistItems: JSON.parse(localStorage.getItem('wishlist') || '[]').length,
@@ -121,56 +202,118 @@ async function loadUserStats() {
         if (toursBookedEl) toursBookedEl.textContent = stats.toursBooked;
         if (wishlistItemsEl) wishlistItemsEl.textContent = stats.wishlistItems;
         if (reviewsWrittenEl) reviewsWrittenEl.textContent = stats.reviewsWritten;
-        
-    } catch (error) {
-        console.error('Error loading stats:', error);
     }
 }
 
-function loadRecentActivity() {
+async function loadRecentActivity() {
     const activityContainer = document.getElementById('activityList');
     if (!activityContainer) return; // Exit if element doesn't exist
     
-    // Mock recent activity data
-    const activities = [
-        {
-            icon: 'fas fa-plane',
-            title: 'Đặt tour "Tokyo Adventure"',
-            description: 'Đã đặt thành công tour du lịch Nhật Bản',
-            time: '2 giờ trước'
-        },
-        {
-            icon: 'fas fa-heart',
-            title: 'Thêm vào wishlist',
-            description: 'Đã thêm "Paris Romance" vào danh sách yêu thích',
-            time: '1 ngày trước'
-        },
-        {
-            icon: 'fas fa-star',
-            title: 'Đánh giá tour',
-            description: 'Đã đánh giá 5 sao cho tour "Venice Explorer"',
-            time: '3 ngày trước'
-        },
-        {
-            icon: 'fas fa-user-edit',
-            title: 'Cập nhật thông tin',
-            description: 'Đã cập nhật thông tin cá nhân',
-            time: '1 tuần trước'
+    try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+        
+        // Show loading state
+        activityContainer.innerHTML = `
+            <li class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas fa-spinner fa-spin"></i>
+                </div>
+                <div class="activity-content">
+                    <p>Đang tải hoạt động...</p>
+                </div>
+            </li>
+        `;
+        
+        // Fetch activities from backend
+        const response = await fetch(`http://localhost:3000/api/profile/${userId}/recent-activity?limit=10`);
+        const data = await response.json();
+        
+        if (!data.success || !data.activities || data.activities.length === 0) {
+            activityContainer.innerHTML = `
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>Chưa có hoạt động nào</p>
+                    </div>
+                </li>
+            `;
+            return;
         }
-    ];
-    
-    activityContainer.innerHTML = activities.map(activity => `
-        <li class="activity-item">
-            <div class="activity-icon">
-                <i class="${activity.icon}"></i>
-            </div>
-            <div class="activity-content">
-                <h5>${activity.title}</h5>
-                <p>${activity.description}</p>
-            </div>
-            <div class="activity-time">${activity.time}</div>
-        </li>
-    `).join('');
+        
+        // Render activities
+        activityContainer.innerHTML = data.activities.map(activity => {
+            const iconClass = getActivityIconClass(activity.type, activity.icon);
+            const statusBadge = activity.status ? 
+                `<span class="status-badge status-${activity.status}">${getStatusText(activity.status)}</span>` : '';
+            
+            return `
+                <li class="activity-item">
+                    <div class="activity-icon" style="background: ${getActivityColor(activity.type)}">
+                        <i class="${iconClass}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h5>${activity.title} ${statusBadge}</h5>
+                        <p>${activity.description}</p>
+                    </div>
+                    <div class="activity-time">${activity.time}</div>
+                </li>
+            `;
+        }).join('');
+        
+    } catch (error) {
+        console.error('Error loading recent activity:', error);
+        
+        // Show error state
+        if (activityContainer) {
+            activityContainer.innerHTML = `
+                <li class="activity-item">
+                    <div class="activity-icon" style="background: #e74c3c">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>Không thể tải hoạt động. Vui lòng thử lại.</p>
+                    </div>
+                </li>
+            `;
+        }
+    }
+}
+
+function getActivityIconClass(type, defaultIcon) {
+    const iconMap = {
+        'booking': 'fas fa-plane',
+        'wishlist': 'fas fa-heart',
+        'search': 'fas fa-search',
+        'view': 'fas fa-eye',
+        'profile_update': 'fas fa-user-edit',
+        'review': 'fas fa-star'
+    };
+    return iconMap[type] || `fas ${defaultIcon}` || 'fas fa-circle';
+}
+
+function getActivityColor(type) {
+    const colorMap = {
+        'booking': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        'wishlist': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        'search': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        'view': 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+        'profile_update': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+        'review': 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+    };
+    return colorMap[type] || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+}
+
+function getStatusText(status) {
+    const statusMap = {
+        'confirmed': 'Đã xác nhận',
+        'pending': 'Chờ xử lý',
+        'completed': 'Hoàn thành',
+        'cancelled': 'Đã hủy'
+    };
+    return statusMap[status] || status;
 }
 
 function setupEventListeners() {
@@ -211,6 +354,8 @@ async function handleProfileUpdate(e) {
     const profileData = Object.fromEntries(formData);
     
     try {
+        const userId = localStorage.getItem('userId');
+        
         // Show loading state
         const submitBtn = e.target.querySelector('button[type="submit"]');
         if (!submitBtn) return;
@@ -218,18 +363,38 @@ async function handleProfileUpdate(e) {
         const originalText = submitBtn.innerHTML;
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Update localStorage
-        Object.entries(profileData).forEach(([key, value]) => {
-            if (key === 'fullName') {
-                localStorage.setItem('userFullName', value);
-            } else {
-                localStorage.setItem(`user${key.charAt(0).toUpperCase() + key.slice(1)}`, value);
-            }
+        // Call API to update profile
+        const response = await fetch(`http://localhost:3000/api/profile/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fullName: profileData.fullName,
+                email: profileData.email,
+                phone: profileData.phone,
+                address: profileData.address,
+                gender: profileData.gender,
+                dateOfBirth: profileData.birthday
+            })
         });
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.message || 'Failed to update profile');
+        }
+        
+        // Update localStorage with new data
+        const user = data.user;
+        localStorage.setItem('userFullName', user.fullName);
+        localStorage.setItem('userEmail', user.email);
+        localStorage.setItem('userPhone', user.phone || '');
+        localStorage.setItem('userAddress', user.address || '');
+        localStorage.setItem('userBirthday', user.dateOfBirth || '');
+        localStorage.setItem('userGender', user.gender || 'male');
         
         // Reset button state
         submitBtn.classList.remove('loading');
@@ -251,12 +416,15 @@ async function handleProfileUpdate(e) {
         
     } catch (error) {
         console.error('Error updating profile:', error);
-        showNotification('An error occurred while updating information', 'error');
+        showNotification(error.message || 'An error occurred while updating information', 'error');
         
         // Reset button state
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        }
     }
 }
 
@@ -309,39 +477,85 @@ async function handlePasswordChange(e) {
     
     // Validate passwords
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-        showNotification('Confirmation password does not match', 'error');
+        showNotification('Mật khẩu xác nhận không khớp', 'error');
         return;
     }
     
     if (passwordData.newPassword.length < 6) {
-        showNotification('New password must be at least 6 characters', 'error');
+        showNotification('Mật khẩu mới phải có ít nhất 6 ký tự', 'error');
         return;
     }
     
     try {
+        const userId = localStorage.getItem('userId');
+        
         // Show loading state
         const submitBtn = e.target.querySelector('button[type="submit"]');
         if (!submitBtn) return;
         
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Changing...';
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
         submitBtn.disabled = true;
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Call API to change password
+        const response = await fetch(`http://localhost:3000/api/profile/${userId}/password`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                currentPassword: passwordData.currentPassword,
+                newPassword: passwordData.newPassword
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            // Reset button state
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            // Highlight the problematic field
+            if (data.message.includes('Mật khẩu hiện tại không đúng') || 
+                data.message.includes('Current password is incorrect')) {
+                const currentPasswordField = document.getElementById('currentPassword');
+                if (currentPasswordField) {
+                    currentPasswordField.style.borderColor = '#e74c3c';
+                    currentPasswordField.focus();
+                    setTimeout(() => {
+                        currentPasswordField.style.borderColor = '';
+                    }, 3000);
+                }
+            }
+            
+            throw new Error(data.message || 'Failed to change password');
+        }
         
         // Reset button state
-        submitBtn.textContent = originalText;
+        submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
         
         // Clear form
         e.target.reset();
         
-        showNotification('Password changed successfully!', 'success');
+        // Clear any field highlighting
+        e.target.querySelectorAll('input').forEach(input => {
+            input.style.borderColor = '';
+        });
+        
+        showNotification('Mật khẩu đã được thay đổi thành công!', 'success');
         
     } catch (error) {
         console.error('Error changing password:', error);
-        showNotification('An error occurred while changing password', 'error');
+        showNotification(error.message || 'Đã xảy ra lỗi khi đổi mật khẩu', 'error');
+        
+        // Reset button state
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.innerHTML = '<i class="fas fa-key"></i> Đổi mật khẩu';
+            submitBtn.disabled = false;
+        }
     }
 }
 
@@ -354,18 +568,62 @@ function handleAvatarChange(e) {
         return;
     }
     
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+        showNotification('Please select an image file', 'error');
+        return;
+    }
+    
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
+        const avatarBase64 = e.target.result;
         const avatar = document.getElementById('userAvatar');
+        
         if (avatar) {
-            avatar.style.backgroundImage = `url(${e.target.result})`;
+            // Show preview immediately
+            avatar.style.backgroundImage = `url(${avatarBase64})`;
             avatar.style.backgroundSize = 'cover';
             avatar.style.backgroundPosition = 'center';
             avatar.innerHTML = '';
             
-            // Store in localStorage (in real app, upload to server)
-            localStorage.setItem('userAvatar', e.target.result);
-            showNotification('Profile picture has been updated!', 'success');
+            // Show uploading status
+            showNotification('Uploading avatar...', 'info');
+            
+            try {
+                const userId = localStorage.getItem('userId');
+                
+                // Upload to server
+                const response = await fetch(`http://localhost:3000/api/profile/${userId}/avatar`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        avatar: avatarBase64
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to upload avatar');
+                }
+                
+                // Save to localStorage for offline access
+                localStorage.setItem('userAvatar', avatarBase64);
+                
+                showNotification('Avatar updated successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Error uploading avatar:', error);
+                showNotification('Failed to upload avatar: ' + error.message, 'error');
+                
+                // Revert to old avatar on error
+                const oldAvatar = localStorage.getItem('userAvatar');
+                if (oldAvatar) {
+                    avatar.style.backgroundImage = `url(${oldAvatar})`;
+                }
+            }
         }
     };
     reader.readAsDataURL(file);
@@ -482,11 +740,30 @@ function initializeWallet() {
     loadTransactionHistory();
 }
 
-function loadWalletBalance() {
-    const balance = localStorage.getItem('walletBalance') || '0';
-    const balanceElement = document.getElementById('walletBalance');
-    if (balanceElement) {
-        balanceElement.textContent = formatCurrency(balance);
+async function loadWalletBalance() {
+    try {
+        const userId = localStorage.getItem('userId');
+        const response = await fetch(`http://localhost:3000/api/wallet/${userId}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            const balance = data.wallet.balance || 0;
+            const balanceElement = document.getElementById('walletBalance');
+            if (balanceElement) {
+                // Display in VND (1 USD = 1 VND for demo)
+                balanceElement.textContent = formatCurrency(balance);
+            }
+            // Cache in localStorage
+            localStorage.setItem('walletBalance', balance.toString());
+        }
+    } catch (error) {
+        console.error('Error loading wallet balance:', error);
+        // Fallback to localStorage
+        const balance = localStorage.getItem('walletBalance') || '0';
+        const balanceElement = document.getElementById('walletBalance');
+        if (balanceElement) {
+            balanceElement.textContent = formatCurrency(balance);
+        }
     }
 }
 
@@ -502,6 +779,9 @@ function setupWalletEventListeners() {
     const cancelTopUp = document.getElementById('cancelTopUp');
     const topUpForm = document.getElementById('topUpForm');
     const transactionHistoryBtn = document.getElementById('transactionHistoryBtn');
+    
+    // Auto-select bank transfer (only payment method)
+    selectedPaymentMethod = 'bank';
     
     if (topUpBtn) {
         topUpBtn.addEventListener('click', () => {
@@ -596,68 +876,21 @@ async function handleTopUp(e) {
     e.preventDefault();
     
     if (!selectedAmount || selectedAmount < 10000) {
-        showNotification('Minimum top-up amount is 10,000 VND', 'error');
+        showNotification('Số tiền tối thiểu là 10,000 VND', 'error');
         return;
     }
     
     if (selectedAmount > 50000000) {
-        showNotification('Maximum top-up amount is 50,000,000 VND', 'error');
+        showNotification('Số tiền tối đa là 50,000,000 VND', 'error');
         return;
     }
     
-    if (!selectedPaymentMethod) {
-        showNotification('Please select a payment method', 'error');
-        return;
-    }
-    
-    try {
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.classList.add('loading');
-        submitBtn.disabled = true;
-        
-        // Simulate payment processing
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        
-        // Update wallet balance
-        const currentBalance = parseInt(localStorage.getItem('walletBalance') || '0');
-        const newBalance = currentBalance + selectedAmount;
-        localStorage.setItem('walletBalance', newBalance.toString());
-        
-        // Add transaction record
-        addTransaction({
-            id: Date.now().toString(),
-            type: 'income',
-            amount: selectedAmount,
-            description: `Nạp tiền qua ${getPaymentMethodName(selectedPaymentMethod)}`,
-            date: new Date().toISOString(),
-            status: 'completed'
-        });
-        
-        // Reset button state
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
-        
-        // Update UI
-        loadWalletBalance();
-        loadTransactionHistory();
-        
-        showNotification(`Top-up successful ${formatCurrency(selectedAmount)} VND!`, 'success');
-        
-        // Close modal
-        setTimeout(() => {
-            closeTopUpModal();
-        }, 1500);
-        
-    } catch (error) {
-        console.error('Error processing top-up:', error);
-        showNotification('An error occurred while processing top-up. Please try again!', 'error');
-        
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-    }
+    // Only bank transfer supported - auto redirect
+    showNotification('Đang chuyển đến trang chuyển khoản...', 'success');
+    setTimeout(() => {
+        closeTopUpModal();
+        window.location.href = `bank-transfer.html?amount=${selectedAmount}`;
+    }, 800);
 }
 
 function getPaymentMethodName(method) {
@@ -682,36 +915,65 @@ function addTransaction(transaction) {
     localStorage.setItem('transactions', JSON.stringify(transactions));
 }
 
-function loadTransactionHistory() {
-    const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+async function loadTransactionHistory() {
     const transactionList = document.getElementById('transactionList');
     
     if (!transactionList) return;
     
-    if (transactions.length === 0) {
+    try {
+        const userId = localStorage.getItem('userId');
+        const response = await fetch(`http://localhost:3000/api/wallet/${userId}/transactions?limit=10`);
+        const data = await response.json();
+        
+        if (!data.success || !data.transactions || data.transactions.length === 0) {
+            transactionList.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: #666;">
+                    <i class="fas fa-receipt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                    <p>Chưa có giao dịch nào</p>
+                </div>
+            `;
+            return;
+        }
+        
+        transactionList.innerHTML = data.transactions.map(transaction => {
+            const isIncome = transaction.type === 'topup' || transaction.type === 'refund' || transaction.type === 'bonus';
+            const amount = Math.abs(transaction.amount);
+            
+            return `
+                <div class="transaction-item">
+                    <div class="transaction-icon ${isIncome ? 'income' : 'expense'}">
+                        <i class="fas ${isIncome ? 'fa-plus' : 'fa-minus'}"></i>
+                    </div>
+                    <div class="transaction-details">
+                        <h6>${transaction.description}</h6>
+                        <p>${formatDate(transaction.timestamp)}</p>
+                        <span class="transaction-status ${transaction.status}">${getStatusText(transaction.status)}</span>
+                    </div>
+                    <div class="transaction-amount ${isIncome ? 'income' : 'expense'}">
+                        ${isIncome ? '+' : '-'}${formatCurrency(amount)} VNĐ
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+    } catch (error) {
+        console.error('Error loading transactions:', error);
         transactionList.innerHTML = `
-            <div style="text-align: center; padding: 2rem; color: #666;">
-                <i class="fas fa-receipt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
-                <p>Chưa có giao dịch nào</p>
+            <div style="text-align: center; padding: 2rem; color: #999;">
+                <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                <p>Không thể tải lịch sử giao dịch</p>
             </div>
         `;
-        return;
     }
-    
-    transactionList.innerHTML = transactions.slice(0, 10).map(transaction => `
-        <div class="transaction-item">
-            <div class="transaction-icon ${transaction.type}">
-                <i class="fas ${transaction.type === 'income' ? 'fa-plus' : 'fa-minus'}"></i>
-            </div>
-            <div class="transaction-details">
-                <h6>${transaction.description}</h6>
-                <p>${formatDate(transaction.date)}</p>
-            </div>
-            <div class="transaction-amount ${transaction.type}">
-                ${transaction.type === 'income' ? '+' : '-'}${formatCurrency(transaction.amount)} VNĐ
-            </div>
-        </div>
-    `).join('');
+}
+
+function getStatusText(status) {
+    const statusMap = {
+        'pending': 'Đang xử lý',
+        'completed': 'Thành công',
+        'failed': 'Thất bại'
+    };
+    return statusMap[status] || status;
 }
 
 function formatDate(dateString) {
