@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User');
 const momoService = require('../services/momoService');
 const mbbankService = require('../services/mbbankService');
-const payosService = require('../services/payosService');
 
 /**
  * CMP WALLET ROUTES WITH MOMO PAYMENT INTEGRATION
@@ -399,140 +398,7 @@ router.post('/:userId/check-payment', async (req, res) => {
 });
 
 // =============================================
-// CREATE PAYOS PAYMENT LINK (Recommended Method)
-// =============================================
-router.post('/:userId/create-payos-payment', async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { amount } = req.body;
-    
-    if (!amount || amount < 1000) {
-      return res.status(400).json({
-        success: false,
-        error: 'Số tiền phải lớn hơn 1,000 VND'
-      });
-    }
-    
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        error: 'User not found'
-      });
-    }
-    
-    // Generate unique order code
-    const orderCode = `CMP${Date.now()}`;
-    const userIdPrefix = userId.substring(0, 6);
-    const description = `CMPTOPUP ${userIdPrefix} ${orderCode}`;
-    
-    // Create PayOS payment link
-    const result = await payosService.createPaymentLink({
-      orderCode: orderCode,
-      amount: amount,
-      description: description,
-      buyerName: user.name || 'Guest',
-      buyerEmail: user.email || '',
-      buyerPhone: user.phone || '',
-      returnUrl: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment-result.html?success=true`,
-      cancelUrl: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment-result.html?success=false`
-    });
-    
-    if (result.success) {
-      res.json({
-        success: true,
-        checkoutUrl: result.checkoutUrl,
-        qrCode: result.qrCode,
-        orderCode: orderCode,
-        amount: amount
-      });
-    } else {
-      res.status(400).json({
-        success: false,
-        error: result.message
-      });
-    }
-    
-  } catch (error) {
-    console.error('Create PayOS payment error:', error);
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
-});
-
-// =============================================
-// PAYOS WEBHOOK (Auto-verify payment)
-// =============================================
-router.post('/payos-webhook', async (req, res) => {
-  try {
-    const signature = req.headers['x-payos-signature'];
-    const webhookData = req.body;
-    
-    // Verify webhook signature
-    if (!payosService.verifyWebhookSignature(webhookData.data, signature)) {
-      console.warn('⚠️ Invalid PayOS webhook signature');
-      return res.status(400).json({ success: false, error: 'Invalid signature' });
-    }
-    
-    const { orderCode, amount, description, status } = webhookData.data;
-    
-    if (status === 'PAID') {
-      // Parse user ID from description: "CMPTOPUP {userId} {orderCode}"
-      const match = description.match(/CMPTOPUP\s+([a-f0-9]+)\s+/);
-      if (!match) {
-        console.error('❌ Cannot parse userId from description:', description);
-        return res.json({ success: true }); // Still acknowledge webhook
-      }
-      
-      const userIdPrefix = match[1];
-      
-      // Find user by ID prefix
-      const user = await User.findOne({ _id: { $regex: `^${userIdPrefix}` } });
-      
-      if (user) {
-        // Initialize wallet if needed
-        if (!user.wallet) {
-          user.wallet = { balance: 0, currency: 'VND', transactions: [] };
-        }
-        
-        // Check if already processed
-        const existingTx = user.wallet.transactions.find(
-          t => t.orderId === orderCode && t.status === 'completed'
-        );
-        
-        if (!existingTx) {
-          // Add amount
-          user.wallet.balance += amount;
-          
-          // Record transaction
-          user.wallet.transactions.push({
-            type: 'topup',
-            amount: amount,
-            description: `Nạp tiền qua PayOS (${orderCode})`,
-            orderId: orderCode,
-            status: 'completed',
-            timestamp: new Date()
-          });
-          
-          await user.save();
-          
-          console.log(`✅ PayOS webhook: Auto-updated ${amount} VND for user ${user._id}`);
-        }
-      }
-    }
-    
-    res.json({ success: true });
-    
-  } catch (error) {
-    console.error('PayOS webhook error:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
-
-// =============================================
-// CHECK BANK TRANSFER STATUS (Fallback method)
+// CHECK BANK TRANSFER STATUS (Auto-verify with MB Bank API)
 // =============================================
 router.post('/:userId/check-transfer', async (req, res) => {
   try {

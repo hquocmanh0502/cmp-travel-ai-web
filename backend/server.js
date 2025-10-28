@@ -21,9 +21,12 @@ const chatbotService = require('./services/chatbotService');
 const bookingsRoutes = require('./routes/bookings');
 const authRoutes = require('./routes/auth');
 const commentsRoutes = require('./routes/comments');
+<<<<<<< HEAD
 const profileRoutes = require('./routes/profile');
 const walletRoutes = require('./routes/wallet');
+=======
 const adminRoutes = require('./routes/admin');
+>>>>>>> fabd539b15c35e7e3aec0ca85c7c045c7652f47e
 
 const app = express();
 
@@ -42,9 +45,12 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/api/bookings', bookingsRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentsRoutes);
+<<<<<<< HEAD
 app.use('/api/profile', profileRoutes);
 app.use('/api/wallet', walletRoutes);
+=======
 app.use('/api/admin', adminRoutes);
+>>>>>>> fabd539b15c35e7e3aec0ca85c7c045c7652f47e
 
 // API Routes
 
