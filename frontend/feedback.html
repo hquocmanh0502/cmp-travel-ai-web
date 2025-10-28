@@ -400,46 +400,104 @@
         <img src="./images/feedback/Travel_Concepts_2 1.png" alt="" id="travel">
         
         <!-- Form feedback -->
-        <div class="container mt-5">
-          <h2 class="mb-4 title2">Tell us about your experience</h2>
-          <form>
-              <div class="form-group">
-                  <label for="name">Name *</label>
-                  <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
-              </div>
-              <div class="form-group">
-                  <label for="email">Email address *</label>
-                  <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-              </div>
-              <div class="form-group">
-                  <label for="travelDate">Date of Travel</label>
-                  <input type="date" class="form-control" id="travelDate">
-              </div>
-              <div class="form-group">
-                  <label for="rating">Rating*</label>
-                  <select class="form-control" id="rating" required>
-                      <option value="">-- Choose --</option>
-                      <option value="1">★ - Very Poor</option>
-                      <option value="2">★★ - Poor</option>
-                      <option value="3">★★★ - Average</option>
-                      <option value="4">★★★★ - Good</option>
-                      <option value="5">★★★★★ - Excellent</option>
-                  </select>
-              </div>
-              <div class="form-group">
-                  <label for="feedback">Feedback</label>
-                  <textarea class="form-control" id="feedback" rows="4" placeholder="Write your feedback here"></textarea>
+        <div class="feedback-form-container">
+          <div class="form-header">
+            <h2 class="form-title">Rate Our Website</h2>
+            <p class="form-subtitle">Your feedback helps us improve your experience on CMP Travel</p>
+          </div>
+          
+          <form id="feedbackForm" class="modern-feedback-form">
+              <!-- Name and Email Row -->
+              <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+                    <span class="error-message" id="name-error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="your.email@example.com" required>
+                    <span class="error-message" id="email-error"></span>
+                </div>
               </div>
 
-              <div class="alert alert-success d-none" role="alert">
-                Your information was sent successfully!
-              </div>
-              <div class="alert alert-danger d-none" role="alert">
-                Please enter complete information in the required fields
+              <!-- Phone Row -->
+              <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" placeholder="+84 xxx xxx xxx">
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+                <div class="form-group">
+                    <!-- Empty for spacing -->
+                </div>
               </div>
 
-              <div class="col text-center">
-                <button type="submit" class="btn text-center">Submit</button>      
+              <!-- Interactive Star Rating -->
+              <div class="form-group">
+                  <label>Rate Our Website <span class="required">*</span></label>
+                  <div class="star-rating-container">
+                    <div class="star-rating" id="starRating">
+                      <i class="fas fa-star star" data-rating="1"></i>
+                      <i class="fas fa-star star" data-rating="2"></i>
+                      <i class="fas fa-star star" data-rating="3"></i>
+                      <i class="fas fa-star star" data-rating="4"></i>
+                      <i class="fas fa-star star" data-rating="5"></i>
+                    </div>
+                    <span class="rating-label" id="ratingLabel">Click to rate our website</span>
+                  </div>
+                  <input type="hidden" id="rating" required>
+                  <span class="error-message" id="rating-error"></span>
+              </div>
+
+              <!-- Category Selection -->
+              <div class="form-group">
+                  <label for="category">What aspect of our website?</label>
+                  <div class="custom-select-wrapper">
+                    <input type="text" class="form-control" id="categoryDisplay" placeholder="-- Select Category --" readonly>
+                    <input type="hidden" id="category" name="category">
+                    <div class="custom-select-dropdown" id="categoryDropdown">
+                      <div class="custom-option" data-value="">-- Select Category --</div>
+                      <div class="custom-option" data-value="design">Website Design</div>
+                      <div class="custom-option" data-value="navigation">Navigation & Usability</div>
+                      <div class="custom-option" data-value="search">Search & Filter Features</div>
+                      <div class="custom-option" data-value="booking">Booking Process</div>
+                      <div class="custom-option" data-value="speed">Loading Speed</div>
+                      <div class="custom-option" data-value="mobile">Mobile Experience</div>
+                      <div class="custom-option" data-value="content">Content & Information</div>
+                      <div class="custom-option" data-value="ai-chatbot">AI Chatbot</div>
+                      <div class="custom-option" data-value="other">Other</div>
+                    </div>
+                  </div>
+                  <span class="error-message" id="category-error"></span>
+              </div>
+
+              <!-- Feedback Textarea with Counter -->
+              <div class="form-group">
+                  <label for="feedback">Your Feedback <span class="required">*</span></label>
+                  <textarea class="form-control" id="feedback" rows="5" placeholder="Share your thoughts about our website... What do you like? What features would you like to see? Any suggestions for improvement?" required></textarea>
+                  <div class="char-counter">
+                    <span id="charCount">0</span>/<span id="maxChars">500</span> characters
+                  </div>
+                  <span class="error-message" id="feedback-error"></span>
+              </div>
+
+              <!-- Would Recommend -->
+              <div class="form-group">
+                <label class="recommend-label">
+                  <input type="checkbox" id="wouldRecommend" class="recommend-checkbox">
+                  <span class="recommend-text">I would recommend CMP Travel to friends and family</span>
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="form-actions">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                  <span class="btn-text">Submit Feedback</span>
+                  <span class="btn-loading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i> Submitting...
+                  </span>
+                </button>
               </div>
           </form>
       </div>

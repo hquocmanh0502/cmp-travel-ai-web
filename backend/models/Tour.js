@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const tourSchema = new mongoose.Schema({
+  id: { type: String, unique: true, sparse: true }, // ID từ data.json (30, 35, 36, 27...)
   name: { type: String, required: true },
   country: { type: String, required: true },
   description: { type: String, required: true },

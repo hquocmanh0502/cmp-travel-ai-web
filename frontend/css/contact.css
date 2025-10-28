@@ -93,33 +93,195 @@ body{
     margin-left: 38px;
     margin-bottom: 50px;
 }
-input[type="text"] {
-    background: #FFFFFF;
-    width: 350px;
-    height: 80.73px;
-    margin-bottom: 20px;
-    border: none;
+
+/* Enhanced Contact Form Styles */
+.contact-form {
+    padding: 0 25px;
 }
 
-input[type="text"]::placeholder {
-    font-weight: 400;
-    font-size: 18px;
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: #181E4B;
+    margin-bottom: 8px;
+}
+
+.required {
+    color: #DF6951;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #DF6951;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(223, 105, 81, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.char-counter {
+    text-align: right;
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.error-message {
+    display: block;
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 18px;
+}
+
+.submit-btn {
+    width: 100%;
+    max-width: 250px;
+    height: 60px;
+    background: linear-gradient(135deg, #DF6951, #ff8566);
+    box-shadow: 0px 20px 35px rgba(223, 105, 81, 0.25);
+    border-radius: 10px;
+    border: none;
     font-style: normal;
-    line-height: 26px;
-    color: rgba(0, 0, 0, 0.26);
+    font-weight: 600;
+    font-size: 16px;
+    color: #FFFFFF;
+    margin: 20px auto 0;
+    display: block;
+    cursor: pointer;
+    transition: all 0.3s ease;
     position: relative;
 }
+
+.submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #d34d32, #ff7050);
+    transform: translateY(-2px);
+    box-shadow: 0px 25px 40px rgba(223, 105, 81, 0.35);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-loader {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Success/Error States */
+.form-group.success input,
+.form-group.success select,
+.form-group.success textarea {
+    border-color: #28a745;
+}
+
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+    border-color: #dc3545;
+}
+
+/* Animation for form appearance */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+
+/* Legacy input styles for compatibility */
+input[type="text"],
+input[type="email"],
+input[type="tel"] {
+    background: #FFFFFF;
+    width: 100%;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 15px;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="tel"]::placeholder {
+    font-weight: 400;
+    font-size: 15px;
+    font-style: normal;
+    line-height: 26px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
 #message {
     height: 150px;
-    width: 350px;
+    width: 100%;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
 }
+
 #message::placeholder{
     font-weight: 400;
-    font-size: 18px;
+    font-size: 15px;
     font-style: normal;
     line-height: 26px;
-    color: rgba(0, 0, 0, 0.26);
-    position: relative;
+    color: rgba(0, 0, 0, 0.4);
 }
 .duoi h3 {
     font-family: "Volkhov", serif;

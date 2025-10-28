@@ -381,6 +381,13 @@ body {
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.tag:hover {
+  background: rgba(255, 102, 0, 0.2);
+  transform: scale(1.1);
 }
 
 /* Loading States */
