@@ -8,6 +8,8 @@
 body {
     width: 100%;
     height: auto;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa;
 }
 
 .container {
@@ -17,214 +19,329 @@ body {
 
 .main-box {
     width: 100%;
-    height: 1800px;
+    min-height: auto;
     margin: 0 auto;
-    background: #f0faff;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     text-align: center;
     z-index: 1;
+    padding-bottom: 80px;
 }
 
 .titletren {
-    padding-top: 34px;
+    padding-top: 60px;
+    padding-bottom: 20px;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .titletren h3 {
     font-family: "Volkhov", serif;
     font-weight: 700;
     font-style: normal;
-    font-size: 50px;
+    font-size: 56px;
     text-transform: capitalize;
     color: #181E4B;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.icon {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
 }
 
 .icon img {
-    width: 30px;
-    margin-right: 20px;
-
-}
-
-.icon img {
-    transition: transform 0.3s ease-in-out;
-    /* Tạo hiệu ứng chuyển đổi mượt mà */
+    width: 38px;
+    height: 38px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    filter: grayscale(20%);
 }
 
 .icon img:hover {
-    transform: scale(1.2);
+    transform: scale(1.2) rotate(5deg);
+    filter: grayscale(0%) drop-shadow(0 4px 8px rgba(255, 102, 0, 0.3));
 }
 
-
-
-/* button css */
-.learn-more {
-    position: relative;
+.icon a {
     display: inline-block;
-    cursor: pointer;
-    outline: none;
-    border: 0;
-    vertical-align: middle;
-    text-decoration: none;
-    background: transparent;
-    padding: 0;
-    font-size: inherit;
-    font-family: inherit;
-    width: 12rem;
-    height: auto;
 }
 
-
-.learn-more .circle {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    position: relative;
-    display: block;
-    margin: 0;
-    width: 3rem;
-    height: 3rem;
-    background: #282936;
-    border-radius: 1.625rem;
+/* Noidung container */
+.noidung {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 35px;
 }
 
-.learn-more .circle .icon {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    background: #fff;
+/* Box styling - Modern card design */
+.box {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
-.learn-more .circle .icon.arrow {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    left: 0.625rem;
-    width: 1.125rem;
-    height: 0.125rem;
-    background: none;
+.box:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 60px rgba(255, 102, 0, 0.15);
 }
 
-.learn-more .circle .icon.arrow::before {
-    position: absolute;
-    content: "";
-    top: -0.29rem;
-    right: 0.0625rem;
-    width: 0.625rem;
-    height: 0.625rem;
-    border-top: 0.125rem solid #fff;
-    border-right: 0.125rem solid #fff;
-    transform: rotate(45deg);
-}
-
-.button-text {
-    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-    position: absolute;
-    top: -.2rem;
-    left: 2rem;
-    padding: 0.75rem 0;
-    margin: 0 0 0 1.85rem;
-    color: #282936;
-    font-weight: 700;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    text-align: center;
-    text-transform: uppercase;
-}
-.learn-more:hover{
-    background-color: #fff;
-}
-.learn-more:hover .circle {
+.box img {
     width: 100%;
+    height: 240px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.learn-more:hover .circle .icon.arrow {
-    background: #fff;
-    transform: translate(1rem, 0);
+.box:hover img {
+    transform: scale(1.08);
 }
 
-.learn-more:hover .button-text {
-    color: #fff;
+.box a {
+    overflow: hidden;
+    display: block;
 }
 
-/* css box */
-.nd a {
-    font-size: 24px;
-    font-family: "Poppins", sans-serif;
+/* Content area */
+.nd {
+    padding: 25px 25px 30px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.nd > a {
+    font-size: 22px;
+    font-family: "Volkhov", serif;
+    font-weight: 600;
     text-decoration: none;
-    color: #555;
+    color: #181E4B;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.nd > a:hover {
+    color: #ff6600;
 }
 
 .nd h6 {
     font-family: "Poppins", sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    font-style: normal;
-    line-height: 26px;
-    text-align: center;
-    color: #555;
+    font-weight: 400;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nd h6::before {
+    content: "📅";
+    font-size: 14px;
 }
 
 .nd p {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-size: 15px;
-    font-style: normal;
-    line-height: 26px;
-    text-align: center;
-    color: #555;
-}
-
-.box {
-    margin: 0 auto;
-    width: 1000px;
-    height: 280px;
-    background-color: #fff;
-    display: flex;
-    margin-bottom: 40px;
-    box-shadow: 0px 4px 48px 12px rgba(0, 0, 0, 0.09);
-    transform: translateY(50px); /* Di chuyển box xuống 50px */
-    transition: all 0.5s ease; /* Hiệu ứng chuyển tiếp mượt mà */
-}
-
-.box img {
-    height: 100%;
-    width: 400px;
-    margin-right: 30px;
-}
-  
-.box.in-view {
-    opacity: 1; /* Hiển thị box khi xuất hiện trong vùng nhìn */
-    transform: translateY(0px); /* Di chuyển box về vị trí ban đầu */
-  }
-
-.nd {
+    line-height: 1.7;
+    color: #666;
     text-align: left;
-    padding-top: 30px;
+    margin-bottom: 25px;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Button styling - Modern */
+.learn-more {
     position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    outline: none;
+    border: 2px solid #ff6600;
+    background: transparent;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #ff6600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    overflow: hidden;
 }
 
-.nd p {
-    text-align: left;
-    margin-top: 25px;
-    margin-bottom: 20px;
-}
-
-.nd h6 {
+.learn-more::before {
+    content: '';
     position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    transition: left 0.4s ease;
+    z-index: -1;
 }
 
-.nd a {
-    transition: transform 1.5s ease-in-out;
-    /* Tạo hiệu ứng chuyển đổi mượt mà */
+.learn-more:hover::before {
+    left: 0;
 }
 
-.nd a:hover {
-    color: rgb(196, 60, 11);
-    /* Phóng to ảnh khi di chuột qua 10% */
+.learn-more:hover {
+    color: white;
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(255, 102, 0, 0.3);
 }
 
-#gallery {
-    transition: transform 0.5s ease-in-out;
-    /* Tạo hiệu ứng chuyển đổi mượt mà */
+.learn-more .circle {
+    display: none;
 }
 
-#gallery:hover {
-    transform: scale(1.05);
-    /* Phóng to ảnh khi di chuột qua 10% */
+.learn-more .button-text {
+    position: static;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+    line-height: 1;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+.learn-more .icon.arrow {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ff6600'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7l5 5m0 0l-5 5m5-5H6'/%3E%3C/svg%3E") no-repeat center;
+    transition: transform 0.3s ease;
+}
+
+.learn-more:hover .icon.arrow {
+    transform: translateX(5px);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7l5 5m0 0l-5 5m5-5H6'/%3E%3C/svg%3E") no-repeat center;
+}
+
+/* Animations for scroll reveal */
+.slide-up {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: slideUp 0.6s ease forwards;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger animation delay */
+.box:nth-child(1) { animation-delay: 0.1s; }
+.box:nth-child(2) { animation-delay: 0.2s; }
+.box:nth-child(3) { animation-delay: 0.3s; }
+.box:nth-child(4) { animation-delay: 0.4s; }
+.box:nth-child(5) { animation-delay: 0.5s; }
+.box:nth-child(6) { animation-delay: 0.6s; }
+
+/* Loading state */
+.noidung p {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+}
+
+.noidung p i {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .noidung {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .titletren h3 {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 768px) {
+    .noidung {
+        grid-template-columns: 1fr;
+        padding: 0 15px;
+    }
+
+    .titletren {
+        padding-top: 40px;
+    }
+
+    .titletren h3 {
+        font-size: 36px;
+    }
+
+    .box {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .nd {
+        padding: 20px;
+    }
+
+    .nd > a {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .titletren h3 {
+        font-size: 28px;
+    }
+
+    .icon img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .box img {
+        height: 200px;
+    }
+
+    .learn-more {
+        padding: 10px 20px;
+        font-size: 12px;
+    }
 }

@@ -384,37 +384,47 @@
         </div>
     </header>
 
-    <div class="container">
-        <div class="head">
-            <h1 class="blog-title">
-                <i class="fas fa-spinner fa-spin" style="color: #ff6600;"></i> Loading...
-            </h1>
-            <div class="blog-meta">
-                <span class="blog-author"><i class="fas fa-user"></i> <span id="author-name">Loading...</span></span>
-                <span class="blog-date"><i class="fas fa-calendar"></i> <span id="publish-date">Loading...</span></span>
-                <span class="blog-category"><i class="fas fa-tag"></i> <span id="category-name">Loading...</span></span>
-                <span class="blog-views"><i class="fas fa-eye"></i> <span id="view-count">0</span> views</span>
+    <!-- Hero Section with Image -->
+    <div class="blog-hero">
+        <img id="blog-main-image" src="" alt="" class="blog-hero-image" style="display: none;">
+        <div class="blog-hero-content">
+            <div class="head">
+                <h1 class="blog-title">
+                    <i class="fas fa-spinner fa-spin" style="color: #ff6600;"></i> Loading...
+                </h1>
+                <div class="blog-meta">
+                    <span class="blog-author"><i class="fas fa-user"></i> <span id="author-name">Loading...</span></span>
+                    <span class="blog-date"><i class="fas fa-calendar"></i> <span id="publish-date">Loading...</span></span>
+                    <span class="blog-category"><i class="fas fa-tag"></i> <span id="category-name">Loading...</span></span>
+                    <span class="blog-views"><i class="fas fa-eye"></i> <span id="view-count">0</span> views</span>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="blog-image-container">
-            <img id="blog-main-image" src="" alt="" style="display: none;">
-        </div>
+    <div class="container">
+        <div class="blog-main-wrapper">
+            <article class="blog-article">
+                <div class="blog-excerpt">
+                    <p id="blog-excerpt"></p>
+                </div>
 
-        <div class="blog-excerpt">
-            <p id="blog-excerpt"></p>
-        </div>
+                <div class="blog-content">
+                    <div id="blog-content-text"></div>
+                </div>
 
-        <div class="blog-content">
-            <div id="blog-content-text"></div>
-        </div>
+                <div class="blog-tags" id="blog-tags-container">
+                    <!-- Tags will be loaded here -->
+                </div>
 
-        <div class="blog-tags" id="blog-tags-container">
-            <!-- Tags will be loaded here -->
-        </div>
+                <div class="mb-3 back">
+                    <a href="blog.html" class="btn btn-back"><i class="fa-solid fa-arrow-left"></i> Back to Blog</a>
+                </div>
+            </article>
 
-        <div class="mb-3 back">
-            <a href="blog.html" class="btn btn-back"><i class="fa-solid fa-arrow-left"></i> Back to Blog</a>
+            <aside class="blog-sidebar">
+                <!-- Share buttons will be added here by JS -->
+            </aside>
         </div>
     </div>
     <!-- Scroll Icon -->

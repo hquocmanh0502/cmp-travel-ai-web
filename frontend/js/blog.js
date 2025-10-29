@@ -43,16 +43,12 @@ function createBlogCard(blog) {
   const card = document.createElement('div');
   card.className = 'box slide-up';
   
-  // Format date
+  // Format date - simpler format
   const date = new Date(blog.publishedDate || blog.createdAt);
   const formattedDate = date.toLocaleDateString('en-US', { 
-    month: '2-digit', 
-    day: '2-digit', 
     year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true
+    month: 'short', 
+    day: 'numeric'
   });
   
   card.innerHTML = `
@@ -66,10 +62,8 @@ function createBlogCard(blog) {
       <h6>${formattedDate}</h6>
       <p>${blog.excerpt || blog.content.substring(0, 150) + '...'}</p>
       <a href="blog-detail.html?id=${blog._id}" class="learn-more">
-        <span class="circle" aria-hidden="true">
-          <span class="icon arrow"></span>
-        </span>
         <span class="button-text">Read Now</span>
+        <span class="icon arrow"></span>
       </a>
     </div>
   `;
