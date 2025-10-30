@@ -20,6 +20,16 @@ const userSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
   blocked: { type: Boolean, default: false },
   
+  // VIP Membership System
+  membershipLevel: {
+    type: String,
+    enum: ['bronze', 'silver', 'gold', 'platinum', 'diamond'],
+    default: 'bronze'
+  },
+  totalSpent: { type: Number, default: 0 },
+  totalBookings: { type: Number, default: 0 },
+  vipSince: { type: Date, default: null },
+  
   // CMP Wallet (for payments)
   wallet: {
     balance: { type: Number, default: 0 }, // USD balance

@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import BookingsManagement from "./pages/Booking/BookingsManagement";
 import Messages from "./pages/Messages/Messages";
-import Tours from "./pages/Tours/Tours";
+import ToursManagement from "./pages/Tours/ToursManagement";
 import UsersManagement from "./pages/Users/UsersManagement";
 import Hotels from "./pages/Hotels/Hotels";
 import Reviews from "./pages/Reviews/Reviews";
@@ -30,7 +30,7 @@ export default function App() {
           <main className="p-6 overflow-x-hidden">
             {active === "dashboard" && <Dashboard />}
             {active === "bookings" && <BookingsManagement />}
-            {active === "tours" && <Tours />}
+            {active === "tours" && <ToursManagement />}
             {active === "users" && <UsersManagement />}
             {active === "hotels" && <Hotels />}
             {active === "reviews" && <Reviews />}

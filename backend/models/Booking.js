@@ -180,6 +180,32 @@ const bookingSchema = new mongoose.Schema({
     default: 0,
     min: 0
   },
+  
+  // VIP Discount
+  vipDiscount: {
+    membershipLevel: {
+      type: String,
+      enum: ['bronze', 'silver', 'gold', 'platinum', 'diamond'],
+      default: 'bronze'
+    },
+    discountPercentage: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100
+    },
+    discountAmount: {
+      type: Number,
+      default: 0,
+      min: 0
+    },
+    originalAmount: {
+      type: Number,
+      default: 0,
+      min: 0
+    }
+  },
+  
   totalAmount: {
     type: Number,
     required: true,

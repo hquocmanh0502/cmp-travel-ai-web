@@ -751,8 +751,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showLoadingState();
             
+            // Get userId from localStorage for VIP discount
+            const userId = localStorage.getItem('userId');
+            const apiUrl = userId 
+                ? `http://localhost:3000/api/tours/${tourId}?userId=${userId}`
+                : `http://localhost:3000/api/tours/${tourId}`;
+            
             // Fetch tour data from API
-            const response = await fetch(`http://localhost:3000/api/tours/${tourId}`);
+            const response = await fetch(apiUrl);
             
             if (!response.ok) {
                 throw new Error('Failed to fetch tour data');
@@ -984,32 +990,97 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function updatePricing(tour) {
+        // Check if VIP discount available
+        const hasVIPDiscount = tour.vipInfo && tour.vipInfo.discount > 0;
+        
         // Main price
         const amountElement = document.querySelector('.price-section .amount');
         if (amountElement) {
-            amountElement.textContent = tour.estimatedCost.toLocaleString();
+            if (hasVIPDiscount) {
+                // Show discounted price
+                amountElement.textContent = tour.vipInfo.finalPrice.toLocaleString();
+                amountElement.style.color = '#059669'; // Green color for discounted price
+            } else {
+                amountElement.textContent = tour.estimatedCost.toLocaleString();
+            }
         }
         
         // Booking card price
         const bookingPriceElement = document.querySelector('.booking-price .price-amount');
         if (bookingPriceElement) {
-            bookingPriceElement.textContent = tour.estimatedCost.toLocaleString();
+            if (hasVIPDiscount) {
+                bookingPriceElement.textContent = tour.vipInfo.finalPrice.toLocaleString();
+                bookingPriceElement.style.color = '#059669';
+            } else {
+                bookingPriceElement.textContent = tour.estimatedCost.toLocaleString();
+            }
         }
         
-        // Original price (with discount)
+        // Original price (with VIP discount or regular discount)
         const originalPriceElement = document.querySelector('.original-price');
-        if (originalPriceElement && tour.pricing) {
-            const originalPrice = Math.round(tour.estimatedCost * 1.15);
-            originalPriceElement.textContent = `$${originalPrice.toLocaleString()}`;
+        if (originalPriceElement) {
+            if (hasVIPDiscount) {
+                // Show original price crossed out with VIP badge
+                originalPriceElement.innerHTML = `
+                    <span style="text-decoration: line-through; color: #999;">$${tour.vipInfo.originalPrice.toLocaleString()}</span>
+                    <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-left: 8px;">
+                        ${getVIPIcon(tour.vipInfo.membershipLevel)} VIP ${tour.vipInfo.discount}% OFF
+                    </span>
+                `;
+            } else if (tour.pricing) {
+                const originalPrice = Math.round(tour.estimatedCost * 1.15);
+                originalPriceElement.textContent = `$${originalPrice.toLocaleString()}`;
+            }
+        }
+        
+        // Add VIP savings info if available
+        if (hasVIPDiscount) {
+            const priceSectionElement = document.querySelector('.price-section');
+            if (priceSectionElement) {
+                // Remove existing VIP info if any
+                const existingVIPInfo = priceSectionElement.querySelector('.vip-savings-info');
+                if (existingVIPInfo) {
+                    existingVIPInfo.remove();
+                }
+                
+                // Add VIP savings badge
+                const vipSavingsHTML = `
+                    <div class="vip-savings-info" style="margin-top: 8px; padding: 8px 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; display: inline-block;">
+                        <span style="color: white; font-size: 13px; font-weight: 600;">
+                            ${getVIPIcon(tour.vipInfo.membershipLevel)} You save $${tour.vipInfo.savings.toLocaleString()} with ${tour.vipInfo.membershipLevel.toUpperCase()} VIP!
+                        </span>
+                    </div>
+                `;
+                priceSectionElement.insertAdjacentHTML('beforeend', vipSavingsHTML);
+            }
         }
         
         // Update price breakdown
         updatePriceBreakdown(tour);
     }
     
+    // Helper function to get VIP icon
+    function getVIPIcon(level) {
+        const icons = {
+            bronze: '🥉',
+            silver: '🥈',
+            gold: '🥇',
+            platinum: '💎',
+            diamond: '💠'
+        };
+        return icons[level] || '🥉';
+    }
+    
     function updatePriceBreakdown(tour) {
-        const adultPrice = tour.pricing?.adult || tour.estimatedCost;
+        // Use VIP discounted price if available
+        const basePrice = tour.vipInfo?.finalPrice || tour.estimatedCost;
+        const adultPrice = tour.pricing?.adult || basePrice;
         const childPrice = tour.pricing?.child || Math.round(adultPrice * 0.7);
+        
+        // Store VIP info for later use in calculations
+        if (tour.vipInfo) {
+            window.currentVIPDiscount = tour.vipInfo;
+        }
         
         // Update price calculations when quantities change
         calculateTotalPrice();

@@ -95,11 +95,10 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
     // Get total tours
     const totalTours = await Tour.countDocuments();
 
-    // Get recent bookings
-    const recentBookings = await Booking.find()
-      .populate('userId', 'fullName email')
-      .populate('tourId', 'name')
-      .sort({ createdAt: -1 })
+    // Get top 5 VIP users by spending
+    const topVIPUsers = await User.find()
+      .select('username fullName avatar membershipLevel totalSpent totalBookings email')
+      .sort({ totalSpent: -1 })
       .limit(5);
 
     // Get top tours by bookings
@@ -127,20 +126,20 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
       }
     ]);
 
-    // Get revenue by month (last 6 months)
-    const sixMonthsAgo = new Date(now.getTime() - 6 * 30 * 24 * 60 * 60 * 1000);
+    // Get revenue by month (last 12 months) - use bookingDate instead of createdAt
+    const twelveMonthsAgo = new Date(now.getTime() - 12 * 30 * 24 * 60 * 60 * 1000);
     const revenueByMonth = await Booking.aggregate([
       {
         $match: {
           paymentStatus: 'paid',
-          createdAt: { $gte: sixMonthsAgo }
+          bookingDate: { $gte: twelveMonthsAgo }
         }
       },
       {
         $group: {
           _id: {
-            year: { $year: '$createdAt' },
-            month: { $month: '$createdAt' }
+            year: { $year: '$bookingDate' },
+            month: { $month: '$bookingDate' }
           },
           revenue: { $sum: '$totalAmount' },
           bookings: { $count: {} }
@@ -161,14 +160,15 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
         totalBookings,
         bookingGrowth: parseFloat(bookingGrowth),
         totalTours,
-        recentBookings: recentBookings.map(b => ({
-          _id: b._id,
-          customerName: b.userId?.fullName || 'Unknown',
-          tourName: b.tourId?.name || 'Unknown',
-          totalPrice: b.totalAmount,
-          paymentStatus: b.paymentStatus,
-          bookingStatus: b.status,
-          createdAt: b.createdAt
+        topVIPUsers: topVIPUsers.map(u => ({
+          _id: u._id,
+          username: u.username,
+          fullName: u.fullName,
+          email: u.email,
+          avatar: u.avatar,
+          membershipLevel: u.membershipLevel,
+          totalSpent: u.totalSpent,
+          totalBookings: u.totalBookings
         })),
         topTours: topTours.map(t => ({
           _id: t._id,
@@ -176,11 +176,15 @@ router.get('/analytics/overview', isAdmin, async (req, res) => {
           bookings: t.bookingCount,
           revenue: t.totalRevenue
         })),
-        revenueByMonth: revenueByMonth.map(r => ({
-          month: `${r._id.year}-${String(r._id.month).padStart(2, '0')}`,
-          revenue: r.revenue,
-          bookings: r.bookings
-        }))
+        revenueByMonth: revenueByMonth.map(r => {
+          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          return {
+            month: `${r._id.year}-${String(r._id.month).padStart(2, '0')}`,
+            name: `${monthNames[r._id.month - 1]} ${r._id.year}`,
+            revenue: r.revenue,
+            bookings: r.bookings
+          };
+        })
       }
     });
   } catch (error) {
@@ -298,18 +302,52 @@ router.get('/export/full-data', isAdmin, async (req, res) => {
   }
 });
 
-// Get all tours with filters
+// Get tours statistics
+router.get('/tours/stats', isAdmin, async (req, res) => {
+  try {
+    const totalTours = await Tour.countDocuments();
+    const activeTours = await Tour.countDocuments({ status: 'active' });
+    const draftTours = await Tour.countDocuments({ status: 'draft' });
+    const inactiveTours = await Tour.countDocuments({ status: 'inactive' });
+    const featuredTours = await Tour.countDocuments({ featured: true });
+
+    res.json({
+      success: true,
+      data: {
+        totalTours,
+        activeTours,
+        draftTours,
+        inactiveTours,
+        featuredTours
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching tours stats:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching tours statistics',
+      message: error.message 
+    });
+  }
+});
+
+// Get all tours with filters and pagination
 router.get('/tours', isAdmin, async (req, res) => {
   try {
-    const { search, type } = req.query;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const search = req.query.search || '';
+    const type = req.query.type;
+    const status = req.query.status;
+    const featured = req.query.featured;
     
     let query = {};
     
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
-        { country: { $regex: search, $options: 'i' } },
-        { city: { $regex: search, $options: 'i' } }
+        { country: { $regex: search, $options: 'i' } }
       ];
     }
     
@@ -317,7 +355,20 @@ router.get('/tours', isAdmin, async (req, res) => {
       query.type = type;
     }
 
-    const tours = await Tour.find(query);
+    if (status && status !== 'all') {
+      query.status = status;
+    }
+
+    if (featured !== undefined) {
+      query.featured = featured === 'true';
+    }
+
+    const tours = await Tour.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Tour.countDocuments(query);
 
     // Get booking count for each tour
     const toursWithStats = await Promise.all(
@@ -339,7 +390,13 @@ router.get('/tours', isAdmin, async (req, res) => {
 
     res.json({
       success: true,
-      data: toursWithStats
+      data: toursWithStats,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
     });
   } catch (error) {
     console.error('Error fetching tours:', error);
@@ -1086,6 +1143,8 @@ router.put('/bookings/:id/payment', isAdmin, async (req, res) => {
       });
     }
     
+    const previousPaymentStatus = booking.paymentStatus;
+    
     // Update payment info
     booking.paymentStatus = paymentStatus;
     
@@ -1103,6 +1162,28 @@ router.put('/bookings/:id/payment', isAdmin, async (req, res) => {
     }
     
     await booking.save();
+    
+    // Update user's totalSpent and VIP level if payment is now paid
+    if (paymentStatus === 'paid' && previousPaymentStatus !== 'paid') {
+      const user = await User.findById(booking.userId);
+      if (user) {
+        // Add booking amount to totalSpent
+        user.totalSpent = (user.totalSpent || 0) + booking.totalAmount;
+        user.totalBookings = (user.totalBookings || 0) + 1;
+        
+        // Recalculate VIP level
+        const { calculateVIPLevel } = require('../services/vipService');
+        const newLevel = calculateVIPLevel(user.totalSpent);
+        
+        // Update VIP level and set vipSince if level changed from bronze
+        if (user.membershipLevel === 'bronze' && newLevel !== 'bronze') {
+          user.vipSince = new Date();
+        }
+        user.membershipLevel = newLevel;
+        
+        await user.save();
+      }
+    }
     
     res.json({
       success: true,
@@ -1270,6 +1351,8 @@ router.get('/users', isAdmin, async (req, res) => {
     const search = req.query.search || '';
     const verified = req.query.verified; // undefined, 'true', or 'false'
     const blocked = req.query.blocked; // undefined, 'true', or 'false'
+    const sortBy = req.query.sortBy || 'createdAt';
+    const sortOrder = req.query.sortOrder === 'asc' ? 1 : -1;
 
     // Build query
     const query = {};
@@ -1293,10 +1376,14 @@ router.get('/users', isAdmin, async (req, res) => {
       query.blocked = blocked === 'true';
     }
 
+    // Build sort object
+    const sortObj = {};
+    sortObj[sortBy] = sortOrder;
+
     // Get users
     const users = await User.find(query)
       .select('-password') // Exclude password
-      .sort({ createdAt: -1 })
+      .sort(sortObj)
       .skip(skip)
       .limit(limit);
 

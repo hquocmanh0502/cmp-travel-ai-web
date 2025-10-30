@@ -18,7 +18,7 @@ function Dashboard() {
     bookingsChange: 0,
     toursChange: 0,
   });
-  const [recentBookings, setRecentBookings] = useState([]);
+  const [topVIPUsers, setTopVIPUsers] = useState([]);
   const [topTours, setTopTours] = useState([]);
   const [revenueByMonth, setRevenueByMonth] = useState([]);
   const [topDestinations, setTopDestinations] = useState([]);
@@ -45,13 +45,13 @@ function Dashboard() {
             bookingsChange: data.data.bookingGrowth,
             toursChange: 0,
           });
-          setRecentBookings(data.data.recentBookings || []);
+          setTopVIPUsers(data.data.topVIPUsers || []);
           setTopTours(data.data.topTours || []);
           
           // Format revenue by month for chart
           if (data.data.revenueByMonth && data.data.revenueByMonth.length > 0) {
             const chartData = data.data.revenueByMonth.map(item => ({
-              name: item.month, // Format: "2025-10"
+              name: item.name, // Format: "Oct 2025"
               revenue: item.revenue
             }));
             setRevenueByMonth(chartData);
@@ -225,7 +225,7 @@ function Dashboard() {
 
       {/* Recent Activity */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <RecentBookings bookings={recentBookings} loading={loading} />
+        <TopVIPUsers users={topVIPUsers} loading={loading} />
         <TopTours tours={topTours} loading={loading} />
       </div>
     </div>
@@ -277,8 +277,8 @@ function MetricCard({ title, value, change, icon: Icon, color, loading }) {
   );
 }
 
-// Recent Bookings Component
-function RecentBookings({ bookings, loading }) {
+// Top VIP Users Component
+function TopVIPUsers({ users, loading }) {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -287,23 +287,24 @@ function RecentBookings({ bookings, loading }) {
     }).format(amount);
   };
 
-  const getStatusColor = (status) => {
-    const colors = {
-      confirmed: "bg-green-100 text-green-700",
-      pending: "bg-yellow-100 text-yellow-700",
-      cancelled: "bg-red-100 text-red-700",
-      completed: "bg-blue-100 text-blue-700",
+  const getVIPBadge = (level) => {
+    const badges = {
+      bronze: { icon: "🥉", color: "bg-amber-100 text-amber-700", label: "Bronze" },
+      silver: { icon: "🥈", color: "bg-gray-100 text-gray-700", label: "Silver" },
+      gold: { icon: "🥇", color: "bg-yellow-100 text-yellow-700", label: "Gold" },
+      platinum: { icon: "💎", color: "bg-cyan-100 text-cyan-700", label: "Platinum" },
+      diamond: { icon: "💠", color: "bg-blue-100 text-blue-700", label: "Diamond" }
     };
-    return colors[status] || "bg-gray-100 text-gray-700";
+    return badges[level] || badges.bronze;
   };
 
   if (loading) {
     return (
       <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Bookings</h3>
+        <h3 className="text-lg font-bold text-gray-800 mb-4">🏆 Top VIP Users</h3>
         <div className="space-y-3">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-16 bg-gray-200 animate-pulse rounded-lg"></div>
+            <div key={i} className="h-20 bg-gray-200 animate-pulse rounded-lg"></div>
           ))}
         </div>
       </div>
@@ -312,25 +313,51 @@ function RecentBookings({ bookings, loading }) {
 
   return (
     <div className="bg-white rounded-xl p-6 border border-gray-200">
-      <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Bookings</h3>
-      {bookings.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">No recent bookings</p>
+      <h3 className="text-lg font-bold text-gray-800 mb-4">🏆 Top VIP Users</h3>
+      {users.length === 0 ? (
+        <p className="text-gray-500 text-center py-8">No VIP users yet</p>
       ) : (
         <div className="space-y-3">
-          {bookings.slice(0, 5).map((booking) => (
-            <div key={booking._id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
-              <div className="flex-1">
-                <p className="font-medium text-gray-800">{booking.customerName}</p>
-                <p className="text-sm text-gray-600">{booking.tourName}</p>
+          {users.slice(0, 5).map((user, index) => {
+            const badge = getVIPBadge(user.membershipLevel);
+            return (
+              <div key={user._id} className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                {/* Rank */}
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 text-white flex items-center justify-center font-bold text-sm shadow-md">
+                  {index + 1}
+                </div>
+                
+                {/* Avatar */}
+                <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden flex-shrink-0">
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={user.fullName} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+                      {user.fullName?.charAt(0) || user.username?.charAt(0) || 'U'}
+                    </div>
+                  )}
+                </div>
+                
+                {/* User Info */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="font-medium text-gray-800 truncate">{user.fullName || user.username}</p>
+                    <span className={`text-xs px-2 py-0.5 rounded-full ${badge.color} flex items-center gap-1 flex-shrink-0`}>
+                      <span>{badge.icon}</span>
+                      <span className="font-semibold">{badge.label}</span>
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600">{user.totalBookings} bookings</p>
+                </div>
+                
+                {/* Total Spent */}
+                <div className="text-right flex-shrink-0">
+                  <p className="font-bold text-gray-800">{formatCurrency(user.totalSpent)}</p>
+                  <p className="text-xs text-gray-500">Total Spent</p>
+                </div>
               </div>
-              <div className="text-right">
-                <p className="font-semibold text-gray-800">{formatCurrency(booking.totalPrice)}</p>
-                <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(booking.paymentStatus)}`}>
-                  {booking.paymentStatus}
-                </span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

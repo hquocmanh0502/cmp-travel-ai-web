@@ -31,6 +31,11 @@ router.get('/:userId', async (req, res) => {
             });
         }
 
+        // Get VIP information
+        const { getVIPDiscount, getNextLevelProgress } = require('../services/vipService');
+        const vipDiscount = getVIPDiscount(user.membershipLevel);
+        const levelProgress = getNextLevelProgress(user.totalSpent || 0);
+
         res.json({
             success: true,
             user: {
@@ -47,7 +52,16 @@ router.get('/:userId', async (req, res) => {
                 preferences: user.preferences,
                 behavior: user.behavior,
                 createdAt: user.createdAt,
-                updatedAt: user.updatedAt
+                updatedAt: user.updatedAt,
+                // VIP Membership Info
+                vip: {
+                    membershipLevel: user.membershipLevel || 'bronze',
+                    totalSpent: user.totalSpent || 0,
+                    totalBookings: user.totalBookings || 0,
+                    vipSince: user.vipSince,
+                    discount: vipDiscount,
+                    levelProgress: levelProgress
+                }
             }
         });
     } catch (error) {

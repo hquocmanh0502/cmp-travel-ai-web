@@ -4,6 +4,7 @@ const Booking = require('../models/Booking');
 const Tour = require('../models/Tour');
 const Hotel = require('../models/Hotel');
 const User = require('../models/User');
+const { applyVIPDiscount, calculateVIPLevel } = require('../services/vipService');
 
 // Middleware to verify authentication
 const verifyAuth = async (req, res, next) => {
@@ -97,7 +98,11 @@ router.post('/', verifyAuth, async (req, res) => {
       });
     }
     
-    // Create booking
+    // Calculate VIP discount
+    const originalAmount = parseFloat(totalAmount) || 0;
+    const discountResult = applyVIPDiscount(originalAmount, user.membershipLevel || 'bronze');
+    
+    // Create booking with VIP discount
     const booking = new Booking({
       userId,
       tourId,
@@ -116,7 +121,13 @@ router.post('/', verifyAuth, async (req, res) => {
       tourBaseCost: parseFloat(tourBaseCost) || 0,
       accommodationCost: parseFloat(accommodationCost) || 0,
       servicesCost: parseFloat(servicesCost) || 0,
-      totalAmount: parseFloat(totalAmount) || 0,
+      vipDiscount: {
+        membershipLevel: user.membershipLevel || 'bronze',
+        discountPercentage: discountResult.discount,
+        discountAmount: discountResult.discountAmount,
+        originalAmount: discountResult.originalPrice
+      },
+      totalAmount: discountResult.finalPrice,
       status: 'pending',
       paymentStatus: 'unpaid'
     });

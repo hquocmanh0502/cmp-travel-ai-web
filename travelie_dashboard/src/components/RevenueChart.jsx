@@ -24,7 +24,7 @@ function RevenueChart({ data, loading }) {
       <div className="flex justify-between items-start mb-6">
         <div>
           <div className="text-lg font-semibold">Revenue Overview</div>
-          <div className="text-xs text-gray-400">Last 6 Months</div>
+          <div className="text-xs text-gray-400">Last 12 Months</div>
         </div>
         {!loading && (
           <div className="text-sm text-gray-400">

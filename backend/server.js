@@ -62,6 +62,7 @@ app.get('/api/tours', async (req, res) => {
 app.get('/api/tours/:id', async (req, res) => {
   try {
     const { id } = req.params;
+    const { userId } = req.query; // Optional userId for VIP discount
     let tour = null;
     
     // Try string id first
@@ -81,7 +82,36 @@ app.get('/api/tours/:id', async (req, res) => {
       return res.status(404).json({ error: 'Tour not found' });
     }
     
-    res.json(tour);
+    // Convert to plain object to add VIP discount info
+    const tourData = tour.toObject();
+    
+    // Calculate VIP discount if userId provided
+    if (userId) {
+      try {
+        const user = await User.findById(userId);
+        if (user) {
+          const { applyVIPDiscount, getVIPDiscount } = require('./services/vipService');
+          
+          // Apply discount to tour price
+          const originalPrice = tour.estimatedCost || 0;
+          const discountResult = applyVIPDiscount(originalPrice, user.membershipLevel || 'bronze');
+          
+          tourData.vipInfo = {
+            membershipLevel: user.membershipLevel || 'bronze',
+            discount: discountResult.discount,
+            originalPrice: discountResult.originalPrice,
+            discountAmount: discountResult.discountAmount,
+            finalPrice: discountResult.finalPrice,
+            savings: discountResult.discountAmount
+          };
+        }
+      } catch (userError) {
+        console.error('Error fetching user VIP info:', userError);
+        // Continue without VIP info
+      }
+    }
+    
+    res.json(tourData);
   } catch (err) {
     res.status(500).json({ error: 'Error fetching tour details' });
   }
