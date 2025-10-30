@@ -429,124 +429,6 @@ router.delete('/tours/:id', isAdmin, async (req, res) => {
   }
 });
 
-// ==================== USERS MANAGEMENT ====================
-
-// Get all users with filters
-router.get('/users', isAdmin, async (req, res) => {
-  try {
-    const { search, status } = req.query;
-    
-    let query = {};
-    
-    if (search) {
-      query.$or = [
-        { fullName: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } },
-        { username: { $regex: search, $options: 'i' } }
-      ];
-    }
-    
-    if (status === 'verified') {
-      query.verified = true;
-    } else if (status === 'unverified') {
-      query.verified = false;
-    }
-
-    const users = await User.find(query).select('-password');
-
-    // Get stats for each user
-    const usersWithStats = await Promise.all(
-      users.map(async (user) => {
-        const bookings = await Booking.find({ userId: user._id });
-        const completedBookings = bookings.filter(b => b.paymentStatus === 'paid');
-        const totalSpent = completedBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
-
-        return {
-          ...user.toObject(),
-          totalBookings: bookings.length,
-          totalSpent
-        };
-      })
-    );
-
-    res.json({
-      success: true,
-      data: usersWithStats
-    });
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: 'Error fetching users',
-      message: error.message 
-    });
-  }
-});
-
-// Update user
-router.put('/users/:id', isAdmin, async (req, res) => {
-  try {
-    // Don't allow password update through this endpoint
-    delete req.body.password;
-    
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    ).select('-password');
-    
-    if (!user) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'User not found' 
-      });
-    }
-    
-    res.json({
-      success: true,
-      data: user,
-      message: 'User updated successfully'
-    });
-  } catch (error) {
-    console.error('Error updating user:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: 'Error updating user',
-      message: error.message 
-    });
-  }
-});
-
-// Block/Unblock user
-router.put('/users/:id/block', isAdmin, async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    
-    if (!user) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'User not found' 
-      });
-    }
-    
-    user.blocked = !user.blocked;
-    await user.save();
-    
-    res.json({
-      success: true,
-      data: user,
-      message: `User ${user.blocked ? 'blocked' : 'unblocked'} successfully`
-    });
-  } catch (error) {
-    console.error('Error blocking user:', error);
-    res.status(500).json({ 
-      success: false, 
-      error: 'Error blocking user',
-      message: error.message 
-    });
-  }
-});
-
 // ==================== HOTELS MANAGEMENT ====================
 
 // Get all hotels with filters
@@ -1372,6 +1254,253 @@ router.delete('/blogs/:id', isAdmin, async (req, res) => {
     res.status(500).json({ 
       success: false, 
       error: 'Error deleting blog',
+      message: error.message 
+    });
+  }
+});
+
+// ==================== USERS MANAGEMENT ====================
+
+// Get all users with pagination, search, and filters
+router.get('/users', isAdmin, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const search = req.query.search || '';
+    const verified = req.query.verified; // undefined, 'true', or 'false'
+    const blocked = req.query.blocked; // undefined, 'true', or 'false'
+
+    // Build query
+    const query = {};
+    
+    // Search in username, email, fullName
+    if (search) {
+      query.$or = [
+        { username: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { fullName: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    // Filter by verified status
+    if (verified !== undefined) {
+      query.verified = verified === 'true';
+    }
+
+    // Filter by blocked status
+    if (blocked !== undefined) {
+      query.blocked = blocked === 'true';
+    }
+
+    // Get users
+    const users = await User.find(query)
+      .select('-password') // Exclude password
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await User.countDocuments(query);
+
+    res.json({
+      success: true,
+      data: users,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching users',
+      message: error.message 
+    });
+  }
+});
+
+// Get users statistics
+router.get('/users/stats', isAdmin, async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+    const verifiedUsers = await User.countDocuments({ verified: true });
+    const blockedUsers = await User.countDocuments({ blocked: true });
+    const newUsersThisMonth = await User.countDocuments({
+      createdAt: {
+        $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+      }
+    });
+
+    res.json({
+      success: true,
+      data: {
+        totalUsers,
+        verifiedUsers,
+        blockedUsers,
+        newUsersThisMonth,
+        activeUsers: totalUsers - blockedUsers
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching users stats:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching users statistics',
+      message: error.message 
+    });
+  }
+});
+
+// Get single user details
+router.get('/users/:id', isAdmin, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password');
+    
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'User not found' 
+      });
+    }
+
+    // Get user's booking count
+    const bookingCount = await Booking.countDocuments({ userId: req.params.id });
+
+    res.json({
+      success: true,
+      data: {
+        ...user.toObject(),
+        bookingCount
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error fetching user details',
+      message: error.message 
+    });
+  }
+});
+
+// Update user details
+router.put('/users/:id', isAdmin, async (req, res) => {
+  try {
+    const { 
+      fullName, 
+      email, 
+      phone, 
+      dateOfBirth, 
+      gender, 
+      address,
+      verified,
+      blocked
+    } = req.body;
+
+    const updateData = {};
+    if (fullName !== undefined) updateData.fullName = fullName;
+    if (email !== undefined) updateData.email = email;
+    if (phone !== undefined) updateData.phone = phone;
+    if (dateOfBirth !== undefined) updateData.dateOfBirth = dateOfBirth;
+    if (gender !== undefined) updateData.gender = gender;
+    if (address !== undefined) updateData.address = address;
+    if (verified !== undefined) updateData.verified = verified;
+    if (blocked !== undefined) updateData.blocked = blocked;
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'User not found' 
+      });
+    }
+
+    res.json({
+      success: true,
+      data: user,
+      message: 'User updated successfully'
+    });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error updating user',
+      message: error.message 
+    });
+  }
+});
+
+// Update user status (verify/block)
+router.put('/users/:id/status', isAdmin, async (req, res) => {
+  try {
+    const { verified, blocked } = req.body;
+    
+    const updateData = {};
+    if (verified !== undefined) updateData.verified = verified;
+    if (blocked !== undefined) updateData.blocked = blocked;
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateData },
+      { new: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'User not found' 
+      });
+    }
+
+    res.json({
+      success: true,
+      data: user,
+      message: 'User status updated successfully'
+    });
+  } catch (error) {
+    console.error('Error updating user status:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error updating user status',
+      message: error.message 
+    });
+  }
+});
+
+// Delete user (soft delete - block user)
+router.delete('/users/:id', isAdmin, async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { blocked: true } },
+      { new: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'User not found' 
+      });
+    }
+
+    res.json({
+      success: true,
+      data: user,
+      message: 'User blocked successfully'
+    });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Error deleting user',
       message: error.message 
     });
   }

@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import BookingsManagement from "./pages/Booking/BookingsManagement";
 import Messages from "./pages/Messages/Messages";
 import Tours from "./pages/Tours/Tours";
-import Users from "./pages/Users/Users";
+import UsersManagement from "./pages/Users/UsersManagement";
 import Hotels from "./pages/Hotels/Hotels";
 import Reviews from "./pages/Reviews/Reviews";
 import BlogManagement from "./pages/Blog/BlogManagement";
@@ -31,7 +31,7 @@ export default function App() {
             {active === "dashboard" && <Dashboard />}
             {active === "bookings" && <BookingsManagement />}
             {active === "tours" && <Tours />}
-            {active === "users" && <Users />}
+            {active === "users" && <UsersManagement />}
             {active === "hotels" && <Hotels />}
             {active === "reviews" && <Reviews />}
             {active === "blog" && <BlogManagement />}
