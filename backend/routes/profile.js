@@ -625,7 +625,7 @@ router.delete('/:userId/wishlist/:tourId', async (req, res) => {
 // TRAVEL HISTORY
 // =============================================
 
-// Get travel history (view history)
+// Get travel history (completed bookings)
 router.get('/:userId/travel-history', async (req, res) => {
     try {
         const { userId } = req.params;
@@ -638,7 +638,7 @@ router.get('/:userId/travel-history', async (req, res) => {
             });
         }
 
-        const user = await User.findById(userId).select('behavior.viewHistory');
+        const user = await User.findById(userId);
         
         if (!user) {
             return res.status(404).json({ 
@@ -647,19 +647,53 @@ router.get('/:userId/travel-history', async (req, res) => {
             });
         }
 
-        // Get view history
-        const viewHistory = user.behavior?.viewHistory || [];
-        
-        // Get unique tour IDs
-        const tourIds = [...new Set(viewHistory.map(item => item.tourId))];
-        
-        // Populate with tour details
-        const tours = await Tour.find({ _id: { $in: tourIds } }).limit(parseInt(limit));
+        // Get completed bookings with tour details
+        const completedBookings = await Booking.find({ 
+            userId: userId,
+            status: 'completed',
+            paymentStatus: 'paid'
+        })
+        .populate('tourId', 'name country img rating duration estimatedCost')
+        .populate('hotelId', 'name rating')
+        .sort({ checkoutDate: -1 })
+        .limit(parseInt(limit));
+
+        // Calculate statistics
+        const stats = {
+            totalTours: completedBookings.length,
+            totalCountries: [...new Set(completedBookings.map(b => b.tourId?.country).filter(Boolean))].length,
+            totalDays: completedBookings.reduce((sum, b) => {
+                if (b.checkinDate && b.checkoutDate) {
+                    const days = Math.ceil((new Date(b.checkoutDate) - new Date(b.checkinDate)) / (1000 * 60 * 60 * 24));
+                    return sum + days;
+                }
+                return sum + (b.tourId?.duration || 0);
+            }, 0),
+            totalSpent: completedBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0)
+        };
 
         res.json({
             success: true,
-            count: tours.length,
-            history: tours
+            stats: stats,
+            bookings: completedBookings.map(b => ({
+                _id: b._id,
+                tourId: b.tourId?._id,
+                tourName: b.tourName || b.tourId?.name,
+                tourImage: b.tourId?.img,
+                country: b.tourId?.country,
+                rating: b.tourId?.rating,
+                hotelName: b.hotelName || b.hotelId?.name,
+                checkinDate: b.checkinDate,
+                checkoutDate: b.checkoutDate,
+                departureDate: b.departureDate,
+                adults: b.adults,
+                children: b.children,
+                totalAmount: b.totalAmount,
+                status: b.status,
+                paymentStatus: b.paymentStatus,
+                duration: b.tourId?.duration,
+                vipDiscount: b.vipDiscount
+            }))
         });
     } catch (error) {
         console.error('Error fetching travel history:', error);
@@ -850,7 +884,7 @@ router.get('/:userId/recent-activity', async (req, res) => {
             activities.push({
                 type: 'booking',
                 icon: 'fa-plane',
-                title: `Đặt ${itemType === 'tour' ? 'tour' : 'khách sạn'}`,
+                title: `Booked ${itemType === 'tour' ? 'Tour' : 'Hotel'}`,
                 description: itemName,
                 status: booking.status,
                 timestamp: booking.createdAt,
@@ -878,7 +912,7 @@ router.get('/:userId/recent-activity', async (req, res) => {
                     activities.push({
                         type: 'wishlist',
                         icon: 'fa-heart',
-                        title: 'Thêm vào yêu thích',
+                        title: 'Added to Wishlist',
                         description: `${tour.name} - ${tour.country}`,
                         timestamp: item.addedAt,
                         time: getTimeAgo(item.addedAt),
@@ -904,8 +938,8 @@ router.get('/:userId/recent-activity', async (req, res) => {
             activities.push({
                 type: 'search',
                 icon: 'fa-search',
-                title: 'Tìm kiếm',
-                description: search.query || 'Tour du lịch',
+                title: 'Searched',
+                description: search.query || 'Travel Tours',
                 timestamp: search.timestamp,
                 time: getTimeAgo(search.timestamp),
                 data: {
@@ -928,7 +962,7 @@ router.get('/:userId/recent-activity', async (req, res) => {
                     activities.push({
                         type: 'view',
                         icon: 'fa-eye',
-                        title: 'Xem chi tiết tour',
+                        title: 'Viewed Tour Details',
                         description: tour.name,
                         timestamp: view.timestamp,
                         time: getTimeAgo(view.timestamp),

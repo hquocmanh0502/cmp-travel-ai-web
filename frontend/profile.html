@@ -82,15 +82,15 @@
               <div class="profile-stats">
                   <div class="stat-item">
                       <span class="number" id="toursBooked">0</span>
-                      <span class="label">Tours đã đặt</span>
+                      <span class="label">Tours Booked</span>
                   </div>
                   <div class="stat-item">
                       <span class="number" id="wishlistItems">0</span>
-                      <span class="label">Yêu thích</span>
+                      <span class="label">Wishlist</span>
                   </div>
                   <div class="stat-item">
                       <span class="number" id="reviewsWritten">0</span>
-                      <span class="label">Đánh giá</span>
+                      <span class="label">Reviews</span>
                   </div>
               </div>
           </div>
@@ -103,26 +103,26 @@
                   <div class="wallet-icon">
                       <i class="fas fa-wallet"></i>
                   </div>
-                  <span>Ví CMP Travel</span>
+                  <span>CMP Travel Wallet</span>
               </div>
           </div>
           
           <div class="wallet-balance">
-              <div class="balance-label">Số dư khả dụng</div>
+              <div class="balance-label">Available Balance</div>
               <div class="balance-amount">
                   <span id="walletBalance">0</span>
-                  <span class="balance-currency">VNĐ</span>
+                  <span class="balance-currency">USD</span>
               </div>
           </div>
           
           <div class="wallet-actions">
               <button class="wallet-btn primary" id="topUpBtn">
                   <i class="fas fa-plus"></i>
-                  Nạp tiền
+                  Top Up
               </button>
               <button class="wallet-btn" id="transactionHistoryBtn">
                   <i class="fas fa-history"></i>
-                  Lịch sử giao dịch
+                  Transaction History
               </button>
           </div>
       </div>
@@ -137,7 +137,7 @@
                   <div class="card-icon">
                       <i class="fas fa-receipt"></i>
                   </div>
-                  <h3>Lịch sử giao dịch</h3>
+                  <h3>Transaction History</h3>
               </div>
               
               <div id="transactionList">
@@ -153,7 +153,7 @@
           <div class="modal-header">
               <h3 class="modal-title">
                   <i class="fas fa-credit-card"></i>
-                  Nạp tiền vào ví
+                  Top Up Wallet
               </h3>
               <button class="close-btn" id="closeModal">
                   <i class="fas fa-times"></i>
@@ -163,38 +163,38 @@
           <form id="topUpForm">
               <div class="amount-options">
                   <div class="amount-option" data-amount="100000">
-                      <div class="amount-value">100,000</div>
-                      <div class="amount-label">VNĐ</div>
+                      <div class="amount-value">$100,000</div>
+                      <div class="amount-label">USD</div>
                   </div>
                   <div class="amount-option" data-amount="200000">
-                      <div class="amount-value">200,000</div>
-                      <div class="amount-label">VNĐ</div>
+                      <div class="amount-value">$200,000</div>
+                      <div class="amount-label">USD</div>
                   </div>
                   <div class="amount-option" data-amount="500000">
-                      <div class="amount-value">500,000</div>
-                      <div class="amount-label">VNĐ</div>
+                      <div class="amount-value">$500,000</div>
+                      <div class="amount-label">USD</div>
                   </div>
                   <div class="amount-option" data-amount="1000000">
-                      <div class="amount-value">1,000,000</div>
-                      <div class="amount-label">VNĐ</div>
+                      <div class="amount-value">$1,000,000</div>
+                      <div class="amount-label">USD</div>
                   </div>
                   <div class="amount-option" data-amount="2000000">
-                      <div class="amount-value">2,000,000</div>
-                      <div class="amount-label">VNĐ</div>
+                      <div class="amount-value">$2,000,000</div>
+                      <div class="amount-label">USD</div>
                   </div>
                   <div class="amount-option" data-amount="5000000">
-                      <div class="amount-value">5,000,000</div>
-                      <div class="amount-label">VNĐ</div>
+                      <div class="amount-value">$5,000,000</div>
+                      <div class="amount-label">USD</div>
                   </div>
               </div>
               
               <div class="custom-amount">
-                  <label for="customAmountInput">Hoặc nhập số tiền khác:</label>
-                  <input type="number" id="customAmountInput" placeholder="Nhập số tiền (VNĐ)" min="10000" max="50000000">
+                  <label for="customAmountInput">Or enter custom amount:</label>
+                  <input type="number" id="customAmountInput" placeholder="Enter amount (USD)" min="10000" max="50000000">
               </div>
               
               <div class="payment-methods">
-                  <h4>Phương thức thanh toán:</h4>
+                  <h4>Payment Method:</h4>
                   
                   <label class="payment-method selected" for="bank">
                       <input type="radio" id="bank" name="paymentMethod" value="bank" checked>
@@ -202,8 +202,8 @@
                           <i class="fas fa-university"></i>
                       </div>
                       <div class="payment-method-info">
-                          <h5>Chuyển khoản ngân hàng</h5>
-                          <p>Quét mã QR hoặc chuyển khoản thủ công - Tự động cập nhật</p>
+                          <h5>Bank Transfer</h5>
+                          <p>Scan QR code or manual transfer - Auto update</p>
                       </div>
                   </label>
               </div>
@@ -212,7 +212,7 @@
                   <button type="button" class="btn-cancel" id="cancelTopUp">Cancel</button>
                   <button type="submit" class="btn">
                       <i class="fas fa-credit-card"></i>
-                      Nạp tiền
+                      Top Up
                   </button>
               </div>
           </form>
@@ -232,7 +232,7 @@
               
               <form id="profileForm">
                   <div class="form-group">
-                      <label for="fullName">Họ và tên</label>
+                      <label for="fullName">Full Name</label>
                       <input type="text" id="fullName" name="fullName" required>
                   </div>
                   
@@ -242,32 +242,32 @@
                   </div>
                   
                   <div class="form-group">
-                      <label for="phone">Số điện thoại</label>
+                      <label for="phone">Phone Number</label>
                       <input type="tel" id="phone" name="phone">
                   </div>
                   
                   <div class="form-group">
-                      <label for="birthday">Ngày sinh</label>
+                      <label for="birthday">Date of Birth</label>
                       <input type="date" id="birthday" name="birthday">
                   </div>
                   
                   <div class="form-group">
-                      <label for="gender">Giới tính</label>
+                      <label for="gender">Gender</label>
                       <select id="gender" name="gender">
-                          <option value="male">Nam</option>
-                          <option value="female">Nữ</option>
-                          <option value="other">Khác</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
                       </select>
                   </div>
                   
                   <div class="form-group">
-                      <label for="address">Địa chỉ</label>
+                      <label for="address">Address</label>
                       <textarea id="address" name="address" rows="3"></textarea>
                   </div>
                   
                   <button type="submit" class="btn">
                       <i class="fas fa-save"></i>
-                      Cập nhật thông tin
+                      Update Profile
                   </button>
               </form>
           </div>
@@ -278,28 +278,28 @@
                   <div class="card-icon">
                       <i class="fas fa-lock"></i>
                   </div>
-                  <h3>Đổi mật khẩu</h3>
+                  <h3>Change Password</h3>
               </div>
               
               <form id="passwordForm">
                   <div class="form-group">
-                      <label for="currentPassword">Mật khẩu hiện tại</label>
+                      <label for="currentPassword">Current Password</label>
                       <input type="password" id="currentPassword" name="currentPassword" required>
                   </div>
                   
                   <div class="form-group">
-                      <label for="newPassword">Mật khẩu mới</label>
+                      <label for="newPassword">New Password</label>
                       <input type="password" id="newPassword" name="newPassword" required>
                   </div>
                   
                   <div class="form-group">
-                      <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+                      <label for="confirmPassword">Confirm New Password</label>
                       <input type="password" id="confirmPassword" name="confirmPassword" required>
                   </div>
                   
                   <button type="submit" class="btn">
                       <i class="fas fa-key"></i>
-                      Đổi mật khẩu
+                      Change Password
                   </button>
               </form>
           </div>
@@ -310,13 +310,13 @@
                   <div class="card-icon">
                       <i class="fas fa-bolt"></i>
                   </div>
-                  <h3>Thao tác nhanh</h3>
+                  <h3>Quick Actions</h3>
               </div>
               
               <div style="display: grid; gap: 1rem;">
                   <a href="my-bookings.html" class="btn">
                       <i class="fas fa-ticket-alt"></i>
-                      Xem đơn đặt tour
+                      View My Bookings
                   </a>
                   
                   <a href="my-wishlist.html" class="btn btn-secondary">
@@ -326,7 +326,7 @@
                   
                   <a href="preferences.html" class="btn btn-secondary">
                       <i class="fas fa-cog"></i>
-                      Tùy chỉnh sở thích
+                      AI Preferences
                   </a>
               </div>
           </div>
@@ -337,7 +337,7 @@
                   <div class="card-icon">
                       <i class="fas fa-history"></i>
                   </div>
-                  <h3>Hoạt động gần đây</h3>
+                  <h3>Recent Activity</h3>
               </div>
               
               <ul class="activity-list" id="activityList">

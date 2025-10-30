@@ -314,37 +314,79 @@ router.get('/:userId/transactions', async (req, res) => {
     const { userId } = req.params;
     const { limit = 50, type } = req.query;
     
+    const Booking = require('../models/Booking');
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({
         success: false,
-        error: 'Không tìm thấy người dùng'
+        error: 'User not found'
       });
     }
     
-    let transactions = user.wallet?.transactions || [];
+    // Get wallet transactions
+    let walletTransactions = (user.wallet?.transactions || []).map(t => ({
+      _id: t._id,
+      type: t.type,
+      amount: t.amount,
+      description: t.description,
+      reference: t.reference,
+      status: t.status,
+      createdAt: t.createdAt || t.timestamp,
+      source: 'wallet'
+    }));
+    
+    // Get paid bookings as transactions
+    const paidBookings = await Booking.find({ 
+      userId: userId,
+      paymentStatus: 'paid'
+    })
+    .populate('tourId', 'name')
+    .select('tourId tourName totalAmount paymentDetails bookingDate createdAt vipDiscount')
+    .sort({ createdAt: -1 });
+    
+    const bookingTransactions = paidBookings.map(booking => ({
+      _id: booking._id,
+      type: 'payment',
+      amount: booking.totalAmount,
+      description: `Booking: ${booking.tourName || booking.tourId?.name || 'Tour'}`,
+      reference: booking._id.toString(),
+      status: 'completed',
+      createdAt: booking.paymentDetails?.paidAt || booking.bookingDate || booking.createdAt,
+      source: 'booking',
+      bookingDetails: {
+        tourName: booking.tourName || booking.tourId?.name,
+        vipDiscount: booking.vipDiscount
+      }
+    }));
+    
+    // Combine all transactions
+    let allTransactions = [...walletTransactions, ...bookingTransactions];
     
     // Filter by type if specified
     if (type) {
-      transactions = transactions.filter(t => t.type === type);
+      allTransactions = allTransactions.filter(t => t.type === type);
     }
     
-    // Sort by timestamp (newest first) and limit
-    transactions = transactions
-      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+    // Sort by date (newest first) and limit
+    allTransactions = allTransactions
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .slice(0, parseInt(limit));
     
     res.json({
       success: true,
-      transactions,
-      total: transactions.length
+      transactions: allTransactions,
+      total: allTransactions.length,
+      breakdown: {
+        wallet: walletTransactions.length,
+        bookings: bookingTransactions.length
+      }
     });
     
   } catch (error) {
     console.error('Get transactions error:', error);
     res.status(500).json({
       success: false,
-      error: 'Lỗi khi lấy lịch sử giao dịch'
+      error: 'Error fetching transaction history'
     });
   }
 });
@@ -608,6 +650,573 @@ router.post('/casso-webhook', async (req, res) => {
   } catch (error) {
     console.error('Casso webhook error:', error);
     res.json({ success: true }); // Still return success to avoid retry
+  }
+});
+
+// =============================================
+// PAYOS PAYMENT GATEWAY - CREATE PAYMENT LINK
+// =============================================
+const payosService = require('../services/payosService');
+
+router.post('/:userId/topup/payos', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { amount } = req.body;
+    
+    // Validate amount
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid amount'
+      });
+    }
+    
+    // Find user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+    
+    console.log(`💰 Creating PayOS payment link for user ${userId}: ${amount} VND`);
+    
+    // Create payment link via PayOS
+    const paymentResult = await payosService.createPaymentLink(userId, amount);
+    
+    if (!paymentResult.success) {
+      return res.status(400).json({
+        success: false,
+        error: paymentResult.error || 'Failed to create payment link'
+      });
+    }
+    
+    // Save pending transaction to user wallet
+    const transaction = {
+      type: 'topup',
+      amount: paymentResult.data.amountWallet,
+      amountVND: amount,
+      status: 'pending',
+      orderCode: paymentResult.data.orderCode,
+      paymentLinkId: paymentResult.data.paymentLinkId,
+      description: 'Wallet Top-up via Bank Transfer',
+      payosDescription: paymentResult.data.description, // Keep PayOS description for reference
+      date: new Date()
+    };
+    
+    user.wallet.transactions.push(transaction);
+    await user.save();
+    
+    console.log(`✅ Payment link created: ${paymentResult.data.checkoutUrl}`);
+    
+    res.json({
+      success: true,
+      data: {
+        checkoutUrl: paymentResult.data.checkoutUrl,
+        qrCode: paymentResult.data.qrCode,
+        orderCode: paymentResult.data.orderCode,
+        amount: amount,
+        amountWallet: paymentResult.data.amountWallet,
+        description: paymentResult.data.description,
+        instructions: [
+          '1. Scan QR code with your banking app',
+          '2. Confirm the payment',
+          '3. Wait for confirmation (usually within 30 seconds)',
+          '4. Your wallet will be automatically updated'
+        ]
+      }
+    });
+    
+  } catch (error) {
+    console.error('❌ PayOS topup error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to create payment link'
+    });
+  }
+});
+
+// =============================================
+// CASSO BANK TRANSFER - GENERATE QR CODE (LEGACY)
+// =============================================
+const cassoService = require('../services/cassoService');
+const cassoConfig = require('../config/casso');
+
+router.post('/:userId/topup/casso', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { amount } = req.body;
+    
+    // Validate amount
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid amount'
+      });
+    }
+    
+    if (amount < cassoConfig.minAmount) {
+      return res.status(400).json({
+        success: false,
+        error: `Minimum amount is ${cassoConfig.minAmount.toLocaleString()} VND`
+      });
+    }
+    
+    if (amount > cassoConfig.maxAmount) {
+      return res.status(400).json({
+        success: false,
+        error: `Maximum amount is ${cassoConfig.maxAmount.toLocaleString()} VND`
+      });
+    }
+    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+    
+    // Initialize wallet if not exists
+    if (!user.wallet) {
+      user.wallet = {
+        balance: 0,
+        currency: 'USD',
+        transactions: []
+      };
+    }
+    
+    // Generate transaction reference
+    const transactionRef = cassoService.generateTransactionRef(userId);
+    
+    // Generate QR code
+    const qrData = cassoService.generateQRCode(amount, transactionRef);
+    
+    // Save pending transaction
+    user.wallet.transactions.push({
+      type: 'deposit',
+      amount: cassoService.convertToWalletCurrency(amount),
+      balanceBefore: user.wallet.balance,
+      balanceAfter: user.wallet.balance, // Will be updated when confirmed
+      description: `Bank Transfer Top-up`,
+      reference: transactionRef,
+      status: 'pending',
+      createdAt: new Date(),
+      metadata: {
+        amountVND: amount,
+        bankTransfer: true,
+        qrGenerated: true
+      }
+    });
+    
+    await user.save();
+    
+    res.json({
+      success: true,
+      message: 'QR Code generated. Please scan and transfer to complete top-up.',
+      data: {
+        transactionRef,
+        qrCodeUrl: qrData.qrUrl,
+        bankInfo: {
+          bankName: qrData.bankInfo.bankName,
+          accountNumber: qrData.bankInfo.accountNumber,
+          accountName: qrData.bankInfo.accountName,
+          branch: qrData.bankInfo.branch
+        },
+        amount: amount,
+        amountWallet: cassoService.convertToWalletCurrency(amount),
+        currency: 'VND',
+        walletCurrency: 'USD',
+        transferContent: transactionRef,
+        instructions: [
+          '1. Open your banking app',
+          '2. Scan the QR code or enter bank details manually',
+          '3. Transfer exact amount with the provided content',
+          '4. Your wallet will be updated automatically within 1-2 minutes'
+        ]
+      }
+    });
+    
+  } catch (error) {
+    console.error('❌ Casso top-up error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Error generating QR code',
+      message: error.message
+    });
+  }
+});
+
+// =============================================
+// PAYOS WEBHOOK - Auto receive payment notification
+// =============================================
+router.post('/webhook/payos', async (req, res) => {
+  try {
+    const webhookData = req.body;
+    
+    console.log('🔔 PayOS Webhook received:', JSON.stringify(webhookData, null, 2));
+    
+    // PayOS webhook structure
+    const paymentData = webhookData.data || webhookData;
+    const { orderCode, amount, description, transactionDateTime, reference, code } = paymentData;
+    
+    // Check payment status
+    if (code !== '00') {
+      console.log('⚠️ Payment not successful, code:', code);
+      return res.json({ success: true, message: 'Payment not successful' });
+    }
+    
+    console.log(`💰 Payment successful: Order ${orderCode}, Amount: ${amount} VND`);
+    
+    // Find user with this pending transaction by orderCode
+    const user = await User.findOne({
+      'wallet.transactions': {
+        $elemMatch: {
+          orderCode: Number(orderCode),
+          status: 'pending'
+        }
+      }
+    });
+    
+    if (!user) {
+      console.error('❌ No pending transaction found for order:', orderCode);
+      return res.json({ success: true, message: 'Transaction already processed or not found' });
+    }
+    
+    // Find the transaction
+    const transaction = user.wallet.transactions.find(
+      t => Number(t.orderCode) === Number(orderCode) && t.status === 'pending'
+    );
+    
+    if (!transaction) {
+      console.error('❌ Transaction not found or already completed');
+      return res.json({ success: true, message: 'Transaction already completed' });
+    }
+    
+    // Update wallet balance
+    const walletAmount = payosService.convertToWalletCurrency(amount);
+    user.wallet.balance += walletAmount;
+    
+    // Update transaction status
+    transaction.status = 'completed';
+    transaction.completedAt = transactionDateTime ? new Date(transactionDateTime) : new Date();
+    transaction.reference = reference || orderCode;
+    
+    await user.save();
+    
+    console.log(`✅ Wallet updated for user ${user._id}: +$${walletAmount} (${amount} VND)`);
+    console.log(`💵 New balance: $${user.wallet.balance}`);
+    
+    res.json({
+      success: true,
+      message: 'Payment processed successfully'
+    });
+    
+  } catch (error) {
+    console.error('❌ PayOS webhook error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// =============================================
+// CASSO WEBHOOK - Auto receive bank transfer (LEGACY)
+// =============================================
+router.post('/webhook/casso', async (req, res) => {
+  try {
+    const webhookData = req.body;
+    
+    console.log('🔔 Casso Webhook received:', JSON.stringify(webhookData, null, 2));
+    
+    // Verify webhook signature (if using secure webhook)
+    const signature = req.headers['x-casso-signature'];
+    if (signature && !cassoService.verifyWebhookSignature(webhookData, signature)) {
+      console.error('❌ Invalid webhook signature');
+      return res.status(401).json({
+        success: false,
+        error: 'Invalid signature'
+      });
+    }
+    
+    // Parse webhook data
+    const { data } = webhookData;
+    
+    if (!data || data.length === 0) {
+      return res.json({ success: true, message: 'No transactions to process' });
+    }
+    
+    // Process each transaction
+    for (const transaction of data) {
+      const { amount, description, tid, when } = transaction;
+      
+      // Parse transaction reference from description
+      const refData = cassoService.parseTransactionRef(description);
+      
+      if (!refData.valid) {
+        console.log(`⚠️  Invalid transaction reference: ${description}`);
+        continue;
+      }
+      
+      const { userId } = refData;
+      
+      // Find user
+      const user = await User.findById(userId);
+      if (!user) {
+        console.error(`❌ User not found: ${userId}`);
+        continue;
+      }
+      
+      // Check if transaction already processed
+      const existingTransaction = user.wallet.transactions.find(
+        t => t.reference === description || t.metadata?.tid === tid
+      );
+      
+      if (existingTransaction && existingTransaction.status === 'completed') {
+        console.log(`⚠️  Transaction already processed: ${tid}`);
+        continue;
+      }
+      
+      // Convert amount to wallet currency
+      const walletAmount = cassoService.convertToWalletCurrency(amount);
+      
+      // Update pending transaction or create new one
+      if (existingTransaction) {
+        existingTransaction.status = 'completed';
+        existingTransaction.completedAt = new Date(when);
+        existingTransaction.balanceAfter = user.wallet.balance + walletAmount;
+        existingTransaction.metadata = {
+          ...existingTransaction.metadata,
+          tid,
+          bankTransactionDate: when
+        };
+      } else {
+        user.wallet.transactions.push({
+          type: 'deposit',
+          amount: walletAmount,
+          balanceBefore: user.wallet.balance,
+          balanceAfter: user.wallet.balance + walletAmount,
+          description: `Bank Transfer Top-up`,
+          reference: description,
+          status: 'completed',
+          createdAt: new Date(when),
+          completedAt: new Date(when),
+          metadata: {
+            amountVND: amount,
+            tid,
+            bankTransfer: true,
+            bankTransactionDate: when
+          }
+        });
+      }
+      
+      // Update wallet balance
+      user.wallet.balance += walletAmount;
+      
+      await user.save();
+      
+      console.log(`✅ Wallet updated for user ${userId}: +$${walletAmount} (${amount} VND)`);
+    }
+    
+    res.json({
+      success: true,
+      message: 'Webhook processed successfully'
+    });
+    
+  } catch (error) {
+    console.error('❌ Casso webhook error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Webhook processing failed',
+      message: error.message
+    });
+  }
+});
+
+// =============================================
+// CHECK PAYOS PAYMENT STATUS (Polling endpoint)
+// =============================================
+router.get('/:userId/topup/check-payos/:orderCode', async (req, res) => {
+  try {
+    const { userId, orderCode } = req.params;
+    
+    console.log(`🔍 Checking PayOS payment status: ${orderCode}`);
+    
+    // Find user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+    
+    // Find transaction
+    const transaction = user.wallet.transactions.find(
+      t => t.orderCode == orderCode
+    );
+    
+    if (!transaction) {
+      return res.status(404).json({
+        success: false,
+        error: 'Transaction not found'
+      });
+    }
+    
+    // If already completed, return success
+    if (transaction.status === 'completed') {
+      return res.json({
+        success: true,
+        status: 'completed',
+        message: 'Payment successful!',
+        data: {
+          amount: transaction.amountVND || transaction.amount,
+          balance: user.wallet.balance,
+          completedAt: transaction.completedAt
+        }
+      });
+    }
+    
+    // Check with PayOS API if still pending
+    if (transaction.status === 'pending') {
+      const paymentInfo = await payosService.getPaymentInfo(orderCode);
+      
+      if (paymentInfo.success && paymentInfo.status === 'PAID') {
+        // Update wallet
+        user.wallet.balance += transaction.amount;
+        transaction.status = 'completed';
+        transaction.completedAt = new Date();
+        transaction.reference = paymentInfo.reference;
+        
+        await user.save();
+        
+        console.log(`✅ Payment confirmed via polling: +$${transaction.amount}`);
+        
+        return res.json({
+          success: true,
+          status: 'completed',
+          message: 'Payment successful!',
+          data: {
+            amount: transaction.amountVND || transaction.amount,
+            balance: user.wallet.balance,
+            completedAt: transaction.completedAt
+          }
+        });
+      }
+      
+      // Still pending
+      return res.json({
+        success: true,
+        status: 'pending',
+        message: 'Payment is being processed'
+      });
+    }
+    
+    // Failed or cancelled
+    res.json({
+      success: false,
+      status: transaction.status,
+      message: 'Payment failed or cancelled'
+    });
+    
+  } catch (error) {
+    console.error('❌ Check PayOS status error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// =============================================
+// CHECK TRANSFER STATUS (Casso - Polling endpoint - LEGACY)
+// =============================================
+router.get('/:userId/topup/check/:transactionRef', async (req, res) => {
+  try {
+    const { userId, transactionRef } = req.params;
+    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+    
+    // Find transaction in user's wallet
+    const transaction = user.wallet.transactions.find(
+      t => t.reference === transactionRef
+    );
+    
+    if (!transaction) {
+      return res.status(404).json({
+        success: false,
+        error: 'Transaction not found'
+      });
+    }
+    
+    // If already completed, return success
+    if (transaction.status === 'completed') {
+      return res.json({
+        success: true,
+        status: 'completed',
+        message: 'Top-up successful!',
+        data: {
+          amount: transaction.amount,
+          balance: user.wallet.balance,
+          completedAt: transaction.completedAt
+        }
+      });
+    }
+    
+    // If still pending, check with Casso API
+    const verification = await cassoService.verifyTransaction(
+      transactionRef,
+      transaction.metadata?.amountVND || transaction.amount
+    );
+    
+    if (verification.verified) {
+      // Update transaction
+      transaction.status = 'completed';
+      transaction.completedAt = new Date();
+      transaction.balanceAfter = user.wallet.balance + transaction.amount;
+      user.wallet.balance += transaction.amount;
+      
+      await user.save();
+      
+      return res.json({
+        success: true,
+        status: 'completed',
+        message: 'Top-up successful!',
+        data: {
+          amount: transaction.amount,
+          balance: user.wallet.balance,
+          completedAt: transaction.completedAt
+        }
+      });
+    }
+    
+    // Still pending
+    res.json({
+      success: true,
+      status: 'pending',
+      message: 'Transfer not received yet. Please complete the bank transfer.',
+      data: {
+        transactionRef,
+        amount: transaction.amount,
+        createdAt: transaction.createdAt
+      }
+    });
+    
+  } catch (error) {
+    console.error('❌ Check transfer error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Error checking transfer status',
+      message: error.message
+    });
   }
 });
 

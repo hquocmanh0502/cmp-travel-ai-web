@@ -220,7 +220,7 @@ async function loadRecentActivity() {
                     <i class="fas fa-spinner fa-spin"></i>
                 </div>
                 <div class="activity-content">
-                    <p>Đang tải hoạt động...</p>
+                    <p>Loading activities...</p>
                 </div>
             </li>
         `;
@@ -236,7 +236,7 @@ async function loadRecentActivity() {
                         <i class="fas fa-info-circle"></i>
                     </div>
                     <div class="activity-content">
-                        <p>Chưa có hoạt động nào</p>
+                        <p>No recent activities</p>
                     </div>
                 </li>
             `;
@@ -274,7 +274,7 @@ async function loadRecentActivity() {
                         <i class="fas fa-exclamation-circle"></i>
                     </div>
                     <div class="activity-content">
-                        <p>Không thể tải hoạt động. Vui lòng thử lại.</p>
+                        <p>Unable to load activities. Please try again.</p>
                     </div>
                 </li>
             `;
@@ -876,21 +876,49 @@ async function handleTopUp(e) {
     e.preventDefault();
     
     if (!selectedAmount || selectedAmount < 10000) {
-        showNotification('Số tiền tối thiểu là 10,000 VND', 'error');
+        showNotification('Minimum amount is $10,000', 'error');
         return;
     }
     
     if (selectedAmount > 50000000) {
-        showNotification('Số tiền tối đa là 50,000,000 VND', 'error');
+        showNotification('Maximum amount is $50,000,000', 'error');
         return;
     }
     
-    // Only bank transfer supported - auto redirect
-    showNotification('Đang chuyển đến trang chuyển khoản...', 'success');
-    setTimeout(() => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        showNotification('Please login first', 'error');
+        return;
+    }
+    
+    try {
+        showNotification('Creating payment link...', 'info');
+        
+        // Call PayOS API to create payment link
+        const response = await fetch(`http://localhost:3000/api/wallet/${userId}/topup/payos`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ amount: selectedAmount })
+        });
+        
+        const data = await response.json();
+        
+        if (!data.success) {
+            throw new Error(data.error || 'Failed to create payment link');
+        }
+        
+        // Close top-up modal
         closeTopUpModal();
-        window.location.href = `bank-transfer.html?amount=${selectedAmount}`;
-    }, 800);
+        
+        // Show QR code modal
+        showPaymentQRModal(data.data);
+        
+    } catch (error) {
+        console.error('Top-up error:', error);
+        showNotification(error.message || 'Failed to create payment link', 'error');
+    }
 }
 
 function getPaymentMethodName(method) {
@@ -922,35 +950,55 @@ async function loadTransactionHistory() {
     
     try {
         const userId = localStorage.getItem('userId');
-        const response = await fetch(`http://localhost:3000/api/wallet/${userId}/transactions?limit=10`);
+        const response = await fetch(`http://localhost:3000/api/wallet/${userId}/transactions?limit=20`);
         const data = await response.json();
         
         if (!data.success || !data.transactions || data.transactions.length === 0) {
             transactionList.innerHTML = `
                 <div style="text-align: center; padding: 2rem; color: #666;">
                     <i class="fas fa-receipt" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
-                    <p>Chưa có giao dịch nào</p>
+                    <p>No transactions yet</p>
                 </div>
             `;
             return;
         }
         
         transactionList.innerHTML = data.transactions.map(transaction => {
-            const isIncome = transaction.type === 'topup' || transaction.type === 'refund' || transaction.type === 'bonus';
+            const isIncome = transaction.type === 'topup' || transaction.type === 'deposit' || transaction.type === 'refund' || transaction.type === 'bonus';
+            const isPayment = transaction.type === 'payment';
             const amount = Math.abs(transaction.amount);
+            
+            // Get icon based on type
+            let icon = 'fa-exchange-alt';
+            if (isIncome) icon = 'fa-plus-circle';
+            else if (isPayment) icon = 'fa-shopping-cart';
+            
+            // Show VIP discount if exists
+            let vipBadge = '';
+            if (transaction.bookingDetails && transaction.bookingDetails.vipDiscount && transaction.bookingDetails.vipDiscount.discountPercentage > 0) {
+                const vipLevel = transaction.bookingDetails.vipDiscount.membershipLevel;
+                const vipIcons = {
+                    bronze: '🥉',
+                    silver: '🥈',
+                    gold: '🥇',
+                    platinum: '💎',
+                    diamond: '💠'
+                };
+                vipBadge = `<span class="vip-badge" style="font-size: 0.75rem; margin-left: 0.5rem; padding: 2px 6px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">${vipIcons[vipLevel]} ${transaction.bookingDetails.vipDiscount.discountPercentage}% OFF</span>`;
+            }
             
             return `
                 <div class="transaction-item">
                     <div class="transaction-icon ${isIncome ? 'income' : 'expense'}">
-                        <i class="fas ${isIncome ? 'fa-plus' : 'fa-minus'}"></i>
+                        <i class="fas ${icon}"></i>
                     </div>
                     <div class="transaction-details">
-                        <h6>${transaction.description}</h6>
-                        <p>${formatDate(transaction.timestamp)}</p>
+                        <h6>${transaction.description}${vipBadge}</h6>
+                        <p>${formatDate(transaction.createdAt)}</p>
                         <span class="transaction-status ${transaction.status}">${getStatusText(transaction.status)}</span>
                     </div>
                     <div class="transaction-amount ${isIncome ? 'income' : 'expense'}">
-                        ${isIncome ? '+' : '-'}${formatCurrency(amount)} VNĐ
+                        ${isIncome ? '+' : '-'}$${formatCurrency(amount)}
                     </div>
                 </div>
             `;
@@ -961,7 +1009,7 @@ async function loadTransactionHistory() {
         transactionList.innerHTML = `
             <div style="text-align: center; padding: 2rem; color: #999;">
                 <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
-                <p>Không thể tải lịch sử giao dịch</p>
+                <p>Unable to load transaction history</p>
             </div>
         `;
     }
@@ -969,9 +1017,10 @@ async function loadTransactionHistory() {
 
 function getStatusText(status) {
     const statusMap = {
-        'pending': 'Đang xử lý',
-        'completed': 'Thành công',
-        'failed': 'Thất bại'
+        'pending': 'Processing',
+        'completed': 'Completed',
+        'failed': 'Failed',
+        'cancelled': 'Cancelled'
     };
     return statusMap[status] || status;
 }
@@ -993,7 +1042,7 @@ function toggleTransactionHistory() {
     
     if (transactionCard.style.display === 'none') {
         transactionCard.style.display = 'block';
-        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide history';
+        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide History';
         loadTransactionHistory();
         
         // Scroll to transaction card
@@ -1002,7 +1051,7 @@ function toggleTransactionHistory() {
         }, 100);
     } else {
         transactionCard.style.display = 'none';
-        btn.innerHTML = '<i class="fas fa-history"></i> Transaction history';
+        btn.innerHTML = '<i class="fas fa-history"></i> Transaction History';
     }
 }
 
@@ -1031,6 +1080,154 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize components
     initializeComponents();
 });
+
+// =============================================
+// PAYOS PAYMENT QR CODE MODAL
+// =============================================
+let paymentCheckInterval = null;
+
+function showPaymentQRModal(paymentData) {
+    const { checkoutUrl, qrCode, orderCode, amount, amountWallet, description, instructions } = paymentData;
+    
+    // Create modal HTML
+    const modalHTML = `
+        <div id="paymentQRModal" class="modal show" style="display: flex;">
+            <div class="modal-content payment-modal">
+                <div class="modal-header">
+                    <h3>💳 Scan QR to Pay</h3>
+                    <span class="close-modal" onclick="closePaymentQRModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="payment-info">
+                        <div class="amount-display">
+                            <div class="amount-label">Amount to pay</div>
+                            <div class="amount-value">$${amountWallet.toLocaleString()}</div>
+                            <div class="amount-wallet">${amount.toLocaleString()} VND via bank transfer</div>
+                        </div>
+                        
+                        <div class="qr-container">
+                            <img src="${checkoutUrl}" alt="QR Code" class="qr-image" 
+                                 onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(qrCode)}'">
+                            <div class="qr-text">${qrCode}</div>
+                        </div>
+                        
+                        <div class="payment-status">
+                            <div class="status-indicator">
+                                <div class="spinner"></div>
+                                <span>Waiting for payment...</span>
+                            </div>
+                            <div class="order-code">Order: #${orderCode}</div>
+                        </div>
+                        
+                        <div class="payment-instructions">
+                            <h4>📱 How to pay:</h4>
+                            <ol>
+                                ${instructions.map(inst => `<li>${inst}</li>`).join('')}
+                            </ol>
+                        </div>
+                        
+                        <div class="payment-actions">
+                            <button onclick="window.open('${checkoutUrl}', '_blank')" class="btn btn-primary">
+                                🌐 Open Payment Page
+                            </button>
+                            <button onclick="closePaymentQRModal()" class="btn btn-secondary">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to page
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.body.style.overflow = 'hidden';
+    
+    // Start checking payment status
+    startPaymentStatusCheck(orderCode);
+}
+
+function closePaymentQRModal() {
+    const modal = document.getElementById('paymentQRModal');
+    if (modal) {
+        modal.remove();
+        document.body.style.overflow = '';
+    }
+    
+    // Stop checking payment status
+    if (paymentCheckInterval) {
+        clearInterval(paymentCheckInterval);
+        paymentCheckInterval = null;
+    }
+}
+
+function startPaymentStatusCheck(orderCode) {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+    
+    console.log('🔍 Starting payment status check for order:', orderCode);
+    
+    // Check immediately
+    checkPaymentStatus(orderCode, userId);
+    
+    // Then check every 3 seconds
+    paymentCheckInterval = setInterval(() => {
+        checkPaymentStatus(orderCode, userId);
+    }, 3000);
+    
+    // Stop after 5 minutes
+    setTimeout(() => {
+        if (paymentCheckInterval) {
+            clearInterval(paymentCheckInterval);
+            paymentCheckInterval = null;
+            showNotification('Payment timeout. Please try again.', 'error');
+            closePaymentQRModal();
+        }
+    }, 300000); // 5 minutes
+}
+
+async function checkPaymentStatus(orderCode, userId) {
+    try {
+        const response = await fetch(
+            `http://localhost:3000/api/wallet/${userId}/topup/check-payos/${orderCode}`
+        );
+        
+        const data = await response.json();
+        
+        if (data.success && data.status === 'completed') {
+            console.log('✅ Payment completed!', data);
+            
+            // Stop checking
+            if (paymentCheckInterval) {
+                clearInterval(paymentCheckInterval);
+                paymentCheckInterval = null;
+            }
+            
+            // Close modal
+            closePaymentQRModal();
+            
+            // Show success notification
+            showNotification(
+                `Payment successful! $${data.data.balance.toLocaleString()} added to wallet`,
+                'success'
+            );
+            
+            // Reload wallet balance
+            setTimeout(() => {
+                loadUserProfile();
+                loadTransactionHistory();
+            }, 1000);
+        }
+        
+    } catch (error) {
+        console.error('Error checking payment status:', error);
+    }
+}
+
+// Make functions global for onclick handlers
+window.closePaymentQRModal = closePaymentQRModal;
+
 
 // Add some mock transactions on first load for demo
 function initializeMockTransactions() {

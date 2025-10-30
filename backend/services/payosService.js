@@ -9,92 +9,107 @@
  * ✅ QR động với VietQR
  */
 
-const axios = require('axios');
+const { PayOS } = require('@payos/node');
 const crypto = require('crypto');
+const payosConfig = require('../config/payos');
 
 class PayOSService {
     constructor() {
-        // ⚠️ Credentials từ https://payos.vn/portal/settings/api-keys
-        this.clientId = process.env.PAYOS_CLIENT_ID || 'YOUR_CLIENT_ID';
-        this.apiKey = process.env.PAYOS_API_KEY || 'YOUR_API_KEY';
-        this.checksumKey = process.env.PAYOS_CHECKSUM_KEY || 'YOUR_CHECKSUM_KEY';
+        // Initialize PayOS SDK with options object
+        this.payOS = new PayOS({
+            clientId: process.env.PAYOS_CLIENT_ID || payosConfig.clientId,
+            apiKey: process.env.PAYOS_API_KEY || payosConfig.apiKey,
+            checksumKey: process.env.PAYOS_CHECKSUM_KEY || payosConfig.checksumKey
+        });
         
-        this.baseURL = 'https://api-merchant.payos.vn/v2';
+        this.config = payosConfig;
     }
 
     /**
-     * Tạo payment link với QR code
+     * Generate unique order code
+     * Format: CMPTRAVEL_{userId}_{timestamp}
      */
-    async createPaymentLink(orderData) {
+    generateOrderCode(userId) {
+        const timestamp = Date.now();
+        // PayOS requires order code as number, max 9 digits
+        return Number(timestamp.toString().slice(-9));
+    }
+
+    /**
+     * Parse userId from description
+     * Description format: CMP{last8ofUserId}
+     * Returns userId suffix or null
+     */
+    parseUserIdFromDescription(description) {
+        if (!description) return null;
+        
+        // Extract last 8 chars of userId from description like "CMP6e8f1234"
+        const match = description.match(/CMP([a-f0-9]{8})/i);
+        return match ? match[1] : null;
+    }
+
+    /**
+     * Tạo payment link với QR code (using PayOS SDK)
+     */
+    async createPaymentLink(userId, amount, description = null) {
         try {
-            const {
-                orderCode,      // Unique order code
-                amount,         // Số tiền (VND)
-                description,    // Mô tả giao dịch
-                returnUrl,      // URL redirect sau khi thanh toán
-                cancelUrl       // URL khi user cancel
-            } = orderData;
-
-            const data = {
-                orderCode: orderCode,
-                amount: amount,
-                description: description,
-                buyerName: orderData.buyerName || '',
-                buyerEmail: orderData.buyerEmail || '',
-                buyerPhone: orderData.buyerPhone || '',
-                buyerAddress: orderData.buyerAddress || '',
-                items: orderData.items || [],
-                cancelUrl: cancelUrl,
-                returnUrl: returnUrl
-            };
-
-            // Generate signature
-            const signature = this.generateSignature(data);
-
-            const response = await axios.post(`${this.baseURL}/payment-requests`, data, {
-                headers: {
-                    'x-client-id': this.clientId,
-                    'x-api-key': this.apiKey,
-                    'x-partner-code': signature,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.data.code === '00') {
-                return {
-                    success: true,
-                    checkoutUrl: response.data.data.checkoutUrl,
-                    qrCode: response.data.data.qrCode,
-                    paymentLinkId: response.data.data.paymentLinkId
-                };
+            // Validate amount
+            const validation = this.validateAmount(amount);
+            if (!validation.valid) {
+                throw new Error(validation.message);
             }
 
+            // Generate unique order code
+            const orderCode = this.generateOrderCode(userId);
+            
+            // Payment data for PayOS SDK
+            const paymentData = {
+                orderCode: orderCode,
+                amount: amount, // VND
+                description: description || `CMP${userId.slice(-8)}`,
+                returnUrl: this.config.returnUrl,
+                cancelUrl: this.config.cancelUrl,
+                items: [
+                    {
+                        name: 'Nap tien vi CMP Travel',
+                        quantity: 1,
+                        price: amount
+                    }
+                ]
+            };
+
+            // Create payment link via PayOS SDK
+            const paymentLinkResponse = await this.payOS.paymentRequests.create(paymentData);
+
             return {
-                success: false,
-                message: response.data.desc
+                success: true,
+                data: {
+                    checkoutUrl: paymentLinkResponse.checkoutUrl,
+                    qrCode: paymentLinkResponse.qrCode,
+                    orderCode: orderCode,
+                    amount: amount,
+                    amountWallet: this.convertToWalletCurrency(amount),
+                    description: paymentData.description,
+                    createdAt: new Date(),
+                    paymentLinkId: paymentLinkResponse.paymentLinkId
+                }
             };
 
         } catch (error) {
-            console.error('❌ PayOS create payment error:', error.response?.data || error.message);
-            throw new Error('Không thể tạo payment link: ' + (error.response?.data?.desc || error.message));
+            console.error('❌ PayOS create payment error:', error);
+            throw new Error(error.message || 'Failed to create payment link');
         }
     }
 
     /**
-     * Check trạng thái thanh toán
+     * Check trạng thái thanh toán (using PayOS SDK)
      */
     async getPaymentInfo(orderCode) {
         try {
-            const response = await axios.get(`${this.baseURL}/payment-requests/${orderCode}`, {
-                headers: {
-                    'x-client-id': this.clientId,
-                    'x-api-key': this.apiKey,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.data.code === '00') {
-                const payment = response.data.data;
+            const paymentInfo = await this.payOS.paymentRequests.get(orderCode);
+            
+            if (paymentInfo) {
+                const payment = paymentInfo;
                 return {
                     success: true,
                     status: payment.status, // PENDING, PAID, CANCELLED
@@ -108,11 +123,11 @@ class PayOSService {
 
             return {
                 success: false,
-                message: response.data.desc
+                message: 'Payment not found'
             };
 
         } catch (error) {
-            console.error('❌ PayOS get payment error:', error.response?.data || error.message);
+            console.error('❌ PayOS get payment error:', error);
             return {
                 success: false,
                 error: error.message
@@ -121,31 +136,71 @@ class PayOSService {
     }
 
     /**
-     * Verify webhook signature
+     * Cancel payment link (using PayOS SDK)
      */
-    verifyWebhookSignature(data, signature) {
+    async cancelPaymentLink(orderCode, reason = 'User cancelled') {
         try {
-            const sortedData = this.sortObject(data);
-            const dataStr = JSON.stringify(sortedData);
-            
-            const expectedSignature = crypto
-                .createHmac('sha256', this.checksumKey)
-                .update(dataStr)
-                .digest('hex');
-
-            return signature === expectedSignature;
+            await this.payOS.paymentRequests.cancel(orderCode, reason);
+            return {
+                success: true,
+                message: 'Payment cancelled successfully'
+            };
         } catch (error) {
-            console.error('Verify webhook error:', error);
-            return false;
+            console.error('❌ PayOS cancel payment error:', error);
+            return {
+                success: false,
+                error: error.message
+            };
         }
     }
 
     /**
-     * Generate signature for API request
+     * Verify webhook signature from PayOS (using SDK)
      */
-    generateSignature(data) {
-        const sortedData = this.sortObject(data);
-        const dataStr = JSON.stringify(sortedData);
+    async verifyWebhookSignature(webhookData) {
+        try {
+            const result = await this.payOS.webhooks.verify(webhookData);
+            return result;
+        } catch (error) {
+            console.error('❌ Webhook signature verification failed:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Convert VND to wallet currency (USD)
+     */
+    convertToWalletCurrency(amountVND) {
+        return amountVND * this.config.transactionSettings.exchangeRate;
+    }
+
+    /**
+     * Validate payment amount
+     */
+    validateAmount(amount) {
+        const { minAmount, maxAmount } = this.config.transactionSettings;
+        
+        if (amount < minAmount) {
+            return {
+                valid: false,
+                message: `Minimum amount is ${minAmount.toLocaleString()} VND`
+            };
+        }
+        
+        if (amount > maxAmount) {
+            return {
+                valid: false,
+                message: `Maximum amount is ${maxAmount.toLocaleString()} VND`
+            };
+        }
+        
+        return { valid: true };
+    }
+
+    /**
+     * Sort object keys alphabetically
+     */
+    sortObject(obj) {
         
         return crypto
             .createHmac('sha256', this.checksumKey)

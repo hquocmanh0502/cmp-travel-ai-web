@@ -414,4 +414,133 @@ router.get('/stats/summary', async (req, res) => {
   }
 });
 
+// =============================================
+// PAY WITH WALLET
+// =============================================
+router.post('/:bookingId/pay-with-wallet', async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const { userId } = req.body;
+
+    // Validate required fields
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        error: 'User ID is required'
+      });
+    }
+
+    // Find booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        error: 'Booking not found'
+      });
+    }
+
+    // Verify booking belongs to user
+    if (booking.userId.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        error: 'Unauthorized: This booking does not belong to you'
+      });
+    }
+
+    // Check if already paid
+    if (booking.paymentStatus === 'paid') {
+      return res.status(400).json({
+        success: false,
+        error: 'This booking has already been paid'
+      });
+    }
+
+    // Check booking status
+    if (booking.status === 'cancelled') {
+      return res.status(400).json({
+        success: false,
+        error: 'Cannot pay for a cancelled booking'
+      });
+    }
+
+    // Find user and check wallet balance
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    const walletBalance = user.wallet?.balance || 0;
+    const bookingAmount = booking.totalAmount;
+
+    if (walletBalance < bookingAmount) {
+      return res.status(400).json({
+        success: false,
+        error: 'Insufficient wallet balance',
+        balance: walletBalance,
+        required: bookingAmount,
+        shortage: bookingAmount - walletBalance
+      });
+    }
+
+    // Deduct from wallet
+    user.wallet.balance -= bookingAmount;
+
+    // Add transaction to wallet history
+    user.wallet.transactions.push({
+      type: 'payment',
+      amount: bookingAmount,
+      description: `Payment for booking: ${booking.tourName || 'Tour'}`,
+      reference: bookingId,
+      status: 'completed',
+      date: new Date(),
+      completedAt: new Date(),
+      bookingDetails: {
+        tourName: booking.tourName,
+        checkinDate: booking.checkinDate,
+        checkoutDate: booking.checkoutDate,
+        adults: booking.adults,
+        children: booking.children
+      }
+    });
+
+    await user.save();
+
+    // Update booking payment status
+    booking.paymentStatus = 'paid';
+    booking.status = 'confirmed';
+    if (!booking.paymentDetails) {
+      booking.paymentDetails = {};
+    }
+    booking.paymentDetails.paidAt = new Date();
+    booking.paymentDetails.paymentMethod = 'CMP Wallet';
+    booking.paymentDetails.transactionId = user.wallet.transactions[user.wallet.transactions.length - 1]._id.toString();
+
+    await booking.save();
+
+    // Populate booking details
+    await booking.populate('tourId', 'name country img rating estimatedCost duration');
+    if (booking.hotelId) {
+      await booking.populate('hotelId', 'name location rating pricePerNight');
+    }
+
+    res.json({
+      success: true,
+      message: 'Payment successful! Your booking is now confirmed.',
+      booking,
+      walletBalance: user.wallet.balance,
+      amountPaid: bookingAmount
+    });
+
+  } catch (error) {
+    console.error('Payment error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Error processing payment'
+    });
+  }
+});
+
 module.exports = router;

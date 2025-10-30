@@ -37,10 +37,16 @@ const userSchema = new mongoose.Schema({
     transactions: [{
       type: { type: String, enum: ['topup', 'payment', 'refund', 'bonus'], required: true },
       amount: { type: Number, required: true },
+      amountVND: Number, // Amount in VND for topup
       description: String,
       orderId: String,
+      orderCode: Number, // PayOS order code
+      paymentLinkId: String, // PayOS payment link ID
       momoTransId: String, // MoMo transaction ID
+      reference: String, // Bank reference number
       status: { type: String, enum: ['pending', 'completed', 'failed'], default: 'pending' },
+      date: { type: Date, default: Date.now },
+      completedAt: Date, // When payment completed
       timestamp: { type: Date, default: Date.now }
     }]
   },

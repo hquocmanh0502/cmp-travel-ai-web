@@ -1988,7 +1988,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (currentTour && (currentTour._id || currentTour.id)) {
                     try {
                         const urlParams = new URLSearchParams(window.location.search);
-                        const tourId = urlParams.get('id') || currentTour.id || currentTour._id;
+                        const tourId = urlParams.get('id') || currentTour._id || currentTour.id;
                         const response = await fetch(`http://localhost:3000/api/tours/${tourId}/gallery`);
                         if (response.ok) {
                             const data = await response.json();
@@ -2337,7 +2337,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     // Use tour id from URL params or tour object
                     const urlParams = new URLSearchParams(window.location.search);
-                    const tourId = urlParams.get('id') || currentTour.id || currentTour._id;
+                    const tourId = urlParams.get('id') || currentTour._id || currentTour.id;
                     
                     const response = await fetch(`http://localhost:3000/api/tours/${tourId}/gallery`);
                     if (response.ok) {
@@ -4255,7 +4255,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Store booking data in session storage
         const bookingData = {
-            tourId: currentTour?.id || currentTour?._id,
+            tourId: currentTour?._id || currentTour?.id,
             tourName: currentTour?.name || 'Selected Tour',
             tourDuration: currentTour?.duration || null, // ✅ Add tour duration
             selectedHotel: {

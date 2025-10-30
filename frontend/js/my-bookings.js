@@ -98,7 +98,8 @@ async function loadUserBookings() {
                 console.log('📊 Processed data:', { tourName, tourImage, destination, duration, hotelName });
                 
                 return {
-                    id: booking.bookingId || booking._id,
+                    _id: booking._id, // ✅ MongoDB ObjectId for API calls
+                    id: booking.bookingId || booking._id, // Display ID
                     tourId: isTourPopulated ? tourInfo._id : booking.tourId,
                     tourName: tourName,
                     tourImage: tourImage,
@@ -641,23 +642,199 @@ function rebookTour(tourId) {
     }, 1000);
 }
 
-function payNow(bookingId) {
+async function payNow(bookingId) {
     const booking = allBookings.find(b => b.id === bookingId);
-    if (!booking) return;
+    if (!booking) {
+        showNotification('Booking not found', 'error');
+        return;
+    }
     
-    showNotification('Payment feature will be available soon!', 'info');
-    
-    // TODO: Implement payment logic with CMP Wallet
-    // For now, just show a placeholder message
-    setTimeout(() => {
-        const confirmPay = confirm(`Pay $${booking.totalAmount.toLocaleString()} for booking #${booking.id}?\n\nNote: Payment feature is under development. This will be connected to your CMP Wallet.`);
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        showNotification('Please log in to continue', 'error');
+        return;
+    }
+
+    try {
+        // Get user's current wallet balance
+        const walletResponse = await fetch(`http://localhost:3000/api/wallet/${userId}`);
+        const walletData = await walletResponse.json();
         
-        if (confirmPay) {
-            showNotification('Payment processing... (Feature coming soon)', 'info');
-            // Close modal
-            document.querySelector('.modal-overlay')?.remove();
+        if (!walletData.success) {
+            showNotification('Could not fetch wallet balance', 'error');
+            return;
         }
-    }, 500);
+
+        const balance = walletData.wallet?.balance || 0;
+        const amount = booking.totalAmount;
+        
+        // Show payment confirmation modal - use booking._id for API, not booking.id
+        showPaymentConfirmationModal(booking, balance, amount, booking._id, userId);
+
+    } catch (error) {
+        console.error('Payment error:', error);
+        showNotification('❌ Error loading payment information. Please try again.', 'error');
+    }
+}
+
+function showPaymentConfirmationModal(booking, balance, amount, bookingId, userId) {
+    const hasEnoughBalance = balance >= amount;
+    const remaining = balance - amount;
+    const shortage = amount - balance;
+
+    // Create modal HTML
+    const modalHTML = `
+        <div class="payment-confirmation-overlay" id="paymentConfirmationModal">
+            <div class="payment-confirmation-modal">
+                <div class="payment-modal-header">
+                    <i class="fas fa-${hasEnoughBalance ? 'wallet' : 'exclamation-triangle'}"></i>
+                    <h2>Payment Confirmation</h2>
+                </div>
+                
+                <div class="payment-modal-body">
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Booking</span>
+                        <span class="payment-info-value">${booking.tourName}</span>
+                    </div>
+                    
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Amount to Pay</span>
+                        <span class="payment-info-value amount">$${amount.toLocaleString()}</span>
+                    </div>
+                    
+                    <div class="payment-info-row">
+                        <span class="payment-info-label">Current Wallet Balance</span>
+                        <span class="payment-info-value balance">$${balance.toLocaleString()}</span>
+                    </div>
+                    
+                    ${hasEnoughBalance ? `
+                        <div class="payment-info-row">
+                            <span class="payment-info-label">Remaining Balance</span>
+                            <span class="payment-info-value remaining">$${remaining.toLocaleString()}</span>
+                        </div>
+                        
+                        <div class="payment-success-info">
+                            <i class="fas fa-check-circle"></i>
+                            <p>You have sufficient balance to complete this payment.</p>
+                        </div>
+                    ` : `
+                        <div class="payment-info-row">
+                            <span class="payment-info-label">Shortage</span>
+                            <span class="payment-info-value shortage">$${shortage.toLocaleString()}</span>
+                        </div>
+                        
+                        <div class="payment-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p><strong>Insufficient Balance!</strong><br>You need to top up your wallet to complete this payment.</p>
+                        </div>
+                    `}
+                    
+                    <div class="payment-modal-actions">
+                        ${hasEnoughBalance ? `
+                            <button class="btn-cancel-payment" onclick="closePaymentModal()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                            <button class="btn-confirm-payment" onclick="confirmPayment('${bookingId}', '${userId}')">
+                                <i class="fas fa-check"></i> Confirm Payment
+                            </button>
+                        ` : `
+                            <button class="btn-cancel-payment" onclick="closePaymentModal()">
+                                <i class="fas fa-times"></i> Cancel
+                            </button>
+                            <button class="btn-topup-wallet" onclick="goToTopUp()">
+                                <i class="fas fa-plus-circle"></i> Top Up Wallet
+                            </button>
+                        `}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Add modal to page
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Add click outside to close
+    const overlay = document.getElementById('paymentConfirmationModal');
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            closePaymentModal();
+        }
+    });
+}
+
+function closePaymentModal() {
+    const modal = document.getElementById('paymentConfirmationModal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => modal.remove(), 300);
+    }
+}
+
+function goToTopUp() {
+    closePaymentModal();
+    window.location.href = 'profile.html#wallet';
+}
+
+async function confirmPayment(bookingId, userId) {
+    const confirmBtn = event.target;
+    const originalHTML = confirmBtn.innerHTML;
+    
+    try {
+        // Disable button and show loading
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+        // Make payment API call
+        const response = await fetch(`http://localhost:3000/api/bookings/${bookingId}/pay-with-wallet`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token') || 'dummy-token'}`
+            },
+            body: JSON.stringify({ userId })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Close modal
+            closePaymentModal();
+            
+            // Show success notification
+            showNotification(`✅ Payment successful! Your booking is now confirmed.`, 'success');
+            
+            // Update booking in the list - use _id to match
+            const bookingIndex = allBookings.findIndex(b => b._id === bookingId);
+            if (bookingIndex !== -1) {
+                allBookings[bookingIndex].paymentStatus = 'paid';
+                allBookings[bookingIndex].status = 'confirmed';
+            }
+            
+            // Refresh the display after short delay
+            setTimeout(() => {
+                loadBookings();
+                // Close detail modal if open
+                document.querySelector('.modal-overlay')?.remove();
+            }, 1500);
+        } else {
+            // Re-enable button
+            confirmBtn.disabled = false;
+            confirmBtn.innerHTML = originalHTML;
+            
+            // Show error
+            showNotification(`❌ Payment failed: ${data.error}`, 'error');
+        }
+
+    } catch (error) {
+        console.error('Payment error:', error);
+        
+        // Re-enable button
+        confirmBtn.disabled = false;
+        confirmBtn.innerHTML = originalHTML;
+        
+        showNotification('❌ Error processing payment. Please try again.', 'error');
+    }
 }
 
 // Utility functions

@@ -1101,6 +1101,155 @@ body::before {
   color: #dc3545;
 }
 
+/* =============================================
+   PAYOS PAYMENT QR MODAL
+   ============================================= */
+.payment-modal {
+  max-width: 600px !important;
+  width: 90% !important;
+}
+
+.payment-info {
+  text-align: center;
+}
+
+.amount-display {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.amount-label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+}
+
+.amount-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.amount-wallet {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.qr-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.qr-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.qr-text {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #666;
+  word-break: break-all;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.payment-status {
+  margin-bottom: 2rem;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  color: #667eea;
+  font-weight: 600;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(102, 126, 234, 0.3);
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.order-code {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.payment-instructions {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.payment-instructions h4 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.payment-instructions ol {
+  margin-left: 1.5rem;
+}
+
+.payment-instructions li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.payment-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.payment-actions .btn {
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.payment-actions .btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.payment-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.payment-actions .btn-secondary {
+  background: #f8f9fa;
+  color: #666;
+}
+
+.payment-actions .btn-secondary:hover {
+  background: #e9ecef;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .wallet-actions {
@@ -1119,6 +1268,14 @@ body::before {
     padding: 2rem;
     margin: 1rem;
   }
+  
+  .payment-actions {
+    grid-template-columns: 1fr;
+  }
+  
+  .amount-value {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1133,6 +1290,12 @@ body::before {
   .wallet-section {
     padding: 1.5rem;
   }
+  
+  .amount-display {
+    padding: 1.5rem;
+  }
+  
+  .qr-container {
+    padding: 1rem;
+  }
 }
-
-/* ...existing code... */

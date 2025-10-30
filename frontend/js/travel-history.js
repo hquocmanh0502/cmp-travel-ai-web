@@ -17,32 +17,28 @@ async function loadTravelHistory(userId) {
     // Show loading state
     showLoadingState();
 
-    // Fetch completed bookings
-    const response = await fetch('/api/bookings/user', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    });
+    // Fetch completed bookings from profile API
+    const response = await fetch(`http://localhost:3000/api/profile/${userId}/travel-history`);
 
     if (!response.ok) {
       throw new Error('Failed to load travel history');
     }
 
-    const bookings = await response.json();
+    const data = await response.json();
     
-    // Filter only completed bookings
-    const completedBookings = bookings.filter(b => 
-      b.status === 'completed' || 
-      (b.status === 'confirmed' && new Date(b.tourDate) < new Date())
-    );
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to load travel history');
+    }
+
+    const completedBookings = data.bookings || [];
 
     if (completedBookings.length === 0) {
       showEmptyState();
       return;
     }
 
-    // Calculate statistics
-    calculateStats(completedBookings);
+    // Display statistics
+    displayStats(data.stats);
 
     // Render timeline
     renderTimeline(completedBookings);
@@ -73,9 +69,9 @@ function showEmptyState() {
   container.innerHTML = `
     <div class="empty-state">
       <i class="fas fa-plane-slash"></i>
-      <h4>Chưa có lịch sử du lịch</h4>
-      <p>Bạn chưa có chuyến đi nào được hoàn thành. Hãy bắt đầu khám phá thế giới!</p>
-      <a href="destination.html" class="btn">Khám phá Tour</a>
+      <h4>No Travel History</h4>
+      <p>You haven't completed any trips yet. Start exploring the world!</p>
+      <a href="destination.html" class="btn">Explore Tours</a>
     </div>
   `;
 }
@@ -85,10 +81,18 @@ function showError() {
   timeline.innerHTML = `
     <div class="empty-state">
       <i class="fas fa-exclamation-triangle"></i>
-      <h4>Không thể tải dữ liệu</h4>
-      <p>Đã có lỗi xảy ra. Vui lòng thử lại sau.</p>
+      <h4>Unable to Load Data</h4>
+      <p>An error occurred. Please try again later.</p>
     </div>
   `;
+}
+
+function displayStats(stats) {
+  // Display stats from API
+  document.getElementById('totalTours').textContent = stats.totalTours || 0;
+  document.getElementById('totalCountries').textContent = stats.totalCountries || 0;
+  document.getElementById('totalDays').textContent = stats.totalDays || 0;
+  document.getElementById('totalSpent').textContent = `$${(stats.totalSpent || 0).toLocaleString()}`;
 }
 
 function calculateStats(bookings) {
