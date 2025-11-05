@@ -46,8 +46,52 @@ app.use('/api/comments', commentsRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/preferences', require('./routes/preferences'));
 
 // API Routes
+
+// Recommendations API
+app.get('/api/recommendations/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const limit = parseInt(req.query.limit) || 20;
+    
+    console.log(`🎯 Fetching recommendations for user: ${userId}`);
+    
+    const recommendations = await recommendationService.generateRecommendations(userId, { limit });
+    
+    res.json({
+      success: true,
+      count: recommendations.length,
+      recommendations: recommendations.map(r => ({
+        tour: {
+          _id: r.tour._id,
+          id: r.tour.id,
+          name: r.tour.name,
+          country: r.tour.country,
+          description: r.tour.description,
+          img: r.tour.img,
+          rating: r.tour.rating,
+          estimatedCost: r.tour.estimatedCost,
+          duration: r.tour.duration,
+          tags: r.tour.tags,
+          difficulty: r.tour.difficulty
+        },
+        score: r.score,
+        matchPercentage: r.matchPercentage,
+        reasons: r.reasons,
+        scoreBreakdown: r.scoreBreakdown
+      }))
+    });
+    
+  } catch (error) {
+    console.error('❌ Error fetching recommendations:', error);
+    res.status(500).json({ 
+      success: false,
+      error: error.message || 'Error fetching recommendations' 
+    });
+  }
+});
 
 // Tours API
 app.get('/api/tours', async (req, res) => {

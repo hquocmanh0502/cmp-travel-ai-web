@@ -91,6 +91,230 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
+  // AI Personalized Recommendations Function
+  const sortByAIRecommendations = async (tours, button) => {
+    const userId = localStorage.getItem('userId');
+    
+    // Check if user is logged in
+    if (!userId) {
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      `;
+      
+      const modalContent = document.createElement('div');
+      modalContent.style.cssText = `
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      `;
+      
+      modalContent.innerHTML = `
+        <div style="color: #ff6600; font-size: 3rem; margin-bottom: 1rem;">
+          <i class="fas fa-user-lock"></i>
+        </div>
+        <h3 style="color: #333; margin-bottom: 1rem;">Đăng nhập để nhận gợi ý</h3>
+        <p style="color: #666; margin-bottom: 1.5rem;">
+          Bạn cần đăng nhập để nhận được gợi ý tour phù hợp từ AI!
+        </p>
+        <button onclick="window.location.href='login.html'" 
+                style="background: #ff6600; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
+          Đăng nhập
+        </button>
+        <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
+                style="background: #ccc; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">
+          Đóng
+        </button>
+      `;
+      
+      modal.appendChild(modalContent);
+      document.body.appendChild(modal);
+      button.classList.remove("selected");
+      return;
+    }
+
+    // Show loading state
+    const loadingToast = document.createElement('div');
+    loadingToast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    `;
+    loadingToast.innerHTML = `
+      <i class="fas fa-spinner fa-spin" style="color: #ff6600;"></i>
+      <span style="color: #333;">Đang tìm tour phù hợp với bạn...</span>
+    `;
+    document.body.appendChild(loadingToast);
+
+    try {
+      // Fetch AI recommendations
+      const response = await fetch(`/api/recommendations/${userId}`);
+      
+      if (!response.ok) {
+        throw new Error(`API returned ${response.status}`);
+      }
+
+      const result = await response.json();
+      loadingToast.remove();
+
+      if (!result.success || result.recommendations.length === 0) {
+        // No recommendations found
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+        `;
+        
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+          background: white;
+          padding: 2rem;
+          border-radius: 10px;
+          text-align: center;
+          max-width: 400px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        `;
+        
+        modalContent.innerHTML = `
+          <div style="color: #ff6600; font-size: 3rem; margin-bottom: 1rem;">
+            <i class="fas fa-sliders-h"></i>
+          </div>
+          <h3 style="color: #333; margin-bottom: 1rem;">Cập nhật sở thích của bạn</h3>
+          <p style="color: #666; margin-bottom: 1.5rem;">
+            Vui lòng cập nhật sở thích trong trang Profile để nhận gợi ý tour phù hợp!
+          </p>
+          <button onclick="window.location.href='preferences.html'" 
+                  style="background: #ff6600; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
+            Cập nhật ngay
+          </button>
+          <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
+                  style="background: #ccc; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">
+            Đóng
+          </button>
+        `;
+        
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        button.classList.remove("selected");
+        return;
+      }
+
+      // Success toast
+      const successToast = document.createElement('div');
+      successToast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      `;
+      successToast.innerHTML = `
+        <i class="fas fa-check-circle"></i>
+        <span>Tìm thấy ${result.count} tour phù hợp với bạn!</span>
+      `;
+      document.body.appendChild(successToast);
+      setTimeout(() => successToast.remove(), 3000);
+
+      // Sort tours by match percentage
+      const tourIds = result.recommendations.map(r => r.tour._id);
+      const recommendedTours = tours.filter(tour => tourIds.includes(tour._id));
+      const otherTours = tours.filter(tour => !tourIds.includes(tour._id));
+
+      // Add match data to tours
+      recommendedTours.forEach(tour => {
+        const rec = result.recommendations.find(r => r.tour._id === tour._id);
+        if (rec) {
+          tour.aiMatch = {
+            percentage: rec.matchPercentage,
+            reasons: rec.reasons,
+            score: rec.score
+          };
+        }
+      });
+
+      // Sort by match percentage (highest first)
+      recommendedTours.sort((a, b) => b.aiMatch.percentage - a.aiMatch.percentage);
+
+      // Combine and display: recommended tours first, then others
+      const sortedData = [...recommendedTours, ...otherTours];
+      
+      // Update global data to maintain sort order
+      data.length = 0;
+      data.push(...sortedData);
+      
+      // Display first page with sorted data
+      displayPage(sortedData, 1);
+      createPagination(Math.ceil(sortedData.length / itemsPerPage), sortedData);
+      currentPage = 1;
+
+      console.log("✅ AI Recommendations applied:", result.count, "tours");
+
+    } catch (error) {
+      console.error("❌ Error fetching recommendations:", error);
+      loadingToast.remove();
+      
+      // Error toast
+      const errorToast = document.createElement('div');
+      errorToast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #dc3545;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      `;
+      errorToast.innerHTML = `
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Không thể tải gợi ý. Vui lòng thử lại!</span>
+      `;
+      document.body.appendChild(errorToast);
+      setTimeout(() => errorToast.remove(), 3000);
+      
+      button.classList.remove("selected");
+    }
+  };
+
   // Fetch data from API instead of JSON file
   let data = [];
   try {
@@ -190,16 +414,50 @@ document.addEventListener("DOMContentLoaded", async () => {
         cardRate.classList.add("card-rate");
         cardRate.innerHTML = `<i class="fa-solid fa-star"></i>${destination.rating}`;
 
-        // Add AI recommendation badge if available
-        if (destination.recommendationScore) {
-          const recBadge = document.createElement("span");
-          recBadge.classList.add("badge", "badge-success", "ml-2");
-          recBadge.textContent = "AI Recommended";
-          cardBody.appendChild(recBadge);
-        }
-
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
+
+        // Add AI match badge if available
+        if (destination.aiMatch && destination.aiMatch.percentage) {
+          const matchContainer = document.createElement("div");
+          matchContainer.style.cssText = `
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          `;
+          
+          const matchText = document.createElement("span");
+          matchText.style.cssText = `
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          `;
+          matchText.innerHTML = `
+            <i class="fas fa-robot"></i>
+            ${destination.aiMatch.percentage}% Match
+          `;
+          
+          const infoIcon = document.createElement("i");
+          infoIcon.className = "fas fa-info-circle";
+          infoIcon.style.cssText = `
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+          `;
+          infoIcon.title = destination.aiMatch.reasons.join('\n');
+          
+          matchContainer.appendChild(matchText);
+          matchContainer.appendChild(infoIcon);
+          cardBody.appendChild(matchContainer);
+        }
+
         cardBody.appendChild(cardPrice);
         cardBody.appendChild(cardRate);
 
@@ -260,7 +518,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     displayPage(data, 1);
     createPagination(totalPages, data);
-    loadRecommendations();
     
     console.log("✅ Page initialization completed");
   }, 2000);
@@ -322,7 +579,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   buttonsSort.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       const buttonClass = button.classList;
       let sortedData;
 
@@ -342,12 +599,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Reset về data gốc (không sort)
         sortedData = [...data];
       } else if (buttonClass.contains("for-you")) {
-        // Xử lý nút For You - chỉ hiển thị thông báo "Đang phát triển"
-        showDevelopmentNotice();
-        
-        // Remove selected class vì không thực hiện sort
-        button.classList.remove("selected");
-        return; // Dừng xử lý, không sort data
+        // AI Personalized Recommendations
+        await sortByAIRecommendations(data, button);
+        return; // Handle separately with async
       }
 
       // Áp dụng sort và hiển thị cho TẤT CẢ các trường hợp khác (trừ for-you)
