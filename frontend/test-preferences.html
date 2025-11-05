@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Preferences API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .success { color: green; }
+        .error { color: red; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Preferences API Test Page</h1>
+    
+    <div class="test-section">
+        <h3>1. Test GET Preferences</h3>
+        <button onclick="testGetPreferences()">Load Preferences</button>
+        <div id="getResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Test UPDATE Preferences</h3>
+        <button onclick="testUpdatePreferences()">Save New Preferences</button>
+        <div id="updateResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Test Summary</h3>
+        <button onclick="testGetSummary()">Get Summary</button>
+        <div id="summaryResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>4. Test Recommendations</h3>
+        <button onclick="testRecommendations()">Get AI Recommendations</button>
+        <div id="recResult"></div>
+    </div>
+
+    <script>
+        const userId = '69006c243a8a7b5d3ddc69ff'; // QuocManh user ID
+        
+        async function testGetPreferences() {
+            const resultDiv = document.getElementById('getResult');
+            resultDiv.innerHTML = '⏳ Loading...';
+            
+            try {
+                const response = await fetch(`/api/preferences/${userId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ SUCCESS</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.message}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testUpdatePreferences() {
+            const resultDiv = document.getElementById('updateResult');
+            resultDiv.innerHTML = '⏳ Saving...';
+            
+            const newPrefs = {
+                budgetRange: { min: 1000, max: 8000 },
+                travelStyle: ['adventure', 'cultural', 'luxury'],
+                activities: ['sightseeing', 'shopping', 'spa', 'hiking'],
+                favoriteCountries: ['Japan', 'Thailand', 'Italy'],
+                climatePreference: 'temperate',
+                groupSize: 'small',
+                travelFrequency: 'yearly',
+                accommodation: {
+                    type: 'hotel',
+                    minRating: 5,
+                    amenities: ['wifi', 'pool', 'spa', 'gym', 'breakfast', 'room-service']
+                },
+                dietaryRestrictions: ['Vegetarian', 'Halal'],
+                languagePreference: 'en'
+            };
+            
+            try {
+                const response = await fetch(`/api/preferences/${userId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newPrefs)
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ SAVED SUCCESSFULLY</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.message}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testGetSummary() {
+            const resultDiv = document.getElementById('summaryResult');
+            resultDiv.innerHTML = '⏳ Loading...';
+            
+            try {
+                const response = await fetch(`/api/preferences/${userId}/summary`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ SUCCESS</div>
+                        <h4>Completion: ${data.summary.completionPercentage}%</h4>
+                        <h4>Complete: ${data.summary.isComplete}</h4>
+                        <h4>Missing: ${data.summary.missingFields.join(', ') || 'None'}</h4>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.message}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testRecommendations() {
+            const resultDiv = document.getElementById('recResult');
+            resultDiv.innerHTML = '⏳ Loading AI recommendations...';
+            
+            try {
+                const response = await fetch(`/api/recommendations/${userId}?limit=5`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const recommendations = data.recommendations.slice(0, 5);
+                    const recList = recommendations.map((rec, i) => 
+                        `${i+1}. ${rec.tour.name} (${rec.tour.country}) - ${rec.matchPercentage}% match`
+                    ).join('\n');
+                    
+                    resultDiv.innerHTML = `
+                        <div class="success">✅ AI RECOMMENDATIONS</div>
+                        <h4>Top 5 Tours:</h4>
+                        <pre>${recList}</pre>
+                        <details>
+                            <summary>Full Response</summary>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </details>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ ${data.message}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Auto test on load
+        window.onload = function() {
+            console.log('🧪 Test page loaded. Click buttons to test API endpoints.');
+            console.log('User ID:', userId);
+        };
+    </script>
+</body>
+</html>
