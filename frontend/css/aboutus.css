@@ -139,6 +139,13 @@ a {
   overflow: hidden;
   background-color: white;  
   position: relative;
+  cursor: pointer; /* Add hand cursor */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.package:hover {
+  transform: scale(1.05); /* Slight scale effect on hover */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
 .package img{

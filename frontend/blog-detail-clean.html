@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +10,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         /* Clean Blog Detail Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Reading Progress */
         .reading-progress {
             position: fixed;
             top: 0;
@@ -22,6 +35,7 @@
             transition: width 0.3s ease;
         }
 
+        /* Hero Section */
         .blog-hero {
             position: relative;
             height: 80vh;
@@ -94,6 +108,7 @@
             font-size: 0.9rem;
         }
 
+        /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -114,6 +129,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
+        /* Article Actions */
         .article-actions {
             display: flex;
             gap: 1rem;
@@ -167,6 +183,7 @@
             color: #666;
         }
 
+        /* Blog Content */
         .blog-excerpt {
             background: linear-gradient(135deg, #fff5f0 0%, #ffe8d9 100%);
             border-left: 4px solid #ff6600;
@@ -212,6 +229,13 @@
             margin-bottom: 1.5rem;
         }
 
+        .blog-content img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+
+        /* Tags */
         .blog-tags {
             margin: 2rem 0;
         }
@@ -240,6 +264,7 @@
             text-decoration: none;
         }
 
+        /* Rating System */
         .article-rating {
             background: #f8f9fa;
             padding: 2rem;
@@ -268,6 +293,7 @@
             transform: scale(1.2);
         }
 
+        /* Newsletter */
         .newsletter-signup {
             background: linear-gradient(135deg, #ff6600, #ff8533);
             color: white;
@@ -318,6 +344,7 @@
             background: #222;
         }
 
+        /* Back Button */
         .back-to-blog {
             text-align: center;
             margin: 2rem 0;
@@ -343,6 +370,7 @@
             text-decoration: none;
         }
 
+        /* Sidebar */
         .blog-sidebar {
             display: flex;
             flex-direction: column;
@@ -374,6 +402,7 @@
             background: #ff6600;
         }
 
+        /* Share Buttons */
         .share-buttons {
             display: flex;
             flex-direction: column;
@@ -402,9 +431,9 @@
             text-decoration: none;
         }
 
+        /* Popular Articles */
         .popular-articles {
             list-style: none;
-            padding: 0;
         }
 
         .popular-articles li {
@@ -439,6 +468,7 @@
             text-decoration: none;
         }
 
+        /* Author Widget */
         .author-widget {
             text-align: center;
         }
@@ -481,6 +511,7 @@
             text-decoration: none;
         }
 
+        /* Related Articles */
         .related-articles {
             margin: 4rem 0;
         }
@@ -562,6 +593,7 @@
             color: #999;
         }
 
+        /* Scroll to Top */
         .scroll-to-top {
             position: fixed;
             bottom: 2rem;
@@ -588,6 +620,7 @@
             transform: translateY(-3px);
         }
 
+        /* Responsive */
         @media (max-width: 1024px) {
             .blog-main-wrapper {
                 grid-template-columns: 1fr;
@@ -642,7 +675,7 @@
 </head>
 
 <body>
-    <!-- Header -->
+    <!-- Header từ main.css -->
     <header class="header" style="background-image: url('./images/header-bg/blog-bg.jpg');">
         <div class="overlay"></div>
         <div class="header-text">
@@ -750,7 +783,7 @@
                 </div>
 
                 <!-- Tags -->
-                <div class="blog-tags" id="blog-tags-container">
+                <div class="blog-tags">
                     <h4><i class="fas fa-tags"></i> Tags</h4>
                     <div class="tags-wrapper">
                         <a href="#" class="tag"><i class="fas fa-tag"></i> Vietnam</a>
@@ -832,14 +865,6 @@
                     </div>
                 </div>
 
-                <!-- Table of Contents -->
-                <div class="sidebar-widget toc-widget">
-                    <h4>Table of Contents</h4>
-                    <ul class="toc-list">
-                        <!-- Will be populated by JavaScript -->
-                    </ul>
-                </div>
-
                 <!-- Popular Articles -->
                 <div class="sidebar-widget popular-widget">
                     <h4>Popular Articles</h4>
@@ -877,9 +902,9 @@
                 <!-- Author Widget -->
                 <div class="sidebar-widget author-widget">
                     <div class="author-avatar">
-                        <img src="https://images.unsplash.com/photo-1494790108755-2616c5e93d26?w=100&h=100&fit=crop&crop=face" alt="Author" id="author-avatar">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616c5e93d26?w=100&h=100&fit=crop&crop=face" alt="Author">
                     </div>
-                    <h4 id="author-name-sidebar">CMP Travel Team</h4>
+                    <h4>CMP Travel Team</h4>
                     <p class="author-bio">Passionate travel writers sharing amazing destinations and insider tips from around the world.</p>
                     <div class="author-social">
                         <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
@@ -954,7 +979,6 @@
             setupRating();
             setupNewsletter();
             setupSocialShare();
-            loadBlogData();
         });
 
         // Reading Progress
@@ -1165,75 +1189,6 @@
             });
         }
 
-        // Load Blog Data from URL
-        function loadBlogData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const blogId = urlParams.get('id');
-            
-            if (blogId) {
-                // Try to load dynamic content based on ID
-                fetch(`/api/blogs`)
-                    .then(response => response.json())
-                    .then(blogs => {
-                        const blog = blogs.find(b => b.id == blogId);
-                        if (blog) {
-                            updateBlogContent(blog);
-                        }
-                    })
-                    .catch(error => {
-                        console.log('Using static content');
-                    });
-            }
-        }
-
-        // Update blog content dynamically
-        function updateBlogContent(blog) {
-            if (blog.title) {
-                document.getElementById('blog-title').textContent = blog.title;
-                document.title = `${blog.title} - CMP Travel`;
-            }
-            
-            if (blog.author) {
-                document.getElementById('author-name').textContent = blog.author;
-                document.getElementById('author-name-sidebar').textContent = blog.author;
-            }
-            
-            if (blog.publishDate) {
-                const date = new Date(blog.publishDate);
-                document.getElementById('publish-date').textContent = date.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            }
-            
-            if (blog.category) {
-                document.getElementById('category-name').textContent = blog.category;
-            }
-            
-            if (blog.views) {
-                document.getElementById('view-count').textContent = blog.views.toLocaleString();
-            }
-            
-            if (blog.readingTime) {
-                document.getElementById('reading-time').textContent = blog.readingTime;
-            }
-            
-            if (blog.excerpt) {
-                document.getElementById('blog-excerpt').textContent = blog.excerpt;
-            }
-            
-            if (blog.content) {
-                document.getElementById('blog-content').innerHTML = blog.content;
-            }
-            
-            if (blog.image) {
-                const heroImage = document.getElementById('blog-main-image');
-                heroImage.src = blog.image;
-                heroImage.style.display = 'block';
-            }
-        }
-
         // Toast notification
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
@@ -1261,5 +1216,4 @@
         }
     </script>
 </body>
-
 </html>

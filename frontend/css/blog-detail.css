@@ -99,6 +99,85 @@
     font-size: 3.5rem;
     font-family: "Volkhov";
     color: white;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Blog Meta Information */
+.blog-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.blog-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.blog-meta i {
+    color: #ff6600;
+    font-size: 1rem;
+}
+
+/* Tags Section */
+.blog-tags {
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+}
+
+.blog-tags h4 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #ff6600, #ff8533);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.tag-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.tag-badge i {
+    font-size: 0.7rem;
+}
+
+/* Original blog meta styles */
+.head h1 {
     margin-bottom: 25px;
     line-height: 1.3;
     text-shadow: 2px 4px 20px rgba(0, 0, 0, 0.5);
@@ -732,6 +811,140 @@
     .blog-excerpt p {
         font-size: 1.05rem;
     }
+}
+
+/* Additional styles for new components */
+.newsletter-signup {
+    background: linear-gradient(135deg, #ff6600 0%, #ff8533 100%);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    color: white;
+    margin: 2.5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.newsletter-signup::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.newsletter-content {
+    position: relative;
+    z-index: 2;
+}
+
+.newsletter-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.newsletter-signup h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.newsletter-signup p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.newsletter-form .form-group {
+    display: flex;
+    max-width: 400px;
+    margin: 0 auto 1rem;
+    background: white;
+    border-radius: 25px;
+    padding: 0.3rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.newsletter-form input {
+    flex: 1;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.newsletter-form button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.newsletter-form button:hover {
+    background: #222;
+    transform: translateX(3px);
+}
+
+.newsletter-signup small {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* Article Rating Styles */
+.article-rating {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    margin: 2.5rem 0;
+}
+
+.article-rating h4 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.rating-stars i {
+    font-size: 1.5rem;
+    color: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rating-stars i:hover,
+.rating-stars i.active {
+    color: #ffb400;
+    transform: scale(1.2);
+}
+
+.rating-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
 }
 
 
