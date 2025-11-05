@@ -48,8 +48,55 @@ function initializePreferencesPage() {
 }
 
 function loadUserPreferences() {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        console.error('No userId found');
+        return;
+    }
+
+    showLoading(true);
+
+    // Load preferences from API
+    fetch(`/api/preferences/${userId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log('✅ Preferences loaded from API:', data.preferences);
+                
+                // Map API response to form format
+                userPreferences = mapApiToFormData(data.preferences);
+                
+                // Store original for change detection
+                originalPreferences = JSON.parse(JSON.stringify(userPreferences));
+                
+                // Populate form fields
+                populatePreferencesForm();
+                
+                showNotification('Preferences loaded successfully', 'success');
+            } else {
+                throw new Error(data.message || 'Failed to load preferences');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading preferences from API:', error);
+            
+            // Fallback to localStorage
+            loadFromLocalStorage();
+            
+            showNotification('Using cached preferences. Some data may be outdated.', 'warning');
+        })
+        .finally(() => {
+            showLoading(false);
+        });
+}
+
+function loadFromLocalStorage() {
     try {
-        // Load from localStorage or use defaults
         const savedPreferences = localStorage.getItem('userPreferences');
         
         if (savedPreferences) {
@@ -82,12 +129,33 @@ function loadUserPreferences() {
         // Populate form fields
         populatePreferencesForm();
         
-        console.log('✅ User preferences loaded');
+        console.log('✅ User preferences loaded from localStorage');
         
     } catch (error) {
-        console.error('Error loading preferences:', error);
+        console.error('Error loading preferences from localStorage:', error);
         showNotification('Error loading your preferences', 'error');
     }
+}
+
+function mapApiToFormData(apiPreferences) {
+    return {
+        budget: {
+            min: apiPreferences.budgetRange?.min || 500,
+            max: apiPreferences.budgetRange?.max || 5000
+        },
+        travelStyle: apiPreferences.travelStyle || [],
+        accommodation: {
+            type: apiPreferences.accommodation?.type || 'hotel',
+            rating: apiPreferences.accommodation?.minRating || 4,
+            amenities: apiPreferences.accommodation?.amenities || []
+        },
+        activities: apiPreferences.activities || [],
+        dietary: apiPreferences.dietaryRestrictions || [],
+        climate: apiPreferences.climatePreference || 'temperate',
+        language: apiPreferences.languagePreference || 'en',
+        groupSize: apiPreferences.groupSize || 'medium',
+        travelFrequency: apiPreferences.travelFrequency || 'quarterly'
+    };
 }
 
 function populatePreferencesForm() {
@@ -350,6 +418,12 @@ function setupFormValidation() {
 }
 
 async function savePreferences() {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        showNotification('Please login to save preferences', 'error');
+        return;
+    }
+
     try {
         showLoadingOverlay('Saving your preferences...');
         
@@ -361,11 +435,30 @@ async function savePreferences() {
             hideLoadingOverlay();
             return;
         }
+
+        // Map form data to API format
+        const apiData = mapFormToApiData(formData);
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log('🔄 Saving preferences to API:', apiData);
+
+        // Save to API
+        const response = await fetch(`/api/preferences/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(apiData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || `HTTP ${response.status}`);
+        }
+
+        console.log('✅ Preferences saved to API successfully');
         
-        // Save to localStorage
+        // Save to localStorage as backup
         localStorage.setItem('userPreferences', JSON.stringify(formData));
         
         // Update global variables
@@ -394,10 +487,44 @@ async function savePreferences() {
         generateAIInsights();
         
     } catch (error) {
-        console.error('Error saving preferences:', error);
+        console.error('❌ Error saving preferences:', error);
         hideLoadingOverlay();
-        showNotification('Error saving preferences. Please try again.', 'error');
+        
+        // Fallback to localStorage
+        try {
+            const formData = collectFormData();
+            localStorage.setItem('userPreferences', JSON.stringify(formData));
+            showNotification('Preferences saved locally. Will sync when online.', 'warning');
+        } catch (fallbackError) {
+            showNotification('Error saving preferences. Please try again.', 'error');
+        }
     }
+}
+
+function mapFormToApiData(formData) {
+    return {
+        budgetRange: {
+            min: formData.budget?.min || 500,
+            max: formData.budget?.max || 5000
+        },
+        travelStyle: formData.travelStyle || [],
+        activities: formData.activities || [],
+        favoriteCountries: [], // Will be filled later
+        favoriteDestinations: [], // Will be filled later
+        climatePreference: formData.climate || 'temperate',
+        groupSize: formData.groupSize || 'medium',
+        travelFrequency: formData.travelFrequency || 'quarterly',
+        accommodation: {
+            type: formData.accommodation?.type || 'hotel',
+            minRating: formData.accommodation?.rating || 4,
+            amenities: formData.accommodation?.amenities || []
+        },
+        hotelPreferences: {
+            amenities: formData.accommodation?.amenities || []
+        },
+        dietaryRestrictions: formData.dietary || [],
+        languagePreference: formData.language || 'en'
+    };
 }
 
 function collectFormData() {
@@ -618,6 +745,36 @@ function generateAIInsights() {
 }
 
 // Utility functions
+function showLoading(show) {
+    const container = document.querySelector('.preferences-container');
+    if (!container) return;
+
+    if (show) {
+        const loading = document.createElement('div');
+        loading.className = 'loading-indicator';
+        loading.innerHTML = `
+            <div class="loading-spinner-small"></div>
+            <span>Loading preferences...</span>
+        `;
+        loading.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            background: rgba(255, 102, 0, 0.1);
+            border: 1px solid #ff6600;
+            border-radius: 8px;
+            color: #ff6600;
+            margin-bottom: 20px;
+            font-weight: 500;
+        `;
+        container.insertBefore(loading, container.firstChild);
+    } else {
+        const loading = document.querySelector('.loading-indicator');
+        if (loading) loading.remove();
+    }
+}
+
 function showLoadingOverlay(message = 'Processing...') {
     const overlay = document.createElement('div');
     overlay.className = 'loading-overlay';
