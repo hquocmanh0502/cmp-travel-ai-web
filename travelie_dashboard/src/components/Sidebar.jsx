@@ -10,7 +10,9 @@ import {
   MdChat,
   MdAttachMoney,
   MdSettings,
-  MdLogout
+  MdLogout,
+  MdSecurity,
+  MdBlock
 } from "react-icons/md";
 
 function Sidebar({ active, setActive }) {
@@ -21,6 +23,8 @@ function Sidebar({ active, setActive }) {
     { id: "users", label: "Users", icon: MdPeople },
     { id: "hotels", label: "Hotels", icon: MdHotel },
     { id: "reviews", label: "Reviews", icon: MdRateReview },
+    { id: "spam-dashboard", label: "Spam Detection", icon: MdSecurity },
+    { id: "ban-management", label: "Ban Management", icon: MdBlock },
     { id: "blog", label: "Blog", icon: MdArticle },
     { id: "messages", label: "Messages", icon: MdChat },
     { id: "revenue", label: "Revenue", icon: MdAttachMoney },
