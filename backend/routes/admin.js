@@ -341,6 +341,7 @@ router.get('/tours', isAdmin, async (req, res) => {
     const type = req.query.type;
     const status = req.query.status;
     const featured = req.query.featured;
+    const sortBy = req.query.sortBy;
     
     let query = {};
     
@@ -363,34 +364,63 @@ router.get('/tours', isAdmin, async (req, res) => {
       query.featured = featured === 'true';
     }
 
-    const tours = await Tour.find(query)
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
-
+    let tours;
     const total = await Tour.countDocuments(query);
 
-    // Get booking count for each tour
-    const toursWithStats = await Promise.all(
-      tours.map(async (tour) => {
-        const bookingCount = await Booking.countDocuments({ tourId: tour._id });
-        const paidBookings = await Booking.find({ 
-          tourId: tour._id, 
-          paymentStatus: 'paid' 
-        });
-        const totalRevenue = paidBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
+    if (sortBy === 'revenue') {
+      // Get all tours matching query first
+      const allTours = await Tour.find(query);
+      
+      // Calculate revenue for all tours
+      const toursWithRevenue = await Promise.all(
+        allTours.map(async (tour) => {
+          const bookingCount = await Booking.countDocuments({ tourId: tour._id });
+          const paidBookings = await Booking.find({ 
+            tourId: tour._id, 
+            paymentStatus: 'paid' 
+          });
+          const totalRevenue = paidBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
 
-        return {
-          ...tour.toObject(),
-          bookings: bookingCount,
-          revenue: totalRevenue
-        };
-      })
-    );
+          return {
+            ...tour.toObject(),
+            bookings: bookingCount,
+            revenue: totalRevenue
+          };
+        })
+      );
+
+      // Sort by revenue (highest first) and paginate
+      const sortedTours = toursWithRevenue.sort((a, b) => b.revenue - a.revenue);
+      tours = sortedTours.slice(skip, skip + limit);
+    } else {
+      // Regular pagination and sort
+      const tourList = await Tour.find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+      // Get booking count for each tour
+      tours = await Promise.all(
+        tourList.map(async (tour) => {
+          const bookingCount = await Booking.countDocuments({ tourId: tour._id });
+          const paidBookings = await Booking.find({ 
+            tourId: tour._id, 
+            paymentStatus: 'paid' 
+          });
+          const totalRevenue = paidBookings.reduce((sum, b) => sum + (b.totalAmount || 0), 0);
+
+          return {
+            ...tour.toObject(),
+            bookings: bookingCount,
+            revenue: totalRevenue
+          };
+        })
+      );
+    }
 
     res.json({
       success: true,
-      data: toursWithStats,
+      data: tours,
       pagination: {
         page,
         limit,

@@ -17,6 +17,7 @@ import {
   MdTrendingUp
 } from 'react-icons/md';
 import { toast } from 'react-hot-toast';
+import EnhancedTourFormModal from '../../components/EnhancedTourFormModal';
 
 const API_BASE_URL = 'http://localhost:3000/api/admin';
 
@@ -32,6 +33,7 @@ export default function ToursManagement() {
   const [typeFilter, setTypeFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [featuredFilter, setFeaturedFilter] = useState('all');
+  const [sortByRevenue, setSortByRevenue] = useState(false);
   
   // Modals
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -51,7 +53,7 @@ export default function ToursManagement() {
   useEffect(() => {
     fetchTours();
     fetchStats();
-  }, [page, searchTerm, typeFilter, statusFilter, featuredFilter]);
+  }, [page, searchTerm, typeFilter, statusFilter, featuredFilter, sortByRevenue]);
 
   const fetchTours = async () => {
     try {
@@ -65,10 +67,12 @@ export default function ToursManagement() {
       if (typeFilter !== 'all') params.append('type', typeFilter);
       if (statusFilter !== 'all') params.append('status', statusFilter);
       if (featuredFilter !== 'all') params.append('featured', featuredFilter);
+      if (sortByRevenue) params.append('sortBy', 'revenue');
 
-      const response = await fetch(`${API_BASE_URL}/tours?${params}`);
+      const apiUrl = `${API_BASE_URL}/tours?${params}`;
+      const response = await fetch(apiUrl);
       const data = await response.json();
-
+      
       if (data.success) {
         setTours(data.data);
         setTotalPages(data.pagination.pages);
@@ -124,6 +128,7 @@ export default function ToursManagement() {
     setTypeFilter('all');
     setStatusFilter('all');
     setFeaturedFilter('all');
+    setSortByRevenue(false);
     fetchTours();
     fetchStats();
   };
@@ -208,7 +213,7 @@ export default function ToursManagement() {
 
       {/* Filters and Search */}
       <div className="bg-white rounded-lg shadow p-4 mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
           {/* Search */}
           <div className="md:col-span-2">
             <div className="relative">
@@ -259,20 +264,40 @@ export default function ToursManagement() {
             </select>
           </div>
 
-          {/* Featured Filter & Refresh */}
-          <div className="flex gap-2">
+          {/* Featured Filter */}
+          <div>
             <select
               value={featuredFilter}
               onChange={(e) => {
                 setFeaturedFilter(e.target.value);
                 setPage(1);
               }}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="all">All</option>
               <option value="true">Featured Only</option>
               <option value="false">Not Featured</option>
             </select>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => {
+                const newSortState = !sortByRevenue;
+                setSortByRevenue(newSortState);
+                setPage(1);
+              }}
+              className={`px-4 py-2 rounded-lg transition-colors flex items-center gap-2 ${
+                sortByRevenue 
+                  ? 'bg-green-100 text-green-700 hover:bg-green-200' 
+                  : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+              title={sortByRevenue ? "Clear revenue sort" : "Sort by highest revenue"}
+            >
+              <MdTrendingUp className="text-lg" />
+              <span className="text-sm font-medium">Revenue</span>
+            </button>
 
             <button
               onClick={handleRefresh}
@@ -284,6 +309,23 @@ export default function ToursManagement() {
           </div>
         </div>
       </div>
+
+      {/* Revenue Sort Banner */}
+      {sortByRevenue && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center gap-3">
+          <MdTrendingUp className="text-green-600 text-xl" />
+          <div>
+            <p className="text-green-800 font-medium">Sorted by Revenue (Highest First)</p>
+            <p className="text-green-600 text-sm">Tours are ordered by total revenue from completed bookings</p>
+          </div>
+          <button
+            onClick={() => setSortByRevenue(false)}
+            className="ml-auto text-green-600 hover:text-green-800"
+          >
+            <MdClose className="text-xl" />
+          </button>
+        </div>
+      )}
 
       {/* Tours Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -311,8 +353,12 @@ export default function ToursManagement() {
                     <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Pricing
                     </th>
-                    <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                      Stats
+                    <th className={`px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider ${
+                      sortByRevenue 
+                        ? 'text-green-700 bg-green-50' 
+                        : 'text-gray-700'
+                    }`}>
+                      Stats {sortByRevenue && '(Sorted by Revenue)'}
                     </th>
                     <th className="px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                       Status
@@ -437,7 +483,7 @@ export default function ToursManagement() {
 
       {/* Create/Edit Modal */}
       {(showCreateModal || showEditModal) && (
-        <TourFormModal
+        <EnhancedTourFormModal
           tour={selectedTour}
           isEdit={showEditModal}
           onClose={() => {
@@ -451,273 +497,6 @@ export default function ToursManagement() {
           }}
         />
       )}
-    </div>
-  );
-}
-
-// Tour Form Modal Component
-function TourFormModal({ tour, isEdit, onClose, onSuccess }) {
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: tour?.name || '',
-    country: tour?.country || '',
-    description: tour?.description || '',
-    img: tour?.img || '',
-    duration: tour?.duration || '7 Days',
-    type: tour?.type || 'international',
-    estimatedCost: tour?.estimatedCost || tour?.pricing?.adult || 5000,
-    maxGroupSize: tour?.maxGroupSize || 20,
-    status: tour?.status || 'active',
-    featured: tour?.featured || false
-  });
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const url = isEdit 
-        ? `${API_BASE_URL}/tours/${tour._id}`
-        : `${API_BASE_URL}/tours`;
-      
-      const method = isEdit ? 'PUT' : 'POST';
-
-      const tourData = {
-        ...formData,
-        pricing: {
-          adult: parseInt(formData.estimatedCost),
-          child: Math.floor(parseInt(formData.estimatedCost) * 0.7),
-          infant: Math.floor(parseInt(formData.estimatedCost) * 0.3),
-          groupDiscount: 10
-        }
-      };
-
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(tourData)
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        toast.success(isEdit ? 'Tour updated successfully' : 'Tour created successfully');
-        onSuccess();
-        onClose();
-      } else {
-        toast.error(data.error || 'Failed to save tour');
-      }
-    } catch (error) {
-      console.error('Error saving tour:', error);
-      toast.error('Failed to save tour');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] flex flex-col">
-        {/* Header */}
-        <div className="flex-shrink-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-xl">
-          <h2 className="text-xl font-bold text-gray-800">
-            {isEdit ? 'Edit Tour' : 'Create New Tour'}
-          </h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-            <MdClose className="text-xl" />
-          </button>
-        </div>
-
-        {/* Form */}
-        <form id="tour-form" onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
-          <div className="p-6 space-y-4">
-            {/* Tour Name */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Tour Name *
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            {/* Country & Type */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Country *
-                </label>
-                <input
-                  type="text"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Type *
-                </label>
-                <select
-                  name="type"
-                  value={formData.type}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="domestic">Domestic</option>
-                  <option value="international">International</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description *
-              </label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows="3"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            {/* Image URL */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Image URL *
-              </label>
-              <input
-                type="url"
-                name="img"
-                value={formData.img}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                placeholder="https://example.com/image.jpg"
-                required
-              />
-            </div>
-
-            {/* Duration, Price, Group Size */}
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Duration
-                </label>
-                <input
-                  type="text"
-                  name="duration"
-                  value={formData.duration}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="7 Days"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Price (USD) *
-                </label>
-                <input
-                  type="number"
-                  name="estimatedCost"
-                  value={formData.estimatedCost}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  min="0"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Max Group Size
-                </label>
-                <input
-                  type="number"
-                  name="maxGroupSize"
-                  value={formData.maxGroupSize}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  min="1"
-                />
-              </div>
-            </div>
-
-            {/* Status & Featured */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Status *
-                </label>
-                <select
-                  name="status"
-                  value={formData.status}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  required
-                >
-                  <option value="active">Active</option>
-                  <option value="draft">Draft</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-
-              <div className="flex items-end">
-                <label className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer w-full">
-                  <input
-                    type="checkbox"
-                    name="featured"
-                    checked={formData.featured}
-                    onChange={handleChange}
-                    className="w-4 h-4 text-purple-600 focus:ring-purple-500"
-                  />
-                  <span className="text-sm font-medium text-gray-800">Featured Tour</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        {/* Footer */}
-        <div className="flex-shrink-0 bg-white border-t border-gray-200 px-6 py-4 flex gap-3 rounded-b-xl">
-          <button
-            type="button"
-            onClick={onClose}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            form="tour-form"
-            disabled={loading}
-            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 transition-colors"
-          >
-            {loading ? 'Saving...' : isEdit ? 'Update Tour' : 'Create Tour'}
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
