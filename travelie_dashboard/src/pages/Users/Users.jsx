@@ -6,6 +6,9 @@ function Users() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
+  const [showBlockModal, setShowBlockModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [blockReason, setBlockReason] = useState("");
 
   useEffect(() => {
     // TODO: Replace with actual API call
@@ -27,6 +30,7 @@ function Users() {
           createdAt: "2024-01-15",
           totalBookings: 5,
           totalSpent: 12500,
+          blocked: false,
         },
         {
           _id: "2",
@@ -39,6 +43,7 @@ function Users() {
           createdAt: "2024-02-20",
           totalBookings: 3,
           totalSpent: 9600,
+          blocked: false,
         },
         {
           _id: "3",
@@ -51,6 +56,7 @@ function Users() {
           createdAt: "2024-03-10",
           totalBookings: 1,
           totalSpent: 1800,
+          blocked: true, // This user is blocked
         },
         {
           _id: "4",
@@ -63,6 +69,7 @@ function Users() {
           createdAt: "2024-03-25",
           totalBookings: 7,
           totalSpent: 31500,
+          blocked: false,
         },
         {
           _id: "5",
@@ -75,6 +82,7 @@ function Users() {
           createdAt: "2024-04-05",
           totalBookings: 2,
           totalSpent: 4200,
+          blocked: false,
         },
       ]);
       setLoading(false);
@@ -109,6 +117,50 @@ function Users() {
       month: 'short',
       day: 'numeric',
     });
+  };
+
+  const handleBlockUser = (user) => {
+    setSelectedUser(user);
+    setShowBlockModal(true);
+    setBlockReason('');
+  };
+
+  const confirmBlockUser = async () => {
+    if (!selectedUser || !blockReason.trim()) return;
+
+    try {
+      const action = selectedUser.blocked ? 'unblock' : 'block';
+      const response = await fetch(`http://localhost:3000/api/users/${selectedUser._id}/block`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason: blockReason, action })
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        // Update local state
+        setUsers(prevUsers => 
+          prevUsers.map(user => 
+            user._id === selectedUser._id 
+              ? { ...user, blocked: !user.blocked }
+              : user
+          )
+        );
+
+        setShowBlockModal(false);
+        setSelectedUser(null);
+        setBlockReason('');
+        
+        // Show success message
+        alert(selectedUser.blocked ? 'User unblocked successfully!' : 'User blocked successfully!');
+      } else {
+        throw new Error(data.message || 'Failed to process request');
+      }
+    } catch (error) {
+      console.error('Error blocking/unblocking user:', error);
+      alert('Error processing request. Please try again.');
+    }
   };
 
   return (
@@ -183,6 +235,9 @@ function Users() {
                   Status
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                  Booking Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
                   Joined
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
@@ -200,7 +255,7 @@ function Users() {
               {loading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <tr key={i}>
-                    <td className="px-6 py-4" colSpan="7">
+                    <td className="px-6 py-4" colSpan="8">
                       <div className="h-12 bg-gray-200 animate-pulse rounded"></div>
                     </td>
                   </tr>
@@ -258,6 +313,21 @@ function Users() {
                       )}
                     </td>
 
+                    {/* Booking Status */}
+                    <td className="px-6 py-4">
+                      {user.blocked ? (
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                          <MdBlock />
+                          Blocked
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                          <MdCheckCircle />
+                          Active
+                        </span>
+                      )}
+                    </td>
+
                     {/* Joined */}
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {formatDate(user.createdAt)}
@@ -281,7 +351,15 @@ function Users() {
                         <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                           <MdEdit />
                         </button>
-                        <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                        <button 
+                          onClick={() => handleBlockUser(user)}
+                          className={`p-2 rounded-lg transition-colors ${
+                            user.blocked 
+                              ? 'text-green-600 hover:bg-green-50' 
+                              : 'text-red-600 hover:bg-red-50'
+                          }`}
+                          title={user.blocked ? 'Unblock User' : 'Block User'}
+                        >
                           <MdBlock />
                         </button>
                       </div>
@@ -293,6 +371,67 @@ function Users() {
           </table>
         </div>
       </div>
+
+      {/* Block/Unblock Modal */}
+      {showBlockModal && selectedUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-bold mb-4">
+              {selectedUser.blocked ? 'Unblock User' : 'Block User'}
+            </h2>
+            
+            <div className="mb-4 p-3 bg-gray-50 rounded">
+              <p><strong>User:</strong> {selectedUser.fullName}</p>
+              <p><strong>Email:</strong> {selectedUser.email}</p>
+            </div>
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {selectedUser.blocked ? 'Reason for unblocking:' : 'Reason for blocking:'}
+              </label>
+              <textarea
+                value={blockReason}
+                onChange={(e) => setBlockReason(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows="3"
+                placeholder={selectedUser.blocked ? 
+                  "Enter reason for unblocking this user..." : 
+                  "Enter reason for blocking this user (e.g., violation of terms, suspicious activity)..."
+                }
+              />
+            </div>
+
+            {!selectedUser.blocked && (
+              <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded">
+                <p className="text-sm text-orange-800">
+                  ⚠️ <strong>Warning:</strong> Blocking this user will prevent them from making new bookings. 
+                  They will see a notification when trying to book tours.
+                </p>
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowBlockModal(false)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmBlockUser}
+                disabled={!blockReason.trim()}
+                className={`flex-1 px-4 py-2 rounded-lg text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed ${
+                  selectedUser.blocked 
+                    ? 'bg-green-600 hover:bg-green-700' 
+                    : 'bg-red-600 hover:bg-red-700'
+                }`}
+              >
+                {selectedUser.blocked ? 'Unblock User' : 'Block User'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

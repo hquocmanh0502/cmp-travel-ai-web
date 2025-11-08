@@ -1,0 +1,500 @@
+{
+  "Vietnam": [
+    {
+      "id": "VN001",
+      "name": "Vinpearl Luxury Ha Long",
+      "location": {
+        "address": "Hon Tre Island, Ha Long Bay, Quang Ninh Province",
+        "coordinates": [107.0567, 20.9101],
+        "city": "Ha Long",
+        "country": "Vietnam",
+        "distanceToCenter": 12
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 180, "max": 450 },
+        "currency": "USD",
+        "amenities": ["wifi", "pool", "spa", "gym", "restaurant", "bar", "beach", "private_beach", "water_sports", "kids_club"],
+        "roomTypes": [
+          {
+            "type": "Deluxe Ocean View",
+            "price": 180,
+            "capacity": 2,
+            "size": 42,
+            "amenities": ["ocean_view", "balcony", "minibar", "safe"]
+          },
+          {
+            "type": "Grand Suite Bay View",
+            "price": 350,
+            "capacity": 4,
+            "size": 85,
+            "amenities": ["bay_view", "living_room", "jacuzzi", "butler_service"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800",
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800"
+        ],
+        "description": "Experience luxury on a private island with stunning views of Ha Long Bay. This 5-star resort offers world-class amenities and unparalleled service.",
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00",
+        "policies": {
+          "cancellation": "Free cancellation up to 24 hours before check-in",
+          "petPolicy": "No pets allowed",
+          "childPolicy": "Children under 12 stay free with existing bedding"
+        }
+      },
+      "reviewsSummary": {
+        "totalReviews": 1247,
+        "averageRating": 4.8,
+        "ratings": {
+          "cleanliness": 4.9,
+          "comfort": 4.8,
+          "location": 4.9,
+          "service": 4.7,
+          "value": 4.6
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    },
+    {
+      "id": "VN002", 
+      "name": "Rex Hotel Saigon",
+      "location": {
+        "address": "141 Nguyen Hue Boulevard, District 1, Ho Chi Minh City",
+        "coordinates": [106.7017, 10.7769],
+        "city": "Ho Chi Minh City",
+        "country": "Vietnam",
+        "distanceToCenter": 0.5
+      },
+      "details": {
+        "rating": 4.5,
+        "starRating": 5,
+        "priceRange": { "min": 120, "max": 280 },
+        "currency": "USD",
+        "amenities": ["wifi", "pool", "spa", "gym", "restaurant", "bar", "business_center", "rooftop_bar"],
+        "roomTypes": [
+          {
+            "type": "Superior City View",
+            "price": 120,
+            "capacity": 2,
+            "size": 35,
+            "amenities": ["city_view", "work_desk", "minibar"]
+          },
+          {
+            "type": "Executive Suite",
+            "price": 250,
+            "capacity": 3,
+            "size": 65,
+            "amenities": ["living_room", "executive_lounge", "city_view"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800"
+        ],
+        "description": "Historic luxury hotel in the heart of Saigon with colonial charm and modern amenities. Perfect location for exploring the city.",
+        "checkInTime": "14:00",
+        "checkOutTime": "12:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 2156,
+        "averageRating": 4.5,
+        "ratings": {
+          "cleanliness": 4.6,
+          "comfort": 4.4,
+          "location": 4.9,
+          "service": 4.5,
+          "value": 4.3
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    },
+    {
+      "id": "VN003",
+      "name": "La Residence Hue Hotel & Spa",
+      "location": {
+        "address": "5 Le Loi Street, Hue City, Thua Thien Hue Province",
+        "coordinates": [107.5909, 16.4637],
+        "city": "Hue",
+        "country": "Vietnam", 
+        "distanceToCenter": 1.2
+      },
+      "details": {
+        "rating": 4.7,
+        "starRating": 5,
+        "priceRange": { "min": 150, "max": 320 },
+        "currency": "USD",
+        "amenities": ["wifi", "pool", "spa", "restaurant", "bar", "garden", "river_view"],
+        "roomTypes": [
+          {
+            "type": "Heritage Room",
+            "price": 150,
+            "capacity": 2,
+            "size": 40,
+            "amenities": ["garden_view", "colonial_design", "minibar"]
+          },
+          {
+            "type": "Riverside Suite", 
+            "price": 280,
+            "capacity": 3,
+            "size": 70,
+            "amenities": ["river_view", "living_room", "private_terrace"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800",
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+        ],
+        "description": "Elegant boutique hotel overlooking the Perfume River, blending French colonial architecture with Vietnamese hospitality.",
+        "checkInTime": "15:00",
+        "checkOutTime": "11:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 892,
+        "averageRating": 4.7,
+        "ratings": {
+          "cleanliness": 4.8,
+          "comfort": 4.7,
+          "location": 4.6,
+          "service": 4.8,
+          "value": 4.5
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    }
+  ],
+  "Japan": [
+    {
+      "id": "JP001",
+      "name": "Aman Tokyo",
+      "location": {
+        "address": "1-5-6 Otemachi, Chiyoda-ku, Tokyo",
+        "coordinates": [139.7660, 35.6895],
+        "city": "Tokyo",
+        "country": "Japan",
+        "distanceToCenter": 2.1
+      },
+      "details": {
+        "rating": 4.9,
+        "starRating": 5,
+        "priceRange": { "min": 800, "max": 2000 },
+        "currency": "USD",
+        "amenities": ["wifi", "spa", "gym", "restaurant", "bar", "concierge", "business_center"],
+        "roomTypes": [
+          {
+            "type": "Deluxe Room",
+            "price": 800,
+            "capacity": 2,
+            "size": 71,
+            "amenities": ["city_view", "deep_soaking_tub", "tatami_seating"]
+          },
+          {
+            "type": "Aman Suite",
+            "price": 1500,
+            "capacity": 4,
+            "size": 126,
+            "amenities": ["panoramic_view", "living_room", "study", "butler_service"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800"
+        ],
+        "description": "Urban sanctuary in the heart of Tokyo offering minimalist luxury with traditional Japanese aesthetics and exceptional service.",
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 674,
+        "averageRating": 4.9,
+        "ratings": {
+          "cleanliness": 5.0,
+          "comfort": 4.9,
+          "location": 4.8,
+          "service": 5.0,
+          "value": 4.6
+        }
+      },
+      "status": "active", 
+      "verifiedPartner": true
+    },
+    {
+      "id": "JP002",
+      "name": "Gion Nanba",
+      "location": {
+        "address": "56 Hanabancho, Higashiyama-ku, Kyoto",
+        "coordinates": [135.7798, 35.0036],
+        "city": "Kyoto",
+        "country": "Japan",
+        "distanceToCenter": 3.2
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 400, "max": 800 },
+        "currency": "USD",
+        "amenities": ["wifi", "spa", "traditional_bath", "garden", "tea_ceremony", "concierge"],
+        "roomTypes": [
+          {
+            "type": "Superior Machiya",
+            "price": 400,
+            "capacity": 2,
+            "size": 45,
+            "amenities": ["traditional_design", "garden_view", "tatami_floors"]
+          },
+          {
+            "type": "Deluxe Machiya Suite",
+            "price": 650,
+            "capacity": 4,
+            "size": 85,
+            "amenities": ["private_garden", "tea_room", "traditional_bath"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800",
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800"
+        ],
+        "description": "Traditional machiya townhouse in historic Gion district, offering authentic Japanese hospitality and cultural experiences.",
+        "checkInTime": "16:00",
+        "checkOutTime": "11:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 456,
+        "averageRating": 4.8,
+        "ratings": {
+          "cleanliness": 4.9,
+          "comfort": 4.7,
+          "location": 4.9,
+          "service": 4.8,
+          "value": 4.6
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    },
+    {
+      "id": "JP003",
+      "name": "Conrad Osaka",
+      "location": {
+        "address": "3-2-4 Nakanoshima, Kita-ku, Osaka",
+        "coordinates": [135.4960, 34.6937],
+        "city": "Osaka",
+        "country": "Japan",
+        "distanceToCenter": 1.8
+      },
+      "details": {
+        "rating": 4.7,
+        "starRating": 5,
+        "priceRange": { "min": 300, "max": 700 },
+        "currency": "USD",
+        "amenities": ["wifi", "pool", "spa", "gym", "restaurant", "bar", "business_center"],
+        "roomTypes": [
+          {
+            "type": "King Deluxe",
+            "price": 300,
+            "capacity": 2,
+            "size": 50,
+            "amenities": ["city_view", "marble_bathroom", "work_desk"]
+          },
+          {
+            "type": "Conrad Suite",
+            "price": 600,
+            "capacity": 4,
+            "size": 100,
+            "amenities": ["panoramic_view", "living_room", "executive_lounge"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800",
+          "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800"
+        ],
+        "description": "Modern luxury hotel on Nakanoshima island with stunning city views and world-class amenities in Osaka's business district.",
+        "checkInTime": "15:00", 
+        "checkOutTime": "12:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 1123,
+        "averageRating": 4.7,
+        "ratings": {
+          "cleanliness": 4.8,
+          "comfort": 4.7,
+          "location": 4.6,
+          "service": 4.7,
+          "value": 4.5
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    }
+  ],
+  "Thailand": [
+    {
+      "id": "TH001",
+      "name": "Mandarin Oriental Bangkok",
+      "location": {
+        "address": "48 Oriental Avenue, Bangkok",
+        "coordinates": [100.5151, 13.7244],
+        "city": "Bangkok",
+        "country": "Thailand",
+        "distanceToCenter": 1.5
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 350, "max": 800 },
+        "currency": "USD",
+        "amenities": ["wifi", "pool", "spa", "gym", "restaurant", "bar", "river_view", "boat_shuttle"],
+        "roomTypes": [
+          {
+            "type": "Superior Room",
+            "price": 350,
+            "capacity": 2,
+            "size": 38,
+            "amenities": ["river_view", "marble_bathroom", "silk_furnishings"]
+          },
+          {
+            "type": "Oriental Suite",
+            "price": 700,
+            "capacity": 4,
+            "size": 85,
+            "amenities": ["panoramic_river_view", "living_room", "butler_service"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800",
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800"
+        ],
+        "description": "Legendary luxury hotel on the Chao Phraya River, offering timeless elegance and exceptional Thai hospitality since 1876.",
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 2341,
+        "averageRating": 4.8,
+        "ratings": {
+          "cleanliness": 4.9,
+          "comfort": 4.8,
+          "location": 4.9,
+          "service": 4.9,
+          "value": 4.5
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    },
+    {
+      "id": "TH002",
+      "name": "Rayavadee Krabi",
+      "location": {
+        "address": "214 Moo 2, Tambon Ao Nang, Krabi",
+        "coordinates": [98.8354, 8.0863],
+        "city": "Krabi",
+        "country": "Thailand",
+        "distanceToCenter": 15
+      },
+      "details": {
+        "rating": 4.9,
+        "starRating": 5,
+        "priceRange": { "min": 400, "max": 900 },
+        "currency": "USD",
+        "amenities": ["wifi", "pool", "spa", "gym", "restaurant", "bar", "beach", "private_beach", "kayaking"],
+        "roomTypes": [
+          {
+            "type": "Deluxe Pavilion",
+            "price": 400,
+            "capacity": 2,
+            "size": 60,
+            "amenities": ["garden_view", "outdoor_shower", "private_terrace"]
+          },
+          {
+            "type": "Spa Pavilion",
+            "price": 750,
+            "capacity": 3,
+            "size": 90,
+            "amenities": ["beachfront", "private_spa_treatment", "infinity_pool"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800",
+          "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800"
+        ],
+        "description": "Exclusive resort set within Krabi Marine National Park, surrounded by pristine beaches and dramatic limestone cliffs.",
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 1876,
+        "averageRating": 4.9,
+        "ratings": {
+          "cleanliness": 4.9,
+          "comfort": 4.9,
+          "location": 5.0,
+          "service": 4.9,
+          "value": 4.7
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    },
+    {
+      "id": "TH003",
+      "name": "Four Seasons Resort Chiang Mai",
+      "location": {
+        "address": "502 Moo 1, Mae Rim, Chiang Mai",
+        "coordinates": [98.9063, 18.9447],
+        "city": "Chiang Mai",
+        "country": "Thailand",
+        "distanceToCenter": 20
+      },
+      "details": {
+        "rating": 4.8,
+        "starRating": 5,
+        "priceRange": { "min": 350, "max": 750 },
+        "currency": "USD",
+        "amenities": ["wifi", "pool", "spa", "gym", "restaurant", "bar", "mountain_view", "cultural_activities"],
+        "roomTypes": [
+          {
+            "type": "Mountain View Pavilion",
+            "price": 350,
+            "capacity": 2,
+            "size": 55,
+            "amenities": ["mountain_view", "private_terrace", "outdoor_shower"]
+          },
+          {
+            "type": "Royal Villa",
+            "price": 650,
+            "capacity": 4,
+            "size": 120,
+            "amenities": ["private_pool", "garden", "butler_service"]
+          }
+        ],
+        "images": [
+          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800"
+        ],
+        "description": "Luxurious mountain resort offering authentic Thai culture experiences surrounded by lush rice terraces and tropical gardens.",
+        "checkInTime": "15:00",
+        "checkOutTime": "12:00"
+      },
+      "reviewsSummary": {
+        "totalReviews": 1654,
+        "averageRating": 4.8,
+        "ratings": {
+          "cleanliness": 4.9,
+          "comfort": 4.8,
+          "location": 4.7,
+          "service": 4.9,
+          "value": 4.6
+        }
+      },
+      "status": "active",
+      "verifiedPartner": true
+    }
+  ]
+}

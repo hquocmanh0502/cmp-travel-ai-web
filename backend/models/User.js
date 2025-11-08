@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema({
   avatar: { type: String, default: '' },
   verified: { type: Boolean, default: false },
   blocked: { type: Boolean, default: false },
+  blockReason: { type: String },
+  blockedAt: { type: Date },
   
   // VIP Membership System
   membershipLevel: {

@@ -48,9 +48,165 @@ body {
   position: relative;
   overflow: hidden;
   display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  z-index: 10;
+}
+
+/* ========================================
+   ROOM SUGGESTIONS STYLES
+   ======================================== */
+
+.room-suggestions {
+  margin-top: 15px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-orange);
+}
+
+.room-suggestions h5 {
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.room-suggestions h5 i {
+  color: var(--primary-orange);
+  margin-right: 8px;
+}
+
+.suggestion-option {
+  background: white;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.suggestion-option:hover {
+  border-color: var(--primary-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 102, 0, 0.2);
+}
+
+.suggestion-option.recommended {
+  border-color: var(--primary-orange);
+  background: linear-gradient(135deg, #fff5f0 0%, #ffe8d9 100%);
+}
+
+.suggestion-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.suggestion-rooms {
+  font-weight: 600;
+  color: var(--text-dark);
+  text-transform: capitalize;
+}
+
+/* .suggestion-cost removed - no pricing for all-inclusive tours */
+
+.room-breakdown {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.room-breakdown h6 {
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.room-detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.room-detail-item:last-child {
+  border-bottom: none;
+}
+
+.room-detail-total {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  font-weight: 600;
+}
+
+.alert {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 0;
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+  color: #0c5460;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  color: #856404;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-left: 4px solid #dc3545;
+  color: #721c24;
+}
+
+.alert i {
+  margin-right: 8px;
+}
+
+/* Smart Suggestion Button */
+.smart-suggestion-btn {
+  background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.smart-suggestion-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 102, 0, 0.4);
+  color: white;
+}
+
+.smart-suggestion-btn:focus {
+  box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.2);
+  color: white;
+}
+
+.smart-suggestion-btn i {
+  margin-right: 8px;
+}
+
+/* Room Info Labels */
+.room-info {
+  font-size: 12px;
+  margin-top: 3px;
+  line-height: 1.3;
+}
+
+.room-info i {
+  width: 12px;
+  text-align: center;
+  margin-right: 4px;
 }
 
 .booking-summary-card::before {

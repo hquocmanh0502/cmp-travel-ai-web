@@ -12,9 +12,35 @@ class Toast {
         if (!document.querySelector('.toast-container')) {
             this.container = document.createElement('div');
             this.container.className = 'toast-container';
+            // Force correct positioning
+            this.container.style.cssText = `
+                position: fixed !important;
+                top: 20px !important;
+                right: 20px !important;
+                z-index: 999999 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                pointer-events: none !important;
+                bottom: auto !important;
+                left: auto !important;
+            `;
             document.body.appendChild(this.container);
         } else {
             this.container = document.querySelector('.toast-container');
+            // Ensure existing container has correct position
+            this.container.style.cssText = `
+                position: fixed !important;
+                top: 20px !important;
+                right: 20px !important;
+                z-index: 999999 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                pointer-events: none !important;
+                bottom: auto !important;
+                left: auto !important;
+            `;
         }
     }
 
@@ -22,25 +48,53 @@ class Toast {
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
 
-        // Icon based on type
+        // Force toast styling with inline CSS
+        toast.style.cssText = `
+            background: white !important;
+            padding: 16px 20px !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+            min-width: 320px !important;
+            max-width: 400px !important;
+            pointer-events: all !important;
+            margin-bottom: 12px !important;
+            border-left: 4px solid #ccc !important;
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+            position: relative !important;
+        `;
+
+        // Icon based on type (using emoji)
         const icons = {
-            success: '<i class="fas fa-check-circle"></i>',
-            error: '<i class="fas fa-times-circle"></i>',
-            warning: '<i class="fas fa-exclamation-triangle"></i>',
-            info: '<i class="fas fa-info-circle"></i>',
-            loading: '<i class="fas fa-spinner"></i>'
+            success: '✅',
+            error: '❌',
+            warning: '⚠️',
+            info: 'ℹ️',
+            loading: '🔄'
         };
 
+        // Color based on type
+        const colors = {
+            success: '#22c55e',
+            error: '#ef4444',
+            warning: '#f59e0b',
+            info: '#3b82f6',
+            loading: '#6b7280'
+        };
+
+        const color = colors[type] || colors.info;
+        toast.style.borderLeftColor = color + ' !important';
+
         toast.innerHTML = `
-            <div class="toast-icon">${icons[type] || icons.info}</div>
-            <div class="toast-content">
-                <div class="toast-title">${title}</div>
-                ${message ? `<div class="toast-message">${message}</div>` : ''}
+            <div style="font-size: 20px; margin-top: 2px; flex-shrink: 0;">${icons[type] || icons.info}</div>
+            <div style="flex: 1;">
+                <div style="font-weight: 600; color: #1f2937; margin-bottom: 4px; font-size: 14px;">${title}</div>
+                ${message ? `<div style="font-size: 13px; color: #6b7280; line-height: 1.4;">${message}</div>` : ''}
             </div>
-            <button class="toast-close" onclick="this.parentElement.remove()">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="toast-progress"></div>
+            <button onclick="this.parentElement.remove()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #9ca3af; padding: 0; margin-top: 2px; flex-shrink: 0;">&times;</button>
         `;
 
         this.container.appendChild(toast);

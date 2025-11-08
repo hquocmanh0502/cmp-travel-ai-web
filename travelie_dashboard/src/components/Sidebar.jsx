@@ -12,7 +12,9 @@ import {
   MdSettings,
   MdLogout,
   MdSecurity,
-  MdBlock
+  MdBlock,
+  MdEmail,
+  MdMailOutline
 } from "react-icons/md";
 
 function Sidebar({ active, setActive }) {
@@ -25,6 +27,8 @@ function Sidebar({ active, setActive }) {
     { id: "reviews", label: "Reviews", icon: MdRateReview },
     { id: "spam-dashboard", label: "Spam Detection", icon: MdSecurity },
     { id: "ban-management", label: "Ban Management", icon: MdBlock },
+    { id: "contact-management", label: "Contact Management", icon: MdEmail },
+    { id: "newsletter", label: "Newsletter", icon: MdMailOutline },
     { id: "blog", label: "Blog", icon: MdArticle },
     { id: "messages", label: "Messages", icon: MdChat },
     { id: "revenue", label: "Revenue", icon: MdAttachMoney },

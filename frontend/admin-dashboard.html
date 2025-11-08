@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Travel Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .dashboard-card.hotels {
+            border-color: #3498db;
+        }
+
+        .dashboard-card.hotels:hover {
+            border-color: #2980b9;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+
+        .dashboard-card:hover .card-icon {
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .card-description {
+            color: #6c757d;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-card:hover .card-description {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .card-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover .card-button {
+            background: white;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-shield-alt"></i> Admin Dashboard</h1>
+            <p class="mb-0">Travel Management System</p>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Hotel Management Card -->
+            <div class="dashboard-card hotels">
+                <div class="card-icon">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <h3 class="card-title">Hotel Management</h3>
+                <p class="card-description">
+                    Manage hotels, rooms, amenities, and availability. Add new hotels, edit existing ones, and control their status.
+                </p>
+                <a href="admin-hotels.html" class="card-button">
+                    <i class="fas fa-cog"></i> Manage Hotels
+                </a>
+            </div>
+
+            <!-- User Management Card -->
+            <div class="dashboard-card users">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="card-title">User Management</h3>
+                <p class="card-description">
+                    Manage user accounts, view user activity, and handle user permissions and access control.
+                </p>
+                <a href="#" class="card-button">
+                    <i class="fas fa-user-cog"></i> Manage Users
+                </a>
+            </div>
+
+            <!-- Bookings Management Card -->
+            <div class="dashboard-card bookings">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3 class="card-title">Bookings Management</h3>
+                <p class="card-description">
+                    View and manage tour bookings, handle reservations, cancellations, and booking status updates.
+                </p>
+                <a href="#" class="card-button">
+                    <i class="fas fa-list-alt"></i> Manage Bookings
+                </a>
+            </div>
+
+            <!-- Reports & Analytics Card -->
+            <div class="dashboard-card reports">
+                <div class="card-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3 class="card-title">Reports & Analytics</h3>
+                <p class="card-description">
+                    View system statistics, generate reports, and analyze booking trends and user behavior.
+                </p>
+                <a href="#" class="card-button">
+                    <i class="fas fa-chart-line"></i> View Reports
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        .users {
+            border-color: #e74c3c;
+        }
+
+        .users:hover {
+            border-color: #c0392b;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+
+        .users .card-icon {
+            color: #e74c3c;
+        }
+
+        .users .card-button {
+            background: #e74c3c;
+        }
+
+        .users:hover .card-button {
+            background: white;
+            color: #e74c3c;
+        }
+
+        .bookings {
+            border-color: #f39c12;
+        }
+
+        .bookings:hover {
+            border-color: #d68910;
+            background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
+            color: white;
+        }
+
+        .bookings .card-icon {
+            color: #f39c12;
+        }
+
+        .bookings .card-button {
+            background: #f39c12;
+        }
+
+        .bookings:hover .card-button {
+            background: white;
+            color: #f39c12;
+        }
+
+        .reports {
+            border-color: #27ae60;
+        }
+
+        .reports:hover {
+            border-color: #1e8449;
+            background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+            color: white;
+        }
+
+        .reports .card-icon {
+            color: #27ae60;
+        }
+
+        .reports .card-button {
+            background: #27ae60;
+        }
+
+        .reports:hover .card-button {
+            background: white;
+            color: #27ae60;
+        }
+    </style>
+</body>
+</html>

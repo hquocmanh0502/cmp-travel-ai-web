@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('✅ Validation functions available:', {
     validateRoomCapacity: typeof validateRoomCapacity,
     setupRoomValidation: typeof setupRoomValidation,
-    updateRoomSuggestion: typeof updateRoomSuggestion
+    // updateRoomSuggestion: removed smart suggestions
   });
   
   // ✅ POPULATE BOOKING SUMMARY CARD (first for visual feedback)
@@ -452,13 +452,7 @@ function loadBookingData() {
       console.error('❌ Children select not found!');
     }
     
-    // ✅ SHOW INITIAL ROOM SUGGESTION
-    try {
-      updateRoomSuggestion();
-      console.log('✅ Room suggestion updated');
-    } catch (err) {
-      console.error('⚠️ Error updating room suggestion:', err);
-    }
+    // Removed smart room suggestion - using simple validation instead
     
     console.log('✅ loadBookingData completed - all constraints applied');
     }
@@ -583,72 +577,242 @@ function showSuccessMessage(bookingId) {
   document.body.appendChild(successMsg);
 }
 
-// ✅ ROOM CAPACITY VALIDATION FUNCTIONS
+// ✅ SMART ROOM CAPACITY SYSTEM WITH HOTEL DATA
+let currentHotelRoomData = null; // Store hotel room data for intelligent suggestions
+
+// Load hotel room data for smart suggestions
+async function loadHotelRoomData(hotelId) {
+  if (!hotelId) return null;
+  
+  try {
+    const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
+    if (response.ok) {
+      const hotel = await response.json();
+      currentHotelRoomData = hotel.roomTypes || [];
+      console.log('🏨 Hotel room data loaded:', currentHotelRoomData);
+      return currentHotelRoomData;
+    }
+  } catch (error) {
+    console.log('⚠️ Could not load hotel data, using default capacity rules');
+  }
+  return null;
+}
+
+// Get room capacity based on hotel data or default rules  
+function getRoomCapacity(roomType) {
+  // First try to get from loaded hotel data
+  if (currentHotelRoomData) {
+    const roomData = currentHotelRoomData.find(room => 
+      room.type.toLowerCase().replace(' ', '-') === roomType.toLowerCase() ||
+      room.type.toLowerCase() === roomType.toLowerCase().replace('-', ' ')
+    );
+    
+    if (roomData && roomData.capacity) {
+      return {
+        adults: roomData.capacity.adults,
+        children: roomData.capacity.children,
+        total: roomData.capacity.total,
+        available: roomData.available !== false
+      };
+    }
+  }
+  
+  // Fallback to default capacity rules (no pricing for all-inclusive tours)
+  const defaultCapacities = {
+    'superior': { adults: 2, children: 1, total: 3 },
+    'junior-deluxe': { adults: 2, children: 1, total: 3 },
+    'deluxe': { adults: 2, children: 2, total: 4 },
+    'suite': { adults: 3, children: 1, total: 4 },
+    'family': { adults: 2, children: 3, total: 5 },
+    'president': { adults: 4, children: 2, total: 6 }
+  };
+  
+  return defaultCapacities[roomType] || { adults: 2, children: 1, total: 3 };
+}
+
+// Enhanced room validation with smart suggestions
 function validateRoomCapacity() {
   const adults = parseInt(document.querySelector('#adult')?.value) || 0;
   const children = parseInt(document.querySelector('#children')?.value) || 0;
-  const totalGuests = adults + children;
+  const infants = parseInt(document.querySelector('#infant')?.value) || 0;
   
-  if (totalGuests === 0) {
+  // Only adults + children count toward room capacity (infants don't count)
+  const countableGuests = adults + children;
+  
+  if (countableGuests === 0 && adults === 0) {
+    hideRoomWarning();
     return true; // No guests selected yet
   }
   
-  // Calculate total rooms selected
-  const totalRooms = getTotalRoomsSelected();
+  // Calculate total rooms selected and their capacity
+  const roomSelection = getCurrentRoomSelection();
+  const totalRooms = roomSelection.total;
+  const totalCapacity = roomSelection.capacity;
   
   if (totalRooms === 0) {
-    showRoomWarning('Vui lòng chọn ít nhất 1 phòng!');
+    if (countableGuests > 0) {
+      showRoomInfo(`Please select rooms for ${countableGuests} people (${adults} adults + ${children} children). Infants don't require separate beds.`);
+    }
     return false;
   }
   
-  // Room capacity rules:
-  // Superior, Junior Deluxe, Deluxe: max 2 adults + 1 child = 3 guests
-  // Suite: max 3 adults + 1 child = 4 guests
-  // Family: max 2 adults + 2 children = 4 guests
-  // President: max 4 adults + 2 children = 6 guests
-  
-  const superior = parseInt(document.querySelector('select[name="superior"]')?.value || 0);
-  const juniorDeluxe = parseInt(document.querySelector('select[name="junior-deluxe"]')?.value || 0);
-  const deluxe = parseInt(document.querySelector('select[name="deluxe"]')?.value || 0);
-  const suite = parseInt(document.querySelector('select[name="suite"]')?.value || 0);
-  const family = parseInt(document.querySelector('select[name="family"]')?.value || 0);
-  const president = parseInt(document.querySelector('select[name="president"]')?.value || 0);
-  
-  // Calculate max capacity
-  const maxCapacity = 
-    (superior * 3) + 
-    (juniorDeluxe * 3) + 
-    (deluxe * 3) + 
-    (suite * 4) + 
-    (family * 4) + 
-    (president * 6);
-  
-  if (totalGuests > maxCapacity) {
-    showRoomWarning(`Số phòng đã chọn chỉ chứa tối đa ${maxCapacity} khách. Bạn cần thêm phòng!`);
+  // Rule 1: Cannot have more rooms than adults + children (each person can have max 1 room)
+  if (totalRooms > countableGuests) {
+    showRoomInfo(`Invalid selection: You have ${totalRooms} rooms for only ${countableGuests} people (adults + children). Each person can have maximum 1 room. Please reduce rooms.`);
     return false;
   }
   
-  // Calculate minimum rooms needed (assuming avg 3 guests per room)
-  const minRoomsNeeded = Math.ceil(totalGuests / 3);
-  
-  if (totalRooms < minRoomsNeeded) {
-    showRoomWarning(`Bạn cần ít nhất ${minRoomsNeeded} phòng cho ${totalGuests} khách!`);
+  // Rule 2: Must have enough capacity for adults + children
+  if (countableGuests > totalCapacity) {
+    const shortage = countableGuests - totalCapacity;
+    showRoomInfo(`Insufficient capacity: Selected rooms can only accommodate ${totalCapacity} guests, but you have ${countableGuests} people (adults + children). Please add more rooms or select larger rooms.`);
     return false;
   }
   
+  // Rule 3: Warning when room capacity is much larger than needed (3+ people excess)
+  const excessCapacity = totalCapacity - countableGuests;
+  if (excessCapacity >= 3) {
+    showRoomInfo(`Notice: Your selected rooms can accommodate ${totalCapacity} guests, but you only have ${countableGuests} people. You might want to consider selecting smaller rooms to optimize your booking.`);
+    return true; // Still valid, just a notice
+  }
+  
+  // Success case
   hideRoomWarning();
+  
   return true;
 }
 
+// Get current room selection details
+function getCurrentRoomSelection() {
+  const roomTypes = ['superior', 'junior-deluxe', 'deluxe', 'suite', 'family', 'president'];
+  let totalRooms = 0;
+  let totalCapacity = 0;
+  let details = [];
+  
+  roomTypes.forEach(roomType => {
+    const count = parseInt(document.querySelector(`select[name="${roomType}"]`)?.value || 0);
+    if (count > 0) {
+      const capacity = getRoomCapacity(roomType);
+      totalRooms += count;
+      totalCapacity += capacity.total * count;
+      details.push({
+        type: roomType,
+        count: count,
+        capacity: capacity.total * count
+      });
+    }
+  });
+  
+  return {
+    total: totalRooms,
+    capacity: totalCapacity,
+    details: details
+  };
+}
+
+// Simple room validation - removed complex smart suggestion system
+
+// Removed smart suggestion functions - using simple validation instead
+
+// Show informational message (not error)
+function showRoomInfo(message) {
+  const warningDiv = document.querySelector('.room-warning') || createRoomWarningDiv();
+  warningDiv.innerHTML = `
+    <div class="alert alert-info">
+      <i class="fas fa-info-circle"></i> ${message}
+    </div>
+  `;
+  warningDiv.style.display = 'block';
+}
+
+// Enhanced room warning function with different types
+function showRoomWarning(message, type = 'warning') {
+  const warningDiv = document.querySelector('.room-warning') || createRoomWarningDiv();
+  
+  const alertClass = {
+    'warning': 'alert-warning',
+    'error': 'alert-danger',
+    'suggestion': 'alert-info',
+    'info': 'alert-info'
+  }[type] || 'alert-warning';
+  
+  const icon = {
+    'warning': 'fa-exclamation-triangle',
+    'error': 'fa-times-circle',
+    'suggestion': 'fa-lightbulb',
+    'info': 'fa-info-circle'
+  }[type] || 'fa-exclamation-triangle';
+  
+  warningDiv.innerHTML = `
+    <div class="alert ${alertClass}">
+      <i class="fas ${icon}"></i> ${message}
+    </div>
+  `;
+  warningDiv.style.display = 'block';
+}
+
+function createRoomWarningDiv() {
+  const warningDiv = document.createElement('div');
+  warningDiv.className = 'room-warning';
+  warningDiv.style.marginTop = '15px';
+  
+  // Insert after the room selection section
+  const roomSection = document.querySelector('.form-group:has([name="superior"])') || 
+                     document.querySelector('select[name="superior"]')?.closest('.form-group');
+  
+  if (roomSection) {
+    roomSection.parentNode.insertBefore(warningDiv, roomSection.nextSibling);
+  }
+  
+  return warningDiv;
+}
+
+function hideRoomWarning() {
+  const warningDiv = document.querySelector('.room-warning');
+  if (warningDiv) {
+    warningDiv.style.display = 'none';
+  }
+}
+
+// Enhanced booking summary update with room details
+function updateBookingSummary() {
+  const pendingBooking = JSON.parse(sessionStorage.getItem('pendingBooking') || '{}');
+  const roomSelection = getCurrentRoomSelection();
+  
+  const summaryElement = document.querySelector('.booking-summary-content');
+  if (!summaryElement) return;
+  
+  let roomDetailsHtml = '';
+  if (roomSelection.details.length > 0) {
+    roomDetailsHtml = `
+      <div class="room-breakdown">
+        <h6>Room Details:</h6>
+        ${roomSelection.details.map(room => `
+          <div class="room-detail-item">
+            <span>${room.count} ${room.type.replace('-', ' ')}</span>
+            <span>${room.capacity} guests</span>
+          </div>
+        `).join('')}
+        <div class="room-detail-total">
+          <strong>Total Capacity: ${roomSelection.capacity} guests</strong>
+        </div>
+      </div>
+    `;
+  }
+  
+  // Update summary with room information
+  const existingContent = summaryElement.innerHTML;
+  const roomSectionRegex = /<div class="room-breakdown">[\s\S]*?<\/div>\s*<\/div>/;
+  
+  if (roomSectionRegex.test(existingContent)) {
+    summaryElement.innerHTML = existingContent.replace(roomSectionRegex, roomDetailsHtml);
+  } else {
+    summaryElement.innerHTML += roomDetailsHtml;
+  }
+}
+
 function getTotalRoomsSelected() {
-  return (
-    parseInt(document.querySelector('#room-superior')?.value || 0) +
-    parseInt(document.querySelector('#room-junior-deluxe')?.value || 0) +
-    parseInt(document.querySelector('#room-deluxe')?.value || 0) +
-    parseInt(document.querySelector('#room-suite')?.value || 0) +
-    parseInt(document.querySelector('#room-family')?.value || 0) +
-    parseInt(document.querySelector('#room-president')?.value || 0)
-  );
+  return getCurrentRoomSelection().total;
 }
 
 function showRoomWarning(message) {
@@ -669,131 +833,23 @@ function hideRoomWarning() {
   }
 }
 
-function updateRoomSuggestion() {
-  const adults = parseInt(document.querySelector('#adult')?.value) || 0;
-  const children = parseInt(document.querySelector('#children')?.value) || 0;
-  const totalGuests = adults + children;
+// Removed updateRoomSuggestion and autoSelectRooms functions - using simple validation instead
   
-  const suggestionText = document.getElementById('suggestion-text');
-  
-  if (!suggestionText) return;
-  
-  if (totalGuests === 0) {
-    suggestionText.innerHTML = 'Vui lòng chọn số khách trước';
-    return;
-  }
-  
-  // ✅ Room capacity definition
-  const roomCapacity = {
-    superior: 2,
-    juniorDeluxe: 2,
-    deluxe: 3,
-    suite: 3,
-    family: 4,
-    president: 6
-  };
-  
-  // ✅ Smart room suggestion algorithm
-  let suggestions = [];
-  let suggestedRooms = {};
-  
-  if (totalGuests <= 2) {
-    suggestions.push('1 phòng Superior hoặc Junior Deluxe (2 người)');
-    suggestedRooms = { superior: 1 };
-  } else if (totalGuests === 3) {
-    suggestions.push('1 phòng Deluxe hoặc Suite (3 người)');
-    suggestedRooms = { deluxe: 1 };
-  } else if (totalGuests === 4) {
-    suggestions.push('1 phòng Family (4 người)');
-    suggestions.push('Hoặc: 2 phòng Superior (4 người)');
-    suggestedRooms = { family: 1 };
-  } else if (totalGuests === 5) {
-    suggestions.push('1 phòng Family + 1 phòng Superior (6 người)');
-    suggestions.push('Hoặc: 1 phòng Deluxe + 1 phòng Superior (5 người)');
-    suggestedRooms = { family: 1, superior: 1 };
-  } else if (totalGuests === 6) {
-    suggestions.push('1 phòng President (6 người)');
-    suggestions.push('Hoặc: 2 phòng Family (8 người)');
-    suggestions.push('Hoặc: 2 phòng Deluxe (6 người)');
-    suggestedRooms = { president: 1 };
-  } else if (totalGuests <= 8) {
-    const familyRooms = Math.floor(totalGuests / 4);
-    const remaining = totalGuests % 4;
-    suggestions.push(`${familyRooms} phòng Family${remaining > 0 ? ` + 1 phòng ${remaining <= 2 ? 'Superior' : 'Deluxe'}` : ''}`);
-    suggestedRooms = { family: familyRooms };
-    if (remaining > 0) {
-      suggestedRooms[remaining <= 2 ? 'superior' : 'deluxe'] = 1;
-    }
-  } else {
-    // For large groups
-    const presidentRooms = Math.floor(totalGuests / 6);
-    const remaining = totalGuests % 6;
-    suggestions.push(`${presidentRooms} phòng President${remaining > 0 ? ` + phòng khác cho ${remaining} người còn lại` : ''}`);
-    suggestedRooms = { president: presidentRooms };
-    if (remaining > 0) {
-      if (remaining <= 2) suggestedRooms.superior = 1;
-      else if (remaining <= 3) suggestedRooms.deluxe = 1;
-      else suggestedRooms.family = 1;
-    }
-  }
-  
-  // Display suggestions with auto-select button
-  const suggestionHTML = `
-    <div class="room-suggestion-box">
-      <strong>💡 Gợi ý chọn phòng cho ${totalGuests} khách (${adults} người lớn${children > 0 ? `, ${children} trẻ em` : ''}):</strong>
-      <ul class="suggestion-list">
-        ${suggestions.map(s => `<li>${s}</li>`).join('')}
-      </ul>
-      <button type="button" class="btn-auto-select" onclick="autoSelectRooms(${JSON.stringify(suggestedRooms).replace(/"/g, '&quot;')})">
-        <i class="fas fa-magic"></i> Tự động chọn phòng
-      </button>
-    </div>
-  `;
-  
-  suggestionText.innerHTML = suggestionHTML;
-}
-
-// ✅ NEW: Auto-select rooms based on suggestion
-function autoSelectRooms(suggestedRooms) {
-  console.log('🔄 Auto-selecting rooms:', suggestedRooms);
-  
-  // Room mapping
-  const roomMapping = {
-    superior: 'room-superior',
-    juniorDeluxe: 'room-junior-deluxe',
-    deluxe: 'room-deluxe',
-    suite: 'room-suite',
-    family: 'room-family',
-    president: 'room-president'
-  };
-  
-  // Reset all room selections first
-  Object.values(roomMapping).forEach(roomId => {
-    const select = document.getElementById(roomId);
-    if (select) select.value = '0';
-  });
-  
-  // Apply suggested selections
-  Object.entries(suggestedRooms).forEach(([roomType, count]) => {
-    const roomId = roomMapping[roomType];
-    const select = document.getElementById(roomId);
-    if (select) {
-      select.value = count.toString();
-      // Add visual feedback
-      select.style.backgroundColor = '#fff3cd';
-      setTimeout(() => {
-        select.style.backgroundColor = '';
-      }, 1000);
-    }
-  });
-  
-  // Trigger validation
-  validateRoomCapacity();
-  
-  showNotification('✅ Đã tự động chọn phòng theo gợi ý!', 'success');
-}
+// Removed autoSelectRooms function - using simple validation instead
 
 function setupRoomValidation() {
+  console.log('🏨 Setting up enhanced room validation with hotel data');
+  
+  // Load hotel data for intelligent suggestions
+  const pendingBooking = JSON.parse(sessionStorage.getItem('pendingBooking') || '{}');
+  if (pendingBooking.selectedHotel?.id) {
+    loadHotelRoomData(pendingBooking.selectedHotel.id).then(() => {
+      console.log('✅ Hotel room data loaded for smart suggestions');
+      // Trigger initial validation after hotel data is loaded
+      setTimeout(validateRoomCapacity, 100);
+    });
+  }
+  
   const roomSelects = [
     { id: 'room-superior', name: 'superior' },
     { id: 'room-junior-deluxe', name: 'junior-deluxe' },
@@ -807,9 +863,12 @@ function setupRoomValidation() {
   roomSelects.forEach(room => {
     const select = document.querySelector(`#${room.id}`);
     if (select) {
+      // Add capacity info to room labels
+      updateRoomLabels(room.name, select);
+      
       select.addEventListener('change', () => {
         validateRoomCapacity();
-        updateRoomSuggestion();
+        updateBookingSummary(); // Update cost calculation
       });
     }
   });
@@ -817,20 +876,105 @@ function setupRoomValidation() {
   // Add change listeners to guest selects (in case they're not locked)
   const adultSelect = document.querySelector('#adult');
   const childrenSelect = document.querySelector('#children');
+  const infantSelect = document.querySelector('#infant');
+  
+  const triggerAutoSuggestion = () => {
+    const adults = parseInt(adultSelect?.value) || 0;
+    const children = parseInt(childrenSelect?.value) || 0;
+    const infants = parseInt(infantSelect?.value) || 0;
+    
+    validateRoomCapacity();
+    
+    // Room validation will show appropriate messages
+  };
   
   if (adultSelect) {
-    adultSelect.addEventListener('change', () => {
-      validateRoomCapacity();
-      updateRoomSuggestion();
-    });
+    adultSelect.addEventListener('change', triggerAutoSuggestion);
   }
   
   if (childrenSelect) {
-    childrenSelect.addEventListener('change', () => {
+    childrenSelect.addEventListener('change', triggerAutoSuggestion);
+  }
+  
+  if (infantSelect) {
+    infantSelect.addEventListener('change', () => {
+      // Infants don't trigger auto-suggestion but do trigger validation
       validateRoomCapacity();
-      updateRoomSuggestion();
     });
   }
+  
+  // Removed smart suggestion button per user request
+}
+
+// Update room labels with capacity info (no pricing for all-inclusive tours)
+function updateRoomLabels(roomType, selectElement) {
+  const capacity = getRoomCapacity(roomType);
+  const label = selectElement.closest('.form-group')?.querySelector('label');
+  
+  if (label && capacity) {
+    const roomName = roomType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const capacityText = `${capacity.adults + capacity.children} guests`;
+    
+    label.innerHTML = `
+      ${roomName}
+      <small class="room-info text-muted d-block">
+        <i class="fas fa-users"></i> ${capacityText}
+      </small>
+    `;
+  }
+}
+
+// Smart suggestion button removed per user request
+
+// Removed triggerSmartSuggestion function - using simple validation instead
+
+// Show notification function
+function showNotification(message, type = 'info') {
+  // Create notification element if it doesn't exist
+  let notification = document.getElementById('notification');
+  if (!notification) {
+    notification = document.createElement('div');
+    notification.id = 'notification';
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      color: white;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+      max-width: 400px;
+      word-wrap: break-word;
+    `;
+    document.body.appendChild(notification);
+  }
+  
+  // Set notification style based on type
+  const colors = {
+    'success': '#28a745',
+    'error': '#dc3545',
+    'warning': '#ffc107',
+    'info': '#17a2b8'
+  };
+  
+  notification.style.backgroundColor = colors[type] || colors.info;
+  notification.textContent = message;
+  
+  // Show notification
+  setTimeout(() => {
+    notification.style.opacity = '1';
+    notification.style.transform = 'translateX(0)';
+  }, 10);
+  
+  // Hide notification after 4 seconds
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    notification.style.transform = 'translateX(100%)';
+  }, 4000);
 }
 
 function calculateAccommodationCost() {

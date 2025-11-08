@@ -1799,6 +1799,92 @@
   color: var(--primary-orange);
 }
 
+/* Popup Navigation Buttons - Simplified */
+.popup-nav-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10001;
+}
+
+.popup-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.popup-nav:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.popup-prev {
+  left: 30px;
+}
+
+.popup-next {
+  right: 30px;
+}
+
+/* Popup Caption */
+.popup-caption {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.popup-caption p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Mobile responsive for popup navigation */
+@media (max-width: 768px) {
+  .popup-nav {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .popup-prev {
+    left: 15px;
+  }
+  
+  .popup-next {
+    right: 15px;
+  }
+  
+  .popup-caption {
+    bottom: 20px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+}
+
 /* Loading States */
 .loading {
   position: relative;
@@ -2341,24 +2427,11 @@ input:focus,
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.2rem;
-  max-height: 600px;
-  overflow-y: auto;
+  /* Removed max-height and overflow to let modal body handle scrolling */
   padding-right: 10px;
 }
 
-.hotels-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.hotels-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.hotels-list::-webkit-scrollbar-thumb {
-  background: var(--primary-orange);
-  border-radius: 10px;
-}
+/* Removed duplicate scrollbar - using modal body scrollbar only */
 
 .hotel-option {
   border: 2px solid transparent;
@@ -2724,10 +2797,10 @@ input:focus,
 
 .hotel-detail-modal {
   background: white;
-  border-radius: 25px;
+  border-radius: 20px;
   width: 95%;
-  max-width: 900px;
-  max-height: 90vh;
+  max-width: 1400px; /* Tăng từ 900px lên 1400px */
+  max-height: 95vh; /* Tăng từ 90vh lên 95vh */
   overflow: hidden;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
   animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -2792,10 +2865,11 @@ input:focus,
 }
 
 .hotel-detail-modal .modal-body {
-  padding: 2.5rem;
-  max-height: calc(90vh - 200px);
+  padding: 0;
+  max-height: calc(95vh - 140px);
   overflow-y: auto;
   flex: 1;
+  display: flex;
 }
 
 .hotel-detail-modal .modal-body::-webkit-scrollbar {
@@ -2812,9 +2886,531 @@ input:focus,
 }
 
 .hotel-detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
+  height: 100%;
+}
+
+/* Cột trái - Hình ảnh và thông tin cơ bản */
+.hotel-left-section {
+  padding: 2rem;
+  border-right: 1px solid #eee;
+  overflow-y: auto;
+}
+
+/* Cột phải - Room types */
+.hotel-right-section {
+  padding: 2rem;
+  overflow-y: auto;
+  background: #f8f9fa;
+}
+
+.hotel-left-section::-webkit-scrollbar,
+.hotel-right-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hotel-left-section::-webkit-scrollbar-track,
+.hotel-right-section::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.hotel-left-section::-webkit-scrollbar-thumb,
+.hotel-right-section::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+/* Room Types Header */
+.room-types-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.room-types-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.room-types-subtitle {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+/* Cập nhật Room Type Items cho layout mới */
+.room-type-item {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.room-type-item:hover {
+  border-color: var(--primary-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,102,0,0.15);
+}
+
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.room-name-price h5 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.room-price {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.current-price {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--primary-orange);
+}
+
+.per-night {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.room-availability {
+  font-size: 0.9rem;
+  color: #28a745;
+  font-weight: 500;
+}
+
+.room-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.spec-item i {
+  color: var(--primary-orange);
+  width: 16px;
+}
+
+.spec-item small {
+  display: block;
+  color: #6c757d;
+  font-size: 0.8rem;
+  margin-left: 24px;
+}
+
+.room-amenities-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.amenity-tag {
+  background: #e8f4fd;
+  color: #0066cc;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.amenity-tag i {
+  font-size: 0.7rem;
+}
+
+.room-description {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.room-description p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.room-images-preview {
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.room-preview-img {
+  width: 80px; /* Tăng từ 60px lên 80px */
+  height: 60px; /* Tăng từ 45px lên 60px */
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.room-preview-img:hover {
+  border-color: var(--primary-orange);
+  transform: scale(1.05);
+}
+
+.room-images-preview {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* No rooms message */
+.no-rooms {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6c757d;
+}
+
+.no-rooms p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.no-rooms i {
+  margin-right: 8px;
+  color: #ffc107;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+  .hotel-detail-modal {
+    width: 98%;
+    max-width: none;
+    margin: 10px;
+  }
+  
+  .hotel-detail-content {
+    grid-template-columns: 1fr; /* Chuyển thành 1 cột trên mobile */
+  }
+  
+  .hotel-left-section,
+  .hotel-right-section {
+    border-right: none;
+    padding: 1.5rem;
+  }
+  
+  .hotel-left-section {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .room-specs {
+    grid-template-columns: 1fr;
+  }
+  
+  .room-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* Modal Actions (Buttons bên trong) */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+  border-top: 2px solid #e9ecef;
+  justify-content: flex-end;
+}
+
+.modal-actions .btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.modal-actions .btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.modal-actions .btn-secondary:hover {
+  background: #545b62;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.modal-actions .btn-primary {
+  background: var(--primary-orange);
+  color: white;
+}
+
+.modal-actions .btn-primary:hover {
+  background: var(--dark-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+}
+
+/* Mobile responsive cho buttons */
+@media (max-width: 768px) {
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .modal-actions .btn {
+    justify-content: center;
+    padding: 14px 20px;
+  }
+}
+
+/* ========================================
+   IMAGE POPUP STYLES
+   ======================================== */
+
+.image-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002; /* Higher than hotel modal */
+  animation: fadeIn 0.3s ease;
+}
+
+.image-popup-content {
+  position: relative;
+  max-width: 98%;
+  max-height: 98%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.image-popup-close {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.image-popup-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.image-popup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+}
+
+.popup-image {
+  max-width: 90vw;
+  max-height: calc(90vh - 80px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.image-popup-caption {
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+  max-width: 500px;
+}
+
+.image-popup-caption h4 {
+  margin: 0 0 8px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.image-popup-caption p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Navigation buttons trong popup */
+.image-popup-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10005;
+  backdrop-filter: blur(5px);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.image-popup-nav:hover {
+  background: rgba(255, 107, 53, 0.9);
+  border-color: #ff6b35;
+}
+
+.image-popup-nav:active {
+  background: rgba(255, 107, 53, 1);
+  transform: translateY(-50%);
+}
+
+.image-popup-prev {
+  left: 30px;
+}
+
+.image-popup-next {
+  right: 30px;
+}
+
+/* More images indicator styling */
+.more-images-indicator {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.more-images-indicator:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+/* Mobile responsive cho popup */
+@media (max-width: 768px) {
+  .image-popup-close {
+    top: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+    font-size: 1.3rem;
+  }
+  
+  .image-popup-nav {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+  }
+  
+  .image-popup-prev {
+    left: 10px;
+  }
+  
+  .image-popup-next {
+    right: 10px;
+  }
+  
+  .popup-image {
+    max-height: calc(95vh - 80px);
+    min-width: auto;
+    min-height: auto;
+  }
+  
+  .image-popup-caption {
+    margin-top: 15px;
+    padding: 0 20px;
+  }
+}
+
+/* Tablet responsive */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .popup-image {
+    min-width: 600px;
+    min-height: 400px;
+  }
 }
 
 .hotel-detail-images {

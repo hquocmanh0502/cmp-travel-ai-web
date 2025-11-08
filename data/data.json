@@ -1,4 +1,3 @@
-
 [
   {
     "name": "Maldives",
@@ -22,7 +21,11 @@
       "Bis Keemiya"
     ],
     "id": "35",
-    "img": "https://images.unsplash.com/photo-1543731068-7e0f5beff43a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxfHxtYWxkaXZlc3xlbnwwfDB8fHwxNzE4NjE0Mzg3fDA&ixlib=rb-4.0.3&q=80&w=1080"
+    "img": "https://images.unsplash.com/photo-1543731068-7e0f5beff43a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxfHxtYWxkaXZlc3xlbnwwfDB8fHwxNzE4NjE0Mzg3fDA&ixlib=rb-4.0.3&q=80&w=1080",
+    "selectedHotels": [
+      "MV001",
+      "MV002"
+    ]
   },
   {
     "name": "Lauterbrunnen",
@@ -46,7 +49,8 @@
       "Hot Chocolate"
     ],
     "id": "36",
-    "img": "https://images.unsplash.com/photo-1559754417-c1304ca2f80f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxOXx8TGF1dGVyYnJ1bm5lbnxlbnwwfDB8fHwxNzE4NjE1NTQ3fDA&ixlib=rb-4.0.3&q=80&w=1080"
+    "img": "https://images.unsplash.com/photo-1559754417-c1304ca2f80f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxOXx8TGF1dGVyYnJ1bm5lbnxlbnwwfDB8fHwxNzE4NjE1NTQ3fDA&ixlib=rb-4.0.3&q=80&w=1080",
+    "selectedHotels": []
   },
   {
     "name": "Amsterdam",
@@ -70,7 +74,8 @@
       "Herring"
     ],
     "id": "1",
-    "img": "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NjE5NTF8MHwxfHNlYXJjaHwxfHxBbXN0ZXJkYW18ZW58MHx8fHwxNjg5ODM5MTUwfDA&ixlib=rb-4.0.3&q=80&w=1080"
+    "img": "https://images.unsplash.com/photo-1534351590666-13e3e96b5017?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NjE5NTF8MHwxfHNlYXJjaHwxfHxBbXN0ZXJkYW18ZW58MHx8fHwxNjg5ODM5MTUwfDA&ixlib=rb-4.0.3&q=80&w=1080",
+    "selectedHotels": []
   },
   {
     "name": "Toronto",
@@ -94,7 +99,8 @@
       "Butter Tarts"
     ],
     "id": "2",
-    "img": "https://images.unsplash.com/photo-1486325212027-8081e485255e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VG9yb250b3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1486325212027-8081e485255e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VG9yb250b3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Vancouver",
@@ -118,7 +124,8 @@
       "Nanaimo Bar"
     ],
     "id": "3",
-    "img": "https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFuY291dmVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1559511260-66a654ae982a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFuY291dmVyfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Montreal",
@@ -142,7 +149,8 @@
       "Smoked Meat Sandwich"
     ],
     "id": "4",
-    "img": "https://images.unsplash.com/photo-1470181942237-78ce33fec141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8TW9udHJlYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1470181942237-78ce33fec141?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8TW9udHJlYWx8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Lisbon",
@@ -166,7 +174,8 @@
       "Sardines"
     ],
     "id": "5",
-    "img": "https://images.unsplash.com/photo-1588535684923-900727736ac0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8TGlzYm9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1588535684923-900727736ac0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8TGlzYm9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Porto",
@@ -190,7 +199,8 @@
       "Pastel de Chaves"
     ],
     "id": "6",
-    "img": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UG9ydG98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UG9ydG98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Moscow",
@@ -214,7 +224,8 @@
       "Blini"
     ],
     "id": "7",
-    "img": "https://images.unsplash.com/photo-1495542779398-9fec7dc7986c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bW9zY293fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1495542779398-9fec7dc7986c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bW9zY293fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Kazan",
@@ -238,7 +249,8 @@
       "Ikra"
     ],
     "id": "8",
-    "img": "https://images.unsplash.com/photo-1631775866694-fe340840cc52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8S2F6YW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1631775866694-fe340840cc52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8S2F6YW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Kuala Lumpur",
@@ -262,7 +274,8 @@
       "Roti Canai"
     ],
     "id": "9",
-    "img": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8S3VhbGElMjBMdW1wdXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8S3VhbGElMjBMdW1wdXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Malacca",
@@ -286,7 +299,8 @@
       "Cendol"
     ],
     "id": "10",
-    "img": "https://images.unsplash.com/photo-1589733000502-225e3f26fb8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8TWFsYWNjYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1589733000502-225e3f26fb8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8TWFsYWNjYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Langkawi",
@@ -310,7 +324,8 @@
       "Satay"
     ],
     "id": "11",
-    "img": "https://images.unsplash.com/photo-1591251010190-43c22baa46b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TGFuZ2thd2l8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1591251010190-43c22baa46b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TGFuZ2thd2l8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Causeway Bay",
@@ -334,7 +349,8 @@
       "Bubble Tea"
     ],
     "id": "12",
-    "img": "https://images.unsplash.com/photo-1660665641573-b6943d24e418?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Q2F1c2V3YXklMjBCYXl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1660665641573-b6943d24e418?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Q2F1c2V3YXklMjBCYXl8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Athens",
@@ -358,7 +374,8 @@
       "Spanakopita"
     ],
     "id": "13",
-    "img": "https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXRoZW5zfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1603565816030-6b389eeb23cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXRoZW5zfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Santorini",
@@ -382,7 +399,8 @@
       "Loukoumades"
     ],
     "id": "14",
-    "img": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8U2FudG9yaW5pfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8U2FudG9yaW5pfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Tokyo",
@@ -406,7 +424,11 @@
       "Tempura"
     ],
     "id": "15",
-    "img": "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VG9reW98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VG9reW98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": [
+      "JP001",
+      "JP002"
+    ]
   },
   {
     "name": "Kyoto",
@@ -430,7 +452,11 @@
       "Yudofu (Tofu Hot Pot)"
     ],
     "id": "16",
-    "img": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8S3lvdG98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8S3lvdG98ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": [
+      "JP001",
+      "JP002"
+    ]
   },
   {
     "name": "Osaka",
@@ -454,7 +480,11 @@
       "Kushikatsu"
     ],
     "id": "17",
-    "img": "https://images.unsplash.com/photo-1589452271712-64b8a66c7b71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8T3Nha2F8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1589452271712-64b8a66c7b71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8T3Nha2F8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": [
+      "JP001",
+      "JP002"
+    ]
   },
   {
     "name": "Delhi",
@@ -478,7 +508,8 @@
       "Butter Chicken"
     ],
     "id": "18",
-    "img": "https://images.unsplash.com/photo-1513014576558-921f00d80b77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fERlbGhpfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1513014576558-921f00d80b77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fERlbGhpfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "London",
@@ -502,7 +533,8 @@
       "Afternoon Tea"
     ],
     "id": "19",
-    "img": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TG9uZG9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TG9uZG9ufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Manchester",
@@ -526,7 +558,8 @@
       "Fisherman's Breakfast"
     ],
     "id": "20",
-    "img": "https://images.unsplash.com/photo-1515586838455-8f8f940d6853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWFuY2hlc3RlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1515586838455-8f8f940d6853?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWFuY2hlc3RlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Bangkok",
@@ -550,7 +583,11 @@
       "Mango Sticky Rice"
     ],
     "id": "21",
-    "img": "https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QmFuZ2tva3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1523731407965-2430cd12f5e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QmFuZ2tva3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": [
+      "TH001",
+      "TH002"
+    ]
   },
   {
     "name": "Phuket",
@@ -574,7 +611,11 @@
       "Mango with Sticky Rice"
     ],
     "id": "22",
-    "img": "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UGh1a2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UGh1a2V0fGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": [
+      "TH001",
+      "TH002"
+    ]
   },
   {
     "name": "Berlin",
@@ -598,7 +639,8 @@
       "Berliner Pfannkuchen"
     ],
     "id": "23",
-    "img": "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QmVybGlufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1599946347371-68eb71b16afc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QmVybGlufGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Munich",
@@ -622,7 +664,8 @@
       "Apfelstrudel"
     ],
     "id": "24",
-    "img": "https://images.unsplash.com/photo-1595867818082-083862f3d630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TXVuaWNofGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1595867818082-083862f3d630?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TXVuaWNofGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Rome",
@@ -646,7 +689,8 @@
       "Gelato"
     ],
     "id": "25",
-    "img": "https://images.unsplash.com/photo-1531572753322-ad063cecc140?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Um9tZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1531572753322-ad063cecc140?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Um9tZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Florence",
@@ -670,7 +714,8 @@
       "Gelato"
     ],
     "id": "26",
-    "img": "https://images.unsplash.com/photo-1528114039593-4366cc08227d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8RmxvcmVuY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1528114039593-4366cc08227d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8RmxvcmVuY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Venice",
@@ -694,7 +739,8 @@
       "Tiramisu"
     ],
     "id": "27",
-    "img": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VmVuaWNlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VmVuaWNlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Milan",
@@ -718,7 +764,8 @@
       "Panettone"
     ],
     "id": "28",
-    "img": "https://images.unsplash.com/photo-1572602648934-1d98de6dab48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8TWlsYW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1572602648934-1d98de6dab48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8TWlsYW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Valencia",
@@ -742,7 +789,8 @@
       "Buñuelos"
     ],
     "id": "29",
-    "img": "https://images.unsplash.com/photo-1529437971227-3344caa48ce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFsZW5jaWF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1529437971227-3344caa48ce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8VmFsZW5jaWF8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Paris",
@@ -766,7 +814,8 @@
       "Macarons"
     ],
     "id": "30",
-    "img": "https://images.unsplash.com/photo-1550340499-a6c60fc8287c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8UGFyaXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1550340499-a6c60fc8287c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8UGFyaXN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Lyon",
@@ -790,7 +839,8 @@
       "Tarte Tatin"
     ],
     "id": "31",
-    "img": "https://images.unsplash.com/photo-1602087594298-706ccc894bfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8THlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1602087594298-706ccc894bfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8THlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Marseille",
@@ -814,7 +864,8 @@
       "Pastis"
     ],
     "id": "32",
-    "img": "https://images.unsplash.com/photo-1576244348464-c7d393b6dfc0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWFyc2VpbGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1576244348464-c7d393b6dfc0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWFyc2VpbGxlfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Bordeaux",
@@ -838,7 +889,8 @@
       "Pain au Chocolat"
     ],
     "id": "33",
-    "img": "https://images.unsplash.com/photo-1586987177718-54e088c798b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Qm9yZGVhdXh8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1586987177718-54e088c798b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Qm9yZGVhdXh8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   },
   {
     "name": "Barcelona",
@@ -862,6 +914,7 @@
       "Churros"
     ],
     "id": "34",
-    "img": "https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QmFyY2Vsb25hfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60"
+    "img": "https://images.unsplash.com/photo-1583422409516-2895a77efded?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8QmFyY2Vsb25hfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
+    "selectedHotels": []
   }
 ]

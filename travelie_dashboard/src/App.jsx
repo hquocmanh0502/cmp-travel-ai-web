@@ -12,6 +12,9 @@ import BlogManagement from "./pages/Blog/BlogManagement";
 import SpamDashboard from "./pages/SpamDashboard";
 import BanManagement from "./pages/BanManagement";
 import BanManagementTest from "./pages/BanManagementTest";
+import ContactManagement from "./pages/ContactManagement";
+import Newsletter from "./pages/Newsletter/Newsletter";
+import Revenue from "./pages/Revenue/Revenue";
 import { Toaster } from 'react-hot-toast';
 
 export default function App() {
@@ -41,7 +44,10 @@ export default function App() {
             {active === "messages" && <Messages />}
             {active === "spam-dashboard" && <SpamDashboard />}
             {active === "ban-management" && <BanManagement />}
-            {!["dashboard", "bookings", "tours", "users", "hotels", "reviews", "blog", "messages", "spam-dashboard", "ban-management"].includes(active) && (
+            {active === "contact-management" && <ContactManagement />}
+            {active === "newsletter" && <Newsletter />}
+            {active === "revenue" && <Revenue />}
+            {!["dashboard", "bookings", "tours", "users", "hotels", "reviews", "blog", "messages", "spam-dashboard", "ban-management", "contact-management", "newsletter", "revenue"].includes(active) && (
               <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 Coming soon: {active}
               </div>

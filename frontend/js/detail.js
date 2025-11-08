@@ -47,9 +47,70 @@ function getAmenityName(amenity) {
     return amenityNames[amenity] || amenity.charAt(0).toUpperCase() + amenity.slice(1).replace(/_/g, ' ');
 }
 
+// ==================== USER HELPER FUNCTIONS ====================
+function getCurrentUser() {
+    try {
+        const userId = localStorage.getItem('userId');
+        const username = localStorage.getItem('username');
+        const email = localStorage.getItem('email');
+        const fullName = localStorage.getItem('fullName');
+        
+        if (userId) {
+            return {
+                userId,
+                username,
+                email,
+                fullName
+            };
+        }
+        return null;
+    } catch (error) {
+        console.error('Error getting current user:', error);
+        return null;
+    }
+}
+
+// DEBUG: Test function to simulate blocked user
+function testBlockedUser() {
+    console.log('🧪 Testing blocked user simulation');
+    const mockBlockData = {
+        blocked: true,
+        reason: 'Test block - violating booking policy',
+        blockedAt: new Date()
+    };
+    
+    console.log('Simulating blocked user with data:', mockBlockData);
+    
+    // Test the functions
+    if (typeof showToast === 'function') {
+        showToast('Booking Blocked', 'You are currently blocked from making bookings. Please contact support for assistance.', 'error', 8000);
+    }
+    
+    // Test disable button
+    const bookNowBtn = document.getElementById('bookNowBtn');
+    if (bookNowBtn) {
+        bookNowBtn.style.opacity = '0.5';
+        bookNowBtn.style.cursor = 'not-allowed';
+        bookNowBtn.style.pointerEvents = 'none';
+        bookNowBtn.title = 'You are blocked from booking';
+        bookNowBtn.innerHTML = '<i class="fas fa-ban"></i> Booking Blocked';
+    }
+}
+
+// Make test function available globally
+window.testBlockedUser = testBlockedUser;
+
 // ==================== GLOBAL REVIEW REPLY FUNCTIONS ====================
-function toggleReplyForm(reviewId) {
+async function toggleReplyForm(reviewId) {
     console.log('🔄 Toggle reply form for:', reviewId);
+    
+    // Check if user is logged in
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+        alert('Please login to reply');
+        return;
+    }
+    
     const replyForm = document.getElementById(`reply-form-${reviewId}`);
     if (!replyForm) {
         console.error('❌ Reply form not found:', reviewId);
@@ -57,7 +118,57 @@ function toggleReplyForm(reviewId) {
     }
     
     console.log('Current display:', replyForm.style.display);
+    
+    // If form is hidden, check ban status before showing
     if (replyForm.style.display === 'none' || !replyForm.style.display) {
+        // Check ban status before opening reply form
+        try {
+            const response = await fetch('http://localhost:3000/api/comments/ban-status', {
+                headers: {
+                    'user-id': userId
+                }
+            });
+            
+            if (response.ok) {
+                const banData = await response.json();
+                if (banData.banned) {
+                    const banInfo = banData.banInfo;
+                    let banMessage = 'You are banned from commenting';
+                    
+                    if (banInfo) {
+                        if (banInfo.remainingTime && banInfo.remainingTime > 0) {
+                            const hours = Math.ceil(banInfo.remainingTime / (1000 * 60 * 60));
+                            banMessage = `You are banned from commenting for ${hours} more hours due to community guideline violations.`;
+                        } else {
+                            banMessage = 'You are permanently banned from commenting due to severe community guideline violations.';
+                        }
+                        
+                        if (banInfo.reason) {
+                            banMessage += `\nReason: ${banInfo.reason}`;
+                        }
+                        
+                        if (banInfo.appealStatus === 'none') {
+                            banMessage += '\n\nYou can appeal this ban in your profile section.';
+                        } else if (banInfo.appealStatus === 'pending') {
+                            banMessage += '\n\nYour appeal is being reviewed.';
+                        }
+                    }
+                    
+                    // Show ban toast notification
+                    if (typeof showError === 'function') {
+                        showError('Cannot Comment', banMessage, 6000);
+                    } else {
+                        alert(banMessage);
+                    }
+                    return;
+                }
+            }
+        } catch (error) {
+            console.error('Error checking ban status:', error);
+            // Continue to show form if check fails
+        }
+        
+        // Show form if not banned
         replyForm.style.display = 'block';
         const textarea = document.getElementById(`reply-text-${reviewId}`);
         if (textarea) {
@@ -69,6 +180,48 @@ function toggleReplyForm(reviewId) {
         const textarea = document.getElementById(`reply-text-${reviewId}`);
         if (textarea) textarea.value = '';
         console.log('✅ Reply form hidden');
+    }
+}
+
+// Function to disable reply buttons if user is banned
+async function disableReplyButtonsIfBanned() {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+
+    try {
+        const response = await fetch('http://localhost:3000/api/comments/ban-status', {
+            headers: {
+                'user-id': userId
+            }
+        });
+
+        if (response.ok) {
+            const banData = await response.json();
+            if (banData.banned) {
+                // Disable all reply buttons and add banned styling
+                const replyButtons = document.querySelectorAll('[onclick*="toggleReplyForm"]');
+                replyButtons.forEach(button => {
+                    button.style.opacity = '0.5';
+                    button.style.cursor = 'not-allowed';
+                    button.title = 'You are banned from commenting';
+                    
+                    // Replace onclick with ban message
+                    const reviewId = button.getAttribute('onclick').match(/toggleReplyForm\('(.+?)'\)/)?.[1];
+                    button.setAttribute('onclick', `showBanMessage()`);
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Error checking ban status for buttons:', error);
+    }
+}
+
+// Show ban message when user tries to reply while banned
+function showBanMessage() {
+    if (typeof showError === 'function') {
+        showError('Cannot Comment', 'You are banned from commenting due to community guideline violations.');
+    } else {
+        alert('You are banned from commenting due to community guideline violations.');
     }
 }
 
@@ -96,16 +249,76 @@ async function submitReply(reviewId) {
         alert('Please write something before submitting');
         return;
     }
-    
+
+    // 🛡️ CHECK FOR SPAM/TOXIC CONTENT BEFORE SUBMISSION
+    try {
+        console.log('🔍 Checking content for spam/toxic...');
+        
+        const spamCheckResponse = await fetch('http://localhost:3000/api/spam-check', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                text: text,
+                userId: userId 
+            })
+        });
+
+        if (spamCheckResponse.ok) {
+            const spamResult = await spamCheckResponse.json();
+            console.log('📊 Spam check result:', spamResult);
+
+            // If content is problematic, show warning
+            if (spamResult.isProblematic) {
+                return new Promise((resolve, reject) => {
+                    window.spamWarningToast.showWarning(
+                        spamResult.warningMessage,
+                        spamResult.warningType,
+                        () => {
+                            // User confirmed to proceed
+                            console.log('⚠️ User confirmed to post flagged content');
+                            proceedWithSubmission(reviewId, text, userId, true);
+                            resolve();
+                        },
+                        () => {
+                            // User cancelled
+                            console.log('✅ User cancelled flagged content submission');
+                            textarea.focus(); // Focus back to textarea for editing
+                            resolve();
+                        }
+                    );
+                });
+            }
+        } else {
+            console.warn('⚠️ Spam check failed, proceeding without check');
+        }
+    } catch (error) {
+        console.warn('⚠️ Spam check error, proceeding without check:', error);
+    }
+
+    // If no issues detected or spam check failed, proceed normally
+    await proceedWithSubmission(reviewId, text, userId, false);
+}
+
+async function proceedWithSubmission(reviewId, text, userId, isUserConfirmedSpam = false) {
     try {
         console.log('Calling API...');
+        
+        // Add flag if user confirmed spam content
+        const requestBody = { text };
+        if (isUserConfirmedSpam) {
+            requestBody.userConfirmedSpam = true;
+            requestBody.flagForReview = true;
+        }
+
         const response = await fetch(`http://localhost:3000/api/comments/${reviewId}/reply`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'user-id': userId
             },
-            body: JSON.stringify({ text })
+            body: JSON.stringify(requestBody)
         });
         
         console.log('Response status:', response.status);
@@ -113,12 +326,46 @@ async function submitReply(reviewId) {
         if (!response.ok) {
             const errorData = await response.json();
             console.error('❌ API Error:', errorData);
+            
+            // Special handling for banned users
+            if (response.status === 403 && errorData.banned) {
+                const banInfo = errorData.banInfo;
+                let banMessage = 'You are banned from commenting';
+                
+                if (banInfo) {
+                    if (banInfo.remainingTime && banInfo.remainingTime > 0) {
+                        const hours = Math.ceil(banInfo.remainingTime / (1000 * 60 * 60));
+                        banMessage = `You are banned from commenting for ${hours} more hours due to community guideline violations.`;
+                    } else {
+                        banMessage = 'You are permanently banned from commenting due to severe community guideline violations.';
+                    }
+                    
+                    if (banInfo.reason) {
+                        banMessage += `\nReason: ${banInfo.reason}`;
+                    }
+                }
+                
+                // Show ban toast notification
+                if (typeof showError === 'function') {
+                    showError('Cannot Comment', banMessage);
+                } else {
+                    alert(banMessage);
+                }
+                return;
+            }
+            
             throw new Error(errorData.message || 'Failed to submit reply');
         }
         
         const result = await response.json();
         console.log('✅ Reply submitted:', result);
-        alert('Reply submitted successfully!');
+        
+        // Show appropriate success message
+        if (isUserConfirmedSpam) {
+            window.spamWarningToast.showInfo('Reply submitted and flagged for admin review', 4000);
+        } else {
+            alert('Reply submitted successfully!');
+        }
         
         // Hide form and clear textarea
         toggleReplyForm(reviewId);
@@ -437,8 +684,16 @@ async function showSidebarHotelDetailModal(hotelId) {
         try {
             const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
             if (response.ok) {
-                hotel = await response.json();
-                console.log('✅ Sidebar hotel loaded from API:', hotel.name);
+                const apiResponse = await response.json();
+                hotel = apiResponse.data || apiResponse; // Handle both formats
+                console.log('✅ Sidebar hotel loaded from API:', hotel?.name);
+                console.log('🔍 Full hotel object structure:', {
+                    id: hotel?._id,
+                    name: hotel?.name,
+                    hasDetails: !!hotel?.details,
+                    hasMainImage: !!hotel?.details?.mainImage,
+                    roomTypesCount: hotel?.details?.roomTypes?.length || 0
+                });
             }
         } catch (fetchError) {
             console.warn('❌ API fetch failed:', fetchError.message);
@@ -464,19 +719,41 @@ async function showSidebarHotelDetailModal(hotelId) {
             };
         }
         
-        // Prepare hotel images
+        // Prepare hotel images - prioritize mainImage, then images array
+        const mainImage = hotel.details?.mainImage;
         const hotelImages = hotel.details?.images || [];
-        const galleryImages = hotelImages.length > 0 ? hotelImages : [
-            'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
-            'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
-            'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'
-        ];
         
-        const priceRange = hotel.details?.priceRange;
-        // Convert VND to USD
-        const minUSD = priceRange && priceRange.min ? Math.round(priceRange.min / 25000) : 0;
-        const maxUSD = priceRange && priceRange.max ? Math.round(priceRange.max / 25000) : 0;
-        const priceText = (minUSD > 0 && maxUSD > 0) ? `$${minUSD} - $${maxUSD}` : 'Contact for price';
+        let galleryImages = [];
+        if (mainImage) {
+            galleryImages.push(mainImage);
+            // Add other images from gallery (avoid duplicates)
+            hotelImages.forEach(img => {
+                if (img !== mainImage) {
+                    galleryImages.push(img);
+                }
+            });
+        } else if (hotelImages.length > 0) {
+            galleryImages = hotelImages;
+        } else {
+            // Fallback to sample images
+            galleryImages = [
+                'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800',
+                'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800',
+                'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800'
+            ];
+        }
+        
+        // Get price range from room types
+        const roomTypes = hotel.details?.roomTypes || [];
+        let priceText = 'Contact for price';
+        if (roomTypes.length > 0) {
+            const prices = roomTypes.map(rt => rt.price).filter(p => p > 0);
+            if (prices.length > 0) {
+                const minPrice = Math.min(...prices);
+                const maxPrice = Math.max(...prices);
+                priceText = minPrice === maxPrice ? `$${minPrice}` : `$${minPrice} - $${maxPrice}`;
+            }
+        }
         
         const modal = document.createElement('div');
         modal.className = 'sidebar-hotel-detail-modal-overlay';
@@ -516,7 +793,7 @@ async function showSidebarHotelDetailModal(hotelId) {
                         <div class="hotel-info-detailed">
                             <div class="hotel-rating-detailed">
                                 ${generateStarsHTML(hotel.details?.rating || 4.5)}
-                                <span class="rating-score">${hotel.details?.rating || 4.5}</span>
+                                <span class="rating-score">${(hotel.details?.rating || 4.5).toFixed(1)}</span>
                                 <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
                             </div>
                             
@@ -548,33 +825,75 @@ async function showSidebarHotelDetailModal(hotelId) {
                             </div>
                             
                             <div class="room-types">
-                                <h4>Room Types</h4>
+                                <h4>Available Room Types</h4>
                                 <div class="room-types-list">
-                                    ${(hotel.details?.roomTypes || hotel.rooms || [
-                                        { type: 'Deluxe Room', capacity: 2, size: 35, amenities: ['king_bed', 'city_view'] }
-                                    ]).map(room => 
+                                    ${(hotel.details?.roomTypes || []).map(room => 
                                         `<div class="room-type-item">
-                                            <div class="room-info">
-                                                <h5>${room.type}</h5>
-                                                <p><i class="fas fa-users"></i> ${room.capacity} guests</p>
-                                                <p><i class="fas fa-expand"></i> ${room.size || 30}m²</p>
+                                            <div class="room-header">
+                                                <div class="room-name-price">
+                                                    <h5>${room.name || room.type}</h5>
+                                                    <div class="room-price">
+                                                        ${room.originalPrice && room.originalPrice > room.price ? 
+                                                            `<span class="original-price">$${room.originalPrice}</span>` : ''
+                                                        }
+                                                        <span class="current-price">$${room.price}</span>
+                                                        <span class="per-night">/night</span>
+                                                    </div>
+                                                </div>
+                                                <div class="room-availability">
+                                                    <span class="available-rooms">${room.availableRooms || 0}/${room.totalRooms || 10} available</span>
+                                                </div>
                                             </div>
-                                            <div class="room-amenities">
-                                                ${(room.amenities || ['wifi', 'tv', 'ac']).slice(0, 3).map(amenity => 
-                                                    `<span class="room-amenity">${getAmenityName(amenity)}</span>`
-                                                ).join('')}
+                                            <div class="room-details">
+                                                <div class="room-specs">
+                                                    <div class="spec-item">
+                                                        <i class="fas fa-users"></i>
+                                                        <span>${room.capacity?.total || room.capacity || 2} guests</span>
+                                                        ${room.capacity?.adults ? `<small>(${room.capacity.adults} adults, ${room.capacity.children || 0} children)</small>` : ''}
+                                                    </div>
+                                                    <div class="spec-item">
+                                                        <i class="fas fa-expand"></i>
+                                                        <span>${room.size || 30}m²</span>
+                                                    </div>
+                                                    ${room.bedInfo ? 
+                                                        `<div class="spec-item">
+                                                            <i class="fas fa-bed"></i>
+                                                            <span>${room.bedInfo}</span>
+                                                        </div>` : ''
+                                                    }
+                                                </div>
+                                                <div class="room-amenities">
+                                                    ${(room.amenities || []).slice(0, 4).map(amenity => 
+                                                        `<span class="room-amenity">
+                                                            <i class="fas fa-check-circle"></i>
+                                                            ${getAmenityName(amenity)}
+                                                        </span>`
+                                                    ).join('')}
+                                                </div>
+                                                ${room.description ? 
+                                                    `<div class="room-description">
+                                                        <p>${room.description}</p>
+                                                    </div>` : ''
+                                                }
                                             </div>
                                         </div>`
                                     ).join('')}
+                                    ${(hotel.details?.roomTypes || []).length === 0 ? 
+                                        `<div class="no-rooms">
+                                            <p><i class="fas fa-info-circle"></i> Room type information will be available soon.</p>
+                                        </div>` : ''
+                                    }
+                                </div>
+                                
+                                <!-- Close button cho sidebar modal -->
+                                <div class="modal-actions">
+                                    <button class="btn btn-primary" onclick="closeSidebarHotelDetailModal()">
+                                        <i class="fas fa-times"></i> Close
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" onclick="closeSidebarHotelDetailModal()">
-                        <i class="fas fa-times"></i> Close
-                    </button>
                 </div>
             </div>
         `;
@@ -655,6 +974,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check authentication
         checkAuthentication();
         
+        // Check ban status if user is logged in
+        checkUserBanStatus();
+        
         // Load tour data
         loadTourData();
         
@@ -696,6 +1018,325 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('❌ User not authenticated in detail page');
             currentUser = null;
             showGuestInterface();
+        }
+    }
+
+    // Check ban status and show notification if user is banned
+    async function checkUserBanStatus() {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+
+        try {
+            // Check comment/reply ban status
+            const commentBanResponse = await fetch('http://localhost:3000/api/comments/ban-status', {
+                headers: {
+                    'user-id': userId
+                }
+            });
+
+            if (commentBanResponse.ok) {
+                const banData = await commentBanResponse.json();
+                if (banData.banned) {
+                    showBanNotification(banData.banInfo);
+                }
+            }
+
+            // Check booking block status
+            console.log('🔍 Checking booking block status on page load for userId:', userId);
+            const bookingBlockResponse = await fetch(`http://localhost:3000/api/users/${userId}/block-status`);
+            if (bookingBlockResponse.ok) {
+                const blockData = await bookingBlockResponse.json();
+                console.log('📋 Booking block response:', blockData);
+                if (blockData.success && blockData.data.blocked) {
+                    console.log('🚫 User is blocked from booking, showing notification');
+                    showBookingBlockNotification(blockData.data);
+                    disableBookingButton();
+                } else {
+                    console.log('✅ User is not blocked from booking');
+                }
+            } else {
+                console.log('❌ Failed to check booking block status:', bookingBlockResponse.status);
+            }
+        } catch (error) {
+            console.error('Error checking ban status:', error);
+        }
+    }
+
+    // Show persistent ban notification
+    function showBanNotification(banInfo) {
+        // Remove existing ban notification
+        const existingBan = document.querySelector('.ban-notification');
+        if (existingBan) existingBan.remove();
+
+        let banMessage = 'You are banned from commenting';
+        let timeInfo = '';
+        
+        if (banInfo.remainingTime && banInfo.remainingTime > 0) {
+            const hours = Math.ceil(banInfo.remainingTime / (1000 * 60 * 60));
+            timeInfo = `for ${hours} more hours`;
+            banMessage = 'You are temporarily banned from commenting';
+        } else {
+            timeInfo = 'permanently';
+            banMessage = 'You are permanently banned from commenting';
+        }
+
+        // Create ban notification banner
+        const banNotification = document.createElement('div');
+        banNotification.className = 'ban-notification';
+        banNotification.innerHTML = `
+            <div class="ban-content">
+                <div class="ban-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="ban-message">
+                    <strong>${banMessage} ${timeInfo}</strong>
+                    <p>Reason: ${banInfo.reason || 'Community guideline violations'}</p>
+                    ${banInfo.appealStatus === 'none' ? 
+                        '<small>You can appeal this ban in your profile section.</small>' : 
+                        banInfo.appealStatus === 'pending' ? 
+                        '<small>Your appeal is being reviewed.</small>' :
+                        '<small>Your appeal has been processed.</small>'
+                    }
+                </div>
+                <button class="ban-close" onclick="this.parentElement.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+
+        // Add styles if not exists
+        if (!document.querySelector('#ban-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'ban-notification-styles';
+            style.textContent = `
+                .ban-notification {
+                    position: fixed;
+                    top: 70px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9999;
+                    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+                    color: white;
+                    padding: 0;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+                    max-width: 500px;
+                    width: 90%;
+                    animation: slideDown 0.5s ease;
+                }
+                
+                .ban-content {
+                    display: flex;
+                    align-items: center;
+                    padding: 16px 20px;
+                    gap: 12px;
+                }
+                
+                .ban-icon {
+                    font-size: 24px;
+                    color: #fff3cd;
+                }
+                
+                .ban-message {
+                    flex: 1;
+                }
+                
+                .ban-message strong {
+                    display: block;
+                    font-size: 16px;
+                    margin-bottom: 4px;
+                }
+                
+                .ban-message p {
+                    margin: 0;
+                    font-size: 14px;
+                    opacity: 0.9;
+                }
+                
+                .ban-message small {
+                    display: block;
+                    font-size: 12px;
+                    opacity: 0.8;
+                    margin-top: 4px;
+                }
+                
+                .ban-close {
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 18px;
+                    cursor: pointer;
+                    padding: 8px;
+                    border-radius: 50%;
+                    transition: background 0.2s;
+                }
+                
+                .ban-close:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                }
+                
+                @keyframes slideDown {
+                    from {
+                        transform: translateX(-50%) translateY(-100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(-50%) translateY(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Insert at the top of the page
+        document.body.insertBefore(banNotification, document.body.firstChild);
+
+        // Auto hide after 10 seconds
+        setTimeout(() => {
+            if (banNotification.parentElement) {
+                banNotification.remove();
+            }
+        }, 10000);
+    }
+
+    // Show booking block notification
+    function showBookingBlockNotification(blockData) {
+        // Remove existing block notification
+        const existingBlock = document.querySelector('.booking-block-notification');
+        if (existingBlock) existingBlock.remove();
+
+        const blockNotification = document.createElement('div');
+        blockNotification.className = 'booking-block-notification';
+        blockNotification.innerHTML = `
+            <div class="block-content">
+                <div class="block-icon">
+                    <i class="fas fa-ban"></i>
+                </div>
+                <div class="block-message">
+                    <strong>Booking Access Blocked</strong>
+                    <p>You are currently blocked from making new bookings.</p>
+                    ${blockData.reason ? `<p>Reason: ${blockData.reason}</p>` : ''}
+                    <small>Please contact support for assistance: support@cmptravel.com</small>
+                </div>
+                <button class="block-close" onclick="this.parentElement.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+
+        // Add styles for booking block notification
+        if (!document.querySelector('#booking-block-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'booking-block-notification-styles';
+            style.textContent = `
+                .booking-block-notification {
+                    position: fixed;
+                    top: 200px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9997;
+                    background: linear-gradient(135deg, #dc2626, #b91c1c);
+                    color: white;
+                    padding: 16px 24px;
+                    border-radius: 12px;
+                    box-shadow: 0 8px 32px rgba(220, 38, 38, 0.3);
+                    max-width: 90%;
+                    width: 600px;
+                    animation: slideDown 0.3s ease-out;
+                }
+                
+                .block-content {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 16px;
+                }
+                
+                .block-icon {
+                    font-size: 24px;
+                    color: #fecaca;
+                }
+                
+                .block-message {
+                    flex: 1;
+                }
+                
+                .block-message strong {
+                    display: block;
+                    font-size: 16px;
+                    margin-bottom: 4px;
+                }
+                
+                .block-message p {
+                    margin: 4px 0;
+                    font-size: 14px;
+                    opacity: 0.9;
+                }
+                
+                .block-message small {
+                    display: block;
+                    font-size: 12px;
+                    opacity: 0.8;
+                    margin-top: 8px;
+                    color: #fecaca;
+                }
+                
+                .block-close {
+                    background: none;
+                    border: none;
+                    color: white;
+                    font-size: 18px;
+                    cursor: pointer;
+                    padding: 8px;
+                    border-radius: 50%;
+                    transition: background 0.2s;
+                }
+                
+                .block-close:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        document.body.insertBefore(blockNotification, document.body.firstChild);
+
+        // Auto hide after 15 seconds (longer for booking blocks)
+        setTimeout(() => {
+            if (blockNotification.parentElement) {
+                blockNotification.remove();
+            }
+        }, 15000);
+    }
+
+    // Disable booking button when user is blocked
+    function disableBookingButton() {
+        console.log('🔘 Attempting to disable booking button...');
+        const bookNowBtn = document.getElementById('bookNowBtn');
+        console.log('🔍 Found booking button:', bookNowBtn);
+        
+        if (bookNowBtn) {
+            console.log('✅ Disabling booking button');
+            bookNowBtn.style.opacity = '0.5';
+            bookNowBtn.style.cursor = 'not-allowed';
+            bookNowBtn.style.pointerEvents = 'none';
+            bookNowBtn.title = 'Booking is disabled - You are blocked from making bookings';
+            
+            // Add blocked text
+            const originalText = bookNowBtn.textContent;
+            console.log('Original button text:', originalText);
+            if (!originalText.includes('Blocked')) {
+                bookNowBtn.innerHTML = `<i class="fas fa-ban"></i> Booking Blocked`;
+                console.log('✅ Button text updated to blocked');
+            }
+        } else {
+            console.log('❌ Booking button not found! Available buttons:', 
+                Array.from(document.querySelectorAll('button')).map(btn => ({
+                    id: btn.id, 
+                    class: btn.className,
+                    text: btn.textContent.trim()
+                }))
+            );
         }
     }
 
@@ -1272,75 +1913,149 @@ document.addEventListener('DOMContentLoaded', function() {
     // ✅ LOAD HOTELS BY DESTINATION FOR SIDEBAR
     async function loadHotels() {
         try {
-            const destination = currentTour?.country || 'general';
-            console.log(`🏨 Loading sidebar hotels for destination: ${destination}`);
+            console.log(`🏨 Loading hotels for tour: ${currentTour?.name || 'Unknown'}`);
             
-            // Try destination-specific API first
+            // 🎯 PRIORITY 1: Use admin-selected hotels from tour.selectedHotels (max 3 in sidebar)
+            if (currentTour?.selectedHotels && currentTour.selectedHotels.length > 0) {
+                console.log(`✅ Found ${currentTour.selectedHotels.length} admin-selected hotels for this tour`);
+                console.log('🏨 DEBUG Selected Hotels Data:', currentTour.selectedHotels);
+                displayHotels(currentTour.selectedHotels.slice(0, 3), true);
+                return;
+            }
+            
+            // 🔄 FALLBACK 1: Try destination-specific hotels
+            const destination = currentTour?.country || 'general';
+            console.log(`🔄 No admin-selected hotels, trying destination: ${destination}`);
+            
             let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
             let hotels = [];
             
             if (response.ok) {
                 hotels = await response.json();
-                console.log(`✅ Found ${hotels.length} hotels for sidebar in ${destination}`);
+                console.log(`✅ Found ${hotels.length} destination hotels in ${destination}`);
             }
             
-            // Fallback to general hotels if no destination-specific hotels
+            // 🔄 FALLBACK 2: General hotels if no destination-specific hotels
             if (!hotels || hotels.length === 0) {
-                console.log(`❌ No hotels found for ${destination}, using general hotels for sidebar`);
+                console.log(`🔄 No destination hotels, using general hotels`);
                 const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
                 if (fallbackResponse.ok) {
                     hotels = await fallbackResponse.json();
                 }
             }
             
-            // Display hotels or show sample data
+            // 🔄 FALLBACK 3: Sample data if all API calls fail
             if (hotels && hotels.length > 0) {
-                displayHotels(hotels.slice(0, 3));
+                console.log('✅ Displaying API hotels:', hotels.slice(0, 3));
+                displayHotels(hotels.slice(0, 3), false);
             } else {
-                console.log('💡 Using sample hotel data for sidebar');
+                console.log('💡 No API hotels found, using sample hotel data');
                 displaySampleHotels();
             }
             
         } catch (error) {
-            console.error('Error loading hotels for sidebar:', error);
+            console.error('Error loading hotels:', error);
             // Show sample hotels if API fails
             displaySampleHotels();
         }
     }
 
+    // ✅ UNIFIED HOTEL ITEM RENDERER 
+    function renderHotelItem(hotel) {
+        // Handle both database structure and sample structure
+        const hotelId = hotel._id || hotel.id;
+        const hotelName = hotel.name;
+        const hotelImage = hotel.details?.images?.[0] || hotel.image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100';
+        const hotelRating = hotel.details?.rating || hotel.rating || 4.5;
+        const hotelLocation = hotel.location?.city || hotel.location?.address || hotel.location || 'Prime Location';
+        const hotelAmenities = hotel.details?.amenities || hotel.amenities || ['wifi', 'restaurant'];
+        
+        // 🐛 DEBUG HOTEL IMAGE
+        console.log('🏨 DEBUG Hotel Item:', {
+            hotelName: hotelName,
+            hotelId: hotelId,
+            originalHotel: hotel,
+            detailsImages: hotel.details?.images,
+            sampleImage: hotel.image,
+            finalImage: hotelImage,
+            hasDetails: !!hotel.details,
+            hasDetailsImages: !!(hotel.details?.images),
+            imageArrayLength: hotel.details?.images?.length || 0
+        });
+        
+        const starsHTML = generateStarsHTML(hotelRating);
+        
+        return `
+            <div class="hotel-item" onclick="showSidebarHotelDetailModal('${hotelId}')">
+                <img src="${hotelImage}" alt="${hotelName}" class="hotel-image">
+                <div class="hotel-details">
+                    <h6>${hotelName}</h6>
+                    <div class="hotel-rating">
+                        <div class="stars">${starsHTML}</div>
+                        <span>${hotelRating.toFixed(1)}</span>
+                    </div>
+                    <div class="hotel-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        ${hotelLocation}
+                    </div>
+                    <div class="hotel-amenities-preview">
+                        ${hotelAmenities.slice(0, 3).map(amenity => 
+                            `<span class="amenity-preview">${getAmenityName(amenity)}</span>`
+                        ).join(' • ')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     // ✅ UPDATE DISPLAY HOTELS FOR SIDEBAR - CHANGE CLICK HANDLER
-    function displayHotels(hotels) {
+    function displayHotels(hotels, isAdminSelected = false) {
+        console.log('🏨 DEBUG displayHotels called with:', {
+            hotelsCount: hotels.length,
+            isAdminSelected: isAdminSelected,
+            firstHotel: hotels[0],
+            hotelsData: hotels
+        });
+        
         const hotelsList = document.getElementById('hotelsList');
         if (!hotelsList) return;
+        
+        // Update section title based on hotel source
+        const hotelCard = hotelsList.closest('.hotels-card');
+        if (hotelCard) {
+            const titleElement = hotelCard.querySelector('h4');
+            if (titleElement) {
+                titleElement.innerHTML = isAdminSelected 
+                    ? '<i class="fas fa-crown"></i> Curated Hotels for This Tour'
+                    : '<i class="fas fa-bed"></i> Recommended Hotels';
+            }
+            
+            // Update "View All" button text based on available hotels
+            const viewAllBtn = hotelCard.querySelector('.btn-view-hotels');
+            if (viewAllBtn && isAdminSelected && currentTour?.selectedHotels) {
+                const totalHotels = currentTour.selectedHotels.length;
+                const displayedHotels = hotels.length;
+                
+                if (totalHotels > displayedHotels) {
+                    viewAllBtn.textContent = `View All ${totalHotels} Curated Hotels`;
+                    viewAllBtn.style.display = 'inline-block';
+                } else if (totalHotels <= 3) {
+                    // If 3 or fewer hotels, hide the button
+                    viewAllBtn.style.display = 'none';
+                } else {
+                    viewAllBtn.textContent = 'View All Hotels';
+                    viewAllBtn.style.display = 'inline-block';
+                }
+            } else if (viewAllBtn) {
+                viewAllBtn.textContent = 'View All Hotels';
+                viewAllBtn.style.display = 'inline-block';
+            }
+        }
         
         hotelsList.innerHTML = '';
         
         hotels.forEach(hotel => {
-            const rating = hotel.details?.rating || 4.5;
-            const starsHTML = generateStarsHTML(rating);
-            
-            hotelsList.innerHTML += `
-                <div class="hotel-item" onclick="showSidebarHotelDetailModal('${hotel._id || hotel.id}')">
-                    <img src="${hotel.details?.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100'}" 
-                        alt="${hotel.name}" class="hotel-image">
-                    <div class="hotel-details">
-                        <h6>${hotel.name}</h6>
-                        <div class="hotel-rating">
-                            <div class="stars">${starsHTML}</div>
-                            <span>${rating}</span>
-                        </div>
-                        <div class="hotel-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            ${hotel.location?.city || hotel.location?.address || 'Prime Location'}
-                        </div>
-                        <div class="hotel-amenities-preview">
-                            ${(hotel.details?.amenities || ['wifi', 'restaurant']).slice(0, 3).map(amenity => 
-                                `<span class="amenity-preview">${getAmenityName(amenity)}</span>`
-                            ).join(' • ')}
-                        </div>
-                    </div>
-                </div>
-            `;
+            hotelsList.innerHTML += renderHotelItem(hotel);
         });
     }
 
@@ -1349,33 +2064,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const destination = currentTour?.country || 'general';
         const sampleHotels = getSampleHotelsByDestination(destination);
         
+        console.log('🏨 DEBUG displaySampleHotels called:', {
+            destination: destination,
+            sampleHotelsCount: sampleHotels.length,
+            firstSampleHotel: sampleHotels[0],
+            sampleHotels: sampleHotels
+        });
+        
         const hotelsList = document.getElementById('hotelsList');
         if (!hotelsList) return;
         
         hotelsList.innerHTML = '';
         
         sampleHotels.forEach(hotel => {
-            const starsHTML = generateStarsHTML(hotel.rating);
-            
-            hotelsList.innerHTML += `
-                <div class="hotel-item" onclick="showSidebarHotelDetailModal('${hotel.id}')">
-                    <img src="${hotel.image}" alt="${hotel.name}" class="hotel-image">
-                    <div class="hotel-details">
-                        <h6>${hotel.name}</h6>
-                        <div class="hotel-rating">
-                            <div class="stars">${starsHTML}</div>
-                            <span>${hotel.rating}</span>
-                        </div>
-                        <div class="hotel-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            ${hotel.location}
-                        </div>
-                        <div class="hotel-amenities-preview">
-                            ${hotel.amenities.slice(0, 3).map(amenity => getAmenityName(amenity)).join(' • ')}
-                        </div>
-                    </div>
-                </div>
-            `;
+            hotelsList.innerHTML += renderHotelItem(hotel);
         });
     }
 
@@ -1578,8 +2280,8 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('📦 Current tour object:', currentTour);
             
             if (!tourIdParam) {
-                console.warn('⚠️ Tour ID not found, using sample reviews');
-                displaySampleReviews();
+                console.warn('⚠️ Tour ID not found, showing no reviews message');
+                displayNoReviews();
                 return;
             }
             
@@ -1599,17 +2301,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Verify reviews is array
             if (!Array.isArray(reviews)) {
                 console.error('❌ Reviews is not an array:', reviews);
-                displaySampleReviews();
+                displayNoReviews();
                 return;
             }
             
             displayReviews(reviews);
             
+            // Check ban status and disable reply buttons if needed
+            await disableReplyButtonsIfBanned();
+            
             // Check if user can write review
             await showWriteReviewButton();
         } catch (error) {
             console.error('❌ Error loading reviews:', error);
-            displaySampleReviews();
+            displayNoReviews();
         }
     }
     
@@ -1620,7 +2325,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('📝 Displaying reviews:', reviews.length);
         
         if (reviews.length === 0) {
-            displaySampleReviews();
+            displayNoReviews();
             return;
         }
         
@@ -1636,7 +2341,7 @@ document.addEventListener('DOMContentLoaded', function() {
                               `https://ui-avatars.com/api/?name=${encodeURIComponent(review.userId?.fullName || 'Anonymous')}&background=ff6600&color=fff&size=50`;
             
             reviewsList.innerHTML += `
-                <div class="review-item">
+                <div class="review-item" data-rating="${review.content?.rating || 5}">
                     <div class="review-header">
                         <div class="reviewer-info">
                             <img src="${userAvatar}" 
@@ -1683,17 +2388,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     ${review.replies && review.replies.length > 0 ? `
                         <div class="replies-list">
                             ${review.replies.map(reply => {
+                                // Use userName from backend transformation (includes "CMP Travel" for admin)
+                                const displayName = reply.userName || reply.userId?.fullName || 'Anonymous';
                                 const replyAvatar = reply.userId?.avatar || 
-                                                  `https://ui-avatars.com/api/?name=${encodeURIComponent(reply.userId?.fullName || 'Anonymous')}&background=4B5563&color=fff&size=40`;
+                                                  `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=4B5563&color=fff&size=40`;
                                 return `
                                 <div class="reply-item">
                                     <img src="${replyAvatar}" 
-                                         alt="${reply.userId?.fullName || 'Anonymous'}" 
+                                         alt="${displayName}" 
                                          class="reply-avatar"
-                                         onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(reply.userId?.fullName || 'Anonymous')}&background=4B5563&color=fff&size=40'">
+                                         onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=4B5563&color=fff&size=40'">
                                     <div class="reply-content">
                                         <div class="reply-header">
-                                            <strong>${reply.userId?.fullName || 'Anonymous'}</strong>
+                                            <strong>${displayName}</strong>
                                             ${reply.isAdmin ? '<span class="admin-badge">Staff</span>' : ''}
                                             <span class="reply-date">${new Date(reply.timestamp).toLocaleDateString()}</span>
                                         </div>
@@ -1706,6 +2413,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
         });
+    }
+    
+    function displayNoReviews() {
+        const reviewsList = document.getElementById('reviewsList');
+        if (!reviewsList) return;
+        
+        reviewsList.innerHTML = `
+            <div class="no-reviews-message">
+                <div class="no-reviews-icon">
+                    <i class="fas fa-star-o"></i>
+                </div>
+                <h4>No reviews yet</h4>
+                <p>Be the first to share your experience with this tour!</p>
+            </div>
+        `;
     }
     
     function displaySampleReviews() {
@@ -1744,7 +2466,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const photosHTML = review.photos ? generateReviewPhotosHTML(review.photos) : '';
             
             reviewsList.innerHTML += `
-                <div class="review-item">
+                <div class="review-item" data-rating="${review.rating}">
                     <div class="review-header">
                         <div class="reviewer-info">
                             <img src="${review.avatar}" alt="${review.name}" class="reviewer-avatar">
@@ -1852,40 +2574,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Check if there's a static h3 header in HTML
         const staticHeader = gallerySection.querySelector('h3');
         
-        // Add loading state
-        galleryGrid.classList.add('loading');
-        
-        // Display images with delay for better UX
-        setTimeout(() => {
-            galleryGrid.classList.remove('loading');
-            
-            // Always add controls after static header (if exists) or create full header
-            if (staticHeader) {
-                // Static header exists, just add controls
-                const controlsHTML = `
-                    <div class="gallery-controls">
+        // Display images immediately without loading states
+        // Always add controls after static header (if exists) or create full header
+        if (staticHeader) {
+            // Static header exists, just add controls
+            const controlsHTML = `
+                <div class="gallery-controls">
                         <div class="gallery-counter">
                             <i class="fas fa-camera"></i> ${images.length} Photos
-                        </div>
-                        <div class="gallery-filters">
-                            <button class="filter-btn active" data-category="all">
-                                <i class="fas fa-th"></i> All
-                            </button>
-                            <button class="filter-btn" data-category="attractions">
-                                <i class="fas fa-map-marked-alt"></i> Attractions
-                            </button>
-                            <button class="filter-btn" data-category="accommodation">
-                                <i class="fas fa-bed"></i> Hotels
-                            </button>
-                            <button class="filter-btn" data-category="activities">
-                                <i class="fas fa-hiking"></i> Activities
-                            </button>
-                            <button class="filter-btn" data-category="food">
-                                <i class="fas fa-utensils"></i> Food
-                            </button>
-                            <button class="filter-btn" data-category="landscape">
-                                <i class="fas fa-mountain"></i> Landscape
-                            </button>
                         </div>
                     </div>
                 `;
@@ -1900,26 +2596,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="gallery-counter">
                                 <i class="fas fa-camera"></i> ${images.length} Photos
                             </div>
-                        </div>
-                        <div class="gallery-filters">
-                            <button class="filter-btn active" data-category="all">
-                                <i class="fas fa-th"></i> All
-                            </button>
-                            <button class="filter-btn" data-category="attractions">
-                                <i class="fas fa-map-marked-alt"></i> Attractions
-                            </button>
-                            <button class="filter-btn" data-category="accommodation">
-                                <i class="fas fa-bed"></i> Hotels
-                            </button>
-                            <button class="filter-btn" data-category="activities">
-                                <i class="fas fa-hiking"></i> Activities
-                            </button>
-                            <button class="filter-btn" data-category="food">
-                                <i class="fas fa-utensils"></i> Food
-                            </button>
-                            <button class="filter-btn" data-category="landscape">
-                                <i class="fas fa-mountain"></i> Landscape
-                            </button>
                         </div>
                     </div>
                 `;
@@ -1952,134 +2628,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 typeof item === 'string' ? item : (item.url || item)
             );
             
-            // Add gallery filter listeners
-            addGalleryFilterListeners();
-            
-        }, 300);
-    }
-
-    // ✅ GALLERY FILTER FUNCTIONALITY
-    function addGalleryFilterListeners() {
-        const filterButtons = document.querySelectorAll('.gallery-filters .filter-btn');
-        
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', async function() {
-                const category = this.dataset.category;
-                
-                // Load category images (this will call updateActiveFilterButton internally)
-                await loadGalleryByCategory(category);
+            console.log('🖼️ DEBUG Gallery images stored in displayGalleryImages:', {
+                originalImages: images,
+                processedImages: window.currentGalleryImages,
+                imageCount: window.currentGalleryImages.length,
+                caller: 'displayGalleryImages'
             });
-        });
+            
+            // Removed gallery filter functionality for performance
+            console.log('✅ Gallery setup complete - filters removed');
     }
 
-    // ✅ CẬP NHẬT LOAD GALLERY BY CATEGORY - CLIENT-SIDE FILTERING
-    async function loadGalleryByCategory(category) {
-        const galleryGrid = document.getElementById('galleryGrid');
-        
-        try {
-            // Hiển thị loading state
-            galleryGrid.innerHTML = '<div class="gallery-loading"><i class="fas fa-spinner fa-spin"></i> Loading images...</div>';
-            
-            let allImages = [];
-            
-            // Load all images from API or use cached data
-            if (!window.allGalleryImages) {
-                // Thử gọi API lần đầu
-                if (currentTour && (currentTour._id || currentTour.id)) {
-                    try {
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const tourId = urlParams.get('id') || currentTour._id || currentTour.id;
-                        const response = await fetch(`http://localhost:3000/api/tours/${tourId}/gallery`);
-                        if (response.ok) {
-                            const data = await response.json();
-                            allImages = data.gallery || data || [];
-                            window.allGalleryImages = allImages; // Cache for filtering
-                            console.log(`✅ Đã tải ${allImages.length} ảnh gallery từ API`);
-                        } else {
-                            throw new Error(`API trả về ${response.status}`);
-                        }
-                    } catch (apiError) {
-                        console.log(`⚠️ API thất bại, sử dụng dữ liệu mẫu:`, apiError.message);
-                        allImages = getSampleGalleryByCategory('all');
-                        window.allGalleryImages = allImages;
-                    }
-                } else {
-                    // Không có tour ID, dùng sample data
-                    allImages = getSampleGalleryByCategory('all');
-                    window.allGalleryImages = allImages;
-                }
-            } else {
-                // Use cached images
-                allImages = window.allGalleryImages;
-            }
-            
-            // Filter by category
-            let filteredImages = allImages;
-            if (category !== 'all') {
-                filteredImages = allImages.filter(item => {
-                    if (typeof item === 'object' && item.category) {
-                        return item.category === category;
-                    }
-                    return false; // If it's just a string, exclude it from category filter
-                });
-            }
-            
-            console.log(`📸 Filtered ${filteredImages.length} images for category: ${category}`);
-            
-            // Hiển thị ảnh
-            if (filteredImages && filteredImages.length > 0) {
-                displayGalleryImages(filteredImages);
-                // Cập nhật nút filter active sau khi display xong
-                setTimeout(() => updateActiveFilterButton(category), 350);
-            } else {
-                // Hiển thị thông báo không có ảnh
-                galleryGrid.innerHTML = `
-                    <div class="no-images-message">
-                        <i class="fas fa-images"></i>
-                        <p>Không có ảnh nào cho ${category === 'all' ? 'tour này' : category}</p>
-                    </div>
-                `;
-                // Cập nhật nút filter active
-                setTimeout(() => updateActiveFilterButton(category), 350);
-            }
-            
-        } catch (error) {
-            console.error('Error loading gallery:', error);
-            galleryGrid.innerHTML = `
-                <div class="gallery-error">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p>Unable to load images. Please try again.</p>
-                </div>
-            `;
-        }
-    }
+    // ✅ REMOVE GALLERY FILTER SECTION - SIMPLIFIED FOR PERFORMANCE
 
-    // ✅ UPDATE ACTIVE FILTER BUTTON
-    function updateActiveFilterButton(category) {
-        const filterButtons = document.querySelectorAll('.gallery-filters .filter-btn');
-        filterButtons.forEach(btn => {
-            if (btn.dataset.category === category) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-    }
-
-    // ✅ FUNCTION MỚI - LẤY SAMPLE GALLERY THEO CATEGORY
-    function getSampleGalleryByCategory(category) {
-        const destination = currentTour?.country || 'general';
-        const baseSample = getSampleGalleryForDestination(destination);
-        
-        if (category === 'all') {
-            return baseSample;
-        }
-        
-        // Lọc theo category
-        return baseSample.filter(image => image.category === category);
-    }
-
-    // ✅ FUNCTION MỚI - LẤY SAMPLE GALLERY CHO ĐIỂM ĐẾN
+    // ✅ SIMPLIFIED SAMPLE GALLERY FUNCTION - NO CATEGORY FILTERING
     function getSampleGalleryForDestination(destination) {
         const galleries = {
             'Maldives': [
@@ -2264,64 +2826,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
 
-    // ✅ CẬP NHẬT DISPLAY GALLERY IMAGES - XÓA VẤN ĐỀ DUPLICATE HEADER
-    function displayGalleryImages(images) {
-        const galleryGrid = document.getElementById('galleryGrid');
-        if (!galleryGrid) return;
-        
-        const gallerySection = galleryGrid.closest('.gallery-section');
-        
-        // Xóa nội dung hiện có
-        galleryGrid.innerHTML = '';
-        
-        // Xóa các header/controls động hiện có (giữ h3 static)
-        const existingControls = gallerySection.querySelectorAll('.gallery-header, .gallery-controls');
-        existingControls.forEach(control => control.remove());
-        
-        // Kiểm tra có h3 static trong HTML không
-        const staticHeader = gallerySection.querySelector('h3');
-        
-        // Thêm loading state
-        galleryGrid.classList.add('loading');
-        
-        // Hiển thị ảnh với delay để UX tốt hơn
-        setTimeout(() => {
-            galleryGrid.classList.remove('loading');
-            
-            if (!images || images.length === 0) {
-                galleryGrid.innerHTML = `
-                    <div class="no-images">
-                        <i class="fas fa-images"></i>
-                        <p>Không có ảnh nào</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            galleryGrid.innerHTML = '';
-            
-            images.forEach((image, index) => {
-                const imageUrl = image.url || image.src || image;
-                const title = image.title || `Ảnh Gallery ${index + 1}`;
-                const description = image.description || '';
-                
-                const imageElement = document.createElement('div');
-                imageElement.className = 'gallery-item';
-                imageElement.innerHTML = `
-                    <img src="${imageUrl}" alt="${title}" onclick="openLightbox('${imageUrl}', ${index})">
-                    <div class="gallery-overlay">
-                        <h5>${title}</h5>
-                        ${description ? `<p>${description}</p>` : ''}
-                    </div>
-                `;
-                
-                galleryGrid.appendChild(imageElement);
-            });
-            
-            // Thêm lại filter listeners
-            addGalleryFilterListeners();
-            
-        }, 300);
+    // Function to get category display name
+    function getCategoryDisplayName(category) {
+        const categoryMap = {
+            'attractions': 'Attractions',
+            'landscape': 'Landscape', 
+            'accommodation': 'Hotels',
+            'activities': 'Activities',
+            'food': 'Food',
+            'all': 'All'
+        };
+        return categoryMap[category] || category;
     }
 
     // ✅ CẬP NHẬT LOAD GALLERY TỪ DATABASE - VỚI FALLBACK TỐT HỠN
@@ -2344,49 +2859,39 @@ document.addEventListener('DOMContentLoaded', function() {
                         const data = await response.json();
                         galleryData = data.gallery || data || [];
                         console.log(`✅ Đã tải ${galleryData.length} ảnh gallery từ API`);
+                        console.log('🖼️ DEBUG Gallery data from API:', galleryData);
                     } else {
                         throw new Error('API không khả dụng');
                     }
                 } catch (apiError) {
                     console.log('⚠️ Gallery API thất bại, dùng dữ liệu mẫu:', apiError.message);
-                    galleryData = getSampleGalleryByCategory('all');
+                    galleryData = getSampleGalleryForDestination(currentTour?.country || 'general');
                 }
             } else {
                 // Không có dữ liệu tour, dùng sample
-                galleryData = getSampleGalleryByCategory('all');
+                galleryData = getSampleGalleryForDestination(currentTour?.country || 'general');
             }
+            
+            console.log('🖼️ DEBUG About to call displayGalleryImages with:', {
+                galleryDataLength: galleryData.length,
+                galleryData: galleryData
+            });
             
             // Hiển thị ảnh
             displayGalleryImages(galleryData);
             
+            console.log('🖼️ DEBUG displayGalleryImages completed');
+            
         } catch (error) {
             console.error('Lỗi khi tải gallery:', error);
             // Hiển thị thông báo lỗi nhưng vẫn cung cấp sample data
-            displayGalleryImages(getSampleGalleryByCategory('all'));
+            displayGalleryImages(getSampleGalleryForDestination(currentTour?.country || 'general'));
         }
     }
 
-    // ✅ ADD GALLERY FILTER STYLES
+    // ✅ REMOVED GALLERY LOADING STYLES FOR INSTANT DISPLAY
+    
     const galleryStyles = `
-        .gallery-loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-            font-size: 16px;
-        }
-        
-        .gallery-error {
-            text-align: center;
-            padding: 40px;
-            color: #e74c3c;
-        }
-        
-        .gallery-error i {
-            font-size: 48px;
-            margin-bottom: 15px;
-            display: block;
-        }
-        
         .no-images-message {
             text-align: center;
             padding: 40px;
@@ -2399,35 +2904,31 @@ document.addEventListener('DOMContentLoaded', function() {
             display: block;
         }
         
-        .gallery-filters {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        .no-reviews-message {
+            text-align: center;
+            padding: 60px 40px;
+            color: #999;
+            background: #f8f9fa;
+            border-radius: 12px;
             margin: 20px 0;
         }
         
-        .gallery-filter-btn {
-            background: #f8f9fa;
-            border: 2px solid #dee2e6;
-            color: #495057;
-            padding: 8px 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+        .no-reviews-message .no-reviews-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+        
+        .no-reviews-message h4 {
+            margin: 0 0 10px 0;
+            color: #6c757d;
+            font-weight: 600;
+        }
+        
+        .no-reviews-message p {
+            margin: 0;
             font-size: 14px;
-        }
-        
-        .gallery-filter-btn:hover {
-            background: #e9ecef;
-            border-color: #adb5bd;
-        }
-        
-        .gallery-filter-btn.active {
-            background: linear-gradient(135deg, #ff6b35, #f7931e);
-            border-color: #ff6b35;
-            color: white;
-            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+            color: #adb5bd;
         }
         
         .gallery-item {
@@ -2492,7 +2993,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update window exports
     window.loadGallery = loadGallery;
-    window.loadGalleryByCategory = loadGalleryByCategory;
+    // Gallery filter functions removed for performance
     
     // ==================== EVENT LISTENERS SETUP ====================
     function setupEventListeners() {
@@ -2619,13 +3120,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function setupReviews() {
-        // Review filters
-        document.querySelectorAll('.filter-btn').forEach(btn => {
+        // Review filters - only target review filter buttons
+        document.querySelectorAll('.review-filters .filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                // Remove active class from review filter buttons only
+                document.querySelectorAll('.review-filters .filter-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 
                 const filter = this.dataset.filter;
+                console.log('🔍 Filtering reviews by:', filter);
                 filterReviews(filter);
             });
         });
@@ -2668,12 +3171,13 @@ document.addEventListener('DOMContentLoaded', function() {
             closeBtn.addEventListener('click', closeLightbox);
         }
         
+        // Simple popup close setup
         if (popup) {
-            popup.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeLightbox();
-                }
-            });
+            // Close button
+            const closeBtn = popup.querySelector('.close');
+            if (closeBtn) {
+                closeBtn.onclick = closeLightbox;
+            }
         }
         
         // Gallery view button
@@ -3220,9 +3724,70 @@ document.addEventListener('DOMContentLoaded', function() {
     // ✅ GLOBAL VARIABLE TO TRACK BOOKING FLOW
     let isFromBookingFlow = false;
 
+    // ✅ CHECK USER BLOCK STATUS BEFORE BOOKING
+    async function checkUserBlockStatus() {
+        try {
+            const currentUser = getCurrentUser();
+            console.log('🔍 Checking block status for user:', currentUser);
+            
+            if (!currentUser || !currentUser.userId) {
+                console.log('❌ User not logged in, redirecting to login');
+                // User not logged in - redirect to login
+                window.location.href = '/frontend/login.html';
+                return false;
+            }
+
+            console.log(`🌐 Fetching block status from API: /api/users/${currentUser.userId}/block-status`);
+            const response = await fetch(`http://localhost:3000/api/users/${currentUser.userId}/block-status`);
+            const data = await response.json();
+            
+            console.log('📋 Block status response:', data);
+            
+            if (data.success && data.data.blocked) {
+                console.log('🚫 User is blocked, showing notification');
+                
+                // User is blocked - show toast and disable booking
+                if (typeof showToast === 'function') {
+                    console.log('📢 Showing toast notification');
+                    showToast('Booking Blocked', 'You are currently blocked from making bookings. Please contact support for assistance.', 'error', 8000);
+                } else {
+                    console.log('⚠️ Toast function not available, using alert');
+                    alert('You are currently blocked from making bookings. Please contact support for assistance.');
+                }
+                
+                // Disable booking button visually
+                const bookNowBtn = document.getElementById('bookNowBtn');
+                console.log('🔘 Found booking button:', bookNowBtn);
+                if (bookNowBtn) {
+                    bookNowBtn.style.opacity = '0.5';
+                    bookNowBtn.style.cursor = 'not-allowed';
+                    bookNowBtn.title = 'You are blocked from booking';
+                    console.log('✅ Booking button disabled');
+                }
+                
+                return false;
+            } else {
+                console.log('✅ User is not blocked, can proceed with booking');
+            }
+            
+            return true; // User is not blocked
+        } catch (error) {
+            console.error('Error checking user block status:', error);
+            // On error, allow booking (don't block legitimate users due to API issues)
+            return true;
+        }
+    }
+
     // ✅ CẬP NHẬT FUNCTION XỬ LÝ BOOK NOW
-    function handleBookNow() {
+    async function handleBookNow() {
         console.log('📝 Book Now clicked for tour:', currentTour.name);
+        
+        // Check if user is blocked before allowing booking
+        const canBook = await checkUserBlockStatus();
+        if (!canBook) {
+            return; // User is blocked or not logged in
+        }
+        
         isFromBookingFlow = true; // ✅ Set booking flow flag
         showHotelSelectionModal();
     }
@@ -3235,30 +3800,38 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get destination from current tour
             const destination = currentTour?.country || 'general';
             
-            console.log(`🏨 Loading hotels for destination: ${destination}`);
+            console.log(`🏨 Loading admin-selected hotels for destination: ${destination}`);
             
             let destinationHotels = [];
             
-            // Try to fetch hotels from API
-            try {
-                // Try destination-specific API first
-                let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
+            // Use admin-selected hotels if available
+            if (currentTour?.selectedHotels && currentTour.selectedHotels.length > 0) {
+                destinationHotels = currentTour.selectedHotels;
+                console.log(`✅ Using ${destinationHotels.length} admin-selected hotels`);
+            } else {
+                console.log('⚠️ No admin-selected hotels, falling back to destination hotels');
                 
-                if (response.ok) {
-                    destinationHotels = await response.json();
-                    console.log(`✅ Found ${destinationHotels.length} hotels for ${destination}`);
-                }
-                
-                // Fallback if no hotels found
-                if (!destinationHotels || destinationHotels.length === 0) {
-                    console.log(`❌ No hotels found for ${destination}, using general hotels`);
-                    const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
-                    if (fallbackResponse.ok) {
-                        destinationHotels = await fallbackResponse.json();
+                // Try to fetch hotels from API as fallback
+                try {
+                    // Try destination-specific API first
+                    let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
+                    
+                    if (response.ok) {
+                        destinationHotels = await response.json();
+                        console.log(`✅ Found ${destinationHotels.length} hotels for ${destination}`);
                     }
+                    
+                    // Fallback if no hotels found
+                    if (!destinationHotels || destinationHotels.length === 0) {
+                        console.log(`❌ No hotels found for ${destination}, using general hotels`);
+                        const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
+                        if (fallbackResponse.ok) {
+                            destinationHotels = await fallbackResponse.json();
+                        }
+                    }
+                } catch (apiError) {
+                    console.warn('⚠️ API not available, using sample data:', apiError.message);
                 }
-            } catch (apiError) {
-                console.warn('⚠️ API not available, using sample data:', apiError.message);
             }
             
             // Final fallback with sample data
@@ -3272,7 +3845,7 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.innerHTML = `
                 <div class="hotel-selection-modal">
                     <div class="modal-header">
-                        <h3><i class="fas fa-bed"></i> Select Hotel in ${destination}</h3>
+                        <h3><i class="fas fa-bed"></i> ${currentTour?.selectedHotels?.length > 0 ? 'Recommended Hotels' : `Select Hotel in ${destination}`}</h3>
                         <button class="modal-close" onclick="this.closest('.hotel-selection-modal-overlay').remove()">
                             <i class="fas fa-times"></i>
                         </button>
@@ -3280,7 +3853,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="modal-body">
                         <p class="selection-note">
                             <i class="fas fa-info-circle"></i> 
-                            Choose a suitable hotel for your trip to ${destination}
+                            ${currentTour?.selectedHotels?.length > 0 ? 
+                                'These hotels have been carefully selected for this tour by our experts' : 
+                                `Choose a suitable hotel for your trip to ${destination}`
+                            }
                         </p>
                         <div class="hotels-list">
                             ${destinationHotels.map(hotel => `
@@ -3292,7 +3868,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                             <h4>${hotel.name}</h4>
                                             <div class="hotel-rating">
                                                 ${generateStarsHTML(hotel.details?.rating || 4.5)}
-                                                <span class="rating-score">${hotel.details?.rating || 4.5}</span>
+                                                <span class="rating-score">${(hotel.details?.rating || 4.5).toFixed(1)}</span>
                                                 <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
                                             </div>
                                             <div class="hotel-location">
@@ -3624,72 +4200,86 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
     }
 
-    // ✅ FUNCTION TO GENERATE ROOM TYPES HTML FROM DATABASE
+    // ✅ FUNCTION TO GENERATE ROOM TYPES HTML FROM NEW DATABASE STRUCTURE
     function getRoomTypesHTML(hotel) {
-        // Get room types from hotel.rooms object in database
-        const roomTypes = [];
+        const roomTypes = hotel.details?.roomTypes || [];
         
-        if (hotel.rooms) {
-            // Map database room structure to display format
-            const roomTypeMap = {
-                'superior': { name: 'Superior Room', basePrice: 150, capacity: 2 },
-                'juniorDeluxe': { name: 'Junior Deluxe', basePrice: 200, capacity: 2 },
-                'deluxe': { name: 'Deluxe Room', basePrice: 250, capacity: 3 },
-                'suite': { name: 'Suite', basePrice: 400, capacity: 4 },
-                'family': { name: 'Family Room', basePrice: 350, capacity: 5 },
-                'president': { name: 'Presidential Suite', basePrice: 800, capacity: 6 }
-            };
-            
-            // Generate HTML for each room type available
-            Object.keys(hotel.rooms).forEach(roomKey => {
-                const roomData = hotel.rooms[roomKey];
-                const roomInfo = roomTypeMap[roomKey];
-                
-                if (roomData && roomData.available > 0 && roomInfo) {
-                    roomTypes.push(`
-                        <div class="room-type-item">
-                            <div class="room-info">
-                                <h5>${roomInfo.name}</h5>
-                                <div class="room-capacity">
-                                    <i class="fas fa-users"></i> Up to ${roomInfo.capacity} guests
-                                </div>
-                                <div class="room-available">
-                                    <i class="fas fa-door-open"></i> ${roomData.available} rooms available
-                                </div>
-                            </div>
-                            <div class="room-price">
-                                $${roomData.pricePerNight || roomInfo.basePrice}
-                                <span>/night</span>
-                            </div>
-                        </div>
-                    `);
-                }
-            });
+        if (roomTypes.length === 0) {
+            return `<div class="no-rooms">
+                        <p><i class="fas fa-info-circle"></i> Room type information will be available soon.</p>
+                    </div>`;
         }
         
-        // Fallback if no rooms data
-        if (roomTypes.length === 0) {
-            return getSampleRoomTypes().map(room => `
-                <div class="room-type-item">
-                    <div class="room-info">
-                        <h5>${room.type}</h5>
-                        <div class="room-capacity">
-                            <i class="fas fa-users"></i> ${room.capacity} guests
-                        </div>
-                        <div class="room-size">
-                            <i class="fas fa-expand"></i> ${room.size}m²
+        return roomTypes.map(room => `
+            <div class="room-type-item">
+                <div class="room-header">
+                    <div class="room-name-price">
+                        <h5>${room.name || room.type}</h5>
+                        <div class="room-price">
+                            ${room.originalPrice && room.originalPrice > room.price ? 
+                                `<span class="original-price">$${room.originalPrice}</span>` : ''
+                            }
+                            <span class="current-price">$${room.price}</span>
+                            <span class="per-night">/night</span>
                         </div>
                     </div>
-                    <div class="room-amenities-tags">
-                        ${room.amenities.slice(0, 3).map(amenity => 
-                            `<span class="amenity-badge">${getAmenityName(amenity)}</span>`
-                        ).join('')}
+                    <div class="room-availability">
+                        <span class="available-rooms">
+                            <i class="fas fa-door-open"></i>
+                            ${room.availableRooms || 0}/${room.totalRooms || 10} available
+                        </span>
                     </div>
                 </div>
-            `).join('');
-        }
-        
-        return roomTypes.join('');
+                <div class="room-details">
+                    <div class="room-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-users"></i>
+                            <span>${room.capacity?.total || room.capacity || 2} guests</span>
+                            ${room.capacity?.adults ? `<small>(${room.capacity.adults} adults, ${room.capacity.children || 0} children)</small>` : ''}
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-expand"></i>
+                            <span>${room.size || 30}m²</span>
+                        </div>
+                        ${room.bedInfo ? 
+                            `<div class="spec-item">
+                                <i class="fas fa-bed"></i>
+                                <span>${room.bedInfo}</span>
+                            </div>` : ''
+                        }
+                    </div>
+                    <div class="room-amenities-tags">
+                        ${(room.amenities || []).slice(0, 4).map(amenity => 
+                            `<span class="amenity-tag">
+                                <i class="fas fa-check-circle"></i>
+                                ${getAmenityName(amenity)}
+                            </span>`
+                        ).join('')}
+                    </div>
+                    ${room.description ? 
+                        `<div class="room-description">
+                            <p>${room.description}</p>
+                        </div>` : ''
+                    }
+                    ${room.images && room.images.length > 0 ? 
+                        `<div class="room-images-preview">
+                            ${room.images.slice(0, 3).map((img, index) => 
+                                `<img src="${img}" alt="${room.name}" class="room-preview-img"
+                                    onclick="openRoomImagePopup('${room.name}', '${hotel.name}', ${index}, '${room.type || 'room'}')"
+                                    style="cursor: pointer;"
+                                    title="Click to view room gallery">`
+                            ).join('')}
+                            ${room.images.length > 3 ? 
+                                `<div class="more-images-indicator" 
+                                    onclick="openRoomImagePopup('${room.name}', '${hotel.name}', 0, '${room.type || 'room'}')">
+                                    +${room.images.length - 3} more
+                                </div>` : ''
+                            }
+                        </div>` : ''
+                    }
+                </div>
+            </div>
+        `).join('');
     }
 
     // ✅ FUNCTION GET AMENITY NAME - THÊM FUNCTION NÀY
@@ -3861,8 +4451,15 @@ document.addEventListener('DOMContentLoaded', function() {
             try {
                 const response = await fetch(`http://localhost:3000/api/hotels/${hotelId}`);
                 if (response.ok) {
-                    hotel = await response.json();
+                    const apiResponse = await response.json();
+                    hotel = apiResponse.data || apiResponse; // Handle both formats
                     console.log('✅ Hotel loaded from API:', hotel.name);
+                    console.log('🏨 Hotel details structure:', {
+                        hasMainImage: !!hotel.details?.mainImage,
+                        mainImage: hotel.details?.mainImage,
+                        roomTypesCount: hotel.details?.roomTypes?.length || 0,
+                        firstRoomType: hotel.details?.roomTypes?.[0]
+                    });
                 } else {
                     console.log('❌ API response not ok:', response.status);
                 }
@@ -3883,11 +4480,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // ✅ USE IMAGES FROM DATABASE
+            // ✅ USE IMAGES FROM DATABASE - prioritize mainImage
+            const mainImage = hotel.details?.mainImage;
+            const hotelImages = hotel.details?.images || [];
+            
             let galleryImages = [];
-            if (hotel.details?.images && hotel.details.images.length > 0) {
-                // Use images from database
-                galleryImages = hotel.details.images;
+            if (mainImage) {
+                galleryImages.push(mainImage);
+                // Add other images from gallery (avoid duplicates)
+                hotelImages.forEach(img => {
+                    if (img !== mainImage) {
+                        galleryImages.push(img);
+                    }
+                });
+                console.log('✅ Using mainImage +', galleryImages.length - 1, 'gallery images from database');
+            } else if (hotelImages.length > 0) {
+                galleryImages = hotelImages;
                 console.log('✅ Using', galleryImages.length, 'images from database');
             } else {
                 // Fallback to sample images
@@ -3914,77 +4522,93 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="modal-body">
                         <div class="hotel-detail-content">
-                            <div class="hotel-images">
-                                <div class="main-image-container">
-                                    <img src="${galleryImages[0]}" alt="${hotel.name}" class="main-hotel-image" id="mainHotelImage">
-                                    <div class="image-nav-buttons">
-                                        <button class="nav-btn prev-btn" onclick="navigateHotelImage(-1)">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </button>
-                                        <button class="nav-btn next-btn" onclick="navigateHotelImage(1)">
-                                            <i class="fas fa-chevron-right"></i>
+                            <!-- Cột trái: Hình ảnh và thông tin cơ bản -->
+                            <div class="hotel-left-section">
+                                <div class="hotel-images">
+                                    <div class="main-image-container">
+                                        <img src="${galleryImages[0]}" alt="${hotel.name}" class="main-hotel-image" id="mainHotelImage"
+                                            onclick="openHotelImagePopup(0)"
+                                            style="cursor: pointer;"
+                                            title="Click to view full size">
+                                        <div class="image-nav-buttons">
+                                            <button class="nav-btn prev-btn" onclick="navigateHotelImage(-1)">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <button class="nav-btn next-btn" onclick="navigateHotelImage(1)">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                        <div class="image-counter">
+                                            <span id="currentImageIndex">1</span> / <span id="totalImages">${galleryImages.length}</span>
+                                        </div>
+                                        <button class="fullscreen-btn" onclick="openHotelGallery(0)">
+                                            <i class="fas fa-expand"></i>
                                         </button>
                                     </div>
-                                    <div class="image-counter">
-                                        <span id="currentImageIndex">1</span> / <span id="totalImages">${galleryImages.length}</span>
-                                    </div>
-                                    <button class="fullscreen-btn" onclick="openHotelGallery(0)">
-                                        <i class="fas fa-expand"></i>
-                                    </button>
-                                </div>
-                                <div class="image-thumbnails">
-                                    ${galleryImages.map((img, index) => 
-                                        `<img src="${img}" alt="Hotel ${index + 1}" class="thumb-image ${index === 0 ? 'active' : ''}" 
-                                            onclick="changeHotelImage(${index})" data-index="${index}">`
-                                    ).join('')}
-                                </div>
-                            </div>
-                            
-                            <div class="hotel-info-detailed">
-                                <div class="hotel-rating-detailed">
-                                    ${generateStarsHTML(hotel.details?.rating || 4.5)}
-                                    <span class="rating-score">${hotel.details?.rating || 4.5}</span>
-                                    <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
-                                </div>
-                                
-                                <div class="hotel-location-detailed">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>${hotel.location?.address || hotel.location?.city || 'Prime Location'}</span>
-                                </div>
-                                
-                                <div class="hotel-description">
-                                    <h4>Description</h4>
-                                    <p>${hotel.details?.description || 'Luxury hotel with excellent service and convenient location.'}</p>
-                                </div>
-                                
-                                <div class="hotel-amenities-detailed">
-                                    <h4>Amenities</h4>
-                                    <div class="amenities-grid">
-                                        ${(hotel.details?.amenities || ['wifi', 'pool', 'spa', 'restaurant']).map(amenity => 
-                                            `<div class="amenity-item">
-                                                <i class="fas fa-check"></i>
-                                                <span>${getAmenityName(amenity)}</span>
-                                            </div>`
+                                    <div class="image-thumbnails">
+                                        ${galleryImages.map((img, index) => 
+                                            `<img src="${img}" alt="Hotel ${index + 1}" class="thumb-image ${index === 0 ? 'active' : ''}" 
+                                                onclick="changeHotelImage(${index})" 
+                                                oncontextmenu="openHotelImagePopup(${index}); return false;"
+                                                ondblclick="openHotelImagePopup(${index})"
+                                                data-index="${index}">`
                                         ).join('')}
                                     </div>
                                 </div>
                                 
-                                <div class="room-types">
-                                    <h4><i class="fas fa-bed"></i> Available Room Types</h4>
-                                    <div class="room-types-list">
-                                        ${getRoomTypesHTML(hotel)}
+                                <div class="hotel-info-detailed">
+                                    <div class="hotel-rating-detailed">
+                                        ${generateStarsHTML(hotel.details?.rating || 4.5)}
+                                        <span class="rating-score">${(hotel.details?.rating || 4.5).toFixed(1)}</span>
+                                        <span class="review-count">(${hotel.reviewsSummary?.totalReviews || 120} reviews)</span>
+                                    </div>
+                                    
+                                    <div class="hotel-location-detailed">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>${hotel.location?.address || hotel.location?.city || 'Prime Location'}</span>
+                                    </div>
+                                    
+                                    <div class="hotel-description">
+                                        <h4>About This Hotel</h4>
+                                        <p>${hotel.details?.description || 'Luxury hotel with excellent service and convenient location.'}</p>
+                                    </div>
+                                    
+                                    <div class="hotel-amenities-detailed">
+                                        <h4>Hotel Amenities</h4>
+                                        <div class="amenities-grid">
+                                            ${(hotel.details?.amenities || ['wifi', 'pool', 'spa', 'restaurant']).map(amenity => 
+                                                `<div class="amenity-item">
+                                                    <i class="fas fa-check-circle"></i>
+                                                    <span>${getAmenityName(amenity)}</span>
+                                                </div>`
+                                            ).join('')}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            
+                            <!-- Cột phải: Room Types -->
+                            <div class="hotel-right-section">
+                                <div class="room-types-header">
+                                    <h3><i class="fas fa-bed"></i> Available Room Types</h3>
+                                    <p class="room-types-subtitle">Choose from our selection of comfortable accommodations</p>
+                                </div>
+                                
+                                <div class="room-types-container">
+                                    ${getRoomTypesHTML(hotel)}
+                                </div>
+                                
+                                <!-- Action buttons ở cuối cột phải -->
+                                <div class="modal-actions">
+                                    <button class="btn btn-secondary" onclick="closeHotelDetailModal()">
+                                        <i class="fas fa-arrow-left"></i> Back
+                                    </button>
+                                    <button class="btn btn-primary" onclick="selectHotelFromDetail('${hotel._id || hotel.id}', '${hotel.name.replace(/'/g, "\\'")}')">
+                                        <i class="fas fa-check"></i> Select This Hotel
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" onclick="closeHotelDetailModal()">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
-                        <button class="btn btn-primary" onclick="selectHotelFromDetail('${hotel._id || hotel.id}', '${hotel.name.replace(/'/g, "\\'")}')">
-                            <i class="fas fa-check"></i> Select This Hotel
-                        </button>
                     </div>
                 </div>
                 
@@ -4021,6 +4645,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Store gallery images globally for navigation
             window.currentHotelGallery = galleryImages;
             window.currentHotelImageIndex = 0;
+            window.currentHotelName = hotel.name;
+            
+            // Store room images for popup navigation
+            window.currentHotelRooms = hotel.details?.roomTypes || [];
             
             // Close on outside click
             modal.addEventListener('click', function(e) {
@@ -4139,6 +4767,204 @@ document.addEventListener('DOMContentLoaded', function() {
     window.getAmenityName = getAmenityName;
     window.changeMainImage = changeMainImage;
     window.changeHotelImage = changeHotelImage;
+
+    // ✅ IMAGE POPUP FUNCTIONS WITH GALLERY NAVIGATION
+    let currentPopupGallery = [];
+    let currentPopupIndex = 0;
+
+    window.openImagePopup = function(imageSrc, hotelName, galleryImages = null, startIndex = 0) {
+        // Setup gallery array
+        if (galleryImages && Array.isArray(galleryImages)) {
+            currentPopupGallery = galleryImages;
+            currentPopupIndex = startIndex;
+        } else {
+            // Single image mode
+            currentPopupGallery = [imageSrc];
+            currentPopupIndex = 0;
+        }
+
+        const popup = document.createElement('div');
+        popup.className = 'image-popup-overlay';
+        
+        popup.innerHTML = `
+            <div class="image-popup-content">
+                <button class="image-popup-close" id="popupCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <button class="image-popup-nav image-popup-prev" id="popupPrevBtn" ${currentPopupGallery.length <= 1 ? 'style="display: none;"' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="image-popup-nav image-popup-next" id="popupNextBtn" ${currentPopupGallery.length <= 1 ? 'style="display: none;"' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="image-popup-container">
+                    <img src="${currentPopupGallery[currentPopupIndex]}" alt="${hotelName}" class="popup-image" id="popupImage">
+                    <div class="image-popup-caption">
+                        <h4>${hotelName}</h4>
+                        ${currentPopupGallery.length > 1 ? 
+                            `<p><span id="popupImageCounter">${currentPopupIndex + 1}</span> / ${currentPopupGallery.length} - Use arrow keys or click buttons to navigate</p>` :
+                            `<p>Click outside or press ESC to close</p>`
+                        }
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(popup);
+        
+        // Add proper event listeners instead of inline onclick
+        const closeBtn = popup.querySelector('#popupCloseBtn');
+        const prevBtn = popup.querySelector('#popupPrevBtn');
+        const nextBtn = popup.querySelector('#popupNextBtn');
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeImagePopup();
+            });
+        }
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                navigatePopupImage(-1);
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                navigatePopupImage(1);
+            });
+        }
+        
+        // Preload adjacent images for smooth navigation
+        if (currentPopupGallery.length > 1) {
+            preloadAdjacentImages();
+        }
+        
+        // Close on outside click
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                closeImagePopup();
+            }
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', handlePopupKeydown);
+    };
+
+    function handlePopupKeydown(e) {
+        if (!document.querySelector('.image-popup-overlay')) return;
+        
+        switch(e.key) {
+            case 'Escape':
+                closeImagePopup();
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                navigatePopupImage(-1);
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                navigatePopupImage(1);
+                break;
+        }
+    }
+
+    window.navigatePopupImage = function(direction) {
+        if (currentPopupGallery.length <= 1) return;
+        
+        currentPopupIndex += direction;
+        
+        // Loop around
+        if (currentPopupIndex < 0) {
+            currentPopupIndex = currentPopupGallery.length - 1;
+        } else if (currentPopupIndex >= currentPopupGallery.length) {
+            currentPopupIndex = 0;
+        }
+        
+        // Update image and counter immediately
+        const popupImage = document.getElementById('popupImage');
+        const popupCounter = document.getElementById('popupImageCounter');
+        
+        if (popupImage) {
+            // Direct image change without loading effects
+            popupImage.src = currentPopupGallery[currentPopupIndex];
+            
+            // Preload next and previous images for smooth navigation
+            preloadAdjacentImages();
+        }
+        if (popupCounter) {
+            popupCounter.textContent = currentPopupIndex + 1;
+        }
+    };
+
+    // Helper function to preload adjacent images
+    function preloadAdjacentImages() {
+        if (currentPopupGallery.length <= 1) return;
+        
+        const nextIndex = (currentPopupIndex + 1) % currentPopupGallery.length;
+        const prevIndex = currentPopupIndex === 0 ? currentPopupGallery.length - 1 : currentPopupIndex - 1;
+        
+        // Preload next image
+        const nextImg = new Image();
+        nextImg.src = currentPopupGallery[nextIndex];
+        
+        // Preload previous image  
+        const prevImg = new Image();
+        prevImg.src = currentPopupGallery[prevIndex];
+    }
+
+    window.closeImagePopup = function() {
+        const popup = document.querySelector('.image-popup-overlay');
+        if (popup) {
+            popup.remove();
+        }
+        // Remove event listener
+        document.removeEventListener('keydown', handlePopupKeydown);
+        
+        // Reset gallery state
+        currentPopupGallery = [];
+        currentPopupIndex = 0;
+    };
+
+    // Helper function to open popup from hotel gallery
+    window.openHotelImagePopup = function(index) {
+        if (!window.currentHotelGallery || !window.currentHotelName) return;
+        
+        openImagePopup(
+            window.currentHotelGallery[index], 
+            window.currentHotelName, 
+            window.currentHotelGallery, 
+            index
+        );
+    };
+
+    // Helper function to open popup from room gallery
+    window.openRoomImagePopup = function(roomName, hotelName, imageIndex, roomType) {
+        if (!window.currentHotelRooms) return;
+        
+        // Find the room by name or type
+        const room = window.currentHotelRooms.find(r => 
+            r.name === roomName || r.type === roomName || r.type === roomType
+        );
+        
+        if (room && room.images && room.images.length > 0) {
+            openImagePopup(
+                room.images[imageIndex], 
+                `${roomName} - ${hotelName}`, 
+                room.images, 
+                imageIndex
+            );
+        }
+    };
+
     window.navigateHotelImage = navigateHotelImage;
     window.openHotelGallery = openHotelGallery;
     window.closeHotelGallery = closeHotelGallery;
@@ -4446,19 +5272,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Review functionality
     function filterReviews(filter) {
         const reviewItems = document.querySelectorAll('.review-item');
+        let visibleCount = 0;
         
         reviewItems.forEach(item => {
             let shouldShow = true;
+            const rating = parseInt(item.dataset.rating);
             
             switch (filter) {
                 case 'all':
                     shouldShow = true;
                     break;
                 case '5':
-                    shouldShow = item.querySelector('.stars').children.length === 5;
+                    shouldShow = rating === 5;
                     break;
                 case '4':
-                    shouldShow = item.querySelector('.stars').children.length === 4;
+                    shouldShow = rating === 4;
+                    break;
+                case '3':
+                    shouldShow = rating === 3;
+                    break;
+                case '2':
+                    shouldShow = rating === 2;
+                    break;
+                case '1':
+                    shouldShow = rating === 1;
                     break;
                 case 'with-photos':
                     shouldShow = item.querySelector('.review-photos') !== null;
@@ -4468,8 +5305,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
             }
             
-            item.style.display = shouldShow ? 'block' : 'none';
+            if (shouldShow) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
         });
+        
+        // Update filter button text with count
+        const activeBtn = document.querySelector('.filter-btn.active');
+        if (activeBtn && filter !== 'all') {
+            const originalText = activeBtn.textContent.split(' (')[0];
+            activeBtn.textContent = `${originalText} (${visibleCount})`;
+        }
+        
+        console.log(`✅ Filtered reviews: ${filter}, showing ${visibleCount} of ${reviewItems.length}`);
     }
     
     function updateRatingInput(rating) {
@@ -4650,14 +5501,63 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Gallery functionality
+    // Gallery functionality with navigation - SIMPLIFIED
+    let currentLightboxIndex = 0;
+    let currentLightboxGallery = [];
+
     function openLightbox(imageSrc, index = 0) {
         const popup = document.getElementById('popup');
         const popupImg = document.getElementById('popup-img');
+        const popupPrev = document.querySelector('.popup-prev');
+        const popupNext = document.querySelector('.popup-next');
+        const popupCaption = document.getElementById('popup-caption');
+        
+        // 🐛 DEBUG LIGHTBOX
+        console.log('🖼️ DEBUG Lightbox opened:', {
+            imageSrc: imageSrc,
+            index: index,
+            currentGalleryImages: window.currentGalleryImages,
+            galleryLength: window.currentGalleryImages?.length || 0
+        });
         
         if (popup && popupImg) {
+            // Setup gallery navigation
+            currentLightboxIndex = index;
+            currentLightboxGallery = window.currentGalleryImages || [imageSrc];
+            
+            console.log('🖼️ DEBUG Gallery setup:', {
+                currentLightboxIndex: currentLightboxIndex,
+                currentLightboxGallery: currentLightboxGallery,
+                galleryLength: currentLightboxGallery.length,
+                caller: 'openLightbox'
+            });
+            
             popup.style.display = 'block';
             popupImg.src = imageSrc;
+            
+            // Show/hide navigation buttons
+            const hasMultipleImages = currentLightboxGallery.length > 1;
+            console.log('🖼️ DEBUG Navigation:', {
+                hasMultipleImages: hasMultipleImages,
+                showingButtons: hasMultipleImages
+            });
+            
+            if (popupPrev && popupNext) {
+                popupPrev.style.display = hasMultipleImages ? 'block' : 'none';
+                popupNext.style.display = hasMultipleImages ? 'block' : 'none';
+            }
+            
+            // Update caption
+            if (popupCaption) {
+                if (hasMultipleImages) {
+                    popupCaption.innerHTML = `<p>${currentLightboxIndex + 1} / ${currentLightboxGallery.length} - Press ESC or click outside to close</p>`;
+                } else {
+                    popupCaption.innerHTML = `<p>Press ESC or click outside to close</p>`;
+                }
+            }
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', handleLightboxKeydown);
             
             // Track image view
             trackEvent('image_viewed', {
@@ -4666,11 +5566,81 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+
+    function handleLightboxKeydown(e) {
+        const popup = document.getElementById('popup');
+        if (!popup || popup.style.display === 'none') return;
+        
+        console.log('🖼️ DEBUG Keydown:', {
+            key: e.key,
+            popupVisible: popup.style.display !== 'none'
+        });
+        
+        switch(e.key) {
+            case 'Escape':
+                console.log('🖼️ DEBUG: Closing lightbox via ESC');
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                console.log('🖼️ DEBUG: Navigate left');
+                navigateGalleryPopup(-1);
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                console.log('🖼️ DEBUG: Navigate right');
+                navigateGalleryPopup(1);
+                break;
+        }
+    }
+
+    window.navigateGalleryPopup = function(direction) {
+        console.log('🖼️ DEBUG Navigate called:', direction);
+        
+        if (currentLightboxGallery.length <= 1) {
+            console.log('🖼️ DEBUG: No navigation - only 1 image');
+            return;
+        }
+        
+        currentLightboxIndex += direction;
+        
+        // Loop around
+        if (currentLightboxIndex < 0) {
+            currentLightboxIndex = currentLightboxGallery.length - 1;
+        } else if (currentLightboxIndex >= currentLightboxGallery.length) {
+            currentLightboxIndex = 0;
+        }
+        
+        console.log('🖼️ DEBUG New index:', currentLightboxIndex);
+        
+        // Update image and caption
+        const popupImg = document.getElementById('popup-img');
+        const popupCaption = document.getElementById('popup-caption');
+        
+        if (popupImg) {
+            popupImg.src = currentLightboxGallery[currentLightboxIndex];
+        }
+        
+        if (popupCaption) {
+            popupCaption.innerHTML = `<p>${currentLightboxIndex + 1} / ${currentLightboxGallery.length} - Press ESC or click outside to close</p>`;
+        }
+    };
     
     function closeLightbox() {
+        console.log('🖼️ DEBUG: Closing lightbox');
+        
         const popup = document.getElementById('popup');
         if (popup) {
             popup.style.display = 'none';
+            
+            // Remove keyboard event listener
+            document.removeEventListener('keydown', handleLightboxKeydown);
+            
+            // Reset gallery state
+            currentLightboxIndex = 0;
+            currentLightboxGallery = [];
+            
+            console.log('🖼️ DEBUG: Lightbox closed, state reset');
         }
     }
     
@@ -5168,32 +6138,41 @@ function setupViewAllHotelsButton() {
 
 async function showAllHotelsModal() {
     try {
-        const destination = globalCurrentTour?.country || 'general';
-        console.log(`🏨 Loading all hotels for destination: ${destination}`);
+        console.log(`🏨 Loading all selected hotels for this tour`);
         
-        // Fetch hotels from API
         let hotels = [];
-        try {
-            const response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
-            if (response.ok) {
-                hotels = await response.json();
-                console.log(`✅ Found ${hotels.length} hotels for ${destination}`);
-            }
-        } catch (error) {
-            console.warn('❌ API error:', error);
-        }
         
-        // Fallback to all hotels if no destination-specific hotels
-        if (!hotels || hotels.length === 0) {
-            console.log('🔄 No destination-specific hotels, loading all hotels...');
+        // 🎯 PRIORITY 1: Use admin-selected hotels if available
+        if (globalCurrentTour?.selectedHotels && globalCurrentTour.selectedHotels.length > 0) {
+            hotels = globalCurrentTour.selectedHotels;
+            console.log(`✅ Found ${hotels.length} admin-selected hotels for this tour`);
+        } else {
+            // 🔄 FALLBACK: Load destination hotels if no admin selection
+            const destination = globalCurrentTour?.country || 'general';
+            console.log(`🔄 No admin-selected hotels, loading all hotels for destination: ${destination}`);
+            
             try {
-                const response = await fetch('http://localhost:3000/api/hotels');
+                const response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
                 if (response.ok) {
                     hotels = await response.json();
-                    console.log(`✅ Loaded ${hotels.length} hotels (all destinations)`);
+                    console.log(`✅ Found ${hotels.length} hotels for ${destination}`);
                 }
             } catch (error) {
                 console.warn('❌ API error:', error);
+            }
+            
+            // Fallback to all hotels if no destination-specific hotels
+            if (!hotels || hotels.length === 0) {
+                console.log('🔄 No destination-specific hotels, loading all hotels...');
+                try {
+                    const response = await fetch('http://localhost:3000/api/hotels');
+                    if (response.ok) {
+                        hotels = await response.json();
+                        console.log(`✅ Loaded ${hotels.length} hotels (all destinations)`);
+                    }
+                } catch (error) {
+                    console.warn('❌ API error:', error);
+                }
             }
         }
         
@@ -5226,13 +6205,19 @@ async function showAllHotelsModal() {
             ];
         }
         
+        // Determine modal title based on hotel source
+        const isAdminSelected = globalCurrentTour?.selectedHotels && globalCurrentTour.selectedHotels.length > 0;
+        const modalTitle = isAdminSelected 
+            ? `<i class="fas fa-crown"></i> Curated Hotels for This Tour (${hotels.length})`
+            : `<i class="fas fa-hotel"></i> Hotels in ${globalCurrentTour?.country || 'this destination'} (${hotels.length})`;
+            
         // Create modal
         const modal = document.createElement('div');
         modal.className = 'all-hotels-modal-overlay';
         modal.innerHTML = `
             <div class="all-hotels-modal">
                 <div class="modal-header">
-                    <h3><i class="fas fa-hotel"></i> Hotels in ${destination}</h3>
+                    <h3>${modalTitle}</h3>
                     <button class="modal-close" onclick="this.closest('.all-hotels-modal-overlay').remove()">
                         <i class="fas fa-times"></i>
                     </button>
@@ -5277,7 +6262,7 @@ function createHotelCard(hotel) {
                 <img src="${image}" alt="${hotel.name}">
                 <div class="hotel-card-badge">
                     <div class="stars">${starsHTML}</div>
-                    <span class="rating-score">${rating}</span>
+                    <span class="rating-score">${rating.toFixed(1)}</span>
                 </div>
             </div>
             <div class="hotel-card-content">
@@ -5293,8 +6278,7 @@ function createHotelCard(hotel) {
                 </div>
                 <div class="hotel-card-footer">
                     <div class="hotel-price">
-                        <span class="price-label">Price per night</span>
-                        <span class="price-value">${priceText}</span>
+                        <span class="price-value">Contact for price</span>
                     </div>
                     <button class="btn-view-details" onclick="event.stopPropagation(); showSidebarHotelDetailModal('${hotel._id || hotel.id}')">
                         <i class="fas fa-eye"></i> View Details

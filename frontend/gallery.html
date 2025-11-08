@@ -985,8 +985,150 @@
 
     <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
     <script src="./js/toast.js"></script>
+    <script src="./js/newsletter.js"></script>
     <script src="./js/main.js"></script>
     <script src="./js/gallery.js"></script>
+    
+    <!-- Discount Email Box Handler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find discount section email input and button
+            const discountSection = document.querySelector('.discount');
+            if (discountSection) {
+                const emailInput = discountSection.querySelector('.email-box input[type="email"]');
+                const sendButton = discountSection.querySelector('button');
+                
+                if (emailInput && sendButton) {
+                    // Handle Enter key in email input
+                    emailInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleDiscountSubscription();
+                        }
+                    });
+                    
+                    // Handle Send button click
+                    sendButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        handleDiscountSubscription();
+                    });
+                    
+                    // Handle subscription
+                    async function handleDiscountSubscription() {
+                        const email = emailInput.value.trim();
+                        
+                        if (!email) {
+                            showToast('Please enter your email address', 'error');
+                            return;
+                        }
+                        
+                        // Validate email format
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(email)) {
+                            showToast('Please enter a valid email address', 'error');
+                            return;
+                        }
+                        
+                        // Disable button and show loading
+                        const originalText = sendButton.textContent;
+                        sendButton.disabled = true;
+                        sendButton.textContent = 'SENDING...';
+                        emailInput.disabled = true;
+                        
+                        try {
+                            const response = await fetch('/api/newsletter/subscribe', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    email: email,
+                                    source: 'gallery-discount',
+                                    subscribedFrom: window.location.href
+                                })
+                            });
+                            
+                            const data = await response.json();
+                            
+                            if (data.success) {
+                                showToast('🎉 ' + (data.message || 'Successfully subscribed! Check your email for 20% discount code.'), 'success');
+                                emailInput.value = '';
+                                emailInput.placeholder = 'Email subscribed ✓';
+                                
+                                // Reset placeholder after 3 seconds
+                                setTimeout(() => {
+                                    emailInput.placeholder = 'example@gmail.com';
+                                }, 3000);
+                            } else {
+                                showToast(data.message || 'Subscription failed. Please try again.', 'error');
+                            }
+                        } catch (error) {
+                            console.error('Discount subscription error:', error);
+                            showToast('Network error. Please check your connection and try again.', 'error');
+                        } finally {
+                            // Re-enable button
+                            sendButton.disabled = false;
+                            sendButton.textContent = originalText;
+                            emailInput.disabled = false;
+                        }
+                    }
+                    
+                    // Toast notification function (if not already defined)
+                    function showToast(message, type = 'info') {
+                        // Use newsletter manager's toast if available
+                        if (window.newsletterManager && window.newsletterManager.showToast) {
+                            window.newsletterManager.showToast(message, type);
+                            return;
+                        }
+                        
+                        // Fallback toast implementation
+                        const existingToasts = document.querySelectorAll('.discount-toast');
+                        existingToasts.forEach(toast => toast.remove());
+                        
+                        const toast = document.createElement('div');
+                        toast.className = 'discount-toast fixed top-4 right-4 max-w-sm p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full z-50';
+                        
+                        switch (type) {
+                            case 'success':
+                                toast.style.cssText = 'background: #10b981; color: white;';
+                                break;
+                            case 'error':
+                                toast.style.cssText = 'background: #ef4444; color: white;';
+                                break;
+                            default:
+                                toast.style.cssText = 'background: #3b82f6; color: white;';
+                        }
+                        
+                        const icon = type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ';
+                        toast.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 18px; font-weight: bold;">${icon}</span>
+                                <span style="font-size: 14px; font-weight: 500;">${message}</span>
+                            </div>
+                        `;
+                        
+                        document.body.appendChild(toast);
+                        
+                        setTimeout(() => {
+                            toast.style.transform = 'translateX(0)';
+                        }, 100);
+                        
+                        setTimeout(() => {
+                            toast.style.transform = 'translateX(100%)';
+                            setTimeout(() => toast.remove(), 300);
+                        }, 5000);
+                        
+                        toast.addEventListener('click', () => {
+                            toast.style.transform = 'translateX(100%)';
+                            setTimeout(() => toast.remove(), 300);
+                        });
+                    }
+                    
+                    console.log('Discount email subscription initialized');
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

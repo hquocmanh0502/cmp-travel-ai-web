@@ -20,18 +20,36 @@ const hotelSchema = new mongoose.Schema({
     },
     currency: { type: String, default: 'USD' },
     
+    // Main hotel image (đại diện)
+    mainImage: { type: String, required: true },
+    
     amenities: [String], // wifi, pool, gym, spa, breakfast, parking
     
     roomTypes: [{
-      type: { type: String, required: true }, // single, double, suite
-      price: { type: Number, required: true },
-      capacity: { type: Number, required: true },
+      type: { 
+        type: String, 
+        required: true,
+        enum: ['Superior', 'Junior Deluxe', 'Deluxe', 'Suite', 'Family', 'President']
+      },
+      name: { type: String, required: true }, // Tên hiển thị của loại phòng
+      price: { type: Number, required: true }, // Giá per night
+      originalPrice: Number, // Giá gốc (trước khi giảm giá)
+      capacity: { 
+        adults: { type: Number, required: true }, // Số người lớn
+        children: { type: Number, default: 0 }, // Số trẻ em
+        total: { type: Number, required: true } // Tổng sức chứa
+      },
       size: Number, // m2
-      amenities: [String],
-      available: { type: Boolean, default: true }
+      bedInfo: String, // "1 King Bed", "2 Queen Beds", etc.
+      amenities: [String], // Tiện ích riêng của phòng
+      images: [String], // Ảnh của loại phòng này
+      description: String,
+      available: { type: Boolean, default: true },
+      totalRooms: { type: Number, default: 10 }, // Tổng số phòng loại này
+      availableRooms: { type: Number, default: 10 } // Số phòng còn trống
     }],
     
-    images: [String],
+    images: [String], // Gallery images của hotel
     virtualTourUrl: String,
     description: String,
     

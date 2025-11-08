@@ -15,12 +15,36 @@ const payosConfig = require('../config/payos');
 
 class PayOSService {
     constructor() {
-        // Initialize PayOS SDK with options object
-        this.payOS = new PayOS({
-            clientId: process.env.PAYOS_CLIENT_ID || payosConfig.clientId,
-            apiKey: process.env.PAYOS_API_KEY || payosConfig.apiKey,
-            checksumKey: process.env.PAYOS_CHECKSUM_KEY || payosConfig.checksumKey
-        });
+        // Validate environment variables
+        const clientId = process.env.PAYOS_CLIENT_ID || payosConfig.clientId;
+        const apiKey = process.env.PAYOS_API_KEY || payosConfig.apiKey;
+        const checksumKey = process.env.PAYOS_CHECKSUM_KEY || payosConfig.checksumKey;
+        
+        if (!clientId || !apiKey || !checksumKey) {
+            console.warn('⚠️  PayOS credentials missing! Payment features will be disabled.');
+            console.warn('Please add PAYOS_CLIENT_ID, PAYOS_API_KEY, PAYOS_CHECKSUM_KEY to .env');
+            this.isConfigured = false;
+            return;
+        }
+        
+        console.log('🔧 Initializing PayOS with credentials:');
+        console.log('   Client ID:', clientId.substring(0, 8) + '...');
+        console.log('   API Key:', apiKey.substring(0, 8) + '...');
+        console.log('   Checksum Key:', checksumKey.substring(0, 16) + '...');
+        
+        // Initialize PayOS SDK - Pass as object with named properties
+        try {
+            this.payOS = new PayOS({
+                clientId: clientId,
+                apiKey: apiKey,
+                checksumKey: checksumKey
+            });
+            this.isConfigured = true;
+            console.log('✅ PayOS initialized successfully');
+        } catch (error) {
+            console.error('❌ PayOS initialization error:', error);
+            this.isConfigured = false;
+        }
         
         this.config = payosConfig;
     }
@@ -53,6 +77,11 @@ class PayOSService {
      */
     async createPaymentLink(userId, amount, description = null) {
         try {
+            // Check if PayOS is configured
+            if (!this.isConfigured) {
+                throw new Error('PayOS is not configured. Please check API credentials in .env file.');
+            }
+            
             // Validate amount
             const validation = this.validateAmount(amount);
             if (!validation.valid) {
@@ -78,8 +107,12 @@ class PayOSService {
                 ]
             };
 
+            console.log('📝 Creating PayOS payment with data:', JSON.stringify(paymentData, null, 2));
+
             // Create payment link via PayOS SDK
             const paymentLinkResponse = await this.payOS.paymentRequests.create(paymentData);
+
+            console.log('✅ PayOS payment created:', paymentLinkResponse);
 
             return {
                 success: true,
@@ -97,6 +130,9 @@ class PayOSService {
 
         } catch (error) {
             console.error('❌ PayOS create payment error:', error);
+            console.error('   Error name:', error.name);
+            console.error('   Error message:', error.message);
+            console.error('   Error stack:', error.stack);
             throw new Error(error.message || 'Failed to create payment link');
         }
     }

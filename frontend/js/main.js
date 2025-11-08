@@ -254,6 +254,13 @@ function initializeFooter() {
         <p>Copyright @ CMP-2024. All Rights Reserved.</p>
       </div>
     `;
+    
+    // Reinitialize newsletter manager after footer is loaded
+    if (window.newsletterManager) {
+      setTimeout(() => {
+        window.newsletterManager.reinit();
+      }, 100);
+    }
   }
 }
 

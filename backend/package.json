@@ -12,7 +12,7 @@
   "description": "",
   "dependencies": {
     "@payos/node": "^2.0.3",
-    "axios": "^1.13.0",
+    "axios": "^1.13.2",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",

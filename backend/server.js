@@ -18,6 +18,9 @@ const recommendationService = require('./services/recommendationService');
 const sentimentService = require('./services/sentimentService');
 const chatbotService = require('./services/chatbotService');
 
+// Import middleware
+const replyProcessingMiddleware = require('./middleware/replyProcessingMiddleware');
+
 // Import routes
 const bookingsRoutes = require('./routes/bookings');
 const authRoutes = require('./routes/auth');
@@ -25,6 +28,17 @@ const commentsRoutes = require('./routes/comments');
 const profileRoutes = require('./routes/profile');
 const walletRoutes = require('./routes/wallet');
 const adminRoutes = require('./routes/admin');
+const adminHotelsRoutes = require('./routes/admin-hotels');
+const adminSpamRoutes = require('./routes/admin-spam-replies');
+const adminBanRoutes = require('./routes/adminBan');
+const spamCheckRoutes = require('./routes/spam-check');
+const uploadRoutes = require('./routes/upload');
+const hotelsRoutes = require('./routes/hotels');
+const contactRoutes = require('./routes/contacts');
+const usersRoutes = require('./routes/users');
+const newsletterRoutes = require('./routes/newsletter');
+
+console.log('📧 Contact routes loaded:', typeof contactRoutes);
 
 const app = express();
 
@@ -36,6 +50,8 @@ app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, '../frontend')));
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // =============================================
 // Mount API Routes
@@ -45,8 +61,27 @@ app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/wallet', walletRoutes);
+
+// Register specific admin routes BEFORE generic /api/admin
+app.use('/api/admin/reviews-test', require('./routes/admin-reviews-test'));
+app.use('/api/admin/reviews', require('./routes/admin-reviews-new'));
+app.use('/api/admin/hotels', adminHotelsRoutes);
+app.use('/api/admin/spam-replies', adminSpamRoutes);
+app.use('/api/admin/revenue', require('./routes/revenue'));
+
+// Generic admin routes (must be AFTER specific ones)
 app.use('/api/admin', adminRoutes);
+app.use('/api/admin-ban', adminBanRoutes);
 app.use('/api/preferences', require('./routes/preferences'));
+app.use('/api/admin', require('./routes/admin-reply-moderation'));
+app.use('/api/spam-check', spamCheckRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/hotels', hotelsRoutes);
+app.use('/api/contacts', contactRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/newsletter', newsletterRoutes);
+console.log('📧 Contact routes mounted at /api/contacts');
+console.log('👤 Users routes mounted at /api/users');
 
 // API Routes
 
@@ -109,25 +144,32 @@ app.get('/api/tours/:id', async (req, res) => {
     const { userId } = req.query; // Optional userId for VIP discount
     let tour = null;
     
-    // Try string id first
-    tour = await Tour.findOne({ id: id });
+    // Try string id first with populated selectedHotels
+    tour = await Tour.findOne({ id: id }).populate('selectedHotels');
     
     // Try number id
     if (!tour && !isNaN(id)) {
-      tour = await Tour.findOne({ id: parseInt(id) });
+      tour = await Tour.findOne({ id: parseInt(id) }).populate('selectedHotels');
     }
     
     // Try ObjectId
     if (!tour && id.match(/^[0-9a-fA-F]{24}$/)) {
-      tour = await Tour.findById(id);
+      tour = await Tour.findById(id).populate('selectedHotels');
     }
     
     if (!tour) {
       return res.status(404).json({ error: 'Tour not found' });
     }
     
-    // Convert to plain object to add VIP discount info
-    const tourData = tour.toObject();
+    // Convert to plain object with populated data preserved  
+    const tourData = tour.toObject({ virtuals: true, getters: true });
+    
+    // MANUALLY PRESERVE POPULATED selectedHotels
+    if (tour.selectedHotels && tour.selectedHotels.length > 0) {
+      tourData.selectedHotels = tour.selectedHotels.map(hotel => 
+        typeof hotel === 'object' && hotel.toObject ? hotel.toObject() : hotel
+      );
+    }
     
     // Calculate VIP discount if userId provided
     if (userId) {
@@ -809,6 +851,11 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  
+  // Temporarily disabled background processing for testing
+  // setTimeout(() => {
+  //   replyProcessingMiddleware.startBackgroundProcessing();
+  // }, 5000); // Wait 5 seconds for DB to be ready
 });
 
 // Graceful shutdown

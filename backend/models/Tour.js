@@ -39,6 +39,12 @@ const tourSchema = new mongoose.Schema({
   inclusions: [String],
   exclusions: [String],
   
+  // ✅ HOTELS INTEGRATION - Selected hotels for this tour
+  selectedHotels: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Hotel' 
+  }],
+  
   // Pricing (mở rộng)
   pricing: {
     adult: { type: Number, required: true },

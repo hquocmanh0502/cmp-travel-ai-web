@@ -44,6 +44,17 @@ const commentSchema = new mongoose.Schema({
     timestamp: { type: Date, default: Date.now },
     isAdmin: { type: Boolean, default: false },
     adminRole: String, // customer_service, tour_guide, manager
+    adminName: String, // Display name for admin (e.g., 'CMP Travel')
+    
+    // Reply moderation status
+    moderation: {
+      processed: { type: Boolean, default: false },
+      classificationId: { type: mongoose.Schema.Types.ObjectId, ref: 'ReplyClassification' },
+      status: { type: String, enum: ['pending', 'approved', 'rejected', 'auto-approved', 'auto-rejected'], default: 'pending' },
+      isSpam: { type: Boolean, default: false },
+      confidence: { type: Number, min: 0, max: 1, default: 0 },
+      requiresReview: { type: Boolean, default: false }
+    },
     
     reactions: {
       likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

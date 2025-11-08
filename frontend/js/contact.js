@@ -1,18 +1,96 @@
-// frontend/js/contact.js - Enhanced Contact Form
+// frontend/js/contact.js - Enhanced Contact Form with API Integration
+const API_BASE_URL = 'http://localhost:3000/api';
+
 document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.querySelector('#contactForm');
   const submitBtn = document.querySelector('#submit-btn');
   const messageTextarea = document.querySelector('#message');
   const charCount = document.querySelector('#char-count');
 
+  // Override HTML5 validation messages to English
+  const emailInput = document.querySelector('#email');
+  if (emailInput) {
+    emailInput.addEventListener('invalid', function(e) {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Please enter your email address.');
+      } else if (this.validity.typeMismatch) {
+        this.setCustomValidity('Please enter a valid email address (e.g., name@example.com).');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
+    
+    emailInput.addEventListener('input', function() {
+      this.setCustomValidity('');
+    });
+  }
+
+  // Override other required field validation messages
+  const nameInput = document.querySelector('#name');
+  if (nameInput) {
+    nameInput.addEventListener('invalid', function(e) {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Please enter your full name.');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
+    
+    nameInput.addEventListener('input', function() {
+      this.setCustomValidity('');
+    });
+  }
+
+  const subjectSelect = document.querySelector('#subject');
+  if (subjectSelect) {
+    subjectSelect.addEventListener('invalid', function(e) {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Please select a contact subject.');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
+    
+    subjectSelect.addEventListener('change', function() {
+      this.setCustomValidity('');
+    });
+  }
+
+  if (messageTextarea) {
+    messageTextarea.addEventListener('invalid', function(e) {
+      if (this.validity.valueMissing) {
+        this.setCustomValidity('Please enter your message.');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
+    
+    messageTextarea.addEventListener('input', function() {
+      this.setCustomValidity('');
+    });
+  }
+
   // Character counter for message
   if (messageTextarea && charCount) {
+    let hasShownWelcome = false;
+    
     messageTextarea.addEventListener('input', () => {
       const count = messageTextarea.value.length;
       charCount.textContent = count;
       
+      // Show welcome toast on first interaction
+      if (!hasShownWelcome && count > 0) {
+        hasShownWelcome = true;
+        if (typeof showInfo === 'function') {
+          showInfo('Welcome!', 'Thank you for your interest in CMP Travel. We will respond within 24 hours.', 'info', 4000);
+        }
+      }
+      
       if (count > 900) {
         charCount.style.color = '#dc3545';
+        if (count === 950 && typeof showWarning === 'function') {
+          showWarning('Character Limit Warning', 'Your message is approaching the 1000 character limit.', 'warning', 3000);
+        }
       } else if (count > 800) {
         charCount.style.color = '#ff8533';
       } else {
@@ -47,10 +125,23 @@ document.addEventListener('DOMContentLoaded', () => {
       formGroup.classList.add('error');
       formGroup.classList.remove('success');
     }
+    
+    // Show toast for validation error
+    if (typeof showToast === 'function') {
+      const fieldLabels = {
+        name: 'Name',
+        email: 'Email',  
+        phone: 'Phone Number',
+        subject: 'Subject',
+        message: 'Message'
+      };
+      
+      showToast(`${fieldLabels[fieldId] || 'Field'} Error`, message, 'warning', 3000);
+    }
   }
 
-  // Show success
-  function showSuccess(fieldId) {
+  // Clear error message and show field success
+  function showFieldSuccess(fieldId) {
     const field = document.querySelector(`#${fieldId}`);
     const errorElement = document.querySelector(`#${fieldId}-error`);
     const formGroup = field.closest('.form-group');
@@ -61,6 +152,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (formGroup) {
       formGroup.classList.add('success');
       formGroup.classList.remove('error');
+    }
+  }
+  
+  // Show completion progress
+  function checkFormProgress() {
+    const requiredFields = ['name', 'email', 'subject', 'message'];
+    const completedFields = requiredFields.filter(fieldId => {
+      const field = document.querySelector(`#${fieldId}`);
+      return field && field.value.trim() !== '';
+    });
+    
+    const progress = (completedFields.length / requiredFields.length) * 100;
+    
+    if (progress === 50 && typeof showInfo === 'function') {
+      showInfo('Great Progress!', 'You have completed 50% of the form. Keep going!', 'info', 2000);
+    } else if (progress === 100 && typeof showSuccess === 'function') {
+      showSuccess('Form Complete!', 'All required information has been filled. You can submit your message now.', 'success', 3000);
     }
   }
 
@@ -75,9 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Real-time validation
   document.querySelector('#name')?.addEventListener('blur', (e) => {
     if (e.target.value.trim().length < 2) {
-      showError('name', 'Name must be at least 2 characters');
+      showError('name', 'Name must be at least 2 characters long');
     } else {
-      showSuccess('name');
+      showFieldSuccess('name');
+      checkFormProgress();
     }
   });
 
@@ -85,31 +194,54 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!validateEmail(e.target.value)) {
       showError('email', 'Please enter a valid email address');
     } else {
-      showSuccess('email');
+      showFieldSuccess('email');
+      checkFormProgress();
     }
   });
 
   document.querySelector('#phone')?.addEventListener('blur', (e) => {
     if (e.target.value && !validatePhone(e.target.value)) {
-      showError('phone', 'Please enter a valid Vietnamese phone number');
+      showError('phone', 'Please enter a valid Vietnamese phone number (e.g., +84 123 456 789)');
     } else {
-      showSuccess('phone');
+      showFieldSuccess('phone');
     }
   });
 
   document.querySelector('#subject')?.addEventListener('change', (e) => {
     if (!e.target.value) {
-      showError('subject', 'Please select a subject');
+      showError('subject', 'Please select a subject for your message');
     } else {
-      showSuccess('subject');
+      showFieldSuccess('subject');
+      checkFormProgress();
+      
+      // Show helpful tips based on subject
+      if (typeof showInfo === 'function') {
+        const tips = {
+          'tour': 'Tip: Please let us know your destination, travel dates, and number of travelers for the best consultation!',
+          'booking': 'Tip: Please provide your booking reference (if available) for faster assistance.',
+          'complaint': 'Tip: Please describe the issue in detail so we can resolve it effectively.',
+          'general': 'Tip: Ask specific questions to receive the most accurate response.'
+        };
+        
+        if (tips[e.target.value]) {
+          setTimeout(() => showInfo('Helpful Tip', tips[e.target.value], 'info', 5000), 500);
+        }
+      }
     }
   });
 
   document.querySelector('#message')?.addEventListener('blur', (e) => {
-    if (e.target.value.trim().length < 10) {
-      showError('message', 'Message must be at least 10 characters');
+    const length = e.target.value.trim().length;
+    if (length < 10) {
+      showError('message', 'Message content must be at least 10 characters long');
     } else {
-      showSuccess('message');
+      showFieldSuccess('message');
+      checkFormProgress();
+      
+      // Encourage detailed messages
+      if (length >= 50 && length < 100 && typeof showInfo === 'function') {
+        setTimeout(() => showInfo('Excellent!', 'Detailed messages help us provide better support. Thank you!', 'info', 3000), 500);
+      }
     }
   });
 
@@ -156,10 +288,13 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (!isValid) {
         if (typeof showToast === 'function') {
-          showToast('Please fix the errors in the form', 'error');
+          showToast('Invalid Information', 'Please check and fix the errors in the form before submitting.', 'warning', 4000);
         }
         return;
       }
+      
+      // Show loading toast
+      const loadingToast = showLoading('Sending Message', 'Your message is being sent...');
       
       // Show loading state
       submitBtn.disabled = true;
@@ -167,26 +302,53 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('.btn-loader').style.display = 'inline-flex';
       
       try {
-        const response = await fetch('/api/contact', {
+        // Prepare contact data
+        // Map form subject to backend category enum
+        const categoryMapping = {
+          'general': 'general',
+          'tour': 'general', // Tour info maps to general
+          'booking': 'booking', 
+          'complaint': 'complaint',
+          'other': 'other'
+        };
+        
+        const contactData = {
+          name,
+          email,
+          phone,
+          category: categoryMapping[subject] || 'general', // Use valid enum value
+          subject: subject === 'general' ? 'General Inquiry' : 
+                  subject === 'tour' ? 'Tour Information' : 
+                  subject === 'booking' ? 'Booking Support' : 
+                  subject === 'complaint' ? 'Complaint' : 
+                  subject === 'other' ? 'Other' : 'General Inquiry',
+          message
+        };
+
+        console.log('Sending contact data:', contactData);
+
+        const response = await fetch(`${API_BASE_URL}/contacts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ 
-            name, 
-            email, 
-            phone, 
-            subject,
-            message 
-          })
+          body: JSON.stringify(contactData)
         });
         
-        if (response.ok) {
+        const result = await response.json();
+        console.log('Contact response:', result);
+        
+        // Hide loading toast
+        if (loadingToast) {
+          hideToast(loadingToast);
+        }
+        
+        if (result.success) {
           // Success
           if (typeof showToast === 'function') {
-            showToast('✅ Message sent successfully! We will contact you soon.', 'success');
+            showToast('Success!', `Your message has been sent successfully! Contact ID: ${result.contactId}. We will get back to you within 24 hours.`, 'success', 5000);
           } else {
-            alert('✅ Message sent successfully! We will contact you soon.');
+            alert(`✅ Message sent successfully! Contact ID: ${result.contactId}. We will contact you back as soon as possible.`);
           }
           
           // Reset form
@@ -194,23 +356,35 @@ document.addEventListener('DOMContentLoaded', () => {
           clearErrors();
           if (charCount) charCount.textContent = '0';
           
+          // Show additional info toast after success
+          setTimeout(() => {
+            if (typeof showInfo === 'function') {
+              showInfo('Additional Info', 'You can track your request status via email or call our hotline: +84 123 456 789', 'info', 7000);
+            }
+          }, 2000);
+          
           // Smooth scroll to top
           window.scrollTo({ top: 0, behavior: 'smooth' });
           
         } else {
-          const data = await response.json();
           if (typeof showToast === 'function') {
-            showToast('❌ ' + (data.error || 'Error sending message. Please try again.'), 'error');
+            showToast('Message Send Error', result.error || 'Unable to send message. Please try again later or contact us directly by phone.', 'error', 6000);
           } else {
-            alert('❌ Error sending message. Please try again.');
+            alert('❌ ' + (result.error || 'Unable to send message. Please try again.'));
           }
         }
       } catch (error) {
         console.error('Contact error:', error);
+        
+        // Hide loading toast
+        if (loadingToast) {
+          hideToast(loadingToast);
+        }
+        
         if (typeof showToast === 'function') {
-          showToast('❌ Connection error. Please check your internet and try again.', 'error');
+          showToast('Connection Error', 'Unable to connect to server. Please check your network connection and try again.', 'error', 6000);
         } else {
-          alert('❌ Connection error. Please try again.');
+          alert('❌ Connection error. Please try again later.');
         }
       } finally {
         // Reset button state

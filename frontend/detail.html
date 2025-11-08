@@ -491,6 +491,7 @@
         <button class="filter-btn active" data-filter="all">All Reviews</button>
         <button class="filter-btn" data-filter="5">5 Stars</button>
         <button class="filter-btn" data-filter="4">4 Stars</button>
+        <button class="filter-btn" data-filter="3">3 Stars</button>
         <button class="filter-btn" data-filter="with-photos">With Photos</button>
         <button class="filter-btn" data-filter="verified">Verified</button>
       </div>
@@ -512,10 +513,23 @@
 
   <!-- Modals -->
   <!-- Review Modal -->
-  <!-- Popup image -->
-  <div id="popup" class="popup">
-    <span class="close"><i class="fa-solid fa-xmark"></i></span>
-    <img class="popup-content" id="popup-img">
+  <!-- Simple Popup image with navigation -->
+  <div id="popup" class="popup" onclick="if(event.target === this) closeLightbox();">
+    <span class="close" onclick="closeLightbox()">
+      <i class="fa-solid fa-xmark"></i>
+    </span>
+    <div class="popup-nav-container">
+      <button class="popup-nav popup-prev" onclick="event.stopPropagation(); navigateGalleryPopup(-1);" style="display: none;">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="popup-nav popup-next" onclick="event.stopPropagation(); navigateGalleryPopup(1);" style="display: none;">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <img class="popup-content" id="popup-img" onclick="event.stopPropagation();">
+    <div class="popup-caption" id="popup-caption" onclick="event.stopPropagation();">
+      <p>Press ESC or click outside to close</p>
+    </div>
   </div>
 
   <!-- Footer -->
@@ -525,7 +539,9 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="./js/toast.js"></script>
+  <script src="./js/newsletter.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/spam-warning-toast.js"></script>
   <script src="./js/detail.js"></script>
 </body>
 
