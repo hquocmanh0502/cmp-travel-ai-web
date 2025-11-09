@@ -65,7 +65,6 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/wallet', walletRoutes);
 
 // Register specific admin routes BEFORE generic /api/admin
-app.use('/api/admin/reviews-test', require('./routes/admin-reviews-test'));
 app.use('/api/admin/reviews', require('./routes/admin-reviews-new'));
 app.use('/api/admin/hotels', adminHotelsRoutes);
 app.use('/api/admin/spam-replies', adminSpamRoutes);
