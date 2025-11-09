@@ -23,7 +23,7 @@ let selectedItems = [];
 function checkUserAuth() {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-        showNotification('Vui lòng đăng nhập để xem danh sách yêu thích', 'error');
+        showNotification('Please login to view your wishlist', 'error');
         setTimeout(() => {
             window.location.href = 'login.html';
         }, 2000);
@@ -34,7 +34,7 @@ function checkUserAuth() {
 
 function initializeWishlistPage() {
     // Update page title
-    document.title = 'Danh sách yêu thích - CMP Travel';
+    document.title = 'Wishlist - CMP Travel';
     
     // Show loading state
     showLoadingState();
@@ -78,9 +78,9 @@ async function loadWishlistData() {
         
     } catch (error) {
         console.error('Error loading wishlist:', error);
-        showNotification('Không thể tải danh sách yêu thích', 'error');
+        showNotification('Unable to load wishlist', 'error');
         hideLoadingState();
-        showEmptyState('Có lỗi xảy ra khi tải dữ liệu');
+        showEmptyState('An error occurred while loading data');
     }
 }
 
@@ -100,8 +100,11 @@ async function loadToursFromWishlist(wishlistIds) {
                 country: tourData.country,
                 description: tourData.description,
                 estimatedCost: tourData.estimatedCost,
-                rating: tourData.rating,
+                originalPrice: tourData.originalPrice || tourData.estimatedCost,
+                rating: tourData.rating || 0,
                 img: tourData.img,
+                duration: tourData.duration || 'Contact for details',
+                category: tourData.category || 'Tour Package',
                 dateAdded: tourData.dateAdded
             };
         }).filter(tour => tour !== null);
@@ -157,7 +160,7 @@ function displayWishlistItems(items) {
                     ${item.rating >= 4.8 ? '<div class="item-badge hot">HOT</div>' : ''}
                 </div>
                 <div class="date-added">
-                    Thêm: ${formatDate(item.dateAdded)}
+                    Added: ${formatDate(item.dateAdded)}
                 </div>
             </div>
             
@@ -193,13 +196,13 @@ function displayWishlistItems(items) {
                 
                 <div class="item-actions">
                     <button class="btn" onclick="viewTourDetails('${item._id}')">
-                        <i class="fas fa-eye"></i> Xem chi tiết
+                        <i class="fas fa-eye"></i> View Details
                     </button>
                     <button class="btn btn-outline" onclick="bookTour('${item._id}')">
-                        <i class="fas fa-calendar-plus"></i> Đặt tour
+                        <i class="fas fa-calendar-plus"></i> Book Tour
                     </button>
                     <button class="btn remove-btn" onclick="removeFromWishlist('${item._id}')">
-                        <i class="fas fa-heart-broken"></i> Xóa
+                        <i class="fas fa-heart-broken"></i> Remove
                     </button>
                 </div>
             </div>
@@ -213,17 +216,17 @@ function displayWishlistItems(items) {
     });
 }
 
-function showEmptyState(message = 'Bạn chưa có tour nào trong danh sách yêu thích') {
+function showEmptyState(message = 'You have no tours in your wishlist yet') {
     const container = document.getElementById('wishlistContainer');
     container.innerHTML = `
         <div class="empty-state">
             <div class="empty-icon">
                 <i class="fas fa-heart-broken"></i>
             </div>
-            <h3>Danh sách yêu thích trống</h3>
+            <h3>Wishlist is Empty</h3>
             <p>${message}</p>
             <button class="btn" onclick="window.location.href='destination.html'">
-                <i class="fas fa-search"></i> Khám phá tour
+                <i class="fas fa-search"></i> Explore Tours
             </button>
         </div>
     `;
@@ -371,7 +374,7 @@ function clearFilters() {
     filteredWishlistItems = [...allWishlistItems];
     displayWishlistItems(filteredWishlistItems);
     
-    showNotification('Đã xóa tất cả bộ lọc', 'success');
+    showNotification('All filters cleared', 'success');
 }
 
 function toggleView(viewType) {
@@ -394,6 +397,18 @@ function toggleView(viewType) {
     
     // Re-display items with new view
     displayWishlistItems(filteredWishlistItems);
+}
+
+function handleItemSelection(checkbox) {
+    const itemId = checkbox.value;
+    
+    if (checkbox.checked) {
+        selectedItems.push(itemId);
+    } else {
+        selectedItems = selectedItems.filter(id => id !== itemId);
+    }
+    
+    updateSelectedCount();
 }
 
 function handleItemSelection(checkbox) {
@@ -426,7 +441,7 @@ function updateBulkActions() {
     
     if (selectedItems.length > 0) {
         bulkActions.classList.add('show');
-        selectedCount.textContent = `${selectedItems.length} mục đã chọn`;
+        selectedCount.textContent = `${selectedItems.length} items selected`;
     } else {
         bulkActions.classList.remove('show');
     }
@@ -435,7 +450,7 @@ function updateBulkActions() {
 function updateResultsCount(count) {
     const resultsCount = document.getElementById('resultsCount');
     if (resultsCount) {
-        resultsCount.textContent = `Hiển thị ${count} trong số ${allWishlistItems.length} tour yêu thích`;
+        resultsCount.textContent = `Showing ${count} of ${allWishlistItems.length} favorite tours`;
     }
 }
 
@@ -449,7 +464,7 @@ function bookTour(tourId) {
 }
 
 function removeFromWishlist(tourId) {
-    if (!confirm('Bạn có chắc chắn muốn xóa tour này khỏi danh sách yêu thích?')) return;
+    if (!confirm('Are you sure you want to remove this tour from your wishlist?')) return;
     
     // Remove from localStorage
     let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
@@ -466,7 +481,7 @@ function removeFromWishlist(tourId) {
     displayWishlistItems(filteredWishlistItems);
     updateBulkActions();
     
-    showNotification('Đã xóa tour khỏi danh sách yêu thích', 'success');
+    showNotification('Tour removed from wishlist', 'success');
     
     // Check if empty
     if (allWishlistItems.length === 0) {
@@ -477,7 +492,7 @@ function removeFromWishlist(tourId) {
 function removeSelectedItems() {
     if (selectedItems.length === 0) return;
     
-    if (!confirm(`Bạn có chắc chắn muốn xóa ${selectedItems.length} tour đã chọn?`)) return;
+    if (!confirm(`Are you sure you want to remove ${selectedItems.length} selected tours?`)) return;
     
     selectedItems.forEach(tourId => {
         // Remove from localStorage
@@ -498,7 +513,7 @@ function removeSelectedItems() {
     displayWishlistItems(filteredWishlistItems);
     updateBulkActions();
     
-    showNotification(`Đã xóa ${removedCount} tour khỏi danh sách yêu thích`, 'success');
+    showNotification(`${removedCount} tours removed from wishlist`, 'success');
     
     // Check if empty
     if (allWishlistItems.length === 0) {
@@ -510,13 +525,13 @@ function shareSelectedItems() {
     if (selectedItems.length === 0) return;
     
     const selectedTours = allWishlistItems.filter(item => selectedItems.includes(item._id));
-    const shareText = `Danh sách tour yêu thích của tôi:\n\n${selectedTours.map(tour => 
+    const shareText = `My Favorite Tours:\n\n${selectedTours.map(tour => 
         `• ${tour.name} - ${tour.country} - $${tour.estimatedCost.toLocaleString()}`
-    ).join('\n')}\n\nKhám phá thêm tại: ${window.location.origin}`;
+    ).join('\n')}\n\nDiscover more at: ${window.location.origin}`;
     
     if (navigator.share) {
         navigator.share({
-            title: 'Danh sách tour yêu thích - CMP Travel',
+            title: 'My Wishlist - CMP Travel',
             text: shareText,
             url: window.location.href
         }).catch(err => {
@@ -531,7 +546,7 @@ function shareSelectedItems() {
 function fallbackShare(text) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
-            showNotification('Đã sao chép danh sách vào clipboard!', 'success');
+            showNotification('Wishlist copied to clipboard!', 'success');
         });
     } else {
         // Fallback for older browsers
@@ -541,13 +556,13 @@ function fallbackShare(text) {
         textArea.select();
         document.execCommand('copy');
         document.body.removeChild(textArea);
-        showNotification('Đã sao chép danh sách vào clipboard!', 'success');
+        showNotification('Wishlist copied to clipboard!', 'success');
     }
 }
 
 // Utility functions
 function formatDate(date) {
-    return new Date(date).toLocaleDateString('vi-VN', {
+    return new Date(date).toLocaleDateString('en-US', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
@@ -559,7 +574,7 @@ function showLoadingState() {
     container.innerHTML = `
         <div class="loading-state">
             <div class="loading-spinner"></div>
-            <p>Đang tải danh sách yêu thích...</p>
+            <p>Loading wishlist...</p>
         </div>
     `;
 }
