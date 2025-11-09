@@ -37,7 +37,7 @@ const NewsletterManagement = () => {
     try {
       setLoading(true);
       const query = new URLSearchParams(filters).toString();
-      const response = await fetch(`/api/newsletter/admin/subscriptions?${query}`);
+      const response = await fetch(`http://localhost:3000/api/newsletter/admin/subscriptions?${query}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch subscriptions');
@@ -140,7 +140,7 @@ const NewsletterManagement = () => {
   // Handle subscription update
   const handleUpdateSubscription = async (id, updates) => {
     try {
-      const response = await fetch(`/api/newsletter/admin/subscriptions/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/newsletter/admin/subscriptions/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -169,7 +169,7 @@ const NewsletterManagement = () => {
     }
 
     try {
-      const response = await fetch(`/api/newsletter/admin/subscriptions/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/newsletter/admin/subscriptions/${id}`, {
         method: 'DELETE'
       });
 
@@ -189,7 +189,7 @@ const NewsletterManagement = () => {
   // Handle export
   const handleExport = async (format = 'json') => {
     try {
-      const response = await fetch(`/api/newsletter/admin/export?format=${format}&status=${filters.status}`);
+      const response = await fetch(`http://localhost:3000/api/newsletter/admin/export?format=${format}&status=${filters.status}`);
       
       if (format === 'csv') {
         const blob = await response.blob();

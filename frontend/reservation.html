@@ -431,6 +431,13 @@
           </div>
         </div>
         <div class="summary-item">
+          <i class="fas fa-user-tie"></i>
+          <div class="summary-content">
+            <span class="summary-label">Tour Guide</span>
+            <span class="summary-value" id="summary-guide">--</span>
+          </div>
+        </div>
+        <div class="summary-item">
           <i class="fas fa-calendar-check"></i>
           <div class="summary-content">
             <span class="summary-label">Check-in</span>
@@ -473,6 +480,7 @@
               
               const tourEl = document.getElementById('summary-tour');
               const hotelEl = document.getElementById('summary-hotel');
+              const guideEl = document.getElementById('summary-guide');
               const guestsEl = document.getElementById('summary-guests');
               const priceEl = document.getElementById('summary-price');
               const checkinEl = document.getElementById('summary-checkin');
@@ -487,6 +495,12 @@
                 hotelEl.textContent = parsed.selectedHotel?.name || 'N/A';
                 hotelEl.style.color = 'white';
                 console.log('✅ Set hotel:', hotelEl.textContent);
+              }
+              
+              if (guideEl) {
+                guideEl.textContent = parsed.selectedGuide?.name || 'N/A';
+                guideEl.style.color = 'white';
+                console.log('✅ Set guide:', guideEl.textContent);
               }
               
               if (guestsEl) {

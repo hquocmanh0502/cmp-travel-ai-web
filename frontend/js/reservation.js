@@ -142,10 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
         userId: userId,
         tourId: pendingBooking.tourId,
         hotelId: isValidObjectId ? hotelId : null, // ✅ Only send valid ObjectId
+        selectedGuide: pendingBooking.selectedGuide?.id || null, // ✅ Add selected guide
         
         // ✅ Store tour and hotel names for display purposes
         tourName: pendingBooking.tourName || 'Tour',
         hotelName: pendingBooking.selectedHotel?.name || 'No hotel',
+        guideName: pendingBooking.selectedGuide?.name || null,
         
         checkinDate: checkinDate,
         checkoutDate: checkoutDate || checkinDate, // ✅ Default to checkin if not provided
@@ -498,6 +500,15 @@ function populateBookingSummary() {
     console.log('✅ Set hotel name:', hotelName.textContent);
   } else {
     console.error('❌ Element #summary-hotel not found');
+  }
+  
+  // Populate tour guide
+  const guideName = document.getElementById('summary-guide');
+  if (guideName) {
+    guideName.textContent = pendingBooking.selectedGuide?.name || 'N/A';
+    console.log('✅ Set guide name:', guideName.textContent);
+  } else {
+    console.error('❌ Element #summary-guide not found');
   }
   
   // Populate check-in date

@@ -190,12 +190,88 @@ export const blogsAPI = {
 };
 
 /**
+ * Tour Guides API
+ */
+export const tourGuidesAPI = {
+  // Get all tour guides
+  getAll: (params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    return apiCall(`/tour-guides${queryString ? `?${queryString}` : ''}`);
+  },
+
+  // Get single tour guide
+  getById: (id) => apiCall(`/tour-guides/${id}`),
+
+  // Create new tour guide
+  create: async (guideData) => {
+    const response = await apiCall('/tour-guides', {
+      method: 'POST',
+      body: JSON.stringify(guideData),
+    });
+    return response.data || response;
+  },
+
+  // Update tour guide
+  update: async (id, guideData) => {
+    const response = await apiCall(`/tour-guides/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(guideData),
+    });
+    return response.data || response;
+  },
+
+  // Delete tour guide
+  delete: (id) => apiCall(`/tour-guides/${id}`, {
+    method: 'DELETE',
+  }),
+
+  // Get statistics
+  getStats: () => apiCall('/tour-guides/stats/overview'),
+};
+
+/**
+ * Guide Reviews API
+ */
+export const guideReviewsAPI = {
+  // Get all reviews
+  getAll: (params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    return apiCall(`/guide-reviews${queryString ? `?${queryString}` : ''}`);
+  },
+
+  // Get reviews for specific guide
+  getByGuide: (guideId, params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    return apiCall(`/tour-guides/${guideId}/reviews${queryString ? `?${queryString}` : ''}`);
+  },
+
+  // Update review status
+  updateStatus: async (id, status, adminResponse = '') => {
+    const response = await apiCall(`/guide-reviews/${id}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ status, adminResponse }),
+    });
+    return response.data || response;
+  },
+
+  // Delete review
+  delete: (id) => apiCall(`/guide-reviews/${id}`, {
+    method: 'DELETE',
+  }),
+};
+
+/**
  * Convenience functions for common operations
  */
 export const fetchBlogs = () => blogsAPI.getAll();
 export const createBlog = (data) => blogsAPI.create(data);
 export const updateBlog = (id, data) => blogsAPI.update(id, data);
 export const deleteBlog = (id) => blogsAPI.delete(id);
+
+export const fetchTourGuides = () => tourGuidesAPI.getAll();
+export const createTourGuide = (data) => tourGuidesAPI.create(data);
+export const updateTourGuide = (id, data) => tourGuidesAPI.update(id, data);
+export const deleteTourGuide = (id) => tourGuidesAPI.delete(id);
 
 /**
  * Export all APIs
@@ -208,4 +284,6 @@ export default {
   reviews: reviewsAPI,
   bookings: bookingsAPI,
   blogs: blogsAPI,
+  tourGuides: tourGuidesAPI,
+  guideReviews: guideReviewsAPI,
 };

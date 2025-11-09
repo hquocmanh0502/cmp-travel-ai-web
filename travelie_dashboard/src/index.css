@@ -1,2 +1,115 @@
 @import "tailwindcss";
 
+/* MD Editor Styles */
+.w-md-editor {
+  box-shadow: none !important;
+}
+
+.w-md-editor-toolbar {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 8px;
+}
+
+.w-md-editor-content {
+  background: white;
+}
+
+.w-md-editor-text-pre,
+.w-md-editor-text-input {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.wmde-markdown {
+  background: white;
+  font-size: 15px;
+}
+
+.wmde-markdown h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.3em;
+}
+
+.wmde-markdown h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.3em;
+}
+
+.wmde-markdown h3 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.wmde-markdown p {
+  margin-bottom: 1em;
+  line-height: 1.6;
+}
+
+.wmde-markdown ul,
+.wmde-markdown ol {
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+.wmde-markdown li {
+  margin-bottom: 0.5em;
+}
+
+.wmde-markdown blockquote {
+  border-left: 4px solid #f97316;
+  padding-left: 1em;
+  margin: 1em 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.wmde-markdown code {
+  background: #f3f4f6;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: 'Courier New', monospace;
+}
+
+.wmde-markdown pre {
+  background: #1f2937;
+  color: #f3f4f6;
+  padding: 1em;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.wmde-markdown pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.wmde-markdown img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1em 0;
+}
+
+.wmde-markdown a {
+  color: #f97316;
+  text-decoration: underline;
+}
+
+.wmde-markdown a:hover {
+  color: #ea580c;
+}
+

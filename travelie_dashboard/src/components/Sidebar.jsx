@@ -14,7 +14,8 @@ import {
   MdSecurity,
   MdBlock,
   MdEmail,
-  MdMailOutline
+  MdMailOutline,
+  MdCardTravel
 } from "react-icons/md";
 
 function Sidebar({ active, setActive }) {
@@ -22,6 +23,7 @@ function Sidebar({ active, setActive }) {
     { id: "dashboard", label: "Dashboard", icon: MdDashboard },
     { id: "bookings", label: "Bookings", icon: MdBookOnline },
     { id: "tours", label: "Tours", icon: MdTour },
+    { id: "tour-guides", label: "Tour Guides", icon: MdCardTravel },
     { id: "users", label: "Users", icon: MdPeople },
     { id: "hotels", label: "Hotels", icon: MdHotel },
     { id: "reviews", label: "Reviews", icon: MdRateReview },
@@ -30,7 +32,6 @@ function Sidebar({ active, setActive }) {
     { id: "contact-management", label: "Contact Management", icon: MdEmail },
     { id: "newsletter", label: "Newsletter", icon: MdMailOutline },
     { id: "blog", label: "Blog", icon: MdArticle },
-    { id: "messages", label: "Messages", icon: MdChat },
     { id: "revenue", label: "Revenue", icon: MdAttachMoney },
     { id: "settings", label: "Settings", icon: MdSettings },
   ];

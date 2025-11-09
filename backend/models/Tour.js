@@ -40,12 +40,16 @@ const tourSchema = new mongoose.Schema({
   exclusions: [String],
   
   // ✅ HOTELS INTEGRATION - Selected hotels for this tour
-  selectedHotels: [{ 
-    type: mongoose.Schema.Types.ObjectId, 
+  selectedHotels: [{
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Hotel' 
   }],
   
-  // Pricing (mở rộng)
+  // ✅ TOUR GUIDE INTEGRATION - Assigned tour guides (multiple guides supported)
+  assignedGuide: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TourGuide'
+  }],  // Pricing (mở rộng)
   pricing: {
     adult: { type: Number, required: true },
     child: { type: Number },

@@ -1,0 +1,208 @@
+/* Guide Selection Modal - Booking Flow */
+
+.guide-selection-modal-content {
+  max-width: 900px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.guide-selection-modal-content .modal-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.guide-selection-modal-content .modal-header h3 {
+  color: var(--text-dark);
+  font-size: 28px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.guide-selection-modal-content .modal-header h3 i {
+  color: var(--primary-orange);
+}
+
+.guide-selection-modal-content .modal-header p {
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+.guides-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.guide-selection-card {
+  background: white;
+  border: 3px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  gap: 20px;
+}
+
+.guide-selection-card:hover {
+  border-color: var(--primary-orange);
+  box-shadow: 0 5px 20px rgba(255, 102, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+.guide-selection-card.selected {
+  border-color: var(--primary-orange);
+  background: rgba(255, 102, 0, 0.05);
+  box-shadow: 0 5px 20px rgba(255, 102, 0, 0.2);
+}
+
+.guide-selection-avatar {
+  flex-shrink: 0;
+}
+
+.guide-selection-avatar img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-orange);
+}
+
+.guide-selection-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guide-selection-info h4 {
+  color: var(--text-dark);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.guide-selection-info .guide-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.guide-selection-info .guide-rating .stars {
+  display: flex;
+  gap: 2px;
+}
+
+.guide-selection-info .guide-rating .stars i {
+  color: #ffd700;
+  font-size: 14px;
+}
+
+.guide-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.guide-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+.guide-detail-row i {
+  color: var(--primary-orange);
+  width: 18px;
+  font-size: 14px;
+}
+
+.guide-bio {
+  color: var(--text-light);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 5px 0 0 0;
+}
+
+.btn-view-guide-details {
+  background: transparent;
+  border: 1px solid var(--primary-orange);
+  color: var(--primary-orange);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 5px;
+  width: fit-content;
+}
+
+.btn-view-guide-details:hover {
+  background: var(--primary-orange);
+  color: white;
+}
+
+.selection-check {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.guide-selection-card.selected .selection-check {
+  background: var(--primary-orange);
+  color: white;
+}
+
+.selection-check i {
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.guide-selection-card.selected .selection-check i {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .guides-selection-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .guide-selection-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .guide-selection-avatar {
+    margin: 0 auto;
+  }
+  
+  .btn-view-guide-details {
+    margin: 10px auto 0;
+  }
+  
+  .selection-check {
+    top: 10px;
+    right: 10px;
+  }
+}

@@ -16,7 +16,7 @@ const chatbotService = require('../services/chatbotService');
 // Tours Routes
 router.get('/tours', async (req, res) => {
   try {
-    const tours = await Tour.find();
+    const tours = await Tour.find().populate('selectedHotels').populate('assignedGuide');
     res.json(tours);
   } catch (err) {
     res.status(500).json({ error: 'Error fetching tours' });
@@ -25,12 +25,26 @@ router.get('/tours', async (req, res) => {
 
 router.get('/tours/:id', async (req, res) => {
   try {
-    const tour = await Tour.findOne({ id: req.params.id });
+    const tourId = req.params.id;
+    
+    // Try to find by MongoDB _id first (if it's a valid ObjectId)
+    let tour = null;
+    if (tourId.match(/^[0-9a-fA-F]{24}$/)) {
+      tour = await Tour.findById(tourId).populate('selectedHotels').populate('assignedGuide');
+    }
+    
+    // If not found, try to find by custom id field
+    if (!tour) {
+      tour = await Tour.findOne({ id: tourId }).populate('selectedHotels').populate('assignedGuide');
+    }
+    
     if (!tour) {
       return res.status(404).json({ error: 'Tour not found' });
     }
+    
     res.json(tour);
   } catch (err) {
+    console.error('Error fetching tour:', err);
     res.status(500).json({ error: 'Error fetching tour' });
   }
 });

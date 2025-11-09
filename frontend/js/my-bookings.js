@@ -88,6 +88,11 @@ async function loadUserBookings() {
                 const isHotelPopulated = hotelInfo && typeof hotelInfo === 'object' && hotelInfo.name;
                 const hotelName = isHotelPopulated ? hotelInfo.name : (booking.hotelName || 'No hotel selected');
                 
+                // ✅ Extract guide info
+                const guideInfo = booking.selectedGuide;
+                const isGuidePopulated = guideInfo && typeof guideInfo === 'object' && guideInfo.name;
+                const guideName = isGuidePopulated ? guideInfo.name : (booking.guideName || null);
+                
                 console.log('🏨 Hotel debug:', { 
                     hotelId: booking.hotelId, 
                     hotelInfo, 
@@ -95,7 +100,14 @@ async function loadUserBookings() {
                     storedHotelName: booking.hotelName,
                     finalHotelName: hotelName 
                 });
-                console.log('📊 Processed data:', { tourName, tourImage, destination, duration, hotelName });
+                console.log('�‍✈️ Guide debug:', {
+                    selectedGuide: booking.selectedGuide,
+                    guideInfo,
+                    isGuidePopulated,
+                    guideName,
+                    hasReviewedGuide: booking.hasReviewedGuide
+                });
+                console.log('�📊 Processed data:', { tourName, tourImage, destination, duration, hotelName });
                 
                 return {
                     _id: booking._id, // ✅ MongoDB ObjectId for API calls
@@ -125,6 +137,18 @@ async function loadUserBookings() {
                         title: booking.customerInfo?.title || 'Mr'
                     },
                     hotelName: hotelName,
+                    // ✅ Guide info
+                    selectedGuide: isGuidePopulated ? {
+                        _id: guideInfo._id,
+                        name: guideInfo.name,
+                        avatar: guideInfo.avatar,
+                        rating: guideInfo.rating,
+                        experience: guideInfo.experience,
+                        languages: guideInfo.languages,
+                        specialties: guideInfo.specialties
+                    } : null,
+                    guideName: guideName,
+                    hasReviewedGuide: booking.hasReviewedGuide || false,
                     _rawBooking: booking // Keep original data for reference
                 };
             });
@@ -337,6 +361,15 @@ function displayBookings(bookings) {
                                 <i class="fas fa-check-circle"></i> Reviewed
                             </button>
                         `}
+                        ${booking.selectedGuide && !booking.hasReviewedGuide ? `
+                            <button class="btn btn-success" onclick="reviewGuide('${booking._id}', '${booking.selectedGuide._id}')">
+                                <i class="fas fa-user-tie"></i> Review Guide
+                            </button>
+                        ` : booking.selectedGuide && booking.hasReviewedGuide ? `
+                            <button class="btn btn-outline" disabled>
+                                <i class="fas fa-check-circle"></i> Guide Reviewed
+                            </button>
+                        ` : ''}
                         <button class="btn btn-outline" onclick="rebookTour('${booking.tourId}')">
                             <i class="fas fa-redo"></i> Book Again
                         </button>
@@ -927,9 +960,327 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
+// ==================== REVIEW GUIDE MODAL ====================
+
+function reviewGuide(bookingId, guideId) {
+    console.log('📝 Opening review guide modal for booking:', bookingId, 'guide:', guideId);
+    
+    // Find booking and guide data
+    const booking = allBookings.find(b => b._id === bookingId);
+    if (!booking || !booking.selectedGuide) {
+        showNotification('Guide information not found', 'error');
+        return;
+    }
+    
+    console.log('🔍 Found booking:', {
+        _id: booking._id,
+        id: booking.id,
+        tourName: booking.tourName,
+        guideName: booking.selectedGuide.name,
+        rawBooking: booking._rawBooking
+    });
+    
+    const guide = booking.selectedGuide;
+    
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'guide-review-modal-overlay';
+    modal.innerHTML = `
+        <div class="guide-review-modal">
+            <div class="modal-header">
+                <h2><i class="fas fa-star"></i> Review Tour Guide</h2>
+                <button class="close-btn" onclick="closeGuideReviewModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Guide Info Card -->
+                <div class="guide-info-card">
+                    <img src="${guide.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(guide.name)}" 
+                         alt="${guide.name}" class="guide-avatar">
+                    <div class="guide-details">
+                        <h3>${guide.name}</h3>
+                        <div class="guide-meta">
+                            ${guide.rating ? `<span><i class="fas fa-star"></i> ${guide.rating.toFixed(1)}</span>` : ''}
+                            ${guide.experience ? `<span><i class="fas fa-briefcase"></i> ${guide.experience}</span>` : ''}
+                        </div>
+                        ${guide.languages && guide.languages.length > 0 ? `
+                            <div class="guide-languages">
+                                <i class="fas fa-language"></i>
+                                ${guide.languages.join(', ')}
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <!-- Review Form -->
+                <form id="guideReviewForm" class="review-form">
+                    <input type="hidden" name="bookingId" value="${bookingId}">
+                    <input type="hidden" name="guideId" value="${guideId}">
+                    
+                    <!-- Overall Rating -->
+                    <div class="form-group">
+                        <label class="required">Overall Rating</label>
+                        <div class="star-rating" id="overallRating">
+                            ${[1, 2, 3, 4, 5].map(star => `
+                                <i class="far fa-star" data-rating="${star}" onclick="setRating('overall', ${star})"></i>
+                            `).join('')}
+                        </div>
+                        <input type="hidden" name="rating" id="overallValue" required>
+                        <span class="rating-text" id="overallRatingText">Select a rating</span>
+                    </div>
+
+                    <!-- Detailed Ratings -->
+                    <div class="detailed-ratings">
+                        <h4>Detailed Ratings (Optional)</h4>
+                        
+                        <!-- Knowledge -->
+                        <div class="form-group">
+                            <label>Knowledge & Expertise</label>
+                            <div class="star-rating" id="knowledgeRating">
+                                ${[1, 2, 3, 4, 5].map(star => `
+                                    <i class="far fa-star" data-rating="${star}" onclick="setRating('knowledge', ${star})"></i>
+                                `).join('')}
+                            </div>
+                            <input type="hidden" name="knowledge" id="knowledgeValue">
+                        </div>
+
+                        <!-- Communication -->
+                        <div class="form-group">
+                            <label>Communication Skills</label>
+                            <div class="star-rating" id="communicationRating">
+                                ${[1, 2, 3, 4, 5].map(star => `
+                                    <i class="far fa-star" data-rating="${star}" onclick="setRating('communication', ${star})"></i>
+                                `).join('')}
+                            </div>
+                            <input type="hidden" name="communication" id="communicationValue">
+                        </div>
+
+                        <!-- Professionalism -->
+                        <div class="form-group">
+                            <label>Professionalism</label>
+                            <div class="star-rating" id="professionalismRating">
+                                ${[1, 2, 3, 4, 5].map(star => `
+                                    <i class="far fa-star" data-rating="${star}" onclick="setRating('professionalism', ${star})"></i>
+                                `).join('')}
+                            </div>
+                            <input type="hidden" name="professionalism" id="professionalismValue">
+                        </div>
+
+                        <!-- Friendliness -->
+                        <div class="form-group">
+                            <label>Friendliness</label>
+                            <div class="star-rating" id="friendlinessRating">
+                                ${[1, 2, 3, 4, 5].map(star => `
+                                    <i class="far fa-star" data-rating="${star}" onclick="setRating('friendliness', ${star})"></i>
+                                `).join('')}
+                            </div>
+                            <input type="hidden" name="friendliness" id="friendlinessValue">
+                        </div>
+
+                        <!-- Punctuality -->
+                        <div class="form-group">
+                            <label>Punctuality</label>
+                            <div class="star-rating" id="punctualityRating">
+                                ${[1, 2, 3, 4, 5].map(star => `
+                                    <i class="far fa-star" data-rating="${star}" onclick="setRating('punctuality', ${star})"></i>
+                                `).join('')}
+                            </div>
+                            <input type="hidden" name="punctuality" id="punctualityValue">
+                        </div>
+                    </div>
+
+                    <!-- Comment -->
+                    <div class="form-group">
+                        <label class="required">Your Review</label>
+                        <textarea name="comment" id="reviewComment" rows="5" 
+                                  placeholder="Share your experience with this tour guide..." 
+                                  maxlength="1000" required></textarea>
+                        <div class="char-count">
+                            <span id="charCount">0</span>/1000 characters
+                        </div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" onclick="closeGuideReviewModal()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Review
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Setup event listeners after DOM is ready
+    setTimeout(() => {
+        setupGuideReviewModal();
+    }, 0);
+}
+
+function setupGuideReviewModal() {
+    // Character counter
+    const commentField = document.getElementById('reviewComment');
+    const charCount = document.getElementById('charCount');
+    
+    if (commentField && charCount) {
+        commentField.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+    }
+    
+    // Form submission
+    const form = document.getElementById('guideReviewForm');
+    if (form) {
+        form.addEventListener('submit', handleGuideReviewSubmit);
+    }
+}
+
+function setRating(category, rating) {
+    console.log('⭐ setRating called:', category, rating);
+    
+    const container = document.getElementById(`${category}Rating`);
+    const hiddenInput = document.getElementById(`${category}Value`);
+    
+    console.log('🔍 Elements found:', {
+        container: !!container,
+        hiddenInput: !!hiddenInput,
+        containerId: `${category}Rating`,
+        inputId: `${category}Value`
+    });
+    
+    if (!container) {
+        console.error('❌ Rating container not found:', `${category}Rating`);
+        return;
+    }
+    
+    const stars = container.querySelectorAll('.fa-star');
+    console.log('⭐ Stars found:', stars.length);
+    
+    // Update visual stars
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.remove('far');
+            star.classList.add('fas');
+        } else {
+            star.classList.remove('fas');
+            star.classList.add('far');
+        }
+    });
+    
+    // Update hidden input (if exists)
+    if (hiddenInput) {
+        hiddenInput.value = rating;
+        console.log('✅ Hidden input updated:', hiddenInput.value);
+    } else {
+        console.warn('⚠️ Hidden input not found:', `${category}Value`);
+    }
+    
+    // Update rating text for overall rating
+    if (category === 'overall') {
+        const ratingText = document.getElementById('overallRatingText');
+        const texts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+        if (ratingText) {
+            ratingText.textContent = texts[rating] || '';
+            console.log('✅ Rating text updated:', ratingText.textContent);
+        }
+    }
+}
+
+async function handleGuideReviewSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = new FormData(form);
+    
+    // Validate overall rating
+    const rating = formData.get('rating');
+    if (!rating) {
+        showNotification('Please select an overall rating', 'error');
+        return;
+    }
+    
+    const comment = formData.get('comment');
+    if (!comment || comment.trim().length < 10) {
+        showNotification('Please write at least 10 characters', 'error');
+        return;
+    }
+    
+    // Build review data
+    const reviewData = {
+        rating: parseInt(rating),
+        comment: comment.trim(),
+        detailedRatings: {}
+    };
+    
+    // Add detailed ratings if provided
+    const detailedCategories = ['knowledge', 'communication', 'professionalism', 'friendliness', 'punctuality'];
+    detailedCategories.forEach(category => {
+        const value = formData.get(category);
+        if (value) {
+            reviewData.detailedRatings[category] = parseInt(value);
+        }
+    });
+    
+    try {
+        const bookingId = formData.get('bookingId');
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('authToken') || userId;
+        
+        console.log('📤 Submitting guide review:', reviewData);
+        console.log('🔑 Auth info:', { bookingId, userId, token });
+        
+        const response = await fetch(`/api/bookings/${bookingId}/review-guide`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(reviewData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+            showNotification('Thank you! Your guide review has been submitted', 'success');
+            closeGuideReviewModal();
+            
+            // Reload bookings to update review status
+            setTimeout(() => {
+                loadUserBookings();
+            }, 1000);
+        } else {
+            showNotification(data.error || 'Failed to submit review', 'error');
+        }
+        
+    } catch (error) {
+        console.error('Error submitting guide review:', error);
+        showNotification('Failed to submit review. Please try again.', 'error');
+    }
+}
+
+function closeGuideReviewModal() {
+    const modal = document.querySelector('.guide-review-modal-overlay');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// Make functions globally available
+window.setRating = setRating;
+window.closeGuideReviewModal = closeGuideReviewModal;
+
 // Export functions for global use
 window.viewBookingDetails = viewBookingDetails;
 window.cancelBooking = cancelBooking;
 window.downloadTicket = downloadTicket;
 window.writeReview = writeReview;
 window.rebookTour = rebookTour;
+window.reviewGuide = reviewGuide;
+window.payNow = payNow;

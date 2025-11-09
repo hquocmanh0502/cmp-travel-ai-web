@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@uiw/react-md-editor": "^4.0.8",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.552.0",
     "react": "^19.1.1",

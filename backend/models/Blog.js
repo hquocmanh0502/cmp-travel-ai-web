@@ -24,6 +24,16 @@ const blogSchema = new mongoose.Schema({
   image: { 
     type: String 
   },
+  thumbnail: {
+    type: String
+  },
+  images: [{
+    type: String
+  }],
+  readingTime: {
+    type: Number,
+    default: 5
+  },
   category: { 
     type: String,
     required: true,

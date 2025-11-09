@@ -591,6 +591,49 @@ function BookingDetailModal({ booking, onClose, formatCurrency, formatDate }) {
             </div>
           </div>
 
+          {/* Tour Guide Info */}
+          {booking.guide && booking.guide.name !== 'N/A' ? (
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Tour Guide</h3>
+              <div className="bg-gray-50 rounded-lg p-4">
+                <div className="flex items-start gap-4">
+                  {booking.guide.avatar && (
+                    <img 
+                      src={booking.guide.avatar} 
+                      alt={booking.guide.name}
+                      className="w-16 h-16 rounded-full object-cover"
+                    />
+                  )}
+                  <div className="flex-1 grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-gray-600">Name</p>
+                      <p className="font-medium text-gray-900">{booking.guide.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Email</p>
+                      <p className="font-medium text-gray-900">{booking.guide.email || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Rating</p>
+                      <p className="font-medium text-gray-900">
+                        {booking.guide.rating ? `⭐ ${booking.guide.rating.toFixed(1)}` : 'N/A'}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Experience</p>
+                      <p className="font-medium text-gray-900">{booking.guide.experience || 'N/A'}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">Tour Guide</h3>
+              <p className="text-gray-500 italic">No tour guide assigned</p>
+            </div>
+          )}
+
           {/* Dates */}
           <div>
             <h3 className="text-lg font-semibold text-gray-800 mb-3">Travel Dates</h3>

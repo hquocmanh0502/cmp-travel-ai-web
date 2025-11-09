@@ -3,18 +3,19 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import BookingsManagement from "./pages/Booking/BookingsManagement";
-import Messages from "./pages/Messages/Messages";
 import ToursManagement from "./pages/Tours/ToursManagement";
 import UsersManagement from "./pages/Users/UsersManagement";
 import Hotels from "./pages/Hotels/Hotels";
 import Reviews from "./pages/Reviews/Reviews";
 import BlogManagement from "./pages/Blog/BlogManagement";
+import TourGuideManagement from "./pages/TourGuides/TourGuideManagement";
 import SpamDashboard from "./pages/SpamDashboard";
 import BanManagement from "./pages/BanManagement";
 import BanManagementTest from "./pages/BanManagementTest";
 import ContactManagement from "./pages/ContactManagement";
 import Newsletter from "./pages/Newsletter/Newsletter";
 import Revenue from "./pages/Revenue/Revenue";
+import Settings from "./pages/Settings/Settings";
 import { Toaster } from 'react-hot-toast';
 
 export default function App() {
@@ -32,7 +33,7 @@ export default function App() {
       <div className="max-w-[1400px] mx-auto flex gap-6 px-4">
         <Sidebar active={active} setActive={setActive} />
         <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
-          <Header title={title} />
+          <Header title={title} setActive={setActive} />
           <main className="p-6 overflow-x-hidden">
             {active === "dashboard" && <Dashboard />}
             {active === "bookings" && <BookingsManagement />}
@@ -41,13 +42,14 @@ export default function App() {
             {active === "hotels" && <Hotels />}
             {active === "reviews" && <Reviews />}
             {active === "blog" && <BlogManagement />}
-            {active === "messages" && <Messages />}
+            {active === "tour-guides" && <TourGuideManagement />}
             {active === "spam-dashboard" && <SpamDashboard />}
             {active === "ban-management" && <BanManagement />}
             {active === "contact-management" && <ContactManagement />}
             {active === "newsletter" && <Newsletter />}
             {active === "revenue" && <Revenue />}
-            {!["dashboard", "bookings", "tours", "users", "hotels", "reviews", "blog", "messages", "spam-dashboard", "ban-management", "contact-management", "newsletter", "revenue"].includes(active) && (
+            {active === "settings" && <Settings />}
+            {!["dashboard", "bookings", "tours", "users", "hotels", "reviews", "blog", "tour-guides", "spam-dashboard", "ban-management", "contact-management", "newsletter", "revenue", "settings"].includes(active) && (
               <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                 Coming soon: {active}
               </div>

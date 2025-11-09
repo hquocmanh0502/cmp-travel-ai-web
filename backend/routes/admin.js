@@ -369,7 +369,7 @@ router.get('/tours', isAdmin, async (req, res) => {
 
     if (sortBy === 'revenue') {
       // Get all tours matching query first
-      const allTours = await Tour.find(query);
+      const allTours = await Tour.find(query).populate('assignedGuide', 'name email avatar rating experience');
       
       // Calculate revenue for all tours
       const toursWithRevenue = await Promise.all(
@@ -395,6 +395,7 @@ router.get('/tours', isAdmin, async (req, res) => {
     } else {
       // Regular pagination and sort
       const tourList = await Tour.find(query)
+        .populate('assignedGuide', 'name email avatar rating experience')
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);
@@ -938,6 +939,7 @@ router.get('/bookings/:id', isAdmin, async (req, res) => {
       .populate('userId', 'fullName email phoneNumber avatar')
       .populate('tourId')
       .populate('hotelId', 'name address rating')
+      .populate('selectedGuide', 'name email avatar rating experience')
       .lean();
 
     if (!booking) {
@@ -980,6 +982,18 @@ router.get('/bookings/:id', isAdmin, async (req, res) => {
         address: booking.hotelId.address,
         rating: booking.hotelId.rating
       } : null,
+      
+      // Tour Guide Info
+      guide: booking.selectedGuide ? {
+        id: booking.selectedGuide._id,
+        name: booking.guideName || booking.selectedGuide.name,
+        email: booking.selectedGuide.email,
+        avatar: booking.selectedGuide.avatar,
+        rating: booking.selectedGuide.rating,
+        experience: booking.selectedGuide.experience
+      } : {
+        name: booking.guideName || 'N/A'
+      },
       
       // Dates
       dates: {

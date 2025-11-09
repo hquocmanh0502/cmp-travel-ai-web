@@ -403,26 +403,6 @@ iframe{
     margin-top: 50px;
     margin-bottom: 20px;
 }
-.icon-container {
-    position: fixed; /* Cố định vị trí icon */
-    bottom: 30px; /* Khoảng cách từ dưới đáy trang */
-    right: 10px; /* Khoảng cách từ mép phải */
-    z-index: 100; /* Đảm bảo icon hiển thị trên các phần tử khác */
-    transform: translate(-50%, -50%); /* Di chuyển icon về trung tâm */
-    display: flex; /* Chuyển đổi container thành flexbox */
-    align-items: center; /* Canh giữa các mục theo chiều dọc */
-  }
-  
-  .icon-container img {
-    width: 70px;
-    height: auto; /* Tự động điều chỉnh chiều cao */
-    cursor: pointer;
-    transition: transform 0.5s ease-in-out;
-    /* Tạo hiệu ứng chuyển đổi mượt mà */
-  }
-  .icon-container img:hover {
-    transform: scale(1.05);
-  }
 
 /* .footer{
     width: 100%;

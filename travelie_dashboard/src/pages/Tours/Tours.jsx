@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { MdAdd, MdSearch, MdFilterList, MdEdit, MdDelete, MdVisibility, MdStar } from "react-icons/md";
+import { MdAdd, MdSearch, MdFilterList, MdEdit, MdDelete, MdVisibility, MdStar, MdPerson } from "react-icons/md";
+import TourGuidePickerModal from "../../components/Tours/TourGuidePickerModal";
+import toast from 'react-hot-toast';
 
 const API_BASE_URL = 'http://localhost:3000/api/admin';
 
@@ -9,6 +11,8 @@ function Tours() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [error, setError] = useState(null);
+  const [isGuidePickerOpen, setIsGuidePickerOpen] = useState(false);
+  const [selectedTour, setSelectedTour] = useState(null);
 
   useEffect(() => {
     fetchTours();
@@ -47,6 +51,38 @@ function Tours() {
       currency: 'USD',
       minimumFractionDigits: 0,
     }).format(amount);
+  };
+
+  const handleAssignGuide = (tour) => {
+    setSelectedTour(tour);
+    setIsGuidePickerOpen(true);
+  };
+
+  const handleGuideSelect = async (guide) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/tours/${selectedTour._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...selectedTour,
+          assignedGuide: guide._id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success(`${guide.name} assigned to ${selectedTour.name || selectedTour.title}`);
+        fetchTours(); // Refresh list
+      } else {
+        toast.error('Failed to assign guide');
+      }
+    } catch (error) {
+      console.error('Error assigning guide:', error);
+      toast.error('Failed to assign guide');
+    }
   };
 
   return (
@@ -131,10 +167,23 @@ function Tours() {
           </div>
         ) : (
           filteredTours.map((tour) => (
-            <TourCard key={tour._id} tour={tour} formatCurrency={formatCurrency} />
+            <TourCard 
+              key={tour._id} 
+              tour={tour} 
+              formatCurrency={formatCurrency}
+              onAssignGuide={() => handleAssignGuide(tour)}
+            />
           ))
         )}
       </div>
+
+      {/* Tour Guide Picker Modal */}
+      <TourGuidePickerModal
+        isOpen={isGuidePickerOpen}
+        onClose={() => setIsGuidePickerOpen(false)}
+        onSelect={handleGuideSelect}
+        selectedGuideId={selectedTour?.assignedGuide}
+      />
     </div>
   );
 }
@@ -150,7 +199,7 @@ function StatBox({ label, value }) {
 }
 
 // Tour Card Component
-function TourCard({ tour, formatCurrency }) {
+function TourCard({ tour, formatCurrency, onAssignGuide }) {
   // Handle different data structures from API
   const tourName = tour.name || tour.title || 'Unnamed Tour';
   const tourCountry = tour.country || 'Unknown';
@@ -161,6 +210,7 @@ function TourCard({ tour, formatCurrency }) {
   const tourBookings = tour.bookings || tour.totalBookings || 0;
   const tourRevenue = tour.revenue || tour.totalRevenue || 0;
   const tourPrice = tour.pricing?.adult || tour.price || 0;
+  const assignedGuide = tour.assignedGuide;
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow group">
@@ -218,18 +268,43 @@ function TourCard({ tour, formatCurrency }) {
           </div>
         </div>
 
+        {/* Tour Guide Info */}
+        {assignedGuide && (
+          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-center gap-2">
+              <MdPerson className="text-green-600" />
+              <div>
+                <p className="text-xs text-green-700 font-medium">Tour Guide</p>
+                <p className="text-sm font-semibold text-green-900">{assignedGuide.name}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Actions */}
-        <div className="flex gap-2">
-          <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
-            <MdVisibility />
-            <span className="text-sm font-medium">View</span>
-          </button>
-          <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors">
-            <MdEdit />
-            <span className="text-sm font-medium">Edit</span>
-          </button>
-          <button className="px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
-            <MdDelete />
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors">
+              <MdVisibility />
+              <span className="text-sm font-medium">View</span>
+            </button>
+            <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors">
+              <MdEdit />
+              <span className="text-sm font-medium">Edit</span>
+            </button>
+            <button className="px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
+              <MdDelete />
+            </button>
+          </div>
+          
+          <button 
+            onClick={onAssignGuide}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-50 to-purple-100 text-purple-700 rounded-lg hover:from-purple-100 hover:to-purple-200 transition-all border border-purple-200"
+          >
+            <MdPerson className="w-4 h-4" />
+            <span className="text-sm font-medium">
+              {assignedGuide ? 'Change Guide' : 'Assign Guide'}
+            </span>
           </button>
         </div>
       </div>

@@ -949,6 +949,482 @@
   color: white;
 }
 
+/* Tour Guides Section */
+.guides-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.guides-card h4 {
+  color: var(--text-dark);
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guides-card h4 i {
+  color: var(--primary-orange);
+}
+
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.guide-card-item {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.guide-card-item:hover {
+  border-color: var(--primary-orange);
+  box-shadow: 0 5px 15px rgba(255, 102, 0, 0.15);
+  transform: translateY(-3px);
+}
+
+.guide-card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.guide-card-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary-orange);
+}
+
+.guide-card-info h6 {
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 3px;
+  font-size: 16px;
+}
+
+.guide-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.guide-card-rating .stars {
+  display: flex;
+  gap: 2px;
+}
+
+.guide-card-rating .stars i {
+  color: #ffd700;
+  font-size: 14px;
+}
+
+.guide-card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.guide-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+.guide-detail-item i {
+  color: var(--primary-orange);
+  width: 16px;
+  font-size: 14px;
+}
+
+.guide-languages, .guide-specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.guide-lang-tag, .guide-specialty-tag {
+  background: rgba(255, 102, 0, 0.1);
+  color: var(--primary-orange);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.btn-view-guides {
+  width: 100%;
+  background: transparent;
+  border: 2px solid var(--primary-orange);
+  color: var(--primary-orange);
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.btn-view-guides:hover {
+  background: var(--primary-orange);
+  color: white;
+}
+
+/* Modal Overlay - Generic */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+  animation: slideUp 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: #f0f0f0;
+  color: var(--primary-orange);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.modal-footer .btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.modal-footer .btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.modal-footer .btn-secondary:hover {
+  background: #5a6268;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Guide Detail Modal */
+.guide-detail-modal-content {
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.guide-detail-header {
+  display: flex;
+  gap: 25px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 25px;
+}
+
+.guide-detail-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary-orange);
+}
+
+.guide-detail-header-info h3 {
+  color: var(--text-dark);
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.guide-detail-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.guide-detail-rating .stars {
+  display: flex;
+  gap: 3px;
+}
+
+.guide-detail-rating .stars i {
+  color: #ffd700;
+  font-size: 16px;
+}
+
+.guide-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+.guide-contact-info i {
+  color: var(--primary-orange);
+  width: 20px;
+}
+
+.guide-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.guide-info-section h4 {
+  color: var(--text-dark);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guide-info-section h4 i {
+  color: var(--primary-orange);
+}
+
+.guide-info-section p {
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.guide-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.guide-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+}
+
+.guide-stat-item i {
+  color: var(--primary-orange);
+  font-size: 24px;
+}
+
+.guide-stat-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-stat-item strong {
+  color: var(--text-dark);
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.guide-stat-item span {
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+.guide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.guide-tag {
+  background: rgba(255, 102, 0, 0.1);
+  color: var(--primary-orange);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.guide-certifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.certification-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-orange);
+}
+
+.cert-name {
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.cert-issuer {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.cert-date {
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+.guide-reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.guide-review-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+.guide-review-item .review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.guide-review-item .review-header strong {
+  color: var(--text-dark);
+}
+
+.guide-review-item .review-tour {
+  color: #999;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.guide-review-item p {
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.guide-review-item .review-date {
+  color: #999;
+  font-size: 12px;
+}
+
+.view-more-reviews {
+  text-align: center;
+  color: var(--primary-orange);
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* All Guides Modal */
+.all-guides-modal-content {
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.all-guides-modal-content h3 {
+  color: var(--text-dark);
+  font-size: 24px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.all-guides-modal-content h3 i {
+  color: var(--primary-orange);
+}
+
+.all-guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+
+
 /* Gallery Section */
 .gallery-section {
   margin: 40px 30px;

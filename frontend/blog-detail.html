@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         /* Clean Blog Detail Styles */
         .reading-progress {
@@ -184,6 +186,16 @@
             margin-bottom: 2rem;
         }
 
+        .blog-content h1 {
+            color: #333;
+            margin: 2.5rem 0 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #ff6600;
+        }
+
         .blog-content h2 {
             color: #333;
             margin: 2rem 0 1rem;
@@ -208,8 +220,179 @@
             font-size: 1.5rem;
         }
 
+        .blog-content h4 {
+            color: #444;
+            margin: 1.2rem 0 0.8rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
         .blog-content p {
             margin-bottom: 1.5rem;
+        }
+
+        .blog-content ul,
+        .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid #ff6600;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            color: #666;
+            font-style: italic;
+            background: #fff5f0;
+            padding: 1rem 1rem 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .blog-content code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        .blog-content pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .blog-content pre code {
+            background: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 0.95em;
+        }
+
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-content a {
+            color: #ff6600;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+        }
+
+        .blog-content a:hover {
+            color: #ff8533;
+        }
+
+        .blog-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .blog-content table th,
+        .blog-content table td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .blog-content table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .blog-content table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .blog-content hr {
+            border: none;
+            border-top: 2px solid #e5e7eb;
+            margin: 2rem 0;
+        }
+
+        /* Image Gallery Styles */
+        .blog-image-gallery {
+            margin: 3rem 0;
+        }
+
+        .blog-image-gallery h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .blog-image-gallery h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #ff6600;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 1rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            transform: translateY(0);
         }
 
         .blog-tags {
@@ -576,18 +759,75 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .scroll-to-top.visible {
-            display: flex;
+            z-index: 999;
         }
 
         .scroll-to-top:hover {
             background: #ff8533;
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
 
+        /* Image Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .image-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design */
         @media (max-width: 1024px) {
             .blog-main-wrapper {
                 grid-template-columns: 1fr;
@@ -660,6 +900,30 @@
                     <li><a href="blog.html" style="color: #ff6600;">Blog</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="feedback.html">Feedback</a></li>
+                    
+                    <!-- Greeting cho user đã login - Ban đầu ẩn -->
+                    <li class="greeting-li" style="display: none;">
+                        <span class="user-greeting">
+                            Hello, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+                        </span>
+                        <!-- Dropdown menu -->
+                        <div class="user-dropdown-menu">
+                            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a>
+                            <a href="my-wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+                            <a href="travel-history.html"><i class="fas fa-history"></i> Travel History</a>
+                            <a href="preferences.html"><i class="fas fa-cog"></i> AI Preferences</a>
+                            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </li>
+                    
+                    <!-- Auth buttons cho user chưa login - Ban đầu hiện -->
+                    <li class="auth-li" id="auth-li">
+                        <div class="auth-buttons">
+                            <a href="login.html" class="btn-login">Login</a>
+                            <a href="create_acc.html" class="btn-register">Register</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -941,9 +1205,18 @@
         <i class="fas fa-chevron-up"></i>
     </div>
 
+    <!-- Image Modal -->
+    <div class="image-modal" id="image-modal">
+        <div class="image-modal-close" onclick="closeImageModal()">
+            <i class="fas fa-times"></i>
+        </div>
+        <img src="" alt="Gallery Image" class="image-modal-content" id="modal-image">
+    </div>
+
     <footer></footer>
 
     <script src="./js/toast.js"></script>
+    <script src="./js/auth.js"></script>
     <script src="./js/main.js"></script>
     <script>
         // Clean and Simple JavaScript
@@ -1105,7 +1378,7 @@
                 }
                 
                 try {
-                    const response = await fetch('/api/newsletter/subscribe', {
+                    const response = await fetch('http://localhost:3000/api/newsletter/subscribe', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email, source: 'blog-detail' })
@@ -1171,23 +1444,42 @@
             const blogId = urlParams.get('id');
             
             if (blogId) {
-                // Try to load dynamic content based on ID
-                fetch(`/api/blogs`)
-                    .then(response => response.json())
-                    .then(blogs => {
-                        const blog = blogs.find(b => b.id == blogId);
-                        if (blog) {
-                            updateBlogContent(blog);
+                // Load from API endpoint
+                fetch(`http://localhost:3000/api/blogs/${blogId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Blog not found');
                         }
+                        return response.json();
+                    })
+                    .then(blog => {
+                        updateBlogContent(blog);
                     })
                     .catch(error => {
-                        console.log('Using static content');
+                        console.log('Error loading blog:', error);
+                        // Fallback to data/blog.json if API fails
+                        fetch('../data/blog.json')
+                            .then(response => response.json())
+                            .then(blogs => {
+                                const blog = blogs.find(b => b.id == blogId);
+                                if (blog) {
+                                    updateBlogContent(blog);
+                                }
+                            })
+                            .catch(err => {
+                                console.log('Using static content');
+                            });
                     });
             }
         }
 
         // Update blog content dynamically
         function updateBlogContent(blog) {
+            console.log('📝 Updating blog content:', blog);
+            console.log('🖼️ Blog thumbnail:', blog.thumbnail);
+            console.log('🖼️ Blog image:', blog.image);
+            console.log('📸 Blog images array:', blog.images);
+            
             if (blog.title) {
                 document.getElementById('blog-title').textContent = blog.title;
                 document.title = `${blog.title} - CMP Travel`;
@@ -1198,8 +1490,8 @@
                 document.getElementById('author-name-sidebar').textContent = blog.author;
             }
             
-            if (blog.publishDate) {
-                const date = new Date(blog.publishDate);
+            if (blog.publishedDate) {
+                const date = new Date(blog.publishedDate);
                 document.getElementById('publish-date').textContent = date.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -1224,10 +1516,55 @@
             }
             
             if (blog.content) {
-                document.getElementById('blog-content').innerHTML = blog.content;
+                // Parse markdown to HTML if content looks like markdown
+                let htmlContent = blog.content;
+                
+                // Check if content contains markdown syntax
+                if (typeof marked !== 'undefined' && (
+                    blog.content.includes('#') || 
+                    blog.content.includes('**') || 
+                    blog.content.includes('![') ||
+                    blog.content.includes('[') ||
+                    blog.content.includes('```')
+                )) {
+                    // Configure marked options
+                    marked.setOptions({
+                        breaks: true,
+                        gfm: true,
+                        headerIds: true,
+                        mangle: false
+                    });
+                    htmlContent = marked.parse(blog.content);
+                }
+                
+                document.getElementById('blog-content').innerHTML = htmlContent;
+                
+                // Add image gallery if images exist
+                if (blog.images && blog.images.length > 0) {
+                    const galleryHTML = `
+                        <div class="blog-image-gallery">
+                            <h2><i class="fas fa-images"></i> Photo Gallery</h2>
+                            <div class="gallery-grid">
+                                ${blog.images.map((img, index) => `
+                                    <div class="gallery-item" onclick="openImageModal('${img}')">
+                                        <img src="${img}" alt="${blog.title} - Image ${index + 1}" loading="lazy">
+                                        <div class="gallery-item-overlay">
+                                            <i class="fas fa-search-plus"></i> Click to enlarge
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('blog-content').innerHTML += galleryHTML;
+                }
             }
             
-            if (blog.image) {
+            if (blog.thumbnail) {
+                const heroImage = document.getElementById('blog-main-image');
+                heroImage.src = blog.thumbnail;
+                heroImage.style.display = 'block';
+            } else if (blog.image) {
                 const heroImage = document.getElementById('blog-main-image');
                 heroImage.src = blog.image;
                 heroImage.style.display = 'block';
@@ -1259,6 +1596,38 @@
                 setTimeout(() => document.body.removeChild(toast), 300);
             }, 3000);
         }
+
+        // Image Modal Functions
+        function openImageModal(imageSrc) {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            modalImage.src = imageSrc;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside the image
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('image-modal');
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeImageModal();
+                }
+            });
+
+            // Close modal with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeImageModal();
+                }
+            });
+        });
     </script>
 </body>
 

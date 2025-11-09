@@ -45,8 +45,11 @@ async function loadBlogs() {
   try {
     showLoading();
     
-    const response = await fetch('/api/blogs');
+    const response = await fetch('http://localhost:3000/api/blogs');
     const blogs = await response.json();
+    
+    console.log('📚 Loaded blogs from API:', blogs);
+    console.log('📚 Total blogs:', blogs.length);
     
     // Filter published blogs
     allBlogs = blogs.filter(blog => blog.status === 'published');
@@ -112,7 +115,7 @@ function createBlogCard(blog, index) {
   
   card.innerHTML = `
     <a href="blog-detail.html?id=${blog._id}">
-      <img src="${blog.image || getDefaultImage(category)}" 
+      <img src="${blog.thumbnail || blog.image || getDefaultImage(category)}" 
            alt="${blog.title}"
            onerror="this.src='${getDefaultImage(category)}'">
       ${categoryBadge}
@@ -409,32 +412,34 @@ function clearFilters() {
 // Initialize animations
 function initializeAnimations() {
   if (typeof ScrollReveal !== 'undefined') {
-    ScrollReveal().reveal('.slide-up', {
-      duration: 800,
-      distance: '50px',
-      origin: 'bottom',
-      reset: false,
-      easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
-    });
+    // Check if elements exist before revealing
+    const slideUpElements = document.querySelectorAll('.slide-up');
+    const revealElements = document.querySelectorAll('.reveal');
     
-    ScrollReveal().reveal('.reveal', {
-      duration: 1000,
-      distance: '30px',
-      origin: 'bottom',
-      reset: false
-    });
+    if (slideUpElements.length > 0) {
+      ScrollReveal().reveal('.slide-up', {
+        duration: 800,
+        distance: '50px',
+        origin: 'bottom',
+        reset: false,
+        easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
+      });
+    }
+    
+    if (revealElements.length > 0) {
+      ScrollReveal().reveal('.reveal', {
+        duration: 1000,
+        distance: '30px',
+        origin: 'bottom',
+        reset: false
+      });
+    }
   }
 }
 
 // Toast notification function (if not available)
 function showToast(message, type = 'info') {
-  // Check if toast function exists
-  if (typeof window.showToast === 'function') {
-    window.showToast(message, type);
-    return;
-  }
-  
-  // Fallback toast
+  // Fallback toast (always use fallback to avoid conflicts)
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
   toast.style.cssText = `

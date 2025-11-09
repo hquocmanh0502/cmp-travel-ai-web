@@ -829,3 +829,309 @@ body {
     margin-bottom: 1rem;
   }
 }
+
+/* ==================== GUIDE REVIEW MODAL ==================== */
+.guide-review-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.guide-review-modal {
+  background: white;
+  border-radius: 20px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.guide-review-modal .modal-header {
+  background: linear-gradient(135deg, #ff6600, #ff8533);
+  color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.guide-review-modal .modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guide-review-modal .close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.guide-review-modal .close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.guide-review-modal .modal-body {
+  padding: 2rem;
+}
+
+/* Guide Info Card */
+.guide-info-card {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border: 2px solid #ff6600;
+}
+
+.guide-info-card .guide-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ff6600;
+}
+
+.guide-info-card .guide-details h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2d3748;
+  font-size: 1.3rem;
+}
+
+.guide-info-card .guide-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.guide-info-card .guide-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.guide-info-card .guide-languages {
+  color: #718096;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Review Form */
+.review-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.review-form label {
+  display: block;
+  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.review-form label.required::after {
+  content: ' *';
+  color: #e53e3e;
+}
+
+/* Star Rating */
+.star-rating {
+  display: flex;
+  gap: 8px;
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.star-rating i {
+  color: #fbbf24;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.star-rating i:hover {
+  transform: scale(1.2);
+}
+
+.star-rating i.fas {
+  color: #ff6600;
+}
+
+.rating-text {
+  display: block;
+  color: #718096;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+/* Detailed Ratings */
+.detailed-ratings {
+  background: #f7fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.detailed-ratings h4 {
+  color: #2d3748;
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+}
+
+.detailed-ratings .form-group {
+  margin-bottom: 1rem;
+}
+
+.detailed-ratings .star-rating {
+  font-size: 1.5rem;
+}
+
+/* Textarea */
+.review-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.review-form textarea:focus {
+  outline: none;
+  border-color: #ff6600;
+  box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+}
+
+.char-count {
+  text-align: right;
+  color: #718096;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.modal-actions .btn {
+  padding: 12px 30px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-actions .btn-outline {
+  background: white;
+  color: #718096;
+  border: 2px solid #e2e8f0;
+}
+
+.modal-actions .btn-outline:hover {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+}
+
+.modal-actions .btn-primary {
+  background: linear-gradient(135deg, #ff6600, #ff8533);
+  color: white;
+}
+
+.modal-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 102, 0, 0.3);
+}
+
+.modal-actions .btn-success {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: white;
+}
+
+.modal-actions .btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .guide-review-modal {
+    max-width: 95%;
+    max-height: 95vh;
+  }
+  
+  .guide-info-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .guide-info-card .guide-meta {
+    justify-content: center;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .modal-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

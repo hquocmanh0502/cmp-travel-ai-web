@@ -255,19 +255,6 @@ function MetricCard({ title, value, change, icon: Icon, color, loading }) {
               value
             )}
           </h3>
-          {!loading && (
-            <div className="flex items-center gap-1 mt-2">
-              {isPositive ? (
-                <MdTrendingUp className="text-green-600" />
-              ) : (
-                <MdTrendingDown className="text-red-600" />
-              )}
-              <span className={`text-sm font-semibold ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                {isPositive ? '+' : ''}{change.toFixed(1)}%
-              </span>
-              <span className="text-sm text-gray-500">vs last month</span>
-            </div>
-          )}
         </div>
         <div className={`w-12 h-12 rounded-xl ${colorClasses[color]} flex items-center justify-center`}>
           <Icon className="text-2xl" />

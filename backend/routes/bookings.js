@@ -10,7 +10,10 @@ const { applyVIPDiscount, calculateVIPLevel } = require('../services/vipService'
 const verifyAuth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
+    console.log('🔐 verifyAuth - authHeader:', authHeader);
+    
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log('❌ verifyAuth - No valid auth header');
       return res.status(401).json({ 
         success: false, 
         error: 'Authentication required' 
@@ -18,17 +21,38 @@ const verifyAuth = async (req, res, next) => {
     }
     
     const token = authHeader.split(' ')[1];
-    // Simple token verification - you should use proper JWT verification
-    // For now, we'll just extract userId from request body
-    if (!req.body.userId && !req.query.userId) {
+    console.log('🔑 verifyAuth - token:', token);
+    
+    // Extract userId from token (token is base64 encoded "userId:timestamp")
+    let userId;
+    try {
+      const decoded = Buffer.from(token, 'base64').toString('utf-8');
+      console.log('🔓 verifyAuth - decoded token:', decoded);
+      userId = decoded.split(':')[0]; // Extract userId before the colon
+      console.log('👤 verifyAuth - extracted userId:', userId);
+    } catch (error) {
+      console.log('❌ verifyAuth - Failed to decode token:', error);
       return res.status(401).json({ 
         success: false, 
-        error: 'User ID required' 
+        error: 'Invalid token format' 
       });
     }
     
+    if (!userId) {
+      console.log('❌ verifyAuth - Invalid token');
+      return res.status(401).json({ 
+        success: false, 
+        error: 'Invalid token' 
+      });
+    }
+    
+    // Attach userId to request
+    req.userId = userId;
+    console.log('✅ verifyAuth - userId attached:', userId);
+    
     next();
   } catch (error) {
+    console.log('❌ verifyAuth - Error:', error);
     res.status(401).json({ 
       success: false, 
       error: 'Invalid authentication' 
@@ -45,6 +69,7 @@ router.post('/', verifyAuth, async (req, res) => {
       userId,
       tourId,
       hotelId,
+      selectedGuide,
       checkinDate,
       checkoutDate,
       departureDate,
@@ -89,6 +114,17 @@ router.post('/', verifyAuth, async (req, res) => {
       }
     }
     
+    // Verify tour guide exists (if provided)
+    let guide = null;
+    if (selectedGuide) {
+      const TourGuide = require('../models/TourGuide');
+      guide = await TourGuide.findById(selectedGuide);
+      if (!guide) {
+        console.warn('⚠️ Tour guide not found:', selectedGuide);
+        // Don't fail booking if guide not found, just proceed without guide
+      }
+    }
+    
     // Verify user exists
     const user = await User.findById(userId);
     if (!user) {
@@ -109,6 +145,8 @@ router.post('/', verifyAuth, async (req, res) => {
       tourName: tour.name, // ✅ Store tour name
       hotelId,
       hotelName: hotel ? hotel.name : 'No hotel selected', // ✅ Store hotel name
+      selectedGuide: guide ? guide._id : null,
+      guideName: guide ? guide.name : null, // ✅ Store guide name
       checkinDate: new Date(checkinDate),
       checkoutDate: new Date(checkoutDate || checkinDate),
       departureDate: new Date(departureDate || checkinDate),
@@ -183,15 +221,39 @@ router.get('/user/:userId', async (req, res) => {
     const bookings = await Booking.find(query)
       .populate('tourId', 'name country description img rating estimatedCost duration pricing')
       .populate('hotelId', 'name address rating')
+      .populate('selectedGuide', 'name email avatar rating experience languages specialties')
       .sort({ bookingDate: -1 })
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
+    
+    // ✅ Check if user has reviewed each guide
+    const GuideReview = require('../models/GuideReview');
+    
+    const bookingsWithReviewStatus = await Promise.all(
+      bookings.map(async (booking) => {
+        const bookingObj = booking.toObject();
+        
+        // Check if guide was reviewed
+        if (bookingObj.selectedGuide) {
+          const existingReview = await GuideReview.findOne({
+            userId: userId,
+            guideId: bookingObj.selectedGuide._id,
+            bookingId: booking._id
+          });
+          bookingObj.hasReviewedGuide = !!existingReview;
+        } else {
+          bookingObj.hasReviewedGuide = false;
+        }
+        
+        return bookingObj;
+      })
+    );
     
     const total = await Booking.countDocuments(query);
     
     res.json({
       success: true,
-      bookings,
+      bookings: bookingsWithReviewStatus,
       pagination: {
         total,
         page: parseInt(page),
@@ -539,6 +601,118 @@ router.post('/:bookingId/pay-with-wallet', async (req, res) => {
     res.status(500).json({
       success: false,
       error: error.message || 'Error processing payment'
+    });
+  }
+});
+
+// POST /api/bookings/:bookingId/review-guide - Submit guide review
+router.post('/:bookingId/review-guide', verifyAuth, async (req, res) => {
+  try {
+    const { bookingId } = req.params;
+    const { rating, comment, detailedRatings } = req.body;
+    const userId = req.userId;
+
+    console.log('📝 Review guide request:', { bookingId, userId, rating, comment, detailedRatings });
+
+    // Validate booking
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      return res.status(404).json({ 
+        success: false,
+        error: 'Booking not found' 
+      });
+    }
+
+    console.log('🔍 Ownership check:', {
+      bookingUserId: booking.userId,
+      bookingUserIdString: booking.userId.toString(),
+      requestUserId: userId,
+      match: booking.userId.toString() === userId.toString()
+    });
+
+    // Check if user owns this booking
+    if (booking.userId.toString() !== userId.toString()) {
+      console.log('❌ Ownership check failed');
+      return res.status(403).json({ 
+        success: false,
+        error: 'Unauthorized - You do not own this booking' 
+      });
+    }
+
+    console.log('✅ Ownership check passed');
+
+    // Check if booking is completed
+    if (booking.status !== 'completed') {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Can only review completed bookings' 
+      });
+    }
+
+    // Check if guide was assigned
+    if (!booking.selectedGuide) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'No tour guide assigned to this booking' 
+      });
+    }
+
+    // Check if already reviewed
+    const GuideReview = require('../models/GuideReview');
+    const existingReview = await GuideReview.findOne({
+      userId: userId,
+      guideId: booking.selectedGuide,
+      bookingId: bookingId
+    });
+
+    if (existingReview) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'You have already reviewed this tour guide' 
+      });
+    }
+
+    // Create guide review
+    const reviewData = {
+      guideId: booking.selectedGuide,
+      userId: userId,
+      tourId: booking.tourId,
+      bookingId: bookingId,
+      rating: rating,
+      comment: comment,
+      status: 'approved', // Auto-approve user reviews
+      isVerified: true // User completed the tour
+    };
+
+    // Add detailed ratings if provided
+    if (detailedRatings && Object.keys(detailedRatings).length > 0) {
+      reviewData.detailedRatings = detailedRatings;
+    }
+
+    const review = new GuideReview(reviewData);
+    await review.save();
+
+    console.log('✅ Guide review created:', review._id);
+
+    // Update guide rating
+    const TourGuide = require('../models/TourGuide');
+    const guide = await TourGuide.findById(booking.selectedGuide);
+    if (guide) {
+      await guide.updateRating();
+      console.log('✅ Guide rating updated');
+    }
+
+    res.json({
+      success: true,
+      message: 'Guide review submitted successfully',
+      review: review
+    });
+
+  } catch (error) {
+    console.error('❌ Error submitting guide review:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Error submitting guide review'
     });
   }
 });

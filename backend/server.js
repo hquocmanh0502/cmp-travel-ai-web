@@ -37,6 +37,8 @@ const hotelsRoutes = require('./routes/hotels');
 const contactRoutes = require('./routes/contacts');
 const usersRoutes = require('./routes/users');
 const newsletterRoutes = require('./routes/newsletter');
+const indexRoutes = require('./routes/index'); // Add this line
+const tourGuidesRoutes = require('./routes/tour-guides');
 
 console.log('📧 Contact routes loaded:', typeof contactRoutes);
 
@@ -68,6 +70,7 @@ app.use('/api/admin/reviews', require('./routes/admin-reviews-new'));
 app.use('/api/admin/hotels', adminHotelsRoutes);
 app.use('/api/admin/spam-replies', adminSpamRoutes);
 app.use('/api/admin/revenue', require('./routes/revenue'));
+app.use('/api/admin', tourGuidesRoutes); // Tour Guides routes
 
 // Generic admin routes (must be AFTER specific ones)
 app.use('/api/admin', adminRoutes);
@@ -80,6 +83,7 @@ app.use('/api/hotels', hotelsRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api', indexRoutes); // Mount index routes (includes /blogs, /tours, etc.)
 console.log('📧 Contact routes mounted at /api/contacts');
 console.log('👤 Users routes mounted at /api/users');
 

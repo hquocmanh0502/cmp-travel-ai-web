@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/detail.css">
+  <link rel="stylesheet" href="./css/guide-selection-modal.css">
 </head>
 
 <body>
@@ -376,26 +377,13 @@
           </div>
         </div>
 
-        <!-- Tour Guide Card -->
-        <div class="guide-card">
-          <h4><i class="fas fa-user-tie"></i> Your Tour Guide</h4>
-          <div class="guide-info">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Guide" class="guide-avatar">
-            <div class="guide-details">
-              <h5>John Smith</h5>
-              <p>Professional guide with 8+ years experience</p>
-              <div class="guide-rating">
-                <div class="stars">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <span>4.9 (156 reviews)</span>
-              </div>
-            </div>
+        <!-- Tour Guides Section -->
+        <div class="guides-card">
+          <h4><i class="fas fa-user-tie"></i> Your Tour Guides</h4>
+          <div class="guides-grid" id="tourGuidesList">
+            <!-- Dynamic guide content -->
           </div>
+          <button class="btn btn-view-guides" id="viewAllGuidesBtn" style="display: none;">View All Guides</button>
         </div>
 
         <!-- Quick Facts -->
@@ -542,6 +530,7 @@
   <script src="./js/newsletter.js"></script>
   <script src="./js/main.js"></script>
   <script src="./js/spam-warning-toast.js"></script>
+  <script src="./js/guide-selection-modal.js"></script>
   <script src="./js/detail.js"></script>
 </body>
 

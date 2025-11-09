@@ -34,6 +34,19 @@ const bookingSchema = new mongoose.Schema({
     default: 'No hotel selected'
   },
   
+  // Tour Guide Information
+  selectedGuide: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TourGuide',
+    default: null
+  },
+  
+  // ✅ Store guide name for display (fallback if guide deleted)
+  guideName: {
+    type: String,
+    default: null
+  },
+  
   // Dates
   checkinDate: {
     type: Date,

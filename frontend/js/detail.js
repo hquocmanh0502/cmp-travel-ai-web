@@ -960,6 +960,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Global variables
     let currentTour = null;
     let currentUser = null;
+    let assignedGuides = []; // ✅ Store guides globally
     let wishlistItems = JSON.parse(localStorage.getItem('wishlist')) || [];
     let compareItems = JSON.parse(localStorage.getItem('compare')) || [];
     let chatbotOpen = false;
@@ -1417,6 +1418,7 @@ document.addEventListener('DOMContentLoaded', function() {
             await Promise.all([
                 loadRelatedTours(),
                 loadHotels(),
+                loadGuides(),
                 loadReviews(),
                 loadGallery()
             ]);
@@ -2191,6 +2193,365 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         ];
     }
+    
+    // ==================== TOUR GUIDES SECTION ====================
+    
+    async function loadGuides() {
+        try {
+            console.log(`👨‍✈️ Loading tour guides for tour: ${currentTour?.name || 'Unknown'}`);
+            console.log('📋 assignedGuide data:', currentTour?.assignedGuide);
+            
+            // Check if tour has assigned guides
+            if (currentTour?.assignedGuide && currentTour.assignedGuide.length > 0) {
+                console.log(`✅ Found ${currentTour.assignedGuide.length} assigned tour guides`);
+                console.log('📊 Guide objects:', currentTour.assignedGuide);
+                
+                // ✅ Store guides globally for booking flow
+                assignedGuides = currentTour.assignedGuide;
+                console.log('💾 Stored guides globally:', assignedGuides);
+                
+                displayGuides(currentTour.assignedGuide);
+            } else {
+                console.log('ℹ️ No tour guides assigned to this tour');
+                assignedGuides = []; // ✅ Clear global guides
+                // Hide guides section if no guides
+                const guidesCard = document.querySelector('.guides-card');
+                if (guidesCard) {
+                    guidesCard.style.display = 'none';
+                }
+            }
+            
+        } catch (error) {
+            console.error('Error loading tour guides:', error);
+            assignedGuides = []; // ✅ Clear global guides on error
+            // Hide guides section on error
+            const guidesCard = document.querySelector('.guides-card');
+            if (guidesCard) {
+                guidesCard.style.display = 'none';
+            }
+        }
+    }
+    
+    function displayGuides(guides) {
+        const guidesList = document.getElementById('tourGuidesList');
+        const viewAllBtn = document.getElementById('viewAllGuidesBtn');
+        const guidesCard = document.querySelector('.guides-card');
+        
+        if (!guidesList) return;
+        
+        // Show guides card
+        if (guidesCard) {
+            guidesCard.style.display = 'block';
+        }
+        
+        guidesList.innerHTML = '';
+        
+        // Display up to 3 guides
+        const displayGuides = guides.slice(0, 3);
+        displayGuides.forEach(guide => {
+            guidesList.innerHTML += renderGuideCard(guide);
+        });
+        
+        // Show "View All" button if more than 3 guides
+        if (viewAllBtn) {
+            if (guides.length > 3) {
+                viewAllBtn.style.display = 'block';
+                viewAllBtn.textContent = `View All ${guides.length} Guides`;
+                // Add click handler
+                viewAllBtn.onclick = () => showAllGuidesModal(guides);
+            } else {
+                viewAllBtn.style.display = 'none';
+            }
+        }
+    }
+    
+    function renderGuideCard(guide) {
+        const starsHTML = generateStarsHTML(guide.rating || 0);
+        const guideName = guide.name || 'Tour Guide';
+        const guideId = guide._id || guide.id;
+        const avatar = guide.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(guideName)}&background=ff6600&color=fff&size=128`;
+        
+        // Get languages (max 2 to display)
+        const languages = guide.languages || [];
+        const displayLanguages = languages.slice(0, 2);
+        
+        // Get specialties (max 2 to display)
+        const specialties = guide.specialties || [];
+        const displaySpecialties = specialties.slice(0, 2);
+        
+        return `
+            <div class="guide-card-item" onclick="showGuideDetailModal('${guideId}')">
+                <div class="guide-card-header">
+                    <img src="${avatar}" alt="${guideName}" class="guide-card-avatar">
+                    <div class="guide-card-info">
+                        <h6>${guideName}</h6>
+                        <div class="guide-card-rating">
+                            <div class="stars">${starsHTML}</div>
+                            <span>${(guide.rating || 0).toFixed(1)} (${guide.totalReviews || 0} reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-card-details">
+                    <div class="guide-detail-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span>${guide.experience || 0} years experience</span>
+                    </div>
+                    ${displayLanguages.length > 0 ? `
+                        <div class="guide-detail-item">
+                            <i class="fas fa-globe"></i>
+                            <div class="guide-languages">
+                                ${displayLanguages.map(lang => `<span class="guide-lang-tag">${lang}</span>`).join('')}
+                                ${languages.length > 2 ? `<span class="guide-lang-tag">+${languages.length - 2}</span>` : ''}
+                            </div>
+                        </div>
+                    ` : ''}
+                    ${displaySpecialties.length > 0 ? `
+                        <div class="guide-detail-item">
+                            <i class="fas fa-star"></i>
+                            <div class="guide-specialties">
+                                ${displaySpecialties.map(spec => `<span class="guide-specialty-tag">${spec}</span>`).join('')}
+                                ${specialties.length > 2 ? `<span class="guide-specialty-tag">+${specialties.length - 2}</span>` : ''}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+    }
+    
+    // Show guide detail modal
+    async function showGuideDetailModal(guideId) {
+        try {
+            console.log('👨‍✈️ Loading guide details for:', guideId);
+            
+            // Fetch guide details from API
+            const response = await fetch(`http://localhost:3000/api/admin/tour-guides/${guideId}`);
+            if (!response.ok) {
+                throw new Error('Failed to load guide details');
+            }
+            
+            const apiResponse = await response.json();
+            console.log('✅ Guide API response:', apiResponse);
+            
+            // Unwrap guide data - handle {success: true, data: {...}} format
+            const guide = apiResponse.data || apiResponse;
+            console.log('📋 Guide data:', guide);
+            
+            // Handle guide name - might be undefined
+            const guideName = guide.name || 'Tour Guide';
+            
+            // Reviews already included in guide.recentReviews from backend
+            let reviews = guide.recentReviews || [];
+            console.log(`✅ Found ${reviews.length} reviews for guide`);
+            
+            // Create modal HTML
+            const starsHTML = generateStarsHTML(guide.rating || 0);
+            const avatar = guide.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(guideName)}&background=ff6600&color=fff&size=128`;
+            
+            const modalHTML = `
+                <div class="modal-overlay" id="guideDetailModal" onclick="closeGuideDetailModal()">
+                    <div class="modal-content guide-detail-modal-content" onclick="event.stopPropagation()">
+                        <button class="modal-close" onclick="closeGuideDetailModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        
+                        <div class="guide-detail-header">
+                            <img src="${avatar}" alt="${guideName}" class="guide-detail-avatar">
+                            <div class="guide-detail-header-info">
+                                <h3>${guideName}</h3>
+                                <div class="guide-detail-rating">
+                                    <div class="stars">${starsHTML}</div>
+                                    <span>${(guide.rating || 0).toFixed(1)} (${guide.totalReviews || 0} reviews)</span>
+                                </div>
+                                <div class="guide-contact-info">
+                                    <div><i class="fas fa-envelope"></i> ${guide.email || 'N/A'}</div>
+                                    <div><i class="fas fa-phone"></i> ${guide.phone || 'N/A'}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="guide-detail-body">
+                            <div class="guide-info-section">
+                                <h4><i class="fas fa-user"></i> About</h4>
+                                <p>${guide.bio || 'No bio available'}</p>
+                            </div>
+                            
+                            <div class="guide-stats-grid">
+                                <div class="guide-stat-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <div>
+                                        <strong>${guide.experience || 0} years</strong>
+                                        <span>Experience</span>
+                                    </div>
+                                </div>
+                                <div class="guide-stat-item">
+                                    <i class="fas fa-users"></i>
+                                    <div>
+                                        <strong>${guide.gender || 'N/A'}</strong>
+                                        <span>Gender</span>
+                                    </div>
+                                </div>
+                                <div class="guide-stat-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <strong>${guide.status || 'active'}</strong>
+                                        <span>Status</span>
+                                    </div>
+                                </div>
+                                <div class="guide-stat-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <div>
+                                        <strong>${guide.availability || 'available'}</strong>
+                                        <span>Availability</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            ${guide.languages && guide.languages.length > 0 ? `
+                                <div class="guide-info-section">
+                                    <h4><i class="fas fa-globe"></i> Languages</h4>
+                                    <div class="guide-tags">
+                                        ${guide.languages.map(lang => `<span class="guide-tag">${lang}</span>`).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${guide.specialties && guide.specialties.length > 0 ? `
+                                <div class="guide-info-section">
+                                    <h4><i class="fas fa-star"></i> Specialties</h4>
+                                    <div class="guide-tags">
+                                        ${guide.specialties.map(spec => `<span class="guide-tag">${spec}</span>`).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${guide.certifications && guide.certifications.length > 0 ? `
+                                <div class="guide-info-section">
+                                    <h4><i class="fas fa-certificate"></i> Certifications</h4>
+                                    <div class="guide-certifications-list">
+                                        ${guide.certifications.map(cert => {
+                                            const issueDate = cert.issueDate ? new Date(cert.issueDate).toLocaleDateString() : '';
+                                            const expiryDate = cert.expiryDate ? new Date(cert.expiryDate).toLocaleDateString() : '';
+                                            const dateRange = issueDate + (expiryDate ? ' - ' + expiryDate : '');
+                                            return `
+                                                <div class="certification-item">
+                                                    <div class="cert-name">${cert.name}</div>
+                                                    <div class="cert-issuer">${cert.issuedBy}</div>
+                                                    <div class="cert-date">${dateRange}</div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${reviews.length > 0 ? `
+                                <div class="guide-info-section">
+                                    <h4><i class="fas fa-comments"></i> Customer Reviews (${reviews.length})</h4>
+                                    <div class="guide-reviews-list">
+                                        ${reviews.slice(0, 5).map(review => {
+                                            const reviewStars = generateStarsHTML(review.rating);
+                                            const userName = review.userId?.fullName || review.userName || 'Anonymous';
+                                            const tourName = review.tourId?.name || '';
+                                            return `
+                                                <div class="guide-review-item">
+                                                    <div class="review-header">
+                                                        <div>
+                                                            <strong>${userName}</strong>
+                                                            ${tourName ? `<span class="review-tour"> • ${tourName}</span>` : ''}
+                                                        </div>
+                                                        <div class="stars">${reviewStars}</div>
+                                                    </div>
+                                                    <p>${review.comment || 'No comment'}</p>
+                                                    <div class="review-date">${new Date(review.createdAt).toLocaleDateString()}</div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                        ${reviews.length > 5 ? `<p class="view-more-reviews">${reviews.length - 5} more reviews...</p>` : ''}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" onclick="closeGuideDetailModal()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            console.log('🎨 Creating modal HTML...');
+            
+            // Remove existing modal if present
+            const existingModal = document.getElementById('guideDetailModal');
+            if (existingModal) {
+                console.log('🗑️ Removing existing modal');
+                existingModal.remove();
+            }
+            
+            // Add modal to page
+            console.log('➕ Adding modal to page');
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            console.log('✅ Modal added successfully');
+            
+        } catch (error) {
+            console.error('Error showing guide detail:', error);
+            alert('Failed to load guide details. Please try again.');
+        }
+    }
+    
+    function closeGuideDetailModal() {
+        const modal = document.getElementById('guideDetailModal');
+        if (modal) {
+            modal.remove();
+        }
+    }
+    
+    // Show all guides modal
+    function showAllGuidesModal(guides) {
+        const modalHTML = `
+            <div class="modal-overlay" id="allGuidesModal" onclick="closeAllGuidesModal()">
+                <div class="modal-content all-guides-modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="closeAllGuidesModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <h3><i class="fas fa-user-tie"></i> All Tour Guides (${guides.length})</h3>
+                    
+                    <div class="all-guides-grid">
+                        ${guides.map(guide => renderGuideCard(guide)).join('')}
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeAllGuidesModal()">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Remove existing modal if present
+        const existingModal = document.getElementById('allGuidesModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // Add modal to page
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+    
+    function closeAllGuidesModal() {
+        const modal = document.getElementById('allGuidesModal');
+        if (modal) {
+            modal.remove();
+        }
+    }
+    
+    // Make guide modal functions globally available
+    window.showGuideDetailModal = showGuideDetailModal;
+    window.closeGuideDetailModal = closeGuideDetailModal;
+    window.showAllGuidesModal = showAllGuidesModal;
+    window.closeAllGuidesModal = closeAllGuidesModal;
     
     // ✅ CHECK IF USER CAN WRITE REVIEW
     async function checkReviewEligibility() {
@@ -3817,7 +4178,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     let response = await fetch(`http://localhost:3000/api/hotels/destination/${encodeURIComponent(destination)}`);
                     
                     if (response.ok) {
-                        destinationHotels = await response.json();
+                        const result = await response.json();
+                        // Handle both { success: true, data: [...] } and direct array response
+                        destinationHotels = result.data || result;
                         console.log(`✅ Found ${destinationHotels.length} hotels for ${destination}`);
                     }
                     
@@ -3826,7 +4189,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.log(`❌ No hotels found for ${destination}, using general hotels`);
                         const fallbackResponse = await fetch('http://localhost:3000/api/hotels?limit=3');
                         if (fallbackResponse.ok) {
-                            destinationHotels = await fallbackResponse.json();
+                            const fallbackResult = await fallbackResponse.json();
+                            destinationHotels = fallbackResult.data || fallbackResult;
                         }
                     }
                 } catch (apiError) {
@@ -3859,13 +4223,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         </p>
                         <div class="hotels-list">
-                            ${destinationHotels.map(hotel => `
-                                <div class="hotel-option" data-hotel-id="${hotel._id || hotel.id}">
+                            ${destinationHotels.map(hotel => {
+                                const hotelName = hotel.name || hotel.hotelName || 'Unnamed Hotel';
+                                const hotelId = hotel._id || hotel.id;
+                                return `
+                                <div class="hotel-option" data-hotel-id="${hotelId}">
                                     <div class="hotel-info">
                                         <img src="${hotel.details?.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=120'}" 
-                                            alt="${hotel.name}" class="hotel-thumb">
+                                            alt="${hotelName}" class="hotel-thumb">
                                         <div class="hotel-details">
-                                            <h4>${hotel.name}</h4>
+                                            <h4>${hotelName}</h4>
                                             <div class="hotel-rating">
                                                 ${generateStarsHTML(hotel.details?.rating || 4.5)}
                                                 <span class="rating-score">${(hotel.details?.rating || 4.5).toFixed(1)}</span>
@@ -3885,15 +4252,15 @@ document.addEventListener('DOMContentLoaded', function() {
                                         </div>
                                     </div>
                                     <div class="hotel-actions">
-                                        <button class="btn-view-hotel-detail" onclick="showHotelDetailModal('${hotel._id || hotel.id}')">
+                                        <button class="btn-view-hotel-detail" onclick="showHotelDetailModal('${hotelId}')">
                                             <i class="fas fa-eye"></i> Details
                                         </button>
-                                        <button class="btn-select-hotel" onclick="selectHotelAndProceed('${hotel._id || hotel.id}', '${hotel.name.replace(/'/g, "\\'")}')">
+                                        <button class="btn-select-hotel" onclick="selectHotelAndProceed('${hotelId}', '${hotelName.replace(/'/g, "\\'")}')">
                                             <i class="fas fa-check"></i> Select
                                         </button>
                                     </div>
                                 </div>
-                            `).join('')}
+                            `}).join('')}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -5052,12 +5419,35 @@ document.addEventListener('DOMContentLoaded', function() {
     // ✅ SELECT HOTEL AND PROCEED - ENGLISH VERSION
     function selectHotelAndProceed(hotelId, hotelName) {
         console.log('✅ Hotel selected:', hotelName);
+        console.log('📊 Current tour object:', currentTour);
+        console.log('📋 assignedGuide field:', currentTour?.assignedGuide);
+        console.log('📦 Global assignedGuides:', assignedGuides);
         
         // Close hotel selection modal
         const modal = document.querySelector('.hotel-selection-modal-overlay');
         if (modal) {
             modal.remove();
         }
+        
+        // Use global assignedGuides (more reliable than currentTour.assignedGuide)
+        console.log('👨‍✈️ Number of guides available:', assignedGuides.length);
+        
+        // Show guide selection modal if guides available
+        if (assignedGuides && assignedGuides.length > 0) {
+            console.log('✅ Opening guide selection modal with guides:', assignedGuides);
+            openGuideSelectionModal(assignedGuides, (selectedGuide) => {
+                console.log('✅ Guide selected from modal:', selectedGuide);
+                proceedToReservation(hotelId, hotelName, selectedGuide);
+            });
+        } else {
+            // No guides - proceed without guide
+            console.log('⚠️ No guides available - proceeding without guide');
+            proceedToReservation(hotelId, hotelName, null);
+        }
+    }
+    
+    function proceedToReservation(hotelId, hotelName, selectedGuide) {
+        console.log('📝 Proceeding to reservation with:', { hotelId, hotelName, selectedGuide });
         
         // Get current booking data
         const adults = parseInt(document.querySelector('.traveler-item:first-child .quantity').textContent) || 2;
@@ -5083,11 +5473,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const bookingData = {
             tourId: currentTour?._id || currentTour?.id,
             tourName: currentTour?.name || 'Selected Tour',
-            tourDuration: currentTour?.duration || null, // ✅ Add tour duration
+            tourDuration: currentTour?.duration || null,
             selectedHotel: {
                 id: hotelId,
                 name: hotelName
             },
+            selectedGuide: selectedGuide ? {
+                id: selectedGuide._id || selectedGuide.id,
+                name: selectedGuide.name || 'Tour Guide',
+                avatar: selectedGuide.avatar,
+                rating: selectedGuide.rating,
+                experience: selectedGuide.experience
+            } : null,
             checkinDate: checkinDate,
             adults: adults,
             children: children,

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { FiX, FiImage, FiUpload } from 'react-icons/fi';
+import { useState, useEffect, useRef } from 'react';
+import { FiX, FiImage, FiUpload, FiTrash2 } from 'react-icons/fi';
+import MDEditor from '@uiw/react-md-editor';
 
 const BlogModal = ({ isOpen, onClose, onSave, blog, categories }) => {
   const [formData, setFormData] = useState({
@@ -9,13 +10,21 @@ const BlogModal = ({ isOpen, onClose, onSave, blog, categories }) => {
     author: '',
     category: '',
     tags: '',
+    thumbnail: '',
     image: '',
+    images: '',
+    readingTime: 5,
     status: 'draft',
     publishedDate: ''
   });
 
   const [errors, setErrors] = useState({});
   const [imagePreview, setImagePreview] = useState('');
+  const [imagesPreview, setImagesPreview] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadingGallery, setUploadingGallery] = useState(false);
+  const thumbnailInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
 
   useEffect(() => {
     if (blog) {
@@ -26,25 +35,33 @@ const BlogModal = ({ isOpen, onClose, onSave, blog, categories }) => {
         author: blog.author || '',
         category: blog.category || '',
         tags: Array.isArray(blog.tags) ? blog.tags.join(', ') : blog.tags || '',
+        thumbnail: blog.thumbnail || '',
         image: blog.image || '',
+        images: Array.isArray(blog.images) ? blog.images.join('\n') : blog.images || '',
+        readingTime: blog.readingTime || 5,
         status: blog.status || 'draft',
         publishedDate: blog.publishedDate ? new Date(blog.publishedDate).toISOString().split('T')[0] : ''
       });
-      setImagePreview(blog.image || '');
+      setImagePreview(blog.thumbnail || blog.image || '');
+      setImagesPreview(Array.isArray(blog.images) ? blog.images : []);
     } else {
       // Reset form for new blog
       setFormData({
         title: '',
         excerpt: '',
         content: '',
-        author: '',
+        author: 'CMP Travel Team',
         category: '',
         tags: '',
+        thumbnail: '',
         image: '',
+        images: '',
+        readingTime: 5,
         status: 'draft',
         publishedDate: new Date().toISOString().split('T')[0]
       });
       setImagePreview('');
+      setImagesPreview([]);
     }
     setErrors({});
   }, [blog, isOpen]);
@@ -60,8 +77,90 @@ const BlogModal = ({ isOpen, onClose, onSave, blog, categories }) => {
 
   const handleImageChange = (e) => {
     const value = e.target.value;
-    setFormData(prev => ({ ...prev, image: value }));
+    setFormData(prev => ({ ...prev, thumbnail: value, image: value }));
     setImagePreview(value);
+  };
+
+  const handleImagesChange = (e) => {
+    const value = e.target.value;
+    setFormData(prev => ({ ...prev, images: value }));
+    // Parse images (one URL per line)
+    const imageUrls = value.split('\n').map(url => url.trim()).filter(url => url);
+    setImagesPreview(imageUrls);
+  };
+
+  // Upload thumbnail image
+  const handleThumbnailUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formDataUpload = new FormData();
+    formDataUpload.append('image', file);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/upload/upload-single', {
+        method: 'POST',
+        body: formDataUpload,
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setFormData(prev => ({ ...prev, thumbnail: data.url, image: data.url }));
+        setImagePreview(data.url);
+      } else {
+        alert('Upload failed: ' + (data.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Upload failed');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Upload gallery images
+  const handleGalleryUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setUploadingGallery(true);
+    const formDataUpload = new FormData();
+    files.forEach(file => {
+      formDataUpload.append('images', file);
+    });
+
+    try {
+      const response = await fetch('http://localhost:3000/api/upload/upload-multiple', {
+        method: 'POST',
+        body: formDataUpload,
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        const newImageUrls = data.files.map(f => f.url);
+        const currentImages = formData.images ? formData.images.split('\n').filter(url => url.trim()) : [];
+        const allImages = [...currentImages, ...newImageUrls];
+        
+        setFormData(prev => ({ ...prev, images: allImages.join('\n') }));
+        setImagesPreview(allImages);
+      } else {
+        alert('Upload failed: ' + (data.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Upload failed');
+    } finally {
+      setUploadingGallery(false);
+    }
+  };
+
+  // Remove image from gallery
+  const handleRemoveGalleryImage = (indexToRemove) => {
+    const currentImages = formData.images.split('\n').filter(url => url.trim());
+    const updatedImages = currentImages.filter((_, index) => index !== indexToRemove);
+    setFormData(prev => ({ ...prev, images: updatedImages.join('\n') }));
+    setImagesPreview(updatedImages);
   };
 
   const validateForm = () => {
@@ -102,10 +201,14 @@ const BlogModal = ({ isOpen, onClose, onSave, blog, categories }) => {
       return;
     }
 
-    // Process tags
+    // Process tags and images
     const processedData = {
       ...formData,
       tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+      images: formData.images.split('\n').map(url => url.trim()).filter(url => url),
+      thumbnail: formData.thumbnail || formData.image,
+      image: formData.thumbnail || formData.image,
+      readingTime: parseInt(formData.readingTime) || 5,
       publishedDate: formData.publishedDate || new Date().toISOString()
     };
 
@@ -207,49 +310,140 @@ const BlogModal = ({ isOpen, onClose, onSave, blog, categories }) => {
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Content <span className="text-red-500">*</span>
               </label>
-              <textarea
-                name="content"
-                value={formData.content}
-                onChange={handleChange}
-                rows="8"
-                className={`w-full px-4 py-3 border ${errors.content ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent font-mono text-sm`}
-                placeholder="Write your blog content here... (Supports Markdown)"
-              />
+              <div className={`border ${errors.content ? 'border-red-500' : 'border-gray-300'} rounded-lg overflow-hidden`} data-color-mode="light">
+                <MDEditor
+                  value={formData.content}
+                  onChange={(value) => setFormData(prev => ({ ...prev, content: value || '' }))}
+                  height={400}
+                  preview="edit"
+                  hideToolbar={false}
+                  enableScroll={true}
+                  visibleDragbar={false}
+                />
+              </div>
               {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
+              <p className="text-sm text-gray-500 mt-1">Hỗ trợ Markdown - Preview thời gian thực</p>
             </div>
 
-            {/* Image */}
+            {/* Thumbnail (Hero Image) */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Featured Image URL
+                Thumbnail / Hero Image <span className="text-red-500">*</span>
               </label>
               <div className="flex gap-4">
                 <input
                   type="url"
-                  name="image"
-                  value={formData.image}
+                  name="thumbnail"
+                  value={formData.thumbnail}
                   onChange={handleImageChange}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="https://example.com/image.jpg"
+                  placeholder="Or paste image URL here"
+                />
+                <input
+                  ref={thumbnailInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleThumbnailUpload}
+                  className="hidden"
                 />
                 <button
                   type="button"
-                  className="px-4 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-2"
+                  onClick={() => thumbnailInputRef.current?.click()}
+                  disabled={uploading}
+                  className="px-4 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center gap-2 disabled:bg-gray-400"
                 >
                   <FiUpload className="w-4 h-4" />
-                  Upload
+                  {uploading ? 'Uploading...' : 'Upload'}
                 </button>
               </div>
               {imagePreview && (
-                <div className="mt-3">
+                <div className="mt-3 relative">
                   <img
                     src={imagePreview}
-                    alt="Preview"
+                    alt="Thumbnail Preview"
                     className="w-full h-48 object-cover rounded-lg"
                     onError={() => setImagePreview('')}
                   />
                 </div>
               )}
+            </div>
+
+            {/* Gallery Images */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Gallery Images
+              </label>
+              <div className="space-y-3">
+                <div className="flex gap-4">
+                  <textarea
+                    name="images"
+                    value={formData.images}
+                    onChange={handleImagesChange}
+                    rows="3"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent font-mono text-sm"
+                    placeholder="Or paste image URLs here (one per line)"
+                  />
+                  <div className="flex flex-col gap-2">
+                    <input
+                      ref={galleryInputRef}
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleGalleryUpload}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => galleryInputRef.current?.click()}
+                      disabled={uploadingGallery}
+                      className="px-4 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center gap-2 whitespace-nowrap disabled:bg-gray-400"
+                    >
+                      <FiUpload className="w-4 h-4" />
+                      {uploadingGallery ? 'Uploading...' : 'Upload Images'}
+                    </button>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500">Upload images or enter URLs (one per line)</p>
+              </div>
+              {imagesPreview.length > 0 && (
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  {imagesPreview.map((url, index) => (
+                    <div key={index} className="relative group">
+                      <img
+                        src={url}
+                        alt={`Gallery ${index + 1}`}
+                        className="w-full h-24 object-cover rounded-lg"
+                        onError={(e) => e.target.style.display = 'none'}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveGalleryImage(index)}
+                        className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <FiTrash2 className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Reading Time */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Reading Time (minutes)
+              </label>
+              <input
+                type="number"
+                name="readingTime"
+                value={formData.readingTime}
+                onChange={handleChange}
+                min="1"
+                max="60"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                placeholder="5"
+              />
+              <p className="text-sm text-gray-500 mt-1">Estimated reading time in minutes</p>
             </div>
 
             {/* Tags */}

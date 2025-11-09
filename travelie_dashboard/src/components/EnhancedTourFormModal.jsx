@@ -13,10 +13,13 @@ import {
   MdHotel,
   MdLocalActivity,
   MdLandscape,
-  MdDragHandle
+  MdDragHandle,
+  MdPerson
 } from 'react-icons/md';
+import { FiStar, FiMapPin, FiGlobe, FiMessageSquare } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import ImageUpload from './ImageUpload';
+import { tourGuidesAPI, guideReviewsAPI } from '../utils/api';
 
 const API_BASE_URL = 'http://localhost:3000/api/admin';
 
@@ -55,6 +58,10 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
   const [activeTab, setActiveTab] = useState('basic');
   const [availableHotels, setAvailableHotels] = useState({});
   const [hotelSearchTerm, setHotelSearchTerm] = useState('');
+  const [tourGuides, setTourGuides] = useState([]);
+  const [selectedGuide, setSelectedGuide] = useState(null);
+  const [guideReviews, setGuideReviews] = useState([]);
+  const [loadingGuides, setLoadingGuides] = useState(false);
 
   // Load hotels on mount  
   useEffect(() => {
@@ -94,6 +101,24 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
       console.error('Failed to load hotels:', error);
       setAvailableHotels({});
     });
+  }, []);
+
+  // Load tour guides on mount
+  useEffect(() => {
+    const loadGuides = async () => {
+      try {
+        setLoadingGuides(true);
+        const response = await tourGuidesAPI.getAll({ status: 'active' });
+        const guidesData = response.data || response;
+        setTourGuides(Array.isArray(guidesData) ? guidesData : []);
+      } catch (error) {
+        console.error('Error loading tour guides:', error);
+        toast.error('Failed to load tour guides');
+      } finally {
+        setLoadingGuides(false);
+      }
+    };
+    loadGuides();
   }, []);
 
   // Initialize empty form data
@@ -138,6 +163,29 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
     
     // Hotels
     selectedHotels: tourData?.selectedHotels || [],
+    
+    // Tour Guides - handle both ObjectId strings and populated objects
+    assignedGuide: (() => {
+      if (!tourData?.assignedGuide) return [];
+      
+      // If already an array, map to IDs
+      if (Array.isArray(tourData.assignedGuide)) {
+        return tourData.assignedGuide.map(guide => {
+          // If guide is an object (populated), get _id
+          if (typeof guide === 'object' && guide !== null) {
+            return guide._id || guide.id;
+          }
+          // If guide is already a string ID
+          return guide;
+        });
+      }
+      
+      // If single value (old format), convert to array
+      const singleGuide = typeof tourData.assignedGuide === 'object' 
+        ? (tourData.assignedGuide._id || tourData.assignedGuide.id)
+        : tourData.assignedGuide;
+      return singleGuide ? [singleGuide] : [];
+    })(),
     
     // Gallery - 12 photos với file upload support
     gallery: tourData?.gallery && tourData.gallery.length > 0 ? 
@@ -445,6 +493,7 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
     { id: 'basic', label: 'Basic Info', icon: MdLocationOn },
     { id: 'details', label: 'Details', icon: MdStar },
     { id: 'hotels', label: 'Hotels', icon: MdHotel },
+    { id: 'guide', label: 'Tour Guide', icon: MdPerson },
     { id: 'gallery', label: 'Gallery (12 Photos)', icon: MdPhotoLibrary },
     { id: 'itinerary', label: 'Itinerary', icon: MdSchedule },
     { id: 'pricing', label: 'Pricing', icon: MdAttachMoney }
@@ -1039,6 +1088,290 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
                       </div>
                     )}
                   </>
+                )}
+              </div>
+            )}
+
+            {/* Tour Guide Tab */}
+            {activeTab === 'guide' && (
+              <div className="space-y-6">
+                <div className="bg-purple-50 p-4 rounded-lg mb-6">
+                  <h3 className="font-medium text-purple-800 mb-2">Assign Tour Guides</h3>
+                  <p className="text-sm text-purple-700">
+                    Select one or more experienced tour guides for this tour. Click on a guide card to view their profile and customer reviews.
+                  </p>
+                  {formData.assignedGuide && Array.isArray(formData.assignedGuide) && formData.assignedGuide.length > 0 && (
+                    <p className="text-sm text-purple-800 font-medium mt-2">
+                      {formData.assignedGuide.length} guide(s) selected
+                    </p>
+                  )}
+                </div>
+
+                {loadingGuides ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {[1, 2, 3].map(i => (
+                      <div key={i} className="bg-white border rounded-lg p-4 animate-pulse">
+                        <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-3"></div>
+                        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div className="h-3 bg-gray-200 rounded"></div>
+                      </div>
+                    ))}
+                  </div>
+                ) : tourGuides.length === 0 ? (
+                  <div className="text-center py-12 bg-gray-50 rounded-lg">
+                    <MdPerson className="mx-auto text-6xl text-gray-300 mb-4" />
+                    <h3 className="text-lg font-medium text-gray-600 mb-2">No Tour Guides Available</h3>
+                    <p className="text-gray-500">Please add tour guides first before assigning them to tours.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {tourGuides.map(guide => {
+                      const isSelected = Array.isArray(formData.assignedGuide) 
+                        ? formData.assignedGuide.includes(guide._id)
+                        : formData.assignedGuide === guide._id;
+                      
+                      return (
+                      <div
+                        key={guide._id}
+                        onClick={async () => {
+                          setSelectedGuide(guide);
+                          // Load reviews for selected guide
+                          try {
+                            const response = await guideReviewsAPI.getByGuide(guide._id);
+                            const reviewData = response.data || response;
+                            const approvedReviews = Array.isArray(reviewData) 
+                              ? reviewData.filter(r => r.status === 'approved') 
+                              : [];
+                            setGuideReviews(approvedReviews);
+                          } catch (error) {
+                            console.error('Error loading reviews:', error);
+                            setGuideReviews([]);
+                          }
+                        }}
+                        className={`bg-white border-2 rounded-lg p-4 cursor-pointer transition-all hover:shadow-lg ${
+                          isSelected
+                            ? 'border-purple-500 bg-purple-50' 
+                            : 'border-gray-200 hover:border-purple-300'
+                        }`}
+                      >
+                        <div className="flex flex-col items-center text-center">
+                          {guide.avatar ? (
+                            <img
+                              src={guide.avatar}
+                              alt={guide.name}
+                              className="w-20 h-20 rounded-full object-cover border-2 border-gray-200 mb-3"
+                            />
+                          ) : (
+                            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center mb-3">
+                              <MdPerson className="text-white text-4xl" />
+                            </div>
+                          )}
+                          
+                          <h4 className="font-semibold text-gray-900 mb-1">{guide.name}</h4>
+                          
+                          <div className="flex items-center gap-1 mb-2">
+                            <FiStar className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <span className="text-sm font-medium text-gray-700">
+                              {guide.rating?.toFixed(1) || '0.0'}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              ({guide.totalReviews || 0} reviews)
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-1 text-xs text-gray-600 mb-2">
+                            <FiMapPin className="w-3 h-3" />
+                            <span>{guide.experience || 0} years exp</span>
+                          </div>
+
+                          {guide.languages && guide.languages.length > 0 && (
+                            <div className="flex items-center gap-1 text-xs text-gray-600 mb-3">
+                              <FiGlobe className="w-3 h-3" />
+                              <span>{guide.languages.slice(0, 2).join(', ')}</span>
+                            </div>
+                          )}
+
+                          {guide.specialties && guide.specialties.length > 0 && (
+                            <div className="flex flex-wrap gap-1 justify-center mb-3">
+                              {guide.specialties.slice(0, 2).map((specialty, idx) => (
+                                <span
+                                  key={idx}
+                                  className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full"
+                                >
+                                  {specialty}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setFormData(prev => {
+                                const currentGuides = Array.isArray(prev.assignedGuide) 
+                                  ? prev.assignedGuide 
+                                  : prev.assignedGuide ? [prev.assignedGuide] : [];
+                                
+                                const isAlreadySelected = currentGuides.includes(guide._id);
+                                
+                                return {
+                                  ...prev,
+                                  assignedGuide: isAlreadySelected
+                                    ? currentGuides.filter(id => id !== guide._id)
+                                    : [...currentGuides, guide._id]
+                                };
+                              });
+                            }}
+                            className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
+                              isSelected
+                                ? 'bg-purple-600 text-white hover:bg-purple-700'
+                                : 'bg-purple-100 text-purple-700 hover:bg-purple-200'
+                            }`}
+                          >
+                            {isSelected ? 'Selected ✓' : 'Select Guide'}
+                          </button>
+                        </div>
+                      </div>
+                    )})}
+                  </div>
+                )}
+
+                {/* Selected Guide Detail Modal */}
+                {selectedGuide && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+                      <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white p-6 flex justify-between items-center">
+                        <div>
+                          <h2 className="text-2xl font-bold">{selectedGuide.name}</h2>
+                          <p className="text-purple-100 mt-1">{selectedGuide.email}</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setSelectedGuide(null);
+                            setGuideReviews([]);
+                          }}
+                          className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2"
+                        >
+                          <MdClose className="w-6 h-6" />
+                        </button>
+                      </div>
+
+                      <div className="flex-1 overflow-y-auto p-6">
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                          <div className="bg-purple-50 p-4 rounded-lg">
+                            <p className="text-sm text-purple-700">Rating</p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <FiStar className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                              <span className="text-2xl font-bold text-purple-900">
+                                {selectedGuide.rating?.toFixed(1) || '0.0'}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="bg-purple-50 p-4 rounded-lg">
+                            <p className="text-sm text-purple-700">Experience</p>
+                            <p className="text-2xl font-bold text-purple-900 mt-1">
+                              {selectedGuide.experience || 0} years
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="mb-6">
+                          <h3 className="font-semibold text-gray-900 mb-2">Bio</h3>
+                          <p className="text-gray-700">{selectedGuide.bio}</p>
+                        </div>
+
+                        <div className="mb-6">
+                          <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                            <FiMessageSquare className="w-5 h-5" />
+                            Customer Reviews ({guideReviews.length})
+                          </h3>
+                          {guideReviews.length === 0 ? (
+                            <p className="text-gray-500 text-center py-8">No reviews yet</p>
+                          ) : (
+                            <div className="space-y-4 max-h-96 overflow-y-auto">
+                              {guideReviews.slice(0, 5).map(review => (
+                                <div key={review._id} className="bg-gray-50 p-4 rounded-lg">
+                                  <div className="flex items-start justify-between mb-2">
+                                    <div>
+                                      <p className="font-medium text-gray-900">
+                                        {review.userId?.fullName || review.userId?.name || 'Anonymous'}
+                                      </p>
+                                      <p className="text-xs text-gray-500">
+                                        {new Date(review.createdAt).toLocaleDateString()}
+                                      </p>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      {[1, 2, 3, 4, 5].map(star => (
+                                        <FiStar
+                                          key={star}
+                                          className={`w-4 h-4 ${
+                                            star <= review.rating 
+                                              ? 'fill-yellow-400 text-yellow-400' 
+                                              : 'text-gray-300'
+                                          }`}
+                                        />
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <p className="text-gray-700 text-sm">{review.comment}</p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="bg-gray-50 px-6 py-4 border-t flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedGuide(null);
+                            setGuideReviews([]);
+                          }}
+                          className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                        >
+                          Close
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setFormData(prev => {
+                              const currentGuides = Array.isArray(prev.assignedGuide) 
+                                ? prev.assignedGuide 
+                                : prev.assignedGuide ? [prev.assignedGuide] : [];
+                              
+                              const isAlreadySelected = currentGuides.includes(selectedGuide._id);
+                              
+                              return {
+                                ...prev,
+                                assignedGuide: isAlreadySelected
+                                  ? currentGuides.filter(id => id !== selectedGuide._id)
+                                  : [...currentGuides, selectedGuide._id]
+                              };
+                            });
+                            setSelectedGuide(null);
+                            setGuideReviews([]);
+                            const isSelected = Array.isArray(formData.assignedGuide) 
+                              ? formData.assignedGuide.includes(selectedGuide._id)
+                              : formData.assignedGuide === selectedGuide._id;
+                            toast.success(isSelected 
+                              ? `${selectedGuide.name} removed from tour guides`
+                              : `${selectedGuide.name} selected as tour guide`
+                            );
+                          }}
+                          className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                        >
+                          {(() => {
+                            const isSelected = Array.isArray(formData.assignedGuide) 
+                              ? formData.assignedGuide.includes(selectedGuide._id)
+                              : formData.assignedGuide === selectedGuide._id;
+                            return isSelected ? 'Remove This Guide' : 'Select This Guide';
+                          })()}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             )}

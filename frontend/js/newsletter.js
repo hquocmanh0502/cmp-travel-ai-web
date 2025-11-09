@@ -1,7 +1,7 @@
 // Newsletter subscription functionality for footer email boxes
 class NewsletterManager {
   constructor() {
-    this.apiUrl = '/api/newsletter';
+    this.apiUrl = 'http://localhost:3000/api/newsletter';
     this.lastSubscriptionTime = 0;
     this.minInterval = 5000; // 5 seconds between subscriptions
     this.recentEmails = new Set();
