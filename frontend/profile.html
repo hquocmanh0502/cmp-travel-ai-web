@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/profile.css">
+  <link rel="stylesheet" href="./css/wallet-pin.css">
 </head>
 
 <body>
@@ -302,6 +303,79 @@
                       Change Password
                   </button>
               </form>
+          </div>
+
+          <!-- Wallet PIN Security Card -->
+          <div class="profile-card">
+              <div class="card-header">
+                  <div class="card-icon">
+                      <i class="fas fa-shield-alt"></i>
+                  </div>
+                  <h3>Wallet PIN Security</h3>
+              </div>
+              
+              <div class="pin-status-section">
+                  <div class="pin-status-info">
+                      <div class="pin-status-icon" id="pinStatusIcon">
+                          <i class="fas fa-lock"></i>
+                      </div>
+                      <div>
+                          <h4 id="pinStatusTitle">PIN Not Set</h4>
+                          <p id="pinStatusDesc">Set up a 6-digit PIN to secure your wallet payments</p>
+                      </div>
+                  </div>
+                  <div class="pin-toggle">
+                      <label class="switch">
+                          <input type="checkbox" id="pinToggle" disabled>
+                          <span class="slider"></span>
+                      </label>
+                  </div>
+              </div>
+              
+              <div id="pinFormSection" style="margin-top: 20px;">
+                  <form id="walletPinForm">
+                      <div class="form-group">
+                          <label for="newPin">New 6-Digit PIN</label>
+                          <input 
+                              type="password" 
+                              id="newPin" 
+                              name="newPin" 
+                              maxlength="6" 
+                              pattern="\d{6}"
+                              placeholder="Enter 6 digits"
+                              required>
+                          <small class="form-text">Enter a 6-digit number for wallet security</small>
+                      </div>
+                      
+                      <div class="form-group">
+                          <label for="confirmPin">Confirm PIN</label>
+                          <input 
+                              type="password" 
+                              id="confirmPin" 
+                              name="confirmPin" 
+                              maxlength="6" 
+                              pattern="\d{6}"
+                              placeholder="Re-enter 6 digits"
+                              required>
+                      </div>
+                      
+                      <div class="form-group" id="currentPinGroup" style="display: none;">
+                          <label for="currentPin">Current PIN (for changes)</label>
+                          <input 
+                              type="password" 
+                              id="currentPin" 
+                              name="currentPin" 
+                              maxlength="6" 
+                              pattern="\d{6}"
+                              placeholder="Enter current PIN">
+                      </div>
+                      
+                      <button type="submit" class="btn" id="setPinBtn">
+                          <i class="fas fa-shield-alt"></i>
+                          Set Wallet PIN
+                      </button>
+                  </form>
+              </div>
           </div>
 
           <!-- Quick Actions Card -->

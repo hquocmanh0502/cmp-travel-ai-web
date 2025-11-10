@@ -46,9 +46,6 @@ async function loadTravelHistory(userId) {
     // Render photo gallery
     renderPhotoGallery(completedBookings);
 
-    // Update insights
-    updateInsights(completedBookings);
-
   } catch (error) {
     console.error('Error loading travel history:', error);
     showError();
@@ -179,13 +176,13 @@ function renderTimeline(bookings) {
           </div>
           <div class="timeline-title">${tourName}</div>
           <div class="timeline-description">
-            Bạn đã hoàn thành chuyến du lịch tuyệt vời đến ${destination}. 
-            Đây là một trải nghiệm khó quên với những kỷ niệm đáng nhớ.
+            You have completed an amazing trip to ${destination}. 
+            This is an unforgettable experience with memorable moments.
           </div>
           <div class="timeline-details">
             <span><i class="fas fa-map-marker-alt"></i> ${destination}</span>
-            <span><i class="fas fa-clock"></i> ${duration} ngày</span>
-            <span><i class="fas fa-users"></i> ${booking.numberOfGuests || 1} người</span>
+            <span><i class="fas fa-clock"></i> ${duration} days</span>
+            <span><i class="fas fa-users"></i> ${booking.numberOfGuests || 1} guests</span>
             <span><i class="fas fa-dollar-sign"></i> ${price}</span>
           </div>
         </div>
@@ -260,65 +257,9 @@ function renderPhotoGallery(bookings) {
     gallery.innerHTML = `
       <div class="empty-state">
         <i class="fas fa-camera"></i>
-        <p>Chưa có ảnh nào</p>
+        <p>No photos yet</p>
       </div>
     `;
-  }
-}
-
-function updateInsights(bookings) {
-  // Find favorite destination (most visited)
-  const destinationCount = {};
-  bookings.forEach(b => {
-    const dest = b.destination || 'Unknown';
-    destinationCount[dest] = (destinationCount[dest] || 0) + 1;
-  });
-
-  const favoriteDestination = Object.entries(destinationCount)
-    .sort((a, b) => b[1] - a[1])[0];
-
-  if (favoriteDestination) {
-    const [dest, count] = favoriteDestination;
-    document.querySelector('.favorite-destination .destination-info h5').textContent = dest;
-    document.querySelector('.favorite-destination .destination-info p').textContent = 
-      `${count} lần đến thăm`;
-  }
-
-  // Most travel month
-  const monthCount = {};
-  bookings.forEach(b => {
-    const month = new Date(b.tourDate).getMonth();
-    monthCount[month] = (monthCount[month] || 0) + 1;
-  });
-
-  const mostTravelMonth = Object.entries(monthCount)
-    .sort((a, b) => b[1] - a[1])[0];
-
-  if (mostTravelMonth) {
-    const monthNames = [
-      'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 
-      'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8',
-      'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
-    ];
-    document.querySelector('.travel-month span').textContent = 
-      monthNames[parseInt(mostTravelMonth[0])];
-  }
-
-  // Travel style (based on tour names/destinations)
-  const styles = ['Văn hóa & Lịch sử', 'Nghỉ dưỡng', 'Phiêu lưu', 'Khám phá'];
-  const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-  document.querySelector('.travel-style span').textContent = randomStyle;
-
-  // Travel season (based on months)
-  if (mostTravelMonth) {
-    const month = parseInt(mostTravelMonth[0]);
-    let season = 'Mùa hè';
-    if (month >= 2 && month <= 4) season = 'Mùa xuân';
-    else if (month >= 5 && month <= 7) season = 'Mùa hè';
-    else if (month >= 8 && month <= 10) season = 'Mùa thu';
-    else season = 'Mùa đông';
-    
-    document.querySelector('.travel-season span').textContent = season;
   }
 }
 

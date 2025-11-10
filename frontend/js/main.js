@@ -251,7 +251,7 @@ function initializeFooter() {
         </div>
       </div>
       <div class="footer-bottom">
-        <p>Copyright @ CMP-2024. All Rights Reserved.</p>
+        <p>Copyright @hquocmanh0502-2025. All Rights Reserved.</p>
       </div>
     `;
     

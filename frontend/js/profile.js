@@ -1257,3 +1257,187 @@ function initializeMockTransactions() {
 
 // Initialize mock data on page load
 initializeMockTransactions();
+
+// =============================================
+// WALLET PIN FUNCTIONALITY
+// =============================================
+
+let currentPinStatus = {
+    hasPin: false,
+    pinEnabled: false
+};
+
+// Load PIN status
+async function loadPinStatus() {
+    try {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+
+        const response = await fetch(`http://localhost:3000/api/wallet-pin/pin-status/${userId}`);
+        const data = await response.json();
+
+        if (data.success) {
+            currentPinStatus = {
+                hasPin: data.hasPin,
+                pinEnabled: data.pinEnabled
+            };
+            updatePinUI();
+        }
+    } catch (error) {
+        console.error('Error loading PIN status:', error);
+    }
+}
+
+// Update PIN UI
+function updatePinUI() {
+    const pinStatusIcon = document.getElementById('pinStatusIcon');
+    const pinStatusTitle = document.getElementById('pinStatusTitle');
+    const pinStatusDesc = document.getElementById('pinStatusDesc');
+    const pinToggle = document.getElementById('pinToggle');
+    const currentPinGroup = document.getElementById('currentPinGroup');
+    const setPinBtn = document.getElementById('setPinBtn');
+
+    if (currentPinStatus.hasPin) {
+        pinStatusIcon.classList.add('active');
+        pinStatusIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+        pinStatusTitle.textContent = currentPinStatus.pinEnabled ? 'PIN Active' : 'PIN Inactive';
+        pinStatusDesc.textContent = currentPinStatus.pinEnabled 
+            ? 'Your wallet is protected with PIN' 
+            : 'Enable PIN to secure your wallet';
+        pinToggle.disabled = false;
+        pinToggle.checked = currentPinStatus.pinEnabled;
+        currentPinGroup.style.display = 'block';
+        setPinBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Change Wallet PIN';
+    } else {
+        pinStatusIcon.classList.remove('active');
+        pinStatusIcon.innerHTML = '<i class="fas fa-lock"></i>';
+        pinStatusTitle.textContent = 'PIN Not Set';
+        pinStatusDesc.textContent = 'Set up a 6-digit PIN to secure your wallet payments';
+        pinToggle.disabled = true;
+        pinToggle.checked = false;
+        currentPinGroup.style.display = 'none';
+        setPinBtn.innerHTML = '<i class="fas fa-shield-alt"></i> Set Wallet PIN';
+    }
+}
+
+// Handle PIN form submission
+document.getElementById('walletPinForm')?.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const newPin = document.getElementById('newPin').value;
+    const confirmPin = document.getElementById('confirmPin').value;
+    const currentPin = document.getElementById('currentPin').value;
+    const userId = localStorage.getItem('userId');
+
+    // Validate PIN format
+    if (!/^\d{6}$/.test(newPin)) {
+        showNotification('PIN must be exactly 6 digits', 'error');
+        return;
+    }
+
+    // Check if PINs match
+    if (newPin !== confirmPin) {
+        showNotification('PINs do not match', 'error');
+        return;
+    }
+
+    // If changing PIN, require current PIN
+    if (currentPinStatus.hasPin && !currentPin) {
+        showNotification('Please enter your current PIN', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/api/wallet-pin/set-pin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId,
+                newPin,
+                currentPin
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification(
+                currentPinStatus.hasPin ? 'PIN changed successfully' : 'PIN set successfully',
+                'success'
+            );
+            
+            // Clear form
+            document.getElementById('walletPinForm').reset();
+            
+            // Reload PIN status
+            await loadPinStatus();
+        } else {
+            showNotification(data.error || 'Failed to set PIN', 'error');
+        }
+    } catch (error) {
+        console.error('Error setting PIN:', error);
+        showNotification('An error occurred. Please try again.', 'error');
+    }
+});
+
+// Handle PIN toggle
+document.getElementById('pinToggle')?.addEventListener('change', async function(e) {
+    const enabled = e.target.checked;
+    const userId = localStorage.getItem('userId');
+
+    // Ask for PIN to toggle
+    const pin = prompt('Enter your 6-digit PIN to ' + (enabled ? 'enable' : 'disable') + ' wallet security:');
+    
+    if (!pin) {
+        e.target.checked = !enabled; // Revert toggle
+        return;
+    }
+
+    if (!/^\d{6}$/.test(pin)) {
+        showNotification('Invalid PIN format', 'error');
+        e.target.checked = !enabled;
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:3000/api/wallet-pin/toggle-pin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userId,
+                enabled,
+                pin
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification(data.message, 'success');
+            await loadPinStatus();
+        } else {
+            showNotification(data.error || 'Failed to toggle PIN', 'error');
+            e.target.checked = !enabled; // Revert toggle
+        }
+    } catch (error) {
+        console.error('Error toggling PIN:', error);
+        showNotification('An error occurred. Please try again.', 'error');
+        e.target.checked = !enabled;
+    }
+});
+
+// Only allow digits in PIN inputs
+document.querySelectorAll('#newPin, #confirmPin, #currentPin').forEach(input => {
+    input?.addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 6);
+    });
+});
+
+// Load PIN status on page load
+if (document.getElementById('pinStatusIcon')) {
+    loadPinStatus();
+}

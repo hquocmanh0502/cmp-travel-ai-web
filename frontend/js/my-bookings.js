@@ -814,6 +814,41 @@ async function confirmPayment(bookingId, userId) {
     const originalHTML = confirmBtn.innerHTML;
     
     try {
+        // Check if user has PIN enabled
+        const pinStatusResponse = await fetch(`http://localhost:3000/api/wallet-pin/pin-status/${userId}`);
+        const pinStatusData = await pinStatusResponse.json();
+
+        let walletPin = null;
+
+        // If PIN is enabled, show PIN verification modal
+        if (pinStatusData.success && pinStatusData.hasPin && pinStatusData.pinEnabled) {
+            walletPin = await showPinVerificationModal();
+            
+            if (!walletPin) {
+                // User cancelled PIN entry
+                return;
+            }
+
+            // Verify PIN before proceeding
+            const pinVerifyResponse = await fetch('http://localhost:3000/api/wallet-pin/verify-pin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId,
+                    pin: walletPin
+                })
+            });
+
+            const pinVerifyData = await pinVerifyResponse.json();
+
+            if (!pinVerifyData.success) {
+                showNotification('❌ Incorrect PIN. Payment cancelled.', 'error');
+                return;
+            }
+        }
+
         // Disable button and show loading
         confirmBtn.disabled = true;
         confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
@@ -1249,20 +1284,119 @@ async function handleGuideReviewSubmit(e) {
         
         if (response.ok && data.success) {
             showNotification('Thank you! Your guide review has been submitted', 'success');
-            closeGuideReviewModal();
+            closeReviewGuideModal();
             
-            // Reload bookings to update review status
+            // Refresh bookings to update review status
             setTimeout(() => {
-                loadUserBookings();
-            }, 1000);
+                loadBookings();
+            }, 1500);
         } else {
-            showNotification(data.error || 'Failed to submit review', 'error');
+            throw new Error(data.error || 'Failed to submit review');
         }
-        
     } catch (error) {
         console.error('Error submitting guide review:', error);
-        showNotification('Failed to submit review. Please try again.', 'error');
+        showNotification(error.message || 'Failed to submit guide review', 'error');
     }
+}
+
+// =============================================
+// WALLET PIN VERIFICATION MODAL
+// =============================================
+
+function showPinVerificationModal() {
+    return new Promise((resolve, reject) => {
+        // Create modal HTML
+        const modalHTML = `
+            <div class="pin-verification-modal">
+                <div class="pin-modal-content">
+                    <div class="pin-modal-header">
+                        <div class="pin-modal-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Verify Your Wallet PIN</h3>
+                        <p>Enter your 6-digit PIN to confirm payment</p>
+                    </div>
+                    
+                    <div class="pin-input-container">
+                        <label for="verifyPinInput">Wallet PIN</label>
+                        <input 
+                            type="password" 
+                            id="verifyPinInput" 
+                            maxlength="6" 
+                            pattern="\\d{6}"
+                            placeholder="● ● ● ● ● ●"
+                            autocomplete="off"
+                        >
+                    </div>
+                    
+                    <div class="pin-modal-actions">
+                        <button class="btn-cancel-pin" id="cancelPinBtn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button class="btn-verify-pin" id="verifyPinBtn" disabled>
+                            <i class="fas fa-check"></i> Verify
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        const modal = document.querySelector('.pin-verification-modal');
+        const pinInput = document.getElementById('verifyPinInput');
+        const verifyBtn = document.getElementById('verifyPinBtn');
+        const cancelBtn = document.getElementById('cancelPinBtn');
+
+        // Focus on PIN input
+        setTimeout(() => pinInput.focus(), 100);
+
+        // Only allow digits
+        pinInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\\D/g, '').slice(0, 6);
+            verifyBtn.disabled = this.value.length !== 6;
+        });
+
+        // Handle Enter key
+        pinInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.length === 6) {
+                verifyBtn.click();
+            }
+        });
+
+        // Verify button click
+        verifyBtn.addEventListener('click', function() {
+            const pin = pinInput.value;
+            if (pin.length === 6) {
+                modal.remove();
+                resolve(pin);
+            }
+        });
+
+        // Cancel button click
+        cancelBtn.addEventListener('click', function() {
+            modal.remove();
+            resolve(null);
+        });
+
+        // Close on overlay click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.remove();
+                resolve(null);
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function escapeHandler(e) {
+            if (e.key === 'Escape') {
+                modal.remove();
+                document.removeEventListener('keydown', escapeHandler);
+                resolve(null);
+            }
+        });
+    });
 }
 
 function closeGuideReviewModal() {

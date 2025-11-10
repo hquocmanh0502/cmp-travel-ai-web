@@ -36,6 +36,8 @@ const userSchema = new mongoose.Schema({
   wallet: {
     balance: { type: Number, default: 0 }, // USD balance
     currency: { type: String, default: 'USD' },
+    pin: { type: String, default: null }, // 6-digit PIN for wallet transactions (hashed)
+    pinEnabled: { type: Boolean, default: false },
     transactions: [{
       type: { type: String, enum: ['topup', 'payment', 'refund', 'bonus'], required: true },
       amount: { type: Number, required: true },

@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("🔍 Destination.js started loading...");
   
+  // API Base URL
+  const API_BASE_URL = 'http://localhost:3000/api';
+  
   const loaderBox = document.querySelector(".loader-box");
   const loader = document.querySelector(".loader");
   
   // Track user views for AI - ĐỊNH NGHĨA FUNCTION TRƯỚC KHI SỬ DỤNG
   const trackUserViews = async (userId) => {
     try {
-      await fetch('/api/track/page-view', {
+      await fetch(`${API_BASE_URL}/track/page-view`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, page: 'destination' })
@@ -27,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const duration = Math.floor((Date.now() - startTime) / 1000);
       
       try {
-        await fetch('/api/track/view', {
+        await fetch(`${API_BASE_URL}/track/view`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ userId, tourId, duration })
@@ -41,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Function to show development notice
   const showDevelopmentNotice = () => {
-    // Tạo modal thông báo
+    // Create notification modal
     const modal = document.createElement('div');
     modal.style.cssText = `
       position: fixed;
@@ -70,13 +73,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       <div style="color: #ff6600; font-size: 3rem; margin-bottom: 1rem;">
         <i class="fas fa-cogs"></i>
       </div>
-      <h3 style="color: #333; margin-bottom: 1rem;">Tính năng đang phát triển</h3>
+      <h3 style="color: #333; margin-bottom: 1rem;">Feature Under Development</h3>
       <p style="color: #666; margin-bottom: 1.5rem;">
-        AI Recommendations sẽ sớm có mặt để đề xuất những tour phù hợp nhất với bạn!
+        AI Recommendations will soon be available to suggest the most suitable tours for you!
       </p>
       <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
               style="background: #ff6600; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">
-        Đã hiểu
+        Got it
       </button>
     `;
     
@@ -155,20 +158,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       padding: 1rem 1.5rem;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 9999;
+      z-index: 99999;
       display: flex;
       align-items: center;
       gap: 10px;
     `;
     loadingToast.innerHTML = `
       <i class="fas fa-spinner fa-spin" style="color: #ff6600;"></i>
-      <span style="color: #333;">Đang tìm tour phù hợp với bạn...</span>
+      <span style="color: #333;">Finding tours perfect for you...</span>
     `;
     document.body.appendChild(loadingToast);
 
     try {
       // Fetch AI recommendations
-      const response = await fetch(`/api/recommendations/${userId}`);
+      const response = await fetch(`${API_BASE_URL}/recommendations/${userId}`);
       
       if (!response.ok) {
         throw new Error(`API returned ${response.status}`);
@@ -238,14 +241,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         padding: 1rem 1.5rem;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 9999;
+        z-index: 99999;
         display: flex;
         align-items: center;
         gap: 10px;
       `;
       successToast.innerHTML = `
         <i class="fas fa-check-circle"></i>
-        <span>Tìm thấy ${result.count} tour phù hợp với bạn!</span>
+        <span>Found ${result.count} tours perfect for you!</span>
       `;
       document.body.appendChild(successToast);
       setTimeout(() => successToast.remove(), 3000);
@@ -299,14 +302,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         padding: 1rem 1.5rem;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 9999;
+        z-index: 99999;
         display: flex;
         align-items: center;
         gap: 10px;
       `;
       errorToast.innerHTML = `
         <i class="fas fa-exclamation-circle"></i>
-        <span>Không thể tải gợi ý. Vui lòng thử lại!</span>
+        <span>Unable to load recommendations. Please try again!</span>
       `;
       document.body.appendChild(errorToast);
       setTimeout(() => errorToast.remove(), 3000);
@@ -488,7 +491,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (userId) {
       try {
         console.log("🔍 Loading recommendations for user:", userId);
-        const response = await fetch(`/api/recommendations/${userId}`);
+        const response = await fetch(`${API_BASE_URL}/recommendations/${userId}`);
         const recData = await response.json();
         
         if (recData.recommendations && recData.recommendations.length > 0) {

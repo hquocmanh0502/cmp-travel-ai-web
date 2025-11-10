@@ -146,6 +146,166 @@
             return;
         }
         
+        // Special handling for blog page
+        const isBlogPage = window.location.pathname.includes('blog.html') || 
+                          document.querySelector('.blog-controls');
+        
+        if (isBlogPage) {
+            console.log('📰 Blog page detected - using special section detection');
+            
+            // Get header
+            const header = document.querySelector('header');
+            if (header) {
+                const rect = header.getBoundingClientRect();
+                importantSections.push({
+                    element: header,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Header'
+                });
+            }
+            
+            // Get blog controls (search & filter)
+            const blogControls = document.querySelector('.blog-controls');
+            if (blogControls) {
+                const rect = blogControls.getBoundingClientRect();
+                importantSections.push({
+                    element: blogControls,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Search & Filter'
+                });
+            }
+            
+            // Get social media section
+            const socialSection = document.querySelector('.social-section');
+            if (socialSection) {
+                const rect = socialSection.getBoundingClientRect();
+                importantSections.push({
+                    element: socialSection,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Social Media'
+                });
+            }
+            
+            // Get latest posts section
+            const postsSection = document.querySelector('.latest-posts-section');
+            if (postsSection) {
+                const rect = postsSection.getBoundingClientRect();
+                importantSections.push({
+                    element: postsSection,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Blog Posts'
+                });
+            }
+            
+            // Get newsletter section
+            const newsletterSection = document.querySelector('.newsletter-section');
+            if (newsletterSection) {
+                const rect = newsletterSection.getBoundingClientRect();
+                importantSections.push({
+                    element: newsletterSection,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Newsletter'
+                });
+            }
+            
+            // Get footer
+            const footer = document.querySelector('footer');
+            if (footer) {
+                const rect = footer.getBoundingClientRect();
+                importantSections.push({
+                    element: footer,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Footer'
+                });
+            }
+            
+            // Sort by position
+            importantSections.sort((a, b) => a.top - b.top);
+            
+            console.log('📍 Found', importantSections.length, 'blog sections:', 
+                        importantSections.map(s => s.id));
+            return;
+        }
+        
+        // Special handling for feedback page
+        const isFeedbackPage = window.location.pathname.includes('feedback.html') || 
+                              document.querySelector('.feedback-form-container');
+        
+        if (isFeedbackPage) {
+            console.log('💬 Feedback page detected - using special section detection');
+            
+            // Get header
+            const header = document.querySelector('header');
+            if (header) {
+                const rect = header.getBoundingClientRect();
+                importantSections.push({
+                    element: header,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Header'
+                });
+            }
+            
+            // Get client feedback carousel section
+            const clientFeedback = document.querySelector('.clientfb');
+            if (clientFeedback) {
+                const rect = clientFeedback.getBoundingClientRect();
+                importantSections.push({
+                    element: clientFeedback,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Client Reviews'
+                });
+            }
+            
+            // Get feedback form container
+            const feedbackForm = document.querySelector('.feedback-form-container');
+            if (feedbackForm) {
+                const rect = feedbackForm.getBoundingClientRect();
+                importantSections.push({
+                    element: feedbackForm,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Feedback Form'
+                });
+            }
+            
+            // Get footer
+            const footer = document.querySelector('footer');
+            if (footer) {
+                const rect = footer.getBoundingClientRect();
+                importantSections.push({
+                    element: footer,
+                    top: window.pageYOffset + rect.top,
+                    bottom: window.pageYOffset + rect.top + rect.height,
+                    height: rect.height,
+                    id: 'Footer'
+                });
+            }
+            
+            // Sort by position
+            importantSections.sort((a, b) => a.top - b.top);
+            
+            console.log('📍 Found', importantSections.length, 'feedback sections:', 
+                        importantSections.map(s => s.id));
+            return;
+        }
+        
         // Default section detection for other pages
         const allElements = [];
         const seenElements = new Set();

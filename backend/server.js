@@ -27,6 +27,7 @@ const authRoutes = require('./routes/auth');
 const commentsRoutes = require('./routes/comments');
 const profileRoutes = require('./routes/profile');
 const walletRoutes = require('./routes/wallet');
+const walletPinRoutes = require('./routes/wallet-pin');
 const adminRoutes = require('./routes/admin');
 const adminHotelsRoutes = require('./routes/admin-hotels');
 const adminSpamRoutes = require('./routes/admin-spam-replies');
@@ -63,6 +64,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/wallet', walletRoutes);
+app.use('/api/wallet-pin', walletPinRoutes);
 
 // Register specific admin routes BEFORE generic /api/admin
 app.use('/api/admin/reviews', require('./routes/admin-reviews-new'));

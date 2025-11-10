@@ -141,16 +141,99 @@ router.post('/auth/login', async (req, res) => {
 router.get('/recommendations/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById(userId).populate('viewHistory.tourId');
     
+    console.log('🎯 Fetching recommendations for userId:', userId);
+    
+    // Check if user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      console.log('❌ User not found:', userId);
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    console.log('✅ User found:', user.username);
+    console.log('📋 User preferences:', user.preferences);
+    
+    // Generate recommendations (pass userId, not user object)
+    const recommendations = await recommendationService.generateRecommendations(userId);
+    
+    console.log(`✅ Returning ${recommendations.length} recommendations`);
+    
+    res.json({ 
+      success: true,
+      recommendations: recommendations 
+    });
+  } catch (err) {
+    console.error('❌ Error in recommendations route:', err);
+    res.status(500).json({ 
+      success: false,
+      error: 'Error generating recommendations',
+      details: err.message 
+    });
+  }
+});
+
+// Track page view for recommendations
+router.post('/track/page-view', async (req, res) => {
+  try {
+    const { userId, tourId, page } = req.body;
+    
+    console.log('📊 Tracking page view:', { userId, tourId, page });
+    
+    if (!userId) {
+      return res.status(400).json({ error: 'userId is required' });
+    }
+    
+    // Update user's view history
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
     
-    const recommendations = await recommendationService.generateRecommendations(user);
-    res.json({ recommendations });
+    // Initialize viewHistory if not exists
+    if (!user.viewHistory) {
+      user.viewHistory = [];
+    }
+    
+    // Add page view to history
+    if (tourId) {
+      // Check if tour already in history
+      const existingIndex = user.viewHistory.findIndex(
+        item => item.tourId && item.tourId.toString() === tourId
+      );
+      
+      if (existingIndex >= 0) {
+        // Update existing entry
+        user.viewHistory[existingIndex].viewCount += 1;
+        user.viewHistory[existingIndex].lastViewedAt = new Date();
+      } else {
+        // Add new entry
+        user.viewHistory.push({
+          tourId: tourId,
+          viewCount: 1,
+          lastViewedAt: new Date()
+        });
+      }
+    }
+    
+    // Update last activity
+    user.lastActivity = new Date();
+    
+    await user.save();
+    
+    console.log('✅ Page view tracked successfully');
+    
+    res.json({ 
+      success: true,
+      message: 'Page view tracked'
+    });
+    
   } catch (err) {
-    res.status(500).json({ error: 'Error generating recommendations' });
+    console.error('❌ Error tracking page view:', err);
+    res.status(500).json({ 
+      error: 'Error tracking page view',
+      details: err.message 
+    });
   }
 });
 
