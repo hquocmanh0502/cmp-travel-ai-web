@@ -40,6 +40,7 @@ const usersRoutes = require('./routes/users');
 const newsletterRoutes = require('./routes/newsletter');
 const indexRoutes = require('./routes/index'); // Add this line
 const tourGuidesRoutes = require('./routes/tour-guides');
+const chatbotRoutes = require('./routes/chatbot');
 
 console.log('📧 Contact routes loaded:', typeof contactRoutes);
 
@@ -84,6 +85,7 @@ app.use('/api/hotels', hotelsRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 app.use('/api', indexRoutes); // Mount index routes (includes /blogs, /tours, etc.)
 console.log('📧 Contact routes mounted at /api/contacts');
 console.log('👤 Users routes mounted at /api/users');

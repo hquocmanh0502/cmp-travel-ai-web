@@ -8,36 +8,13 @@
   <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
   <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/chatbot.css">
   <link rel="stylesheet" href="./css/homepage.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
-  <!-- AI Chatbot Widget -->
-  <div id="chatbot-widget" class="chatbot-widget">
-    <div class="chatbot-header" onclick="toggleChatbot()">
-      <i class="fas fa-robot"></i>
-      <span>CMP Travel Assistant</span>
-      <i class="fas fa-chevron-up" id="chatbot-toggle"></i>
-    </div>
-    <div class="chatbot-body" id="chatbot-body">
-      <div class="chatbot-messages" id="chatbot-messages">
-        <div class="bot-message">
-          Hello! Tôi là trợ lý AI của CMP Travel. Tôi có thể giúp bạn tìm tour phù hợp, tư vấn giá cả và hỗ trợ đặt tour. Bạn cần hỗ trợ gì?
-        </div>
-      </div>
-      <div class="chatbot-suggestions" id="chatbot-suggestions">
-        <button onclick="sendMessage('Gợi ý tour phù hợp với tôi')">Gợi ý tour</button>
-        <button onclick="sendMessage('Tour nào đang hot nhất?')">Tour hot</button>
-        <button onclick="sendMessage('Giá tour như thế nào?')">Về giá cả</button>
-      </div>
-      <div class="chatbot-input">
-        <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." onkeypress="handleEnter(event)">
-        <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-  </div>
 
   <style>
   .chatbot-widget {
@@ -641,6 +618,7 @@
   <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
   <script src="./js/scroll-navigation.js"></script>
   <script src="./js/main.js"></script>
+  <script src="./js/chatbot.js"></script>
   <script src="./js/erro.js"></script>
 </body>
 

@@ -1,0 +1,40 @@
+BLOG POST: Maldives - The Paradise
+
+Author: CMP Travel Team
+Category: Luxury Travel
+Tags: maldives, paradise, beautiful, island, nation
+
+Excerpt: The Maldives is a beautiful island nation in the Indian Ocean famous for its stunning beaches, luxurious resorts, and crystal-clear waters. This tropical paradise is a dream destination for scuba divers and anyone seeking relaxation amidst idyllic scenery.
+
+Content:
+<div class="blog-content"><p class="lead">The Maldives is a beautiful island nation in the Indian Ocean famous for its stunning beaches, luxurious resorts, and crystal-clear waters. This tropical paradise is a dream destination for scuba divers and anyone seeking relaxation amidst idyllic scenery.</p>
+      <h2>Geography</h2>
+      <p>The Maldives consists of 1,190 coral islands grouped in a double chain of twenty-seven atolls situated in the Indian Ocean. Most atolls consist of a large, ring-shaped coral reef supporting numerous small islands. The country covers an area approximately 90,000 square kilometres, of which only 298 square kilometres is dry land. The islands are of average one to two square kilometres in area, and no individual island is longer than eight kilometres. The Maldives lies between 1-1.5 meters above sea level, with the highest island situated at 3 meters above sea level.</p>
+    
+      <h2>Climate</h2>
+      <p>The Maldives has a warm and humid tropical climate all year round and is influenced by two dominating monsoons. The fact that the Maldives is located at the equator means it receives plentiful sunshine throughout the year. The temperatures of Maldives range between 25° Celsius and 32° Celsius throughout the year. The dry season (northeast monsoon) runs from December to April, while the rainy season (southeast monsoon) runs from late May to November. For further details on weather in the Maldives please visit http://www.meteorology.gov.mv/</p>
+    
+      <h2>Language & Communication</h2>
+      <p>The official language of the Maldives is Dhivehi, which is a unique language spoken only by the people of Maldives. Dhivehi is an Indo-Aryan language with roots in Sanskrit and influenced by other major languages in the region. The language was influenced by Arabic with the advent of Islam in the 12th century and English with the introduction of English medium education in the Maldives. Spoken Dhivehi has notable dialects due to geographical dispersion, with the southern-most islands having the most distinct dialect. Dhivehi script known as Thaana is written from right to left similar to the Arabic language. This new script was invented in the 16th century following the liberation of the country from the Portuguese. There are 24 letters in the Thaana alphabet and 11 separate vowel or diacritical signs called fili in Maldivian which are placed either above or below the alphabet letter designating the sound.</p>
+    
+      <h2>People & Culture</h2>
+      <p>While very little is known about the ancient history of the Maldives, scholars and historians believe that the Maldives is an old nation populated well over 2500 years ago. The Maldivian race is the result of several waves of settlement from various parts of the Indian subcontinent and thousands of years of interactions of people of various races and ethnicities that crisscrossed the Indian Ocean over the centuries. The livelihood of Maldivians traditionally depended on the seas, fishery being the main source of sustenance. While fishery still contributes significantly to the economy in terms of employment and income, tourism is the main source of income for the Maldivian economy today.</p>
+    
+      <h2>Gallery</h2>
+      <div class="image-gallery">
+    
+        <figure>
+          <img src="https://images.unsplash.com/photo-1634500719057-2253a143600d?q=80&w=2531&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Maldives - The Paradise - Image 1" style="width: 100%; border-radius: 12px; margin: 20px 0;">
+        </figure>
+      
+        <figure>
+          <img src="https://images.unsplash.com/photo-1576158831003-d41033ec31fd?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Maldives - The Paradise - Image 2" style="width: 100%; border-radius: 12px; margin: 20px 0;">
+        </figure>
+      
+        <figure>
+          <img src="https://images.unsplash.com/photo-1591211014896-25983a0990e8?q=80&w=2579&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Maldives - The Paradise - Image 3" style="width: 100%; border-radius: 12px; margin: 20px 0;">
+        </figure>
+      </div></div>
+
+Related Location: N/A
+Created Date: 2025-11-09 08:42:07.960000

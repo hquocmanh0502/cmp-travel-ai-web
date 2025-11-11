@@ -1,0 +1,20 @@
+
+TỔNG KẾT KNOWLEDGE BASE
+=======================
+
+Ngày tạo: 2025-11-11 20:58:02
+
+Dữ liệu đã trích xuất:
+- Tours: 37 items
+- Hotels: 180 items  
+- Blogs: 5 items
+- Guides: 5 items
+
+Tổng cộng: 227 documents
+
+Cấu trúc thư mục:
+- knowledge-base-travel/tours/ - Thông tin các tour du lịch
+- knowledge-base-travel/hotels/ - Thông tin khách sạn
+- knowledge-base-travel/blogs/ - Bài viết du lịch
+- knowledge-base-travel/guides/ - Thông tin hướng dẫn viên
+- knowledge-base-travel/general/ - Thông tin chung về công ty

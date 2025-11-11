@@ -1,0 +1,41 @@
+TOUR: Causeway Bay
+
+Description: Causeway Bay is a popular shopping and entertainment district, home to large department stores, trendy boutiques, and a vibrant food scene.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Hong Kong', 'region': 'Hong Kong'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Causeway Bay', 'activities': ['Shopping in Causeway Bay', 'Relaxing in Victoria Park'], 'meals': ['Wonton Noodles'], '_id': '690c7f0bb6d8904848c3052f'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com

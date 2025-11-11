@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMP Travel - AI Chatbot Integration Example</title>
+    
+    <!-- Your existing CSS files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Chatbot CSS -->
+    <link rel="stylesheet" href="css/chatbot.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Your existing website content goes here -->
+    <header>
+        <h1>🌍 CMP Travel - Example Page with AI Chatbot</h1>
+        <p>This page demonstrates the integrated AI Travel Assistant</p>
+    </header>
+    
+    <main>
+        <section style="padding: 50px 20px; text-align: center;">
+            <h2>Welcome to CMP Travel</h2>
+            <p>Explore our amazing tours and hotels with the help of our AI assistant!</p>
+            
+            <div style="margin: 30px 0;">
+                <h3>How to use the AI Chatbot:</h3>
+                <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>🔵 Click the blue chat button in the bottom-right corner</li>
+                    <li>💬 Ask about tours, hotels, prices, or travel advice</li>
+                    <li>🎯 Use suggested responses for quick interactions</li>
+                    <li>📱 Works on desktop and mobile devices</li>
+                </ul>
+            </div>
+            
+            <div style="margin: 30px 0; padding: 20px; background: #f0f8ff; border-radius: 10px;">
+                <h3>Try asking:</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 15px;">
+                    <span onclick="triggerChatbot('Show me tours to Paris')" style="background: #6366f1; color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer;">"Show me tours to Paris"</span>
+                    <span onclick="triggerChatbot('Find budget hotels under $100')" style="background: #10b981; color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer;">"Find budget hotels under $100"</span>
+                    <span onclick="triggerChatbot('Plan a 10-day European trip')" style="background: #f59e0b; color: white; padding: 8px 16px; border-radius: 20px; cursor: pointer;">"Plan a 10-day trip"</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Your existing JavaScript files -->
+    <script src="js/main.js"></script>
+    
+    <!-- Chatbot JavaScript (place this at the end before closing body tag) -->
+    <script src="js/chatbot.js"></script>
+    
+    <script>
+        // Function to trigger chatbot with predefined message
+        function triggerChatbot(message) {
+            if (window.cmpChatbot) {
+                // Open chatbot if not already open
+                if (!window.cmpChatbot.isOpen) {
+                    window.cmpChatbot.toggleChatbot();
+                }
+                
+                // Wait for animation, then set message
+                setTimeout(() => {
+                    const input = document.getElementById('chatbot-input');
+                    if (input) {
+                        input.value = message;
+                        input.focus();
+                    }
+                }, 400);
+            }
+        }
+        
+        // Example: Trigger chatbot based on user behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show chatbot hint after 5 seconds
+            setTimeout(() => {
+                if (window.cmpChatbot && !window.cmpChatbot.isOpen) {
+                    const toggle = document.getElementById('chatbot-toggle');
+                    if (toggle) {
+                        // Add pulsing animation to draw attention
+                        toggle.style.animation = 'pulse 2s infinite';
+                        
+                        // Remove animation after 6 seconds
+                        setTimeout(() => {
+                            toggle.style.animation = '';
+                        }, 6000);
+                    }
+                }
+            }, 5000);
+        });
+    </script>
+    
+    <style>
+        /* Example integration styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        main {
+            background: white;
+            color: #333;
+            min-height: calc(100vh - 160px);
+        }
+        
+        /* Pulse animation for chatbot hint */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,1555 @@
+
+
+================================================================================TOUR: Maldives
+
+Description: The Maldives is a tropical paradise renowned for its luxurious resorts, and vibrant marine life, making it a top destination for beach lovers and divers.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Maldives', 'region': 'Maldives'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Maldives', 'activities': ['Snorkeling', 'Scuba Diving'], 'meals': ['Mas Huni'], '_id': '690c7f0bb6d8904848c30508'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Lauterbrunnen
+
+Description: Lauterbrunnen, in the Swiss Alps, is known for its stunning waterfalls and scenic beauty. It's a serene valley with lush meadows and towering mountains, perfect for nature lovers.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Switzerland', 'region': 'Switzerland'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Lauterbrunnen', 'activities': ['Cable Car Rides', 'Waterfalls Tour'], 'meals': ['Swiss Fondue'], '_id': '690c7f0bb6d8904848c3050b'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Amsterdam
+
+Description: Amsterdam is the capital of the Netherlands, known for its picturesque canals, historic architecture, and vibrant cultural scene.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Netherlands', 'region': 'Netherlands'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Amsterdam', 'activities': ['Boat Tour', 'Biking'], 'meals': ['Stroopwafel'], '_id': '690c7f0bb6d8904848c3050e'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Toronto
+
+Description: Toronto is Canada's largest city, a vibrant metropolis with diverse neighborhoods, iconic landmarks like the CN Tower, and a thriving arts and culture scene.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Canada', 'region': 'Canada'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Toronto', 'activities': ['Harbourfront Centre', 'Explore Toronto Islands'], 'meals': ['Poutine'], '_id': '690c7f0bb6d8904848c30511'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Vancouver
+
+Description: Vancouver is a coastal city known for its stunning natural beauty, surrounded by mountains and ocean, offering a mix of outdoor activities and urban experiences.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Canada', 'region': 'Canada'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Vancouver', 'activities': ['Grouse Mountain Hike', 'Seawall Biking'], 'meals': ['Salmon'], '_id': '690c7f0bb6d8904848c30514'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Montreal
+
+Description: Montreal is a vibrant city with a strong French influence, known for its historic architecture, artsy neighborhoods, and lively festivals.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Canada', 'region': 'Canada'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Montreal', 'activities': ['Explore Plateau-Mont-Royal', 'Bike along Lachine Canal'], 'meals': ['Bagels'], '_id': '690c7f0bb6d8904848c30517'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Lisbon
+
+Description: Lisbon, the capital city of Portugal, is a charming destination with narrow cobblestone streets, colorful buildings, and stunning viewpoints over the Tagus River.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Portugal', 'region': 'Portugal'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Lisbon', 'activities': ['Tram 28 Ride', 'Explore Alfama District'], 'meals': ['Pastéis de Nata'], '_id': '690c7f0bb6d8904848c3051a'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Porto
+
+Description: Porto is a picturesque city known for its Port wine cellars, historic Ribeira district, and iconic Dom Luís I Bridge crossing the Douro River.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Portugal', 'region': 'Portugal'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Porto', 'activities': ['Port Wine Tasting', 'Boat Cruise on Douro River'], 'meals': ['Francesinha'], '_id': '690c7f0bb6d8904848c3051d'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Moscow
+
+Description: Moscow is the capital city of Russia, known for its iconic landmarks, rich history, and vibrant cultural scene.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Russia', 'region': 'Russia'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Moscow', 'activities': ['Visiting Moscow Metro Stations', 'Exploring Gorky Park'], 'meals': ['Borscht'], '_id': '690c7f0bb6d8904848c30520'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Kazan
+
+Description: Kazan is a city where East meets West, showcasing its unique blend of Islamic and Russian cultures, with a stunning Kremlin and a vibrant city center.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Russia', 'region': 'Russia'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Kazan', 'activities': ['Explore Kazan Riviera', 'Visit Raifa Monastery'], 'meals': ['Chak-Chak'], '_id': '690c7f0bb6d8904848c30523'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Kuala Lumpur
+
+Description: Kuala Lumpur is the vibrant capital city of Malaysia, famous for its modern skyline, iconic Petronas Twin Towers, and diverse cultural heritage.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Malaysia', 'region': 'Malaysia'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Kuala Lumpur', 'activities': ['Shopping at Bukit Bintang', 'Visiting KL Tower'], 'meals': ['Nasi Lemak'], '_id': '690c7f0bb6d8904848c30526'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Malacca
+
+Description: Malacca (Melaka) is a historical city with a rich colonial past, featuring well-preserved heritage buildings and a unique blend of cultures.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Malaysia', 'region': 'Malaysia'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Malacca', 'activities': ['River Cruise in Malacca River', 'Visiting Dutch Square'], 'meals': ['Chicken Rice Ball'], '_id': '690c7f0bb6d8904848c30529'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Langkawi
+
+Description: Langkawi is a tropical paradise with beautiful beaches, lush rainforests, and a laid-back atmosphere, perfect for relaxation and adventure.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Malaysia', 'region': 'Malaysia'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Langkawi', 'activities': ['Island Hopping Tour', 'Jet Ski Adventure'], 'meals': ['Nasi Dagang'], '_id': '690c7f0bb6d8904848c3052c'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Causeway Bay
+
+Description: Causeway Bay is a popular shopping and entertainment district, home to large department stores, trendy boutiques, and a vibrant food scene.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Hong Kong', 'region': 'Hong Kong'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Causeway Bay', 'activities': ['Shopping in Causeway Bay', 'Relaxing in Victoria Park'], 'meals': ['Wonton Noodles'], '_id': '690c7f0bb6d8904848c3052f'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Athens
+
+Description: Athens, the ancient capital, is a city steeped in history, showcasing iconic ruins, ancient temples, and a rich cultural heritage.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Greece', 'region': 'Greece'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Athens', 'activities': ['Visit Acropolis Museum', 'Explore Ancient Agora'], 'meals': ['Moussaka'], '_id': '690c7f0bb6d8904848c30532'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Santorini
+
+Description: Santorini is a stunning volcanic island known for its white-washed buildings, dramatic sunsets, and picturesque cliffside villages.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Greece', 'region': 'Greece'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Santorini', 'activities': ['Sail around Caldera', 'Explore Akrotiri Archaeological Site'], 'meals': ['Fava'], '_id': '690c7f0bb6d8904848c30535'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Tokyo
+
+Description: Tokyo, the capital city, is a bustling metropolis known for its modernity, ancient traditions, and vibrant pop culture.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Japan', 'region': 'Japan'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Tokyo', 'activities': ['Visit Tokyo Skytree', 'Explore Akihabara'], 'meals': ['Sushi'], '_id': '690c7f0bb6d8904848c30538'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Kyoto
+
+Description: Kyoto is a city with a rich history, showcasing stunning temples, traditional tea houses, and beautiful cherry blossoms in spring.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Japan', 'region': 'Japan'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Kyoto', 'activities': ['Experience a Tea Ceremony', 'Visit Gion District'], 'meals': ['Kaiseki Ryori'], '_id': '690c7f0bb6d8904848c3053b'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Osaka
+
+Description: Osaka is a lively city known for its delicious street food, modern architecture, and vibrant nightlife.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Japan', 'region': 'Japan'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Osaka', 'activities': ['Taste Okonomiyaki', 'Visit Umeda Sky Building'], 'meals': ['Takoyaki'], '_id': '690c7f0bb6d8904848c3053e'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Delhi
+
+Description: Delhi, the capital city of India, is a historical and cultural hub known for its magnificent architecture, bustling markets, and diverse cuisine.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'India', 'region': 'India'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Delhi', 'activities': ['Heritage Walk', 'Rickshaw Ride in Old Delhi'], 'meals': ['Paratha'], '_id': '690c7f0bb6d8904848c30541'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: London
+
+Description: London, the capital city of the United Kingdom, is a global metropolis known for its iconic landmarks, rich history, and diverse cultural offerings.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'United Kingdom', 'region': 'United Kingdom'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore London', 'activities': ['West End Theatre Show', 'River Thames Cruise'], 'meals': ['Fish and Chips'], '_id': '690c7f0bb6d8904848c30544'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Manchester
+
+Description: Manchester, a vibrant city in England, is renowned for its rich industrial heritage, world-class music scene, and famous football clubs.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'United Kingdom', 'region': 'United Kingdom'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Manchester', 'activities': ['Manchester United Stadium Tour', 'Exploring the Northern Quarter'], 'meals': ['Lancashire Hotpot'], '_id': '690c7f0bb6d8904848c30547'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Bangkok
+
+Description: Bangkok, the capital city of Thailand, is a vibrant metropolis known for its ornate temples, bustling markets, and vibrant street life.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Thailand', 'region': 'Thailand'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Bangkok', 'activities': ['Tuk-Tuk Tour', 'Boat Trip along the Chao Phraya River'], 'meals': ['Pad Thai'], '_id': '690c7f0bb6d8904848c3054a'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Phuket
+
+Description: Phuket, an island province in southern Thailand, is renowned for its stunning beaches, clear turquoise waters, and vibrant nightlife.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Thailand', 'region': 'Thailand'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Phuket', 'activities': ['Island Hopping', 'Snorkeling or Scuba Diving'], 'meals': ['Tom Kha Gai'], '_id': '690c7f0bb6d8904848c3054d'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Berlin
+
+Description: Berlin, the capital city of Germany, is known for its rich history, vibrant cultural scene, and iconic landmarks.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Germany', 'region': 'Germany'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Berlin', 'activities': ['Visit to Checkpoint Charlie', 'Exploring the Reichstag Building'], 'meals': ['Currywurst'], '_id': '690c7f0bb6d8904848c30550'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Munich
+
+Description: Munich, the capital of Bavaria, is famous for its Oktoberfest celebrations, stunning architecture, and vibrant beer gardens.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Germany', 'region': 'Germany'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Munich', 'activities': ['Beer Tasting in a Beer Hall', 'Visiting the BMW Museum'], 'meals': ['Pretzels'], '_id': '690c7f0bb6d8904848c30553'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Rome
+
+Description: Rome, the capital city of Italy, is a treasure trove of ancient ruins, majestic churches, and exquisite art. It's known for its rich history and vibrant street life.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Rome', 'activities': ['Visit to the Roman Forum', 'Exploring the Pantheon'], 'meals': ['Pizza'], '_id': '690c7f0bb6d8904848c30556'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Florence
+
+Description: Florence, the birthplace of the Renaissance, is renowned for its extraordinary art, magnificent architecture, and charming streets lined with boutiques and cafes.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Florence', 'activities': ["Admiring Michelangelo's David", 'Exploring the Boboli Gardens'], 'meals': ['Bistecca alla Fiorentina'], '_id': '690c7f0bb6d8904848c30559'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Venice
+
+Description: Venice, a city built on water, is famous for its canals, romantic gondolas, and stunning architecture. It's a unique and enchanting destination in Italy.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Venice', 'activities': ['Gondola Ride along the Canals', 'Visiting Murano Island for Glassmaking'], 'meals': ['Seafood Risotto'], '_id': '690c7f0bb6d8904848c3055c'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Milan
+
+Description: Milan, the fashion capital of Italy, is known for its stylish boutiques, stunning architecture, and vibrant arts scene. It's a bustling metropolis with a cosmopolitan vibe.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Milan', 'activities': ['Shopping in the Fashion District', 'Exploring the Brera Art Gallery'], 'meals': ['Risotto alla Milanese'], '_id': '690c7f0bb6d8904848c3055f'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Valencia
+
+Description: Valencia, located on the southeastern coast of Spain, is famous for its futuristic architecture, delicious cuisine, and lively street festivals.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Spain', 'region': 'Spain'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Valencia', 'activities': ['Visiting the Oceanografic', 'Exploring the Historic Center'], 'meals': ['Paella'], '_id': '690c7f0bb6d8904848c30562'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Paris
+
+Description: Paris, the capital city of France, is known as the 'City of Love' and is famous for its iconic landmarks, rich history, and exquisite cuisine.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Paris', 'activities': ['Cruise on the Seine River', 'Exploring Montmartre'], 'meals': ['Croissant'], '_id': '690c7f0bb6d8904848c30565'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Lyon
+
+Description: Lyon, located in east-central France, is renowned for its gastronomy, historical architecture, and vibrant cultural scene.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Lyon', 'activities': ['Culinary Tour in Les Halles de Lyon', 'Exploring the Traboules'], 'meals': ['Coq au Vin'], '_id': '690c7f0bb6d8904848c30568'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Marseille
+
+Description: Marseille, located on the Mediterranean coast, is the second-largest city in France and is known for its rich history, vibrant culture, and beautiful waterfront.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Marseille', 'activities': ['Boat Trip to Frioul Archipelago', 'Exploring Le Panier'], 'meals': ['Bouillabaisse'], '_id': '690c7f0bb6d8904848c3056b'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Bordeaux
+
+Description: Bordeaux, located in southwestern France, is famous for its world-class wines, beautiful architecture, and charming historic center.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Bordeaux', 'activities': ['Wine Tasting in the Vineyards', 'Exploring the Quais des Chartrons'], 'meals': ['Entrecôte Bordelaise'], '_id': '690c7f0bb6d8904848c3056e'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Barcelona
+
+Description: Barcelona, located on the northeastern coast of Spain, is known for its unique architecture, vibrant street life, and beautiful beaches.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Spain', 'region': 'Spain'}
+Price: $3032 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Barcelona', 'activities': ['Exploring La Rambla', 'Visiting Casa Batlló'], 'meals': ['Tapas'], '_id': '690c7f0bb6d8904848c30571'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+TOUR: Ha Noi
+
+Description: Ha Noi Beautiful
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'vn', 'region': 'asia'}
+Price: $1700 USD (includes accommodation, meals, and guided tours)
+Duration: 4 Days
+Tour Type: domestic
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Day 1', 'activities': ['Xich du', 'ssss', ''], 'meals': ['sss', 'ss'], '_id': '690ce6bfaff34467086b4c96'}, {'day': 2, 'title': 'Day 2', 'activities': ['sss', 'sss'], 'meals': ['ss'], '_id': '690ce6bfaff34467086b4c97'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com

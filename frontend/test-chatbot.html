@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMP Travel Chatbot Test</title>
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .test-container h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .test-container p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .test-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .test-btn:hover {
+            background: #5855eb;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: #dcfce7;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .status.error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+        
+        .chatbot-hint {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: rgba(99, 102, 241, 0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 14px;
+            max-width: 250px;
+            box-shadow: 0 5px 20px rgba(99, 102, 241, 0.3);
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🤖 CMP Travel AI Chatbot Test</h1>
+        <p>Welcome to the CMP Travel AI Chatbot testing page! Click the blue chat button in the bottom-right corner to start chatting with our AI Travel Assistant.</p>
+        
+        <div class="test-buttons">
+            <button class="test-btn" onclick="testAPI()">
+                <i class="fas fa-flask"></i> Test API
+            </button>
+            <button class="test-btn" onclick="triggerChatbot('Show me tours to Paris')">
+                🇫🇷 Paris Tours
+            </button>
+            <button class="test-btn" onclick="triggerChatbot('Find budget hotels under $100')">
+                💰 Budget Hotels
+            </button>
+            <button class="test-btn" onclick="triggerChatbot('Plan a 10-day European trip')">
+                🗺️ Trip Planning
+            </button>
+            <button class="test-btn" onclick="triggerChatbot('What are your best deals?')">
+                🎯 Best Deals
+            </button>
+        </div>
+        
+        <div class="status" id="status-message" style="display: none;"></div>
+    </div>
+    
+    <div class="chatbot-hint" id="chatbot-hint">
+        👋 Click the blue chat button to test our AI Travel Assistant!
+        <br><br>
+        Try asking about:
+        <br>• Tours & destinations
+        <br>• Hotel recommendations  
+        <br>• Prices & deals
+        <br>• Travel planning
+    </div>
+
+    <script src="js/chatbot.js"></script>
+    
+    <script>
+        // Hide hint after 8 seconds
+        setTimeout(() => {
+            const hint = document.getElementById('chatbot-hint');
+            if (hint) {
+                hint.style.opacity = '0';
+                hint.style.transform = 'translateX(20px)';
+                setTimeout(() => hint.remove(), 500);
+            }
+        }, 8000);
+        
+        // Function to trigger chatbot with predefined message
+        function triggerChatbot(message) {
+            if (window.cmpChatbot) {
+                // Open chatbot if not already open
+                if (!window.cmpChatbot.isOpen) {
+                    window.cmpChatbot.toggleChatbot();
+                }
+                
+                // Wait for animation, then set message
+                setTimeout(() => {
+                    const input = document.getElementById('chatbot-input');
+                    if (input) {
+                        input.value = message;
+                        input.focus();
+                        
+                        // Auto-send after a short delay
+                        setTimeout(() => {
+                            window.cmpChatbot.sendMessage();
+                        }, 500);
+                    }
+                }, 400);
+            } else {
+                showStatus('Chatbot not initialized yet. Please wait a moment and try again.', 'error');
+            }
+        }
+        
+        // Test API function
+        async function testAPI() {
+            const statusEl = document.getElementById('status-message');
+            statusEl.style.display = 'block';
+            statusEl.textContent = '🔄 Testing API connection...';
+            statusEl.className = 'status';
+            
+            try {
+                const response = await fetch('/api/chatbot/message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'Hello, this is a test message',
+                        sessionId: 'test_' + Date.now()
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showStatus('✅ API Test Successful! Response: ' + data.message.substring(0, 100) + '...', 'success');
+                } else {
+                    showStatus('❌ API Test Failed! Status: ' + response.status + ' ' + response.statusText, 'error');
+                }
+            } catch (error) {
+                showStatus('❌ API Test Failed! Error: ' + error.message, 'error');
+            }
+        }
+        
+        // Show status message
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = 'status ' + type;
+            statusEl.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Auto-test API on load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                testAPI();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

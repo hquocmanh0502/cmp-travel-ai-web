@@ -1,0 +1,43 @@
+HOTEL: Grand Hotel Delhi
+
+Address: Prime city/resort location
+City: Major destination
+Country: Vietnam
+
+Description: Elegant 3-star accommodation offering exceptional comfort and service in a prime location.
+
+Star Rating: 3 stars
+Hotel Type: 3-star Hotel
+Price: $100 USD per night (excluding taxes and fees)
+
+Amenities & Facilities:
+• Free Wi-Fi
+• Continental breakfast
+• Air conditioning
+• TV and cable
+• Private bathroom
+• 24-hour front desk
+
+Services:
+• Professional multilingual staff
+• 24-hour front desk assistance
+• Luggage storage and concierge
+• Tour booking and travel assistance
+• Airport transfer available
+• Laundry and dry cleaning
+• Currency exchange
+
+Contact Information:
+Email: reservations@hotel.com
+Phone: +84 28 1234 5678
+Website: www.hotel.com
+
+Booking Policies:
+• Check-in: 3:00 PM | Check-out: 12:00 PM  
+• Free cancellation up to 24 hours before arrival
+• Children under 12 stay free with parents
+• Pet-friendly options available
+• Non-smoking rooms available
+
+Special CMP Travel Rates Available!
+Contact: booking@cmp-travel.com for exclusive deals

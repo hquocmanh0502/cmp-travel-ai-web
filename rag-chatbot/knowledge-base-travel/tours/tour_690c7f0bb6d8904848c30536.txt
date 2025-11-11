@@ -1,0 +1,41 @@
+TOUR: Tokyo
+
+Description: Tokyo, the capital city, is a bustling metropolis known for its modernity, ancient traditions, and vibrant pop culture.
+
+Destination: Premium Destination
+Location: {'coordinates': [0, 0], 'address': 'Japan', 'region': 'Japan'}
+Price: $2366 USD (includes accommodation, meals, and guided tours)
+Duration: 3-5 days
+Tour Type: international
+
+Highlights:
+• Stunning scenic views and photo opportunities
+• Professional English-speaking guide
+• Authentic local cuisine experience  
+• Comfortable accommodation included
+• Small group tours (max 12 people)
+
+Detailed Itinerary:
+[{'day': 1, 'title': 'Explore Tokyo', 'activities': ['Visit Tokyo Skytree', 'Explore Akihabara'], 'meals': ['Sushi'], '_id': '690c7f0bb6d8904848c30538'}]
+
+Package Includes:
+• Round-trip transportation
+• Professional tour guide
+• All entrance fees
+• Daily breakfast and select meals
+• Comfortable accommodation
+• Travel insurance
+
+Not Included:
+• International flights
+• Personal expenses
+• Optional activities
+• Tips for guide and driver
+
+Special Notes:
+Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
