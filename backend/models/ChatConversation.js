@@ -123,8 +123,7 @@ const chatConversationSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-// Indexes
-chatConversationSchema.index({ sessionId: 1 });
+// Indexes (sessionId đã có unique: true ở schema nên không khai báo lại)
 chatConversationSchema.index({ userId: 1 });
 chatConversationSchema.index({ 'sessionInfo.lastActivity': 1 });
 chatConversationSchema.index({ status: 1 });

@@ -240,8 +240,7 @@ cmpWalletSchema.methods.getTransactionHistory = function(limit = 50, type = null
     .slice(0, limit);
 };
 
-// Index for quick user lookup
-cmpWalletSchema.index({ userId: 1 });
+// userId đã có unique: true ở schema (tự tạo index), không khai báo lại ở đây.
 cmpWalletSchema.index({ status: 1 });
 cmpWalletSchema.index({ 'transactions.createdAt': -1 });
 
