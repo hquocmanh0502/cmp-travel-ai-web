@@ -18,25 +18,25 @@ echo ===========================================================================
 echo.
 
 echo 🔥 Step 1/4: Starting Backend API Server (Port 3000)...
-start "🏗️ CMP Backend" cmd /k "cd /d E:\cmp-travel-main\backend && echo ✅ Backend Starting... && npm start"
+start "🏗️ CMP Backend" /D "%~dp0backend" cmd /k "echo ✅ Backend Starting... && npm start"
 
 echo.
 timeout /t 3 /nobreak >nul
 
 echo 🤖 Step 2/4: Starting AI Chatbot API (Port 5000)...
-start "🤖 Chatbot API" cmd /k "cd /d E:\cmp-travel-main\rag-chatbot && echo ✅ Chatbot API Starting... && python chatbot_api.py"
+start "🤖 Chatbot API" /D "%~dp0rag-chatbot" cmd /k "echo ✅ Chatbot API Starting... && python chatbot_api.py"
 
 echo.
 timeout /t 3 /nobreak >nul
 
 echo 📊 Step 3/4: Starting React Dashboard (Port 5173)...
-start "📊 Dashboard" cmd /k "cd /d E:\cmp-travel-main\travelie_dashboard && echo ✅ Dashboard Starting... && npm run dev"
+start "📊 Dashboard" /D "%~dp0travelie_dashboard" cmd /k "echo ✅ Dashboard Starting... && npm run dev"
 
 echo.
 timeout /t 3 /nobreak >nul
 
 echo 🌐 Step 4/4: Starting Frontend Website (Port 8080)...
-start "🌐 Frontend" cmd /k "cd /d E:\cmp-travel-main\frontend && echo ✅ Frontend Starting... && python -m http.server 8080"
+start "🌐 Frontend" /D "%~dp0frontend" cmd /k "echo ✅ Frontend Starting... && python -m http.server 8080"
 
 echo.
 echo ===============================================================================

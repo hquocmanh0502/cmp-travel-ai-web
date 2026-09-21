@@ -28,7 +28,7 @@ python --version  # Cần >= 3.8
 ### Bước 1: Khởi động Backend (Port 3000)
 ```powershell
 # Terminal 1
-cd E:\cmp-travel-main\backend
+cd backend
 npm install  # Chỉ cần chạy 1 lần đầu
 npm start
 ```
@@ -37,7 +37,7 @@ npm start
 ### Bước 2: Khởi động Chatbot API (Port 5000)
 ```powershell
 # Terminal 2  
-cd E:\cmp-travel-main\rag-chatbot
+cd rag-chatbot
 python chatbot_api.py
 ```
 **✅ Kiểm tra:** Thấy message "✅ Loaded 232 documents" và "Running on http://127.0.0.1:5000"
@@ -45,7 +45,7 @@ python chatbot_api.py
 ### Bước 3: Khởi động React Dashboard (Port 5173)
 ```powershell
 # Terminal 3
-cd E:\cmp-travel-main\travelie_dashboard
+cd travelie_dashboard
 npm install  # Chỉ cần chạy 1 lần đầu  
 npm run dev
 ```
@@ -54,7 +54,7 @@ npm run dev
 ### Bước 4: Khởi động Frontend (Port 8080)
 ```powershell
 # Terminal 4
-cd E:\cmp-travel-main\frontend
+cd frontend
 python -m http.server 8080
 ```
 **✅ Kiểm tra:** Thấy message "Serving HTTP on :: port 8080"
@@ -100,33 +100,11 @@ curl http://localhost:5000/health
 
 ## 🔥 SCRIPT NHANH - CHẠY TẤT CẢ
 
-Tạo file `start_all.bat`:
+Double-click file `start_all.bat` ở thư mục gốc project. Script tự mở 4 cửa sổ cho backend, chatbot, dashboard và frontend.
 
-```batch
-@echo off
-echo 🚀 Starting CMP Travel System...
+Script dùng đường dẫn tương đối theo vị trí của chính nó (`%~dp0`), nên clone project về thư mục nào cũng chạy được, không cần sửa gì.
 
-echo.
-echo 📀 Starting Backend...
-start "CMP Backend" cmd /k "cd /d E:\cmp-travel-main\backend && npm start"
-
-echo.
-echo 🤖 Starting Chatbot API...
-start "Chatbot API" cmd /k "cd /d E:\cmp-travel-main\rag-chatbot && python chatbot_api.py"
-
-echo.
-echo 🌐 Starting Frontend...
-start "Frontend" cmd /k "cd /d E:\cmp-travel-main\frontend && python -m http.server 8080"
-
-echo.
-echo ✅ All services starting...
-echo 📋 Check each terminal window for status
-echo 🌐 Website will be available at: http://localhost:8080
-
-pause
-```
-
-**Sử dụng:** Đặt file `start_all.bat` trong `E:\cmp-travel-main\` và double-click để chạy tất cả.
+Tắt tất cả: double-click `stop_all.bat`.
 
 ---
 
@@ -150,7 +128,7 @@ taskkill /PID [PID_NUMBER] /F
 
 ### Lỗi: "Knowledge base not found"
 ```powershell
-cd E:\cmp-travel-main\rag-chatbot
+cd rag-chatbot
 python extract_mongodb_data.py
 ```
 
