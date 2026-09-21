@@ -74,7 +74,7 @@ const adminReplies = [
 
 async function addReviewsForAllTours() {
     try {
-        const MONGODB_URI = 'mongodb+srv://hoangquocmanh2004_db_user:NuB0wKG7gc3QiGn0@cluster0.gs9owka.mongodb.net/traveldb?retryWrites=true&w=majority';
+        const MONGODB_URI = process.env.MONGODB_URI;
         await mongoose.connect(MONGODB_URI);
         console.log('✅ Connected to MongoDB');
 

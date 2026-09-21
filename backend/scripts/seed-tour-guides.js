@@ -329,13 +329,13 @@ const seedData = async () => {
       console.log('⚠️  No bookings found. Reviews will be created without booking references.');
       const reviews = await createSampleReviews(createdGuides, users, tours, [{ _id: null }]);
       console.log('💬 Creating reviews...');
-      await GuideReview.insertMany(reviews);
-      console.log(`✅ Created ${reviews.length} reviews`);
+      const result = await GuideReview.insertMany(reviews, { ordered: false }).catch(e => e.insertedDocs || []);
+      console.log(`✅ Created ${Array.isArray(result) ? result.length : reviews.length} reviews (duplicates skipped)`);
     } else {
       console.log('💬 Creating reviews...');
       const reviews = await createSampleReviews(createdGuides, users, tours, bookings);
-      await GuideReview.insertMany(reviews);
-      console.log(`✅ Created ${reviews.length} reviews`);
+      const result = await GuideReview.insertMany(reviews, { ordered: false }).catch(e => e.insertedDocs || []);
+      console.log(`✅ Created ${Array.isArray(result) ? result.length : reviews.length} reviews (duplicates skipped)`);
     }
 
     // Update guide ratings

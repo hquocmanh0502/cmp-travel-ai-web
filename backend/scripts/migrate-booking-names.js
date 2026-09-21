@@ -4,7 +4,7 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const mongoose = require('mongoose');
 
 // Fallback to hardcoded MongoDB URI if .env not found
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://hoangquocmanh2004_db_user:NuB0wKG7gc3QiGn0@cluster0.gs9owka.mongodb.net/traveldb?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 console.log('🔍 MONGODB_URI:', MONGODB_URI ? 'Found' : 'Missing');
 

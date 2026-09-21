@@ -5,7 +5,7 @@ const Blog = require('../models/Blog');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 // Connect to MongoDB
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://hoangquocmanh2004_db_user:NuB0wKG7gc3QiGn0@cluster0.gs9owka.mongodb.net/traveldb?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI)
 .then(() => console.log('✅ MongoDB connected'))

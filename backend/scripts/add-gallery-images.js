@@ -3,7 +3,7 @@ const path = require('path');
 const Tour = require('../models/Tour');
 
 // Hardcode MongoDB URI for this script
-const MONGODB_URI = 'mongodb+srv://hoangquocmanh2004_db_user:NuB0wKG7gc3QiGn0@cluster0.gs9owka.mongodb.net/traveldb?retryWrites=true&w=majority';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 // Unsplash images by category and country
 const galleryImagesByCountry = {

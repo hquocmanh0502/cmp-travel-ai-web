@@ -8,9 +8,12 @@ import os
 from pymongo import MongoClient
 from datetime import datetime
 import pandas as pd
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Cấu hình MongoDB
-MONGODB_URI = "mongodb+srv://hoangquocmanh2004_db_user:NuB0wKG7gc3QiGn0@cluster0.gs9owka.mongodb.net/traveldb?retryWrites=true&w=majority"
+MONGODB_URI = os.environ.get("MONGODB_URI")
 
 def connect_mongodb():
     """Kết nối đến MongoDB"""

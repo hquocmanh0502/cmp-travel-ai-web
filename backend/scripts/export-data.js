@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const testConnection = async () => {
   try {
-    const uri = 'mongodb+srv://hoangquocmanh2004_db_user:NuB0wKG7gc3QiGn0@cluster0.gs9owka.mongodb.net/traveldb?retryWrites=true&w=majority';
+    const uri = process.env.MONGODB_URI;
     
     console.log('🔄 Testing MongoDB Atlas connection...');
     await mongoose.connect(uri);
