@@ -1,88 +1,57 @@
 /**
- * Reset User Password
- * Force reset a user's password (for admin/testing)
+ * Đặt lại mật khẩu cho một tài khoản (dành cho admin/dev).
+ *
+ * Chạy (từ thư mục backend):
+ *   node scripts/reset-user-password.js <email hoặc userId> <mật khẩu mới>
+ *   node scripts/reset-user-password.js admin@cmptravel.com MatKhauMoi123
  */
 
-const bcrypt = require('bcryptjs');
+require('dotenv').config({ quiet: true });
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const connectDB = require('../config/db');
 
+const MIN_PASSWORD_LENGTH = 8; // khớp với quy định lúc đăng ký
+
 async function resetPassword() {
+    const target = process.argv[2];
+    const newPassword = process.argv[3];
+
+    if (!target || !newPassword) {
+        console.log('Cách dùng: node scripts/reset-user-password.js <email hoặc userId> <mật khẩu mới>');
+        process.exit(1);
+    }
+
+    if (newPassword.length < MIN_PASSWORD_LENGTH) {
+        console.log(`❌ Mật khẩu phải có ít nhất ${MIN_PASSWORD_LENGTH} ký tự`);
+        process.exit(1);
+    }
+
+    await connectDB();
+
     try {
-        console.log('🔄 Resetting user password...\n');
-        
-        // Connect to database
-        await connectDB();
-        
-        // Get userId and new password from command line
-        const userId = process.argv[2];
-        const newPassword = process.argv[3];
-        
-        if (!userId || !newPassword) {
-            console.log('❌ Usage: node reset-user-password.js <userId> <newPassword>');
-            console.log('   Example: node reset-user-password.js 68e286d4983181b367b26535 newpass123\n');
-            process.exit(1);
-        }
-        
-        console.log(`👤 User ID: ${userId}`);
-        console.log(`🔑 New Password: ${newPassword}\n`);
-        
-        // Validate ObjectId
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            console.log('❌ Invalid user ID format');
-            process.exit(1);
-        }
-        
-        // Validate password length
-        if (newPassword.length < 6) {
-            console.log('❌ Password must be at least 6 characters');
-            process.exit(1);
-        }
-        
-        // Find user
-        const user = await User.findById(userId);
-        
+        const query = mongoose.Types.ObjectId.isValid(target)
+            ? { _id: target }
+            : { email: target.toLowerCase().trim() };
+
+        const user = await User.findOne(query);
         if (!user) {
-            console.log('❌ User not found');
-            process.exit(1);
+            console.log('❌ Không tìm thấy tài khoản');
+            process.exitCode = 1;
+            return;
         }
-        
-        console.log('📊 User Info:');
-        console.log(`   Username: ${user.username}`);
-        console.log(`   Email: ${user.email}`);
-        console.log(`   Full Name: ${user.fullName}\n`);
-        
-        // Hash new password
-        console.log('🔐 Hashing new password...');
-        const hashedPassword = await bcrypt.hash(newPassword, 12);
-        
-        // Update password directly (bypass pre-save hook)
-        console.log('💾 Updating database...');
-        await User.findByIdAndUpdate(userId, {
-            password: hashedPassword,
-            updatedAt: new Date()
-        });
-        
-        console.log('\n✅ Password reset successfully! ✅\n');
-        console.log('💡 New login credentials:');
-        console.log(`   Email/Username: ${user.email} or ${user.username}`);
-        console.log(`   Password: ${newPassword}\n`);
-        console.log('🔍 Verify the new password:');
-        console.log(`   node backend/check-password.js ${userId} ${newPassword}`);
-        
-    } catch (error) {
-        console.error('\n❌ Error:', error.message);
+
+        // Gán mật khẩu thô, hook pre('save') của model sẽ hash bằng bcrypt.
+        user.password = newPassword;
+        await user.save();
+
+        console.log(`\n✅ Đã đặt lại mật khẩu cho ${user.email} (role: ${user.role})`);
     } finally {
-        await mongoose.connection.close();
-        console.log('\n👋 Database connection closed');
-        process.exit(0);
+        await mongoose.disconnect();
     }
 }
 
-console.log('═══════════════════════════════════════════');
-console.log('   PASSWORD RESET TOOL');
-console.log('═══════════════════════════════════════════\n');
-console.log('⚠️  WARNING: This will overwrite the user\'s password!\n');
-
-resetPassword();
+resetPassword().catch(err => {
+    console.error('❌ Lỗi:', err.message);
+    process.exit(1);
+});
