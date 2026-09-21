@@ -11,7 +11,6 @@ import BlogManagement from "./pages/Blog/BlogManagement";
 import TourGuideManagement from "./pages/TourGuides/TourGuideManagement";
 import SpamDashboard from "./pages/SpamDashboard";
 import BanManagement from "./pages/BanManagement";
-import BanManagementTest from "./pages/BanManagementTest";
 import ContactManagement from "./pages/ContactManagement";
 import Newsletter from "./pages/Newsletter/Newsletter";
 import Revenue from "./pages/Revenue/Revenue";
