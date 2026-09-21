@@ -1,5 +1,6 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
+const { ipKeyGenerator } = rateLimit;
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
@@ -29,7 +30,9 @@ const pinAttemptLimiter = rateLimit({
   skipSuccessfulRequests: true,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.user?.id || req.ip,
+  // Đếm theo tài khoản. Dự phòng theo IP thì phải qua ipKeyGenerator để gom
+  // cả dải IPv6 /56 lại, nếu không có thể đổi địa chỉ trong dải để né giới hạn.
+  keyGenerator: (req) => req.user?.id || ipKeyGenerator(req.ip),
   message: { success: false, error: 'Nhập sai PIN quá nhiều lần. Vui lòng thử lại sau 15 phút.' }
 });
 
