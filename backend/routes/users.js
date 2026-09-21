@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { requireAdmin, requireSelfOrAdmin } = require('../middleware/auth');
 
-// Block/Unblock user endpoint
-router.post('/:userId/block', async (req, res) => {
+// Khoá/mở khoá tài khoản là hành động quản trị - trước đây ai gọi cũng được.
+router.post('/:userId/block', requireAdmin, async (req, res) => {
   try {
     const { userId } = req.params;
     const { action, reason } = req.body; // action: 'block' or 'unblock'
@@ -44,8 +45,8 @@ router.post('/:userId/block', async (req, res) => {
   }
 });
 
-// Check if user is blocked
-router.get('/:userId/block-status', async (req, res) => {
+// Người dùng tự kiểm tra trạng thái tài khoản của mình (frontend poll định kỳ).
+router.get('/:userId/block-status', requireSelfOrAdmin('userId'), async (req, res) => {
   try {
     const { userId } = req.params;
 

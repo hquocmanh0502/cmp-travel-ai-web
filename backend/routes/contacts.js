@@ -60,12 +60,8 @@ router.post('/', async (req, res) => {
 
 // ==================== ADMIN ROUTES ====================
 
-// Middleware for admin authentication (simple check)
-const isAdmin = (req, res, next) => {
-    // TODO: Implement proper admin authentication
-    // For now, we'll allow all requests
-    next();
-};
+// Xác thực quản trị thật (JWT + kiểm tra role trong DB).
+const { isAdmin } = require('../middleware/adminAuth');
 
 // GET - Get all contacts with filtering and pagination (admin)
 router.get('/admin', isAdmin, async (req, res) => {

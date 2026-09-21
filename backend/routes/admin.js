@@ -10,13 +10,8 @@ const Feedback = require('../models/Feedback');
 const Blog = require('../models/Blog');
 const CMPWallet = require('../models/CMPWallet');
 
-// Middleware to check admin access (TODO: Add proper authentication)
-const isAdmin = (req, res, next) => {
-  // TODO: Implement proper admin authentication
-  // For now, we'll allow all requests
-  // In production, check JWT token and admin role
-  next();
-};
+// Xác thực quản trị thật (JWT + kiểm tra role trong DB).
+const { isAdmin } = require('../middleware/adminAuth');
 
 // ==================== DASHBOARD OVERVIEW ====================
 

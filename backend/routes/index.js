@@ -12,6 +12,7 @@ const Recommendation = require('../models/Recommendation');
 const recommendationService = require('../services/recommendationService');
 const sentimentService = require('../services/sentimentService');
 const chatbotService = require('../services/chatbotService');
+const { requireSelfOrAdmin } = require('../middleware/auth');
 
 // Tours Routes
 router.get('/tours', async (req, res) => {
@@ -78,67 +79,11 @@ router.get('/blogs/:id', async (req, res) => {
   }
 });
 
-// User Authentication Routes
-router.post('/auth/register', async (req, res) => {
-  try {
-    const { username, email, password, fullName, phone } = req.body;
-    
-    const existingUser = await User.findOne({ 
-      $or: [{ email }, { username }] 
-    });
-    
-    if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
-    }
-    
-    const user = new User({
-      username,
-      email, 
-      password,
-      fullName,
-      phone
-    });
-    
-    await user.save();
-    res.status(201).json({ 
-      message: 'User created successfully',
-      user: { id: user._id, username: user.username, email: user.email }
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Error creating user' });
-  }
-});
-
-router.post('/auth/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-    
-    // Simple password comparison (in production, use bcrypt)
-    if (user.password !== password) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-    
-    res.json({
-      message: 'Login successful',
-      user: { 
-        id: user._id, 
-        username: user.username, 
-        email: user.email,
-        fullName: user.fullName
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Error logging in' });
-  }
-});
+// User Authentication Routes: xem routes/auth.js.
+// Hai handler trùng ở đây đã bị xoá - chúng so sánh mật khẩu plaintext.
 
 // AI Recommendations
-router.get('/recommendations/:userId', async (req, res) => {
+router.get('/recommendations/:userId', requireSelfOrAdmin(), async (req, res) => {
   try {
     const { userId } = req.params;
     

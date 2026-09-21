@@ -87,19 +87,27 @@ async function handleLogin(event) {
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('userEmail', result.user.email);
             localStorage.setItem('userFullName', result.user.fullName);
-            
-            console.log('✅ Login successful - Token saved:', result.authToken?.substring(0, 20) + '...');
-            
+            localStorage.setItem('userRole', result.user.role || 'user');
+
             showSuccess('Login Successful!', `Welcome back, ${result.user.fullName}!`, 2000);
-            
-            // Update UI and redirect
+
+            // Quay lại trang người dùng đang xem trước khi bị yêu cầu đăng nhập.
+            let destination = 'index.html';
+            try {
+                const saved = sessionStorage.getItem('redirectAfterLogin');
+                if (saved) {
+                    destination = saved;
+                    sessionStorage.removeItem('redirectAfterLogin');
+                }
+            } catch (e) { /* bỏ qua */ }
+
             setTimeout(() => {
                 if (typeof checkAuthStatus === 'function') {
                     checkAuthStatus();
                 }
-                window.location.href = 'index.html';
+                window.location.href = destination;
             }, 1000);
-            
+
         } else {
             showError('Login Failed', result.error || 'Invalid email or password');
         }

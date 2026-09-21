@@ -1,11 +1,11 @@
 // Admin Authentication Middleware
-// For now, this is a placeholder that allows all requests
-// TODO: Implement proper admin authentication
+//
+// Trước đây file này chỉ gọi next() cho mọi request, nghĩa là toàn bộ API quản trị
+// (xoá tour, xem doanh thu, khoá tài khoản...) mở cho bất kỳ ai biết URL.
+// Giờ nó dùng chung tầng xác thực JWT ở middleware/auth.js.
+//
+// Giữ lại tên isAdmin để các route đang import không phải sửa.
 
-const isAdmin = (req, res, next) => {
-  // Temporary: Allow all requests
-  // In production, implement proper admin token verification
-  next();
-};
+const { requireAdmin } = require('./auth');
 
-module.exports = { isAdmin };
+module.exports = { isAdmin: requireAdmin, requireAdmin };

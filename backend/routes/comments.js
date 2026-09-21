@@ -8,19 +8,18 @@ const UserBan = require('../models/UserBan');
 const replyModerationService = require('../services/replyModerationService');
 const RealTimeSpamFilter = require('../middleware/realTimeSpamFilter');
 const UserBanService = require('../services/userBanService');
+const { requireAuth } = require('../middleware/auth');
 
-// Middleware kiểm tra authentication
-const authenticate = async (req, res, next) => {
-  try {
-    const userId = req.headers['user-id'] || req.headers['authorization']?.replace('Bearer ', '');
-    if (!userId) {
-      return res.status(401).json({ error: 'Authentication required' });
-    }
-    req.userId = userId;
+// Xác thực bằng JWT thật.
+//
+// Bản cũ lấy userId từ header 'user-id', hoặc coi luôn chuỗi sau 'Bearer ' là
+// userId. Cả hai đều do client tự đặt, nên có thể đăng đánh giá dưới danh nghĩa
+// người khác và né lệnh cấm chỉ bằng cách đổi một header.
+const authenticate = (req, res, next) => {
+  return requireAuth(req, res, () => {
+    req.userId = req.user.id;
     next();
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid authentication' });
-  }
+  });
 };
 
 // Middleware kiểm tra ban status

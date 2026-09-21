@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
-let bcrypt;
+const bcrypt = require('bcryptjs');
 
-try {
-  bcrypt = require('bcryptjs');
-} catch (err) {
-  console.log('bcryptjs not installed, password hashing disabled');
-}
+const BCRYPT_ROUNDS = 12;
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  // select: false -> mặc định không bao giờ trả password ra ngoài. Route nào cần
+  // so khớp mật khẩu phải chủ động .select('+password').
+  password: { type: String, required: true, select: false },
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
   fullName: { type: String, required: true },
   phone: { type: String },
   dateOfBirth: { type: Date },
@@ -100,13 +99,14 @@ const userSchema = new mongoose.Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-// Hash password trước khi lưu
+// Hash password trước khi lưu.
+// Bỏ qua nếu giá trị đã là một bcrypt hash (tránh hash chồng khi script migration
+// gán sẵn hash vào document rồi save).
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
-  
-  if (bcrypt) {
-    this.password = await bcrypt.hash(this.password, 12);
-  }
+  if (isBcryptHash(this.password)) return next();
+
+  this.password = await bcrypt.hash(this.password, BCRYPT_ROUNDS);
   next();
 });
 
@@ -114,5 +114,23 @@ userSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();
 });
+
+function isBcryptHash(value) {
+  return typeof value === 'string' && /^\$2[aby]\$\d{2}\$/.test(value);
+}
+
+/**
+ * So khớp mật khẩu thô với hash đã lưu.
+ * Document phải được nạp kèm .select('+password') vì field này select: false.
+ */
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  if (!this.password) {
+    throw new Error('comparePassword: document được nạp mà không có field password');
+  }
+  return bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.statics.isBcryptHash = isBcryptHash;
+userSchema.statics.BCRYPT_ROUNDS = BCRYPT_ROUNDS;
 
 module.exports = mongoose.model('User', userSchema);

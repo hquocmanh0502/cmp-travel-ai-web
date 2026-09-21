@@ -72,9 +72,8 @@ async function handleLogin(event) {
             localStorage.setItem('username', result.user.username);
             localStorage.setItem('userEmail', result.user.email);
             localStorage.setItem('userFullName', result.user.fullName);
-            
-            console.log('✅ Login successful - Token saved:', result.authToken?.substring(0, 20) + '...');
-            
+            localStorage.setItem('userRole', result.user.role || 'user');
+
             showSuccess('Login Successful!', `Welcome back, ${result.user.fullName}!`, 2000);
             
             // Update auth status
@@ -290,12 +289,13 @@ function setupPasswordToggle() {
 
 // Handle logout
 function handleLogout() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('username');
-    localStorage.removeItem('userEmail');
-    localStorage.removeItem('userFullName');
-    
+    if (window.CMPAuth) {
+        window.CMPAuth.clearSession();
+    } else {
+        ['authToken', 'userId', 'username', 'userEmail', 'userFullName', 'userRole']
+            .forEach(k => localStorage.removeItem(k));
+    }
+
     currentUser = null;
     updateAuthUI(false);
     

@@ -6,6 +6,12 @@ const Tour = require('../models/Tour');
 const Hotel = require('../models/Hotel');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const { requireSelfOrAdmin } = require('../middleware/auth');
+
+// Mọi route trong file này đều có dạng /:userId/... nên chỉ cần khai báo một lần:
+// chủ tài khoản hoặc admin mới đi tiếp được. router.param chỉ chạy với route thực
+// sự khai báo :userId, nên không ảnh hưởng route nào khác.
+router.param('userId', requireSelfOrAdmin('userId'));
 
 // =============================================
 // GET USER PROFILE
@@ -195,31 +201,28 @@ router.put('/:userId/password', async (req, res) => {
             });
         }
 
-        // Find user
-        const user = await User.findById(userId);
-        
+        // password là select: false nên phải xin thêm rõ ràng để so khớp.
+        const user = await User.findById(userId).select('+password');
+
         if (!user) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'User not found' 
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
             });
         }
 
         // Verify current password
-        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
-        
+        const isPasswordValid = await user.comparePassword(currentPassword);
+
         if (!isPasswordValid) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Mật khẩu hiện tại không đúng. Vui lòng kiểm tra lại.' 
+            return res.status(401).json({
+                success: false,
+                message: 'Mật khẩu hiện tại không đúng. Vui lòng kiểm tra lại.'
             });
         }
 
-        // Hash new password
-        const hashedPassword = await bcrypt.hash(newPassword, 12);
-        
-        // Update password
-        user.password = hashedPassword;
+        // Gán mật khẩu thô, hook pre('save') của model sẽ tự hash.
+        user.password = newPassword;
         user.updatedAt = new Date();
         await user.save();
 
@@ -427,19 +430,19 @@ router.delete('/:userId', async (req, res) => {
             });
         }
 
-        // Find user
-        const user = await User.findById(userId);
-        
+        // password là select: false nên phải xin thêm rõ ràng để so khớp.
+        const user = await User.findById(userId).select('+password');
+
         if (!user) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'User not found' 
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
             });
         }
 
         // Verify password
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        
+        const isPasswordValid = await user.comparePassword(password);
+
         if (!isPasswordValid) {
             return res.status(401).json({ 
                 success: false, 

@@ -5,11 +5,8 @@ const ReplyClassification = require('../models/ReplyClassification');
 const Tour = require('../models/Tour');
 const RealTimeSpamFilter = require('../middleware/realTimeSpamFilter');
 
-// Middleware để check admin (simplified for demo)
-const requireAdmin = (req, res, next) => {
-  // In production, implement proper admin authentication
-  next();
-};
+// Xác thực quản trị thật (JWT + kiểm tra role trong DB).
+const { requireAdmin } = require('../middleware/auth');
 
 // Get spam replies list
 router.get('/list', requireAdmin, async (req, res) => {

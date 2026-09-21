@@ -2,6 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { requireSelfOrAdmin } = require('../middleware/auth');
+
+// Sở thích cá nhân là dữ liệu riêng tư: chỉ chủ tài khoản hoặc admin được đọc/sửa.
+router.param('userId', requireSelfOrAdmin('userId'));
 
 // GET /api/preferences/:userId - Lấy preferences của user
 router.get('/:userId', async (req, res) => {

@@ -2325,7 +2325,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('👨‍✈️ Loading guide details for:', guideId);
             
             // Fetch guide details from API
-            const response = await fetch(`http://localhost:3000/api/admin/tour-guides/${guideId}`);
+            const response = await fetch(`http://localhost:3000/api/tour-guides/${guideId}`);
             if (!response.ok) {
                 throw new Error('Failed to load guide details');
             }

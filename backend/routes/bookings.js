@@ -5,60 +5,46 @@ const Tour = require('../models/Tour');
 const Hotel = require('../models/Hotel');
 const User = require('../models/User');
 const { applyVIPDiscount, calculateVIPLevel } = require('../services/vipService');
+const { requireAuth, requireSelfOrAdmin } = require('../middleware/auth');
 
-// Middleware to verify authentication
-const verifyAuth = async (req, res, next) => {
-  try {
-    const authHeader = req.headers.authorization;
-    console.log('🔐 verifyAuth - authHeader:', authHeader);
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      console.log('❌ verifyAuth - No valid auth header');
-      return res.status(401).json({ 
-        success: false, 
-        error: 'Authentication required' 
-      });
-    }
-    
-    const token = authHeader.split(' ')[1];
-    console.log('🔑 verifyAuth - token:', token);
-    
-    // Extract userId from token (token is base64 encoded "userId:timestamp")
-    let userId;
-    try {
-      const decoded = Buffer.from(token, 'base64').toString('utf-8');
-      console.log('🔓 verifyAuth - decoded token:', decoded);
-      userId = decoded.split(':')[0]; // Extract userId before the colon
-      console.log('👤 verifyAuth - extracted userId:', userId);
-    } catch (error) {
-      console.log('❌ verifyAuth - Failed to decode token:', error);
-      return res.status(401).json({ 
-        success: false, 
-        error: 'Invalid token format' 
-      });
-    }
-    
-    if (!userId) {
-      console.log('❌ verifyAuth - Invalid token');
-      return res.status(401).json({ 
-        success: false, 
-        error: 'Invalid token' 
-      });
-    }
-    
-    // Attach userId to request
-    req.userId = userId;
-    console.log('✅ verifyAuth - userId attached:', userId);
-    
+// Xác thực bằng JWT thật.
+//
+// Bản cũ chỉ base64-decode token rồi tin luôn userId nằm trong đó, nên bất kỳ ai
+// cũng tự tạo được token cho tài khoản bất kỳ. Giờ chữ ký JWT được kiểm tra trước,
+// req.userId chỉ là alias của req.user.id để phần còn lại của file không phải đổi.
+const verifyAuth = (req, res, next) => {
+  return requireAuth(req, res, () => {
+    req.userId = req.user.id;
     next();
-  } catch (error) {
-    console.log('❌ verifyAuth - Error:', error);
-    res.status(401).json({ 
-      success: false, 
-      error: 'Invalid authentication' 
-    });
-  }
+  });
 };
+
+// Chỉ chủ đơn đặt (hoặc admin) mới được xem/sửa/huỷ/thanh toán một booking.
+const requireBookingOwner = async (req, res, next) => {
+  return verifyAuth(req, res, async () => {
+    try {
+      const booking = await Booking.findById(req.params.bookingId).select('userId');
+
+      if (!booking) {
+        return res.status(404).json({ success: false, error: 'Không tìm thấy đơn đặt' });
+      }
+      if (req.user.role !== 'admin' && String(booking.userId) !== req.user.id) {
+        return res.status(403).json({
+          success: false,
+          error: 'Bạn không có quyền thao tác với đơn đặt này'
+        });
+      }
+
+      next();
+    } catch (err) {
+      console.error('requireBookingOwner error:', err);
+      return res.status(500).json({ success: false, error: 'Lỗi kiểm tra quyền truy cập' });
+    }
+  });
+};
+
+// /user/:userId - chỉ chủ tài khoản hoặc admin.
+router.param('userId', requireSelfOrAdmin('userId'));
 
 // =============================================
 // CREATE BOOKING
@@ -274,7 +260,7 @@ router.get('/user/:userId', async (req, res) => {
 // =============================================
 // GET SINGLE BOOKING
 // =============================================
-router.get('/:bookingId', async (req, res) => {
+router.get('/:bookingId', requireBookingOwner, async (req, res) => {
   try {
     const { bookingId } = req.params;
     
@@ -307,7 +293,7 @@ router.get('/:bookingId', async (req, res) => {
 // =============================================
 // UPDATE BOOKING STATUS
 // =============================================
-router.patch('/:bookingId/status', verifyAuth, async (req, res) => {
+router.patch('/:bookingId/status', requireBookingOwner, async (req, res) => {
   try {
     const { bookingId } = req.params;
     const { status, adminNotes } = req.body;
@@ -357,7 +343,7 @@ router.patch('/:bookingId/status', verifyAuth, async (req, res) => {
 // =============================================
 // CANCEL BOOKING
 // =============================================
-router.post('/:bookingId/cancel', verifyAuth, async (req, res) => {
+router.post('/:bookingId/cancel', requireBookingOwner, async (req, res) => {
   try {
     const { bookingId } = req.params;
     const { reason } = req.body;
@@ -479,7 +465,7 @@ router.get('/stats/summary', async (req, res) => {
 // =============================================
 // PAY WITH WALLET
 // =============================================
-router.post('/:bookingId/pay-with-wallet', async (req, res) => {
+router.post('/:bookingId/pay-with-wallet', requireBookingOwner, async (req, res) => {
   try {
     const { bookingId } = req.params;
     const { userId } = req.body;
@@ -606,7 +592,7 @@ router.post('/:bookingId/pay-with-wallet', async (req, res) => {
 });
 
 // POST /api/bookings/:bookingId/review-guide - Submit guide review
-router.post('/:bookingId/review-guide', verifyAuth, async (req, res) => {
+router.post('/:bookingId/review-guide', requireBookingOwner, async (req, res) => {
   try {
     const { bookingId } = req.params;
     const { rating, comment, detailedRatings } = req.body;

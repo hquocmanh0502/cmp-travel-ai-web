@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { requireSelfOrAdmin } = require('../middleware/auth');
 // Payment services removed - using PayOS instead
 
 /**
@@ -10,26 +11,13 @@ const User = require('../models/User');
  * Integrated with MoMo Developer API for real payment processing
  */
 
-// Middleware to verify authentication (simplified)
-const verifyAuth = async (req, res, next) => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ 
-        success: false, 
-        error: 'Authentication required' 
-      });
-    }
-    
-    // TODO: Implement proper JWT verification
-    next();
-  } catch (error) {
-    res.status(401).json({ 
-      success: false, 
-      error: 'Invalid authentication' 
-    });
-  }
-};
+// Bảo vệ mọi route có :userId (số dư, nạp tiền, thanh toán, lịch sử giao dịch):
+// chỉ chủ ví hoặc admin mới truy cập được.
+//
+// Các endpoint webhook của cổng thanh toán (/momo-ipn, /casso-webhook,
+// /webhook/payos, /webhook/casso) không khai báo :userId nên không bị chặn -
+// đúng như mong muốn, vì chúng do phía đối tác gọi vào chứ không phải người dùng.
+router.param('userId', requireSelfOrAdmin('userId'));
 
 // =============================================
 // GET WALLET BALANCE

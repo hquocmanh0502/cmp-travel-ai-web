@@ -41,6 +41,7 @@ const newsletterRoutes = require('./routes/newsletter');
 const indexRoutes = require('./routes/index'); // Add this line
 const tourGuidesRoutes = require('./routes/tour-guides');
 const chatbotRoutes = require('./routes/chatbot');
+const { requireAuth, requireAdmin } = require('./middleware/auth');
 
 console.log('📧 Contact routes loaded:', typeof contactRoutes);
 
@@ -67,6 +68,15 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/wallet-pin', walletPinRoutes);
 
+// Chốt chặn quản trị: mọi thứ dưới /api/admin và /api/admin-ban đều phải là admin.
+//
+// Đặt ở đây thay vì chỉ dựa vào middleware bên trong từng file route, vì một số
+// file (admin-hotels, admin-reviews-new, revenue, adminBan) trước đây không có
+// lớp bảo vệ nào. Các route bên trong vẫn giữ isAdmin riêng - phòng thủ nhiều lớp,
+// nếu sau này ai đó mount lại ở chỗ khác thì vẫn an toàn.
+app.use('/api/admin', requireAdmin);
+app.use('/api/admin-ban', requireAdmin);
+
 // Register specific admin routes BEFORE generic /api/admin
 app.use('/api/admin/reviews', require('./routes/admin-reviews-new'));
 app.use('/api/admin/hotels', adminHotelsRoutes);
@@ -80,8 +90,10 @@ app.use('/api/admin-ban', adminBanRoutes);
 app.use('/api/preferences', require('./routes/preferences'));
 app.use('/api/admin', require('./routes/admin-reply-moderation'));
 app.use('/api/spam-check', spamCheckRoutes);
-app.use('/api/upload', uploadRoutes);
+app.use('/api/upload', requireAuth, uploadRoutes);
 app.use('/api/hotels', hotelsRoutes);
+// Thông tin hướng dẫn viên cho khách hàng (chỉ đọc, chỉ field công khai).
+app.use('/api/tour-guides', require('./routes/public-tour-guides'));
 app.use('/api/contacts', contactRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/newsletter', newsletterRoutes);
@@ -359,67 +371,9 @@ app.get('/api/blogs/:id', async (req, res) => {
   }
 });
 
-// Authentication Routes
-app.post('/api/auth/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
-    }
-    
-    const user = await User.findOne({ email });
-    if (!user || user.password !== password) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
-    
-    res.json({
-      message: 'Login successful',
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        fullName: user.fullName
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Error logging in' });
-  }
-});
-
-app.post('/api/auth/register', async (req, res) => {
-  try {
-    const { username, email, password, fullName, phone } = req.body;
-    
-    if (!username || !email || !password || !fullName) {
-      return res.status(400).json({ error: 'Username, email, password, and fullName are required' });
-    }
-    
-    const existingUser = await User.findOne({ 
-      $or: [{ email }, { username }] 
-    });
-    
-    if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
-    }
-    
-    const user = new User({
-      username,
-      email, 
-      password,
-      fullName,
-      phone
-    });
-    
-    await user.save();
-    res.status(201).json({ 
-      message: 'User created successfully',
-      user: { id: user._id, username: user.username, email: user.email }
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Error creating user' });
-  }
-});
+// Authentication Routes: xem routes/auth.js (mount tại /api/auth ở trên).
+// Hai handler trùng ở đây đã bị xoá - chúng so sánh mật khẩu dạng plaintext
+// và không phát token.
 
 // Feedback API
 app.get('/api/feedback', async (req, res) => {

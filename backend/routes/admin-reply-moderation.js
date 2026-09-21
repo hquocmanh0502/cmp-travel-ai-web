@@ -5,35 +5,17 @@ const replySpamDetectionService = require('../services/replySpamDetectionService
 const replyProcessingMiddleware = require('../middleware/replyProcessingMiddleware');
 const User = require('../models/User');
 
-// Middleware to check admin permissions (temporarily disabled for testing)
-const requireAdmin = async (req, res, next) => {
-    try {
-        const userId = req.headers['x-user-id'] || req.query.adminId;
-        if (!userId) {
-            return res.status(401).json({
-                success: false,
-                message: 'Admin ID required'
-            });
-        }
+// Xác thực quản trị thật.
+//
+// Bản cũ chỉ đọc userId từ header x-user-id hoặc query ?adminId= và phần kiểm tra
+// role đã bị comment lại, nên chỉ cần thêm một header bất kỳ là qua được.
+const { requireAdmin: verifyAdmin } = require('../middleware/auth');
 
-        // Temporarily bypass admin role check for testing
-        // const user = await User.findById(userId);
-        // if (!user || user.role !== 'admin') {
-        //     return res.status(403).json({
-        //         success: false,
-        //         message: 'Admin access required'
-        //     });
-        // }
-
-        req.adminId = userId;
+const requireAdmin = (req, res, next) => {
+    return verifyAdmin(req, res, () => {
+        req.adminId = req.user.id; // giữ tên cũ để các handler bên dưới không phải đổi
         next();
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Authentication error',
-            error: error.message
-        });
-    }
+    });
 };
 
 /**

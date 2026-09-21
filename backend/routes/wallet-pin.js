@@ -1,10 +1,40 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const { requireAuth, requireSelfOrAdmin } = require('../middleware/auth');
+
+// Toàn bộ thao tác với PIN ví đều yêu cầu đăng nhập.
+router.use(requireAuth);
+
+// Luôn lấy userId từ token, bỏ qua giá trị client gửi trong body.
+//
+// Trước đây userId đến thẳng từ req.body nên /set-pin có thể đặt PIN lên ví người
+// khác (nếu ví đó chưa có PIN), còn /verify-pin trở thành công cụ dò PIN cho bất kỳ
+// tài khoản nào.
+router.use((req, res, next) => {
+  if (req.body && typeof req.body === 'object') {
+    req.body.userId = req.user.id;
+  }
+  next();
+});
+
+router.param('userId', requireSelfOrAdmin('userId'));
+
+// PIN chỉ có 6 chữ số nên phải giới hạn số lần thử, nếu không sẽ bị vét cạn.
+const pinAttemptLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  skipSuccessfulRequests: true,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.user?.id || req.ip,
+  message: { success: false, error: 'Nhập sai PIN quá nhiều lần. Vui lòng thử lại sau 15 phút.' }
+});
 
 // Set or update wallet PIN
-router.post('/set-pin', async (req, res) => {
+router.post('/set-pin', pinAttemptLimiter, async (req, res) => {
     try {
         const { userId, newPin, currentPin } = req.body;
 
@@ -66,7 +96,7 @@ router.post('/set-pin', async (req, res) => {
 });
 
 // Verify wallet PIN
-router.post('/verify-pin', async (req, res) => {
+router.post('/verify-pin', pinAttemptLimiter, async (req, res) => {
     try {
         const { userId, pin } = req.body;
 
@@ -115,7 +145,7 @@ router.post('/verify-pin', async (req, res) => {
 });
 
 // Toggle PIN enabled/disabled
-router.post('/toggle-pin', async (req, res) => {
+router.post('/toggle-pin', pinAttemptLimiter, async (req, res) => {
     try {
         const { userId, enabled, pin } = req.body;
 
