@@ -1,11 +1,13 @@
 # 🚀 HƯỚNG DẪN CHẠY HỆ THỐNG CMP TRAVEL
 
 ## 📋 Tổng quan hệ thống
-Hệ thống CMP Travel bao gồm 4 thành phần chính:
-1. **Frontend** (Website) - Port 8080
-2. **Backend** (API Server) - Port 3000  
-3. **Chatbot API** (AI Service) - Port 5000
-4. **React Dashboard** (Admin Panel) - Port 5173
+Hệ thống CMP Travel bao gồm 3 service:
+1. **Backend** (API Server + Website) - Port 3000. Backend phục vụ luôn thư mục `frontend`
+2. **Chatbot API** (AI Service) - Port 5000
+3. **React Dashboard** (Admin Panel) - Port 5173
+
+> Không mở website bằng server riêng (ví dụ `python -m http.server 8080`). Nhiều trang gọi
+> API bằng đường dẫn tương đối `/api/...`, nên phải chạy chung port với backend.
 
 ---
 
@@ -23,7 +25,7 @@ python --version  # Cần >= 3.8
 
 ---
 
-## 🚀 CÁCH CHẠY HỆ THỐNG (4 bước)
+## 🚀 CÁCH CHẠY HỆ THỐNG (3 bước)
 
 ### Bước 1: Khởi động Backend (Port 3000)
 ```powershell
@@ -51,29 +53,22 @@ npm run dev
 ```
 **✅ Kiểm tra:** Thấy message "Local: http://localhost:5173/"
 
-### Bước 4: Khởi động Frontend (Port 8080)
-```powershell
-# Terminal 4
-cd frontend
-python -m http.server 8080
-```
-**✅ Kiểm tra:** Thấy message "Serving HTTP on :: port 8080"
-
 ---
 
 ## 🌐 Truy cập hệ thống
 
 ### URLs chính:
-- **Website:** http://localhost:8080
-- **Backend API:** http://localhost:3000
+- **Website:** http://localhost:3000
+- **Backend API:** http://localhost:3000/api
+- **Admin Dashboard:** http://localhost:5173
 - **Chatbot API:** http://localhost:5000/health
 
 ### Test pages có chatbot:
-- http://localhost:8080 (Homepage)
-- http://localhost:8080/detail.html
-- http://localhost:8080/blog.html
-- http://localhost:8080/contact.html
-- http://localhost:8080/login.html
+- http://localhost:3000 (Homepage)
+- http://localhost:3000/detail.html
+- http://localhost:3000/blog.html
+- http://localhost:3000/contact.html
+- http://localhost:3000/login.html
 - ... và 10+ trang khác
 
 ---
@@ -91,7 +86,7 @@ curl http://localhost:5000/health
 ```
 
 ### 3. Test Frontend + Chatbot
-1. Mở http://localhost:8080
+1. Mở http://localhost:3000
 2. Tìm chatbot widget ở góc phải dưới
 3. Click để mở chatbot
 4. Test chat: "Show me tours under $3000"

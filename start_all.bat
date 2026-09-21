@@ -17,7 +17,7 @@ echo                              STARTING ALL SERVICES...
 echo ===============================================================================
 echo.
 
-echo 🔥 Step 1/4: Starting Backend API Server (Port 3000)...
+echo 🔥 Step 1/4: Starting Backend API + Website (Port 3000)...
 start "🏗️ CMP Backend" /D "%~dp0backend" cmd /k "echo ✅ Backend Starting... && npm start"
 
 echo.
@@ -35,23 +35,24 @@ start "📊 Dashboard" /D "%~dp0travelie_dashboard" cmd /k "echo ✅ Dashboard S
 echo.
 timeout /t 3 /nobreak >nul
 
-echo 🌐 Step 4/4: Starting Frontend Website (Port 8080)...
-start "🌐 Frontend" /D "%~dp0frontend" cmd /k "echo ✅ Frontend Starting... && python -m http.server 8080"
+rem Website không cần server riêng: backend (port 3000) phục vụ luôn thư mục frontend.
+rem Trước đây chạy thêm python http.server 8080, nhưng nhiều trang gọi API bằng đường
+rem dẫn tương đối (/api/...) nên ở port 8080 sẽ bị 404.
+echo 🌐 Step 4/4: Website is served by the backend at http://localhost:3000
 
 echo.
 echo ===============================================================================
-echo                                 ✅ ALL SERVICES LAUNCHED!                        
+echo                                 ✅ ALL SERVICES LAUNCHED!
 echo ===============================================================================
 echo.
 echo 📋 Service Status:
-echo    🏗️  Backend API:       http://localhost:3000
+echo    🌐  Website + API:     http://localhost:3000
 echo    🤖  Chatbot API:       http://localhost:5000
 echo    📊  React Dashboard:   http://localhost:5173
-echo    🌐  Website:           http://localhost:8080
 echo.
 echo 💡 What's Next:
 echo    1. Wait 15-20 seconds for all services to fully start
-echo    2. Main Website:       http://localhost:8080
+echo    2. Main Website:       http://localhost:3000
 echo    3. Admin Dashboard:    http://localhost:5173
 echo    4. Test chatbot widget in bottom-right corner
 echo    5. Try: "Show me tours under $3000"
