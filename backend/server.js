@@ -666,55 +666,71 @@ app.get('/api/filters/durations', async (req, res) => {
   }
 });
 
-// Enhanced search suggestions with better formatting
+// Search suggestions cho ô tìm kiếm.
+//
+// Xếp hạng theo độ liên quan rồi mới tới thứ tự bảng chữ cái, thay vì trả về theo
+// thứ tự Mongo tìm thấy (nhìn như ngẫu nhiên với người dùng):
+//   1. Tên tour bắt đầu bằng từ khoá             "par" -> Paris
+//   2. Tên quốc gia bắt đầu bằng từ khoá         "fra" -> France
+//   3. Một từ trong tên tour bắt đầu bằng từ khoá "bay" -> Ha Long Bay
+//   4. Tên tour chứa từ khoá ở giữa từ
+//   5. Quốc gia chứa từ khoá
+//   6. Chỉ khớp ở phần mô tả
+// Trong cùng một nhóm thì sắp xếp A-Z.
 app.get('/api/search/suggestions', async (req, res) => {
   try {
-    const { q } = req.query;
-    
-    if (!q || q.length < 2) {
+    const raw = (req.query.q || '').trim();
+    if (raw.length < 2) {
       return res.json([]);
     }
-    
+
+    // Người dùng có thể gõ ký tự đặc biệt ( * ? ( [ ... ). Nhét thẳng vào regex sẽ
+    // gây lỗi cú pháp hoặc tạo regex chạy rất chậm, nên phải escape trước.
+    const safe = raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const contains = new RegExp(safe, 'i');
+    const startsWith = new RegExp('^' + safe, 'i');
+    const wordStart = new RegExp('\\b' + safe, 'i');
+
+    // Lấy dư rồi mới xếp hạng và cắt, để Mongo không cắt mất kết quả tốt.
     const tours = await Tour.find({
+      status: 'active',
       $or: [
-        { name: { $regex: q, $options: 'i' } },
-        { country: { $regex: q, $options: 'i' } },
-        { description: { $regex: q, $options: 'i' } }
+        { name: contains },
+        { country: contains },
+        { description: contains }
       ]
-    }).limit(8).select('name country id estimatedCost _id rating');
-    
-    const suggestions = tours.map(tour => ({
-      id: tour.id || tour._id,
-      name: tour.name,
-      country: tour.country,
-      estimatedCost: tour.estimatedCost,
-      rating: tour.rating
-    }));
-    
+    })
+      .limit(50)
+      .select('name country id estimatedCost rating _id');
+
+    const rankOf = (tour) => {
+      const name = tour.name || '';
+      const country = tour.country || '';
+      if (startsWith.test(name)) return 1;
+      if (startsWith.test(country)) return 2;
+      if (wordStart.test(name)) return 3;
+      if (contains.test(name)) return 4;
+      if (contains.test(country)) return 5;
+      return 6;
+    };
+
+    const suggestions = tours
+      .map(tour => ({ tour, rank: rankOf(tour) }))
+      .sort((a, b) => a.rank - b.rank || a.tour.name.localeCompare(b.tour.name, 'vi'))
+      .slice(0, 8)
+      .map(({ tour, rank }) => ({
+        id: tour.id || tour._id,
+        name: tour.name,
+        country: tour.country,
+        estimatedCost: tour.estimatedCost,
+        rating: tour.rating,
+        // Cho frontend biết khớp ở đâu để tô đậm đúng chỗ
+        matchIn: rank === 2 || rank === 5 ? 'country' : rank === 6 ? 'description' : 'name'
+      }));
+
     res.json(suggestions);
   } catch (err) {
     console.error('Error fetching suggestions:', err);
-    res.status(500).json({ error: 'Error fetching suggestions' });
-  }
-});
-
-// Search Suggestions API
-app.get('/api/search/suggestions', async (req, res) => {
-  try {
-    const { q } = req.query;
-    if (!q || q.length < 2) {
-      return res.json([]);
-    }
-    
-    const tours = await Tour.find({
-      $or: [
-        { name: { $regex: q, $options: 'i' } },
-        { country: { $regex: q, $options: 'i' } }
-      ]
-    }).limit(5).select('name country id estimatedCost');
-    
-    res.json(tours);
-  } catch (err) {
     res.status(500).json({ error: 'Error fetching suggestions' });
   }
 });

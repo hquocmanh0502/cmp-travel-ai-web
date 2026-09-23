@@ -599,7 +599,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       } else if (buttonClass.contains("rate")) {
         sortedData = sortByRate([...data]);
       } else if (buttonClass.contains("reset")) {
-        // Reset về data gốc (không sort)
+        // Đưa trang về đúng trạng thái lúc mới bấm vào Destination:
+        // bỏ sắp xếp, xoá từ khoá đang tìm, ẩn thông báo không tìm thấy,
+        // và hiện lại toàn bộ danh sách tour.
+        button.classList.remove("selected");
+
+        const searchBox = document.querySelector(".search-input");
+        if (searchBox) searchBox.value = "";
+
+        const alertBox = document.querySelector(".alert-danger");
+        if (alertBox) alertBox.classList.add("d-none");
+
+        // Bỏ luôn tham số ?search=... trên URL, nếu không thì bấm F5 sẽ quay lại
+        // đúng kết quả lọc vừa xoá.
+        if (window.location.search) {
+          history.replaceState({}, "", window.location.pathname);
+        }
+
         sortedData = [...data];
       } else if (buttonClass.contains("for-you")) {
         // AI Personalized Recommendations

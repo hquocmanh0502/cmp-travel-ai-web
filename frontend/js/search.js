@@ -4,21 +4,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const travelTypeSelect = document.getElementById('travel-type-select');
   const durationSelect = document.getElementById('duration-select');
   const submitBtn = document.querySelector('.submit-btn');
-  
+
   let debounceTimer;
   let currentSuggestions = [];
   let selectedIndex = -1;
-  
+  // Giữ lại đúng chuỗi người dùng đã gõ, để khi bấm mũi tên lên quá đầu danh sách
+  // thì trả ô tìm kiếm về nguyên trạng thay vì kẹt ở tên gợi ý.
+  let typedQuery = '';
+
   if (searchInput && suggestionsContainer) {
-    // Load filter options on page load
     loadFilterOptions();
-    
-    // Search input event handler
+
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.trim();
-      
+      typedQuery = e.target.value;
+
       clearTimeout(debounceTimer);
-      
+
       if (query.length >= 2) {
         debounceTimer = setTimeout(() => {
           fetchSuggestions(query);
@@ -27,12 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
         hideSuggestions();
       }
     });
-    
-    // Keyboard navigation
+
     searchInput.addEventListener('keydown', (e) => {
-      if (currentSuggestions.length === 0) return;
-      
-      switch(e.key) {
+      if (currentSuggestions.length === 0) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          performSearch();
+        }
+        return;
+      }
+
+      switch (e.key) {
         case 'ArrowDown':
           e.preventDefault();
           selectedIndex = Math.min(selectedIndex + 1, currentSuggestions.length - 1);
@@ -46,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
         case 'Enter':
           e.preventDefault();
           if (selectedIndex >= 0) {
+            // Lần Enter đầu chỉ chọn gợi ý, chưa tìm. Muốn tìm thì Enter lần nữa
+            // hoặc bấm nút Search.
             selectSuggestion(currentSuggestions[selectedIndex]);
           } else {
             performSearch();
@@ -56,30 +65,41 @@ document.addEventListener('DOMContentLoaded', () => {
           break;
       }
     });
-    
-    // Submit button click
-    submitBtn.addEventListener('click', (e) => {
+
+    // Chọn gợi ý bằng chuột. Dùng mousedown thay vì click vì click xảy ra sau blur,
+    // lúc đó dropdown có thể đã bị đóng.
+    suggestionsContainer.addEventListener('mousedown', (e) => {
+      const item = e.target.closest('.suggestion-item');
+      if (!item) return;
       e.preventDefault();
-      performSearch();
+      const index = Number(item.dataset.index);
+      if (currentSuggestions[index]) {
+        selectSuggestion(currentSuggestions[index]);
+      }
     });
-    
-    // Hide suggestions when clicking outside
+
+    if (submitBtn) {
+      submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        performSearch();
+      });
+    }
+
     document.addEventListener('click', (e) => {
       if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
         hideSuggestions();
       }
     });
   }
-  
-  // Fetch suggestions from API
+
   async function fetchSuggestions(query) {
     try {
       const response = await fetch(`/api/search/suggestions?q=${encodeURIComponent(query)}`);
-      
+
       if (response.ok) {
         const suggestions = await response.json();
         currentSuggestions = suggestions;
-        displaySuggestions(suggestions);
+        displaySuggestions(suggestions, query);
       } else {
         hideSuggestions();
       }
@@ -88,95 +108,101 @@ document.addEventListener('DOMContentLoaded', () => {
       hideSuggestions();
     }
   }
-  
-  // Display suggestions
-  function displaySuggestions(suggestions) {
-    if (suggestions.length === 0) {
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /** Tô đậm đúng đoạn khớp với từ khoá, để thấy rõ vì sao gợi ý được xếp trên. */
+  function highlight(text, query) {
+    const safeText = escapeHtml(text);
+    if (!query) return safeText;
+
+    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return safeText.replace(new RegExp(`(${safeQuery})`, 'i'), '<mark>$1</mark>');
+  }
+
+  function displaySuggestions(suggestions, query) {
+    if (!suggestions || suggestions.length === 0) {
       hideSuggestions();
       return;
     }
-    
+
     suggestionsContainer.innerHTML = suggestions.map((suggestion, index) => `
-      <div class="suggestion-item" data-index="${index}" onclick="selectSuggestionByIndex(${index})">
-        <div class="suggestion-name">${suggestion.name}</div>
-        <div class="suggestion-country">${suggestion.country}</div>
-        <div class="suggestion-price">$${suggestion.estimatedCost}</div>
+      <div class="suggestion-item" data-index="${index}">
+        <div class="suggestion-name">${highlight(suggestion.name, query)}</div>
+        <div class="suggestion-country">${highlight(suggestion.country, query)}</div>
+        <div class="suggestion-price">$${escapeHtml(suggestion.estimatedCost)}</div>
       </div>
-    `).join('');
-    
+    `).join('') + `
+      <div class="suggestion-hint">Chọn một gợi ý rồi bấm Search để tìm</div>
+    `;
+
     suggestionsContainer.style.display = 'block';
     selectedIndex = -1;
   }
-  
-  // Update suggestion selection highlighting
+
   function updateSuggestionSelection() {
     const items = suggestionsContainer.querySelectorAll('.suggestion-item');
+
     items.forEach((item, index) => {
-      if (index === selectedIndex) {
-        item.classList.add('suggestion-active');
-        searchInput.value = currentSuggestions[index].name;
-      } else {
-        item.classList.remove('suggestion-active');
-      }
+      item.classList.toggle('suggestion-active', index === selectedIndex);
     });
+
+    if (selectedIndex >= 0) {
+      searchInput.value = currentSuggestions[selectedIndex].name;
+      items[selectedIndex]?.scrollIntoView({ block: 'nearest' });
+    } else {
+      searchInput.value = typedQuery;
+    }
   }
-  
-  // Select suggestion
+
+  /**
+   * Chọn một gợi ý: chỉ điền tên vào ô tìm kiếm rồi đóng dropdown.
+   *
+   * Trước đây hàm này nhảy thẳng sang detail.html, nên người dùng không kịp chọn
+   * thêm Travel Type / Duration. Giờ muốn đi tiếp phải bấm Search.
+   */
   function selectSuggestion(suggestion) {
     searchInput.value = suggestion.name;
+    typedQuery = suggestion.name;
     hideSuggestions();
-    // Redirect to detail page
-    window.location.href = `detail.html?id=${suggestion.id}`;
+    searchInput.focus();
   }
-  
-  // Select suggestion by index (for onclick)
-  window.selectSuggestionByIndex = function(index) {
-    if (currentSuggestions[index]) {
-      selectSuggestion(currentSuggestions[index]);
-    }
-  };
-  
-  // Hide suggestions
+
   function hideSuggestions() {
     suggestionsContainer.style.display = 'none';
+    suggestionsContainer.innerHTML = '';
     currentSuggestions = [];
     selectedIndex = -1;
   }
-  
-  // Perform search with filters
+
   function performSearch() {
     const query = searchInput.value.trim();
-    const travelType = travelTypeSelect.value;
-    const duration = durationSelect.value;
-    
-    if (query) {
-      let searchUrl = `destination.html?search=${encodeURIComponent(query)}`;
-      
-      if (travelType) {
-        searchUrl += `&type=${encodeURIComponent(travelType)}`;
-      }
-      
-      if (duration) {
-        searchUrl += `&duration=${encodeURIComponent(duration)}`;
-      }
-      
-      window.location.href = searchUrl;
-    } else {
-      window.location.href = 'destination.html';
-    }
+    const travelType = travelTypeSelect ? travelTypeSelect.value : '';
+    const duration = durationSelect ? durationSelect.value : '';
+
+    const params = new URLSearchParams();
+    if (query) params.set('search', query);
+    if (travelType) params.set('type', travelType);
+    if (duration) params.set('duration', duration);
+
+    const qs = params.toString();
+    window.location.href = qs ? `destination.html?${qs}` : 'destination.html';
   }
-  
-  // Load filter options
+
   async function loadFilterOptions() {
     try {
-      // Load travel types
       const travelTypesResponse = await fetch('/api/filters/travel-types');
       if (travelTypesResponse.ok) {
         const travelTypes = await travelTypesResponse.json();
         populateSelect(travelTypeSelect, travelTypes, 'Travel Type');
       }
-      
-      // Load durations
+
       const durationsResponse = await fetch('/api/filters/durations');
       if (durationsResponse.ok) {
         const durations = await durationsResponse.json();
@@ -186,13 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Error loading filter options:', error);
     }
   }
-  
-  // Populate select element
+
   function populateSelect(selectElement, options, placeholder) {
     if (!selectElement) return;
-    
+
     selectElement.innerHTML = `<option value="">${placeholder}</option>`;
-    
+
     if (Array.isArray(options)) {
       options.forEach(option => {
         const optionElement = document.createElement('option');
