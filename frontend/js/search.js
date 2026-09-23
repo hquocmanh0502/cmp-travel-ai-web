@@ -53,8 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         case 'Enter':
           e.preventDefault();
           if (selectedIndex >= 0) {
-            // Lần Enter đầu chỉ chọn gợi ý, chưa tìm. Muốn tìm thì Enter lần nữa
-            // hoặc bấm nút Search.
+            // Enter khi đang chọn một gợi ý: vào thẳng tour đó.
             selectSuggestion(currentSuggestions[selectedIndex]);
           } else {
             performSearch();
@@ -138,9 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="suggestion-country">${highlight(suggestion.country, query)}</div>
         <div class="suggestion-price">$${escapeHtml(suggestion.estimatedCost)}</div>
       </div>
-    `).join('') + `
-      <div class="suggestion-hint">Chọn một gợi ý rồi bấm Search để tìm</div>
-    `;
+    `).join('');
 
     suggestionsContainer.style.display = 'block';
     selectedIndex = -1;
@@ -162,16 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
-   * Chọn một gợi ý: chỉ điền tên vào ô tìm kiếm rồi đóng dropdown.
-   *
-   * Trước đây hàm này nhảy thẳng sang detail.html, nên người dùng không kịp chọn
-   * thêm Travel Type / Duration. Giờ muốn đi tiếp phải bấm Search.
+   * Chọn một gợi ý: đi thẳng tới trang chi tiết của tour đó.
    */
   function selectSuggestion(suggestion) {
     searchInput.value = suggestion.name;
-    typedQuery = suggestion.name;
     hideSuggestions();
-    searchInput.focus();
+    window.location.href = `detail.html?id=${encodeURIComponent(suggestion.id)}`;
   }
 
   function hideSuggestions() {

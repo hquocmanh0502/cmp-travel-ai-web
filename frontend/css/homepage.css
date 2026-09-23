@@ -32,12 +32,13 @@ a {
 /*
  * Slideshow nen.
  *
- * Ban cu animate thang background-image trong @keyframes. Thuoc tinh nay khong noi
- * suy duoc nen trinh duyet nhay dot ngot giua cac anh, va chi bat dau tai anh moi
- * dung luc chuyen - vi vay man hinh bi xam mot luc.
+ * Ban cu animate thang background-image trong @keyframes. Trinh duyet chi bat dau
+ * tai anh dung luc chuyen sang no, ma 4 anh nay rat nang, nen man hinh bi xam
+ * trong luc cho tai.
  *
- * Cach nay dat 4 lop chong len nhau, moi lop giu san mot anh va chi doi opacity.
- * Ca 4 anh duoc tai ngay tu dau, va hai lop mo chong nhau nen khong co khoang trong.
+ * Cach nay van doi anh dut khoat y het ban cu (khong mo dan), nhung 4 anh duoc dat
+ * san thanh 4 lop chong len nhau va tai het ngay tu dau, nen khong con khoang xam.
+ * step-end lam opacity nhay thang 1 -> 0, khong noi suy.
  */
 .header-slideshow {
     position: absolute;
@@ -53,45 +54,37 @@ a {
     background-repeat: no-repeat;
     background-attachment: fixed; /* giu hieu ung parallax nhu ban cu */
     opacity: 0;
-    animation: headerCrossfade 32s infinite;
-    will-change: opacity;
+    animation: headerSlideshow 20s step-end infinite;
 }
 
+/* Thu tu anh giu nguyen nhu ban cu: 4 -> 1 -> 2 -> 3, moi anh 5 giay */
 .header-slide:nth-child(1) {
     background-image: url("../images/homepage-image/header-image-4.jpg");
     animation-delay: 0s;
-    opacity: 1; /* lop dau hien san, tranh nhap nhay o frame dau tien */
 }
 .header-slide:nth-child(2) {
     background-image: url("../images/homepage-image/header-image-1.jpg");
-    animation-delay: 8s;
+    animation-delay: 5s;
 }
 .header-slide:nth-child(3) {
     background-image: url("../images/homepage-image/header-image-2.jpg");
-    animation-delay: 16s;
+    animation-delay: 10s;
 }
 .header-slide:nth-child(4) {
     background-image: url("../images/homepage-image/header-image-3.jpg");
-    animation-delay: 24s;
+    animation-delay: 15s;
 }
 
-/* 4 anh x 8s = 32s. Moi anh hien ro 8s, chuyen tiep mo dan 1.5s. */
-@keyframes headerCrossfade {
-    0%     { opacity: 0; }
-    1.5%   { opacity: 1; }
-    25%    { opacity: 1; }
-    26.5%  { opacity: 0; }
-    100%   { opacity: 0; }
+@keyframes headerSlideshow {
+    0%   { opacity: 1; }
+    25%  { opacity: 0; }
+    100% { opacity: 0; }
 }
 
 /* Ton trong cai dat giam chuyen dong cua he dieu hanh */
 @media (prefers-reduced-motion: reduce) {
-    .header-slide {
-        animation: none;
-    }
-    .header-slide:nth-child(1) {
-        opacity: 1;
-    }
+    .header-slide { animation: none; }
+    .header-slide:nth-child(1) { opacity: 1; }
 }
 
 .overlay {
@@ -362,17 +355,6 @@ a {
     color: #DF6951 !important;
     font-weight: 600;
     padding: 0;
-}
-
-/* Dong nhac o cuoi dropdown: chon goi y chua tim ngay */
-.search-suggestions .suggestion-hint {
-    padding: 8px 15px;
-    font-size: 12px;
-    color: #888 !important;
-    background: #fafafa;
-    border-top: 1px solid #eee;
-    text-align: center;
-    cursor: default;
 }
 
 /* CUSTOMER SECTION */

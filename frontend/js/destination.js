@@ -361,6 +361,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  // Ban sao thu tu goc luc moi vao trang. Nut "For You" ghi de truc tiep len mang
+  // data (data.length = 0; data.push(...)), nen neu khong giu ban sao nay thi sau khi
+  // bam For You se khong con gi de Reset ve.
+  const originalOrder = [...data];
+
   const itemsPerPage = 9;
   var currentPage = 1;
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -616,7 +621,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           history.replaceState({}, "", window.location.pathname);
         }
 
-        sortedData = [...data];
+        // Xoa badge "% Match" ma For You gan vao tung tour
+        originalOrder.forEach((tour) => { delete tour.aiMatch; });
+
+        // Tra mang data ve dung thu tu ban dau
+        data.length = 0;
+        data.push(...originalOrder);
+
+        sortedData = [...originalOrder];
       } else if (buttonClass.contains("for-you")) {
         // AI Personalized Recommendations
         await sortByAIRecommendations(data, button);
