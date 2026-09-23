@@ -146,7 +146,7 @@ def create_tour_documents(tours, base_path, hotels=None, guides=None):
             if stay:
                 parts.append("  Overnight: {0}".format(stay.get('name', '')))
             itinerary_lines.append('\n'.join(parts))
-        itinerary_text = '\n'.join(itinerary_lines) if itinerary_lines else 'Đang cập nhật.'
+        itinerary_text = '\n'.join(itinerary_lines) if itinerary_lines else 'To be updated.'
 
         # Khách sạn sử dụng trong tour
         hotel_lines = []
@@ -156,10 +156,10 @@ def create_tour_documents(tours, base_path, hotels=None, guides=None):
                 continue
             details = h.get('details') or {}
             pr = details.get('priceRange') or {}
-            hotel_lines.append("- {0} ({1} sao, {2} USD/đêm)".format(
+            hotel_lines.append("- {0} ({1}-star, {2} USD/night)".format(
                 h.get('name', ''), details.get('starRating', '?'),
                 "{0}-{1}".format(pr.get('min', '?'), pr.get('max', '?'))))
-        hotels_text = '\n'.join(hotel_lines) if hotel_lines else 'Đang cập nhật.'
+        hotels_text = '\n'.join(hotel_lines) if hotel_lines else 'To be updated.'
 
         # Hướng dẫn viên phụ trách
         guide_lines = []
@@ -167,18 +167,18 @@ def create_tour_documents(tours, base_path, hotels=None, guides=None):
             g = guide_by_id.get(str(gid))
             if not g:
                 continue
-            guide_lines.append("- {0} (ngôn ngữ: {1})".format(
+            guide_lines.append("- {0} (languages: {1})".format(
                 g.get('name', ''), ', '.join(g.get('languages') or [])))
-        guides_text = '\n'.join(guide_lines) if guide_lines else 'Sẽ được sắp xếp khi đặt tour.'
+        guides_text = '\n'.join(guide_lines) if guide_lines else 'Assigned at the time of booking.'
 
         # Vài ngày khởi hành gần nhất
         departures = []
         for slot in (tour_clean.get('availability') or [])[:5]:
             start = slot.get('startDate')
             start_str = start.strftime('%d/%m/%Y') if hasattr(start, 'strftime') else str(start)[:10]
-            departures.append("{0} (còn {1} chỗ, {2} USD)".format(
+            departures.append("{0} ({1} seats left, {2} USD)".format(
                 start_str, slot.get('availableSlots', '?'), slot.get('price', price)))
-        departures_text = ', '.join(departures) if departures else 'Liên hệ để biết lịch khởi hành.'
+        departures_text = ', '.join(departures) if departures else 'Contact us for departure dates.'
 
         content = """
 TOUR: {name} - {country}
@@ -189,9 +189,9 @@ Country: {country}
 Duration: {duration}
 Tour type: {ttype}
 Difficulty: {difficulty}
-Price: {price} USD/người lớn{child}
+Price: {price} USD per adult{child}
 Rating: {rating}/5
-Group size: tối đa {group} người | Độ tuổi tối thiểu: {min_age}
+Group size: max {group} people | Minimum age: {min_age}
 Best time to visit: {best_time}
 Tags: {tags}
 
@@ -231,11 +231,11 @@ Email: booking@cmp-travel.com
             ttype=tour_clean.get('type', ''),
             difficulty=tour_clean.get('difficulty', 'moderate'),
             price=price,
-            child=" | trẻ em: {0} USD".format(child_price) if child_price else "",
+            child=" | child: {0} USD".format(child_price) if child_price else "",
             rating=tour_clean.get('rating', 0),
             group=tour_clean.get('maxGroupSize', 20),
             min_age=tour_clean.get('minAge', 0),
-            best_time=', '.join(best_time) if best_time else 'Quanh năm',
+            best_time=', '.join(best_time) if best_time else 'All year round',
             tags=', '.join(tags) if tags else '-',
             attractions='\n'.join("- {0}".format(a) for a in attractions) if attractions else '-',
             food='\n'.join("- {0}".format(f) for f in food) if food else '-',

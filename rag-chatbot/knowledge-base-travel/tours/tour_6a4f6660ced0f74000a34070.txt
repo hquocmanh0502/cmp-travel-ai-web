@@ -6,9 +6,9 @@ Country: Italy
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Price: 6000 USD per adult | child: 4200 USD
 Rating: 4.3/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, luxury, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Gelato
 
 Detailed itinerary:
-Day 1: Đến Rome
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Rome, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Rome
-  Meals: Bữa tối
+Day 1: Arrival in Rome
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Rome.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Rome
+  Meals: Dinner
   Overnight: Rome Grand Hotel
-Day 2: Khám phá Colosseum
-  Tham quan Colosseum cùng hướng dẫn viên. Buổi chiều thưởng thức Pizza và có thời gian tự do khám phá Rome.
-  Activities: Tham quan Colosseum, Chụp ảnh tại các điểm đẹp, Thưởng thức Pizza
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Colosseum
+  Guided visit to Colosseum. In the afternoon you will taste Pizza and have free time to explore Rome at your own pace.
+  Activities: Guided visit to Colosseum, City sightseeing, Taste Pizza
+  Meals: Breakfast, Lunch
   Overnight: Rome Grand Hotel
-Day 3: Khám phá Vatican City
-  Tham quan Vatican City cùng hướng dẫn viên. Buổi chiều thưởng thức Pasta Carbonara và có thời gian tự do khám phá Rome.
-  Activities: Tham quan Vatican City, Chụp ảnh tại các điểm đẹp, Thưởng thức Pasta Carbonara
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Vatican City
+  Guided visit to Vatican City. In the afternoon you will taste Pasta Carbonara and have free time to explore Rome at your own pace.
+  Activities: Guided visit to Vatican City, City sightseeing, Taste Pasta Carbonara
+  Meals: Breakfast, Lunch
   Overnight: Rome Grand Hotel
-Day 4: Khám phá Trevi Fountain
-  Tham quan Trevi Fountain cùng hướng dẫn viên. Buổi chiều thưởng thức Gelato và có thời gian tự do khám phá Rome.
-  Activities: Tham quan Trevi Fountain, Chụp ảnh tại các điểm đẹp, Thưởng thức Gelato
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Trevi Fountain
+  Guided visit to Trevi Fountain. In the afternoon you will taste Gelato and have free time to explore Rome at your own pace.
+  Activities: Guided visit to Trevi Fountain, City sightseeing, Taste Gelato
+  Meals: Breakfast, Lunch
   Overnight: Rome Grand Hotel
-Day 5: Tạm biệt Rome
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Rome
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Italy.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Rome Grand Hotel (5 sao, 150-360 USD/đêm)
-- Rome City Suites (4 sao, 190-456 USD/đêm)
+- Rome Grand Hotel (5-star, 150-360 USD/night)
+- Rome City Suites (4-star, 190-456 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+23/09/2026 (20 seats left, 6000 USD), 09/10/2026 (20 seats left, 6000 USD), 23/10/2026 (20 seats left, 6000 USD), 09/11/2026 (20 seats left, 6000 USD), 23/11/2026 (20 seats left, 6000 USD)
 
 Package includes:
 - Accommodation

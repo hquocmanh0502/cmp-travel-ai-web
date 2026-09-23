@@ -1787,7 +1787,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tabContent.innerHTML = `
                 <div class="alert alert-light border text-center my-3">
                     <i class="fas fa-route mb-2" style="font-size:24px;color:#ff6600"></i>
-                    <p class="mb-0">Lịch trình chi tiết của tour này đang được cập nhật.</p>
+                    <p class="mb-0">The detailed itinerary for this tour is being updated.</p>
                 </div>`;
             return;
         }
@@ -1832,12 +1832,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Bua an va noi luu tru cua ngay do (accommodation da duoc populate o API)
             const mealsHTML = (day.meals && day.meals.length)
-                ? `<div class="day-meals"><i class="fas fa-utensils"></i> Bữa ăn: ${day.meals.join(", ")}</div>`
+                ? `<div class="day-meals"><i class="fas fa-utensils"></i> Meals: ${day.meals.join(", ")}</div>`
                 : "";
 
             const hotelName = day.accommodation && day.accommodation.name ? day.accommodation.name : null;
             const stayHTML = hotelName
-                ? `<div class="day-stay"><i class="fas fa-bed"></i> Nghỉ đêm tại: <strong>${hotelName}</strong></div>`
+                ? `<div class="day-stay"><i class="fas fa-bed"></i> Overnight: <strong>${hotelName}</strong></div>`
                 : "";
 
             contentHTML += `

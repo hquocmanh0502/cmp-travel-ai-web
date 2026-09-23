@@ -6,9 +6,9 @@ Country: Spain
 Duration: 5 days
 Tour type: international
 Difficulty: moderate
-Price: 6500 USD/người lớn | trẻ em: 4550 USD
+Price: 6500 USD per adult | child: 4550 USD
 Rating: 4.3/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: spain, luxury, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Churros
 
 Detailed itinerary:
-Day 1: Đến Barcelona
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Barcelona, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Barcelona
-  Meals: Bữa tối
+Day 1: Arrival in Barcelona
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Barcelona.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Barcelona
+  Meals: Dinner
   Overnight: Barcelona Grand Hotel
-Day 2: Khám phá Sagrada Familia
-  Tham quan Sagrada Familia cùng hướng dẫn viên. Buổi chiều thưởng thức Tapas và có thời gian tự do khám phá Barcelona.
-  Activities: Tham quan Sagrada Familia, Chụp ảnh tại các điểm đẹp, Thưởng thức Tapas
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Sagrada Familia
+  Guided visit to Sagrada Familia. In the afternoon you will taste Tapas and have free time to explore Barcelona at your own pace.
+  Activities: Guided visit to Sagrada Familia, City sightseeing, Taste Tapas
+  Meals: Breakfast, Lunch
   Overnight: Barcelona Grand Hotel
-Day 3: Khám phá Park Güell
-  Tham quan Park Güell cùng hướng dẫn viên. Buổi chiều thưởng thức Paella và có thời gian tự do khám phá Barcelona.
-  Activities: Tham quan Park Güell, Chụp ảnh tại các điểm đẹp, Thưởng thức Paella
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Park Güell
+  Guided visit to Park Güell. In the afternoon you will taste Paella and have free time to explore Barcelona at your own pace.
+  Activities: Guided visit to Park Güell, City sightseeing, Taste Paella
+  Meals: Breakfast, Lunch
   Overnight: Barcelona Grand Hotel
-Day 4: Khám phá Gothic Quarter
-  Tham quan Gothic Quarter cùng hướng dẫn viên. Buổi chiều thưởng thức Churros và có thời gian tự do khám phá Barcelona.
-  Activities: Tham quan Gothic Quarter, Chụp ảnh tại các điểm đẹp, Thưởng thức Churros
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Gothic Quarter
+  Guided visit to Gothic Quarter. In the afternoon you will taste Churros and have free time to explore Barcelona at your own pace.
+  Activities: Guided visit to Gothic Quarter, City sightseeing, Taste Churros
+  Meals: Breakfast, Lunch
   Overnight: Barcelona Grand Hotel
-Day 5: Tạm biệt Barcelona
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Spain.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Barcelona
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Spain.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Barcelona Grand Hotel (5 sao, 163-391 USD/đêm)
-- Barcelona City Suites (4 sao, 203-487 USD/đêm)
+- Barcelona Grand Hotel (5-star, 163-391 USD/night)
+- Barcelona City Suites (4-star, 203-487 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 6500 USD), 09/10/2026 (còn 20 chỗ, 6500 USD), 23/10/2026 (còn 20 chỗ, 6500 USD), 09/11/2026 (còn 20 chỗ, 6500 USD), 23/11/2026 (còn 20 chỗ, 6500 USD)
+23/09/2026 (20 seats left, 6500 USD), 09/10/2026 (20 seats left, 6500 USD), 23/10/2026 (20 seats left, 6500 USD), 09/11/2026 (20 seats left, 6500 USD), 23/11/2026 (20 seats left, 6500 USD)
 
 Package includes:
 - Accommodation

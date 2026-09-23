@@ -6,9 +6,9 @@ Country: Italy
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Price: 5500 USD per adult | child: 3850 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, luxury, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Gelato
 
 Detailed itinerary:
-Day 1: Đến Florence
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Florence, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Florence
-  Meals: Bữa tối
+Day 1: Arrival in Florence
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Florence.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Florence
+  Meals: Dinner
   Overnight: Florence Grand Hotel
-Day 2: Khám phá Uffizi Gallery
-  Tham quan Uffizi Gallery cùng hướng dẫn viên. Buổi chiều thưởng thức Bistecca alla Fiorentina và có thời gian tự do khám phá Florence.
-  Activities: Tham quan Uffizi Gallery, Chụp ảnh tại các điểm đẹp, Thưởng thức Bistecca alla Fiorentina
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Uffizi Gallery
+  Guided visit to Uffizi Gallery. In the afternoon you will taste Bistecca alla Fiorentina and have free time to explore Florence at your own pace.
+  Activities: Guided visit to Uffizi Gallery, City sightseeing, Taste Bistecca alla Fiorentina
+  Meals: Breakfast, Lunch
   Overnight: Florence Grand Hotel
-Day 3: Khám phá Duomo
-  Tham quan Duomo cùng hướng dẫn viên. Buổi chiều thưởng thức Ribollita và có thời gian tự do khám phá Florence.
-  Activities: Tham quan Duomo, Chụp ảnh tại các điểm đẹp, Thưởng thức Ribollita
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Duomo
+  Guided visit to Duomo. In the afternoon you will taste Ribollita and have free time to explore Florence at your own pace.
+  Activities: Guided visit to Duomo, City sightseeing, Taste Ribollita
+  Meals: Breakfast, Lunch
   Overnight: Florence Grand Hotel
-Day 4: Khám phá Ponte Vecchio
-  Tham quan Ponte Vecchio cùng hướng dẫn viên. Buổi chiều thưởng thức Gelato và có thời gian tự do khám phá Florence.
-  Activities: Tham quan Ponte Vecchio, Chụp ảnh tại các điểm đẹp, Thưởng thức Gelato
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Ponte Vecchio
+  Guided visit to Ponte Vecchio. In the afternoon you will taste Gelato and have free time to explore Florence at your own pace.
+  Activities: Guided visit to Ponte Vecchio, City sightseeing, Taste Gelato
+  Meals: Breakfast, Lunch
   Overnight: Florence Grand Hotel
-Day 5: Tạm biệt Florence
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Florence
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Italy.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Florence Grand Hotel (5 sao, 138-331 USD/đêm)
-- Florence City Suites (4 sao, 178-427 USD/đêm)
+- Florence Grand Hotel (5-star, 138-331 USD/night)
+- Florence City Suites (4-star, 178-427 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+23/09/2026 (20 seats left, 5500 USD), 09/10/2026 (20 seats left, 5500 USD), 23/10/2026 (20 seats left, 5500 USD), 09/11/2026 (20 seats left, 5500 USD), 23/11/2026 (20 seats left, 5500 USD)
 
 Package includes:
 - Accommodation

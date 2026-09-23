@@ -6,9 +6,9 @@ Country: France
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Price: 5500 USD per adult | child: 3850 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, luxury, popular
 
@@ -23,41 +23,41 @@ Local food:
 - Tarte Tatin
 
 Detailed itinerary:
-Day 1: Đến Lyon
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Lyon, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Lyon
-  Meals: Bữa tối
+Day 1: Arrival in Lyon
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Lyon.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Lyon
+  Meals: Dinner
   Overnight: Lyon Grand Hotel
-Day 2: Khám phá Basilica of Notre-Dame de Fourvière
-  Tham quan Basilica of Notre-Dame de Fourvière cùng hướng dẫn viên. Buổi chiều thưởng thức Coq au Vin và có thời gian tự do khám phá Lyon.
-  Activities: Tham quan Basilica of Notre-Dame de Fourvière, Chụp ảnh tại các điểm đẹp, Thưởng thức Coq au Vin
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Basilica of Notre-Dame de Fourvière
+  Guided visit to Basilica of Notre-Dame de Fourvière. In the afternoon you will taste Coq au Vin and have free time to explore Lyon at your own pace.
+  Activities: Guided visit to Basilica of Notre-Dame de Fourvière, City sightseeing, Taste Coq au Vin
+  Meals: Breakfast, Lunch
   Overnight: Lyon Grand Hotel
-Day 3: Khám phá Vieux Lyon
-  Tham quan Vieux Lyon cùng hướng dẫn viên. Buổi chiều thưởng thức Quenelle và có thời gian tự do khám phá Lyon.
-  Activities: Tham quan Vieux Lyon, Chụp ảnh tại các điểm đẹp, Thưởng thức Quenelle
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Vieux Lyon
+  Guided visit to Vieux Lyon. In the afternoon you will taste Quenelle and have free time to explore Lyon at your own pace.
+  Activities: Guided visit to Vieux Lyon, City sightseeing, Taste Quenelle
+  Meals: Breakfast, Lunch
   Overnight: Lyon Grand Hotel
-Day 4: Khám phá Musée des Confluences
-  Tham quan Musée des Confluences cùng hướng dẫn viên. Buổi chiều thưởng thức Tarte Tatin và có thời gian tự do khám phá Lyon.
-  Activities: Tham quan Musée des Confluences, Chụp ảnh tại các điểm đẹp, Thưởng thức Tarte Tatin
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Musée des Confluences
+  Guided visit to Musée des Confluences. In the afternoon you will taste Tarte Tatin and have free time to explore Lyon at your own pace.
+  Activities: Guided visit to Musée des Confluences, City sightseeing, Taste Tarte Tatin
+  Meals: Breakfast, Lunch
   Overnight: Lyon Grand Hotel
-Day 5: Tạm biệt Lyon
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Lyon
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in France.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Lyon Grand Hotel (5 sao, 138-331 USD/đêm)
-- Lyon City Suites (4 sao, 178-427 USD/đêm)
+- Lyon Grand Hotel (5-star, 138-331 USD/night)
+- Lyon City Suites (4-star, 178-427 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+23/09/2026 (20 seats left, 5500 USD), 09/10/2026 (20 seats left, 5500 USD), 23/10/2026 (20 seats left, 5500 USD), 09/11/2026 (20 seats left, 5500 USD), 23/11/2026 (20 seats left, 5500 USD)
 
 Package includes:
 - Accommodation

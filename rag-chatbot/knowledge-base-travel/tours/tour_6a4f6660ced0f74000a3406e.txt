@@ -6,9 +6,9 @@ Country: Germany
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Price: 6000 USD per adult | child: 4200 USD
 Rating: 3.8/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: germany, luxury, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Berliner Pfannkuchen
 
 Detailed itinerary:
-Day 1: Đến Berlin
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Berlin, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Berlin
-  Meals: Bữa tối
+Day 1: Arrival in Berlin
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Berlin.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Berlin
+  Meals: Dinner
   Overnight: Berlin Grand Hotel
-Day 2: Khám phá Brandenburg Gate
-  Tham quan Brandenburg Gate cùng hướng dẫn viên. Buổi chiều thưởng thức Currywurst và có thời gian tự do khám phá Berlin.
-  Activities: Tham quan Brandenburg Gate, Chụp ảnh tại các điểm đẹp, Thưởng thức Currywurst
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Brandenburg Gate
+  Guided visit to Brandenburg Gate. In the afternoon you will taste Currywurst and have free time to explore Berlin at your own pace.
+  Activities: Guided visit to Brandenburg Gate, City sightseeing, Taste Currywurst
+  Meals: Breakfast, Lunch
   Overnight: Berlin Grand Hotel
-Day 3: Khám phá Berlin Wall
-  Tham quan Berlin Wall cùng hướng dẫn viên. Buổi chiều thưởng thức Schnitzel và có thời gian tự do khám phá Berlin.
-  Activities: Tham quan Berlin Wall, Chụp ảnh tại các điểm đẹp, Thưởng thức Schnitzel
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Berlin Wall
+  Guided visit to Berlin Wall. In the afternoon you will taste Schnitzel and have free time to explore Berlin at your own pace.
+  Activities: Guided visit to Berlin Wall, City sightseeing, Taste Schnitzel
+  Meals: Breakfast, Lunch
   Overnight: Berlin Grand Hotel
-Day 4: Khám phá Museum Island
-  Tham quan Museum Island cùng hướng dẫn viên. Buổi chiều thưởng thức Berliner Pfannkuchen và có thời gian tự do khám phá Berlin.
-  Activities: Tham quan Museum Island, Chụp ảnh tại các điểm đẹp, Thưởng thức Berliner Pfannkuchen
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Museum Island
+  Guided visit to Museum Island. In the afternoon you will taste Berliner Pfannkuchen and have free time to explore Berlin at your own pace.
+  Activities: Guided visit to Museum Island, City sightseeing, Taste Berliner Pfannkuchen
+  Meals: Breakfast, Lunch
   Overnight: Berlin Grand Hotel
-Day 5: Tạm biệt Berlin
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Germany.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Berlin
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Germany.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Berlin Grand Hotel (5 sao, 150-360 USD/đêm)
-- Berlin City Suites (4 sao, 190-456 USD/đêm)
+- Berlin Grand Hotel (5-star, 150-360 USD/night)
+- Berlin City Suites (4-star, 190-456 USD/night)
 
 Tour guides:
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+23/09/2026 (20 seats left, 6000 USD), 09/10/2026 (20 seats left, 6000 USD), 23/10/2026 (20 seats left, 6000 USD), 09/11/2026 (20 seats left, 6000 USD), 23/11/2026 (20 seats left, 6000 USD)
 
 Package includes:
 - Accommodation

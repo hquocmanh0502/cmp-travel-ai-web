@@ -6,9 +6,9 @@ Country: Canada
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Smoked Meat Sandwich
 
 Detailed itinerary:
-Day 1: Đến Montreal
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Montreal, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Montreal
-  Meals: Bữa tối
+Day 1: Arrival in Montreal
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Montreal.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Montreal
+  Meals: Dinner
   Overnight: Montreal Grand Hotel
-Day 2: Khám phá Old Montreal
-  Tham quan Old Montreal cùng hướng dẫn viên. Buổi chiều thưởng thức Bagels và có thời gian tự do khám phá Montreal.
-  Activities: Tham quan Old Montreal, Chụp ảnh tại các điểm đẹp, Thưởng thức Bagels
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Old Montreal
+  Guided visit to Old Montreal. In the afternoon you will taste Bagels and have free time to explore Montreal at your own pace.
+  Activities: Guided visit to Old Montreal, City sightseeing, Taste Bagels
+  Meals: Breakfast, Lunch
   Overnight: Montreal Grand Hotel
-Day 3: Khám phá Montreal Museum of Fine Arts
-  Tham quan Montreal Museum of Fine Arts cùng hướng dẫn viên. Buổi chiều thưởng thức Poutine và có thời gian tự do khám phá Montreal.
-  Activities: Tham quan Montreal Museum of Fine Arts, Chụp ảnh tại các điểm đẹp, Thưởng thức Poutine
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Montreal Museum of Fine Arts
+  Guided visit to Montreal Museum of Fine Arts. In the afternoon you will taste Poutine and have free time to explore Montreal at your own pace.
+  Activities: Guided visit to Montreal Museum of Fine Arts, City sightseeing, Taste Poutine
+  Meals: Breakfast, Lunch
   Overnight: Montreal Grand Hotel
-Day 4: Khám phá Mount Royal Park
-  Tham quan Mount Royal Park cùng hướng dẫn viên. Buổi chiều thưởng thức Smoked Meat Sandwich và có thời gian tự do khám phá Montreal.
-  Activities: Tham quan Mount Royal Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Smoked Meat Sandwich
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Mount Royal Park
+  Guided visit to Mount Royal Park. In the afternoon you will taste Smoked Meat Sandwich and have free time to explore Montreal at your own pace.
+  Activities: Guided visit to Mount Royal Park, City sightseeing, Taste Smoked Meat Sandwich
+  Meals: Breakfast, Lunch
   Overnight: Montreal Grand Hotel
-Day 5: Tạm biệt Montreal
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Montreal
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Canada.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Montreal Grand Hotel (5 sao, 100-240 USD/đêm)
-- Montreal City Suites (4 sao, 140-336 USD/đêm)
+- Montreal Grand Hotel (5-star, 100-240 USD/night)
+- Montreal City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation

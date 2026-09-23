@@ -6,9 +6,9 @@ Country: Netherlands
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: netherlands, budget, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Herring
 
 Detailed itinerary:
-Day 1: Đến Amsterdam
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Amsterdam, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Amsterdam
-  Meals: Bữa tối
+Day 1: Arrival in Amsterdam
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Amsterdam.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Amsterdam
+  Meals: Dinner
   Overnight: Amsterdam Grand Hotel
-Day 2: Khám phá Rijksmuseum
-  Tham quan Rijksmuseum cùng hướng dẫn viên. Buổi chiều thưởng thức Stroopwafel và có thời gian tự do khám phá Amsterdam.
-  Activities: Tham quan Rijksmuseum, Chụp ảnh tại các điểm đẹp, Thưởng thức Stroopwafel
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Rijksmuseum
+  Guided visit to Rijksmuseum. In the afternoon you will taste Stroopwafel and have free time to explore Amsterdam at your own pace.
+  Activities: Guided visit to Rijksmuseum, City sightseeing, Taste Stroopwafel
+  Meals: Breakfast, Lunch
   Overnight: Amsterdam Grand Hotel
-Day 3: Khám phá Van Gogh Museum
-  Tham quan Van Gogh Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Poffertjes và có thời gian tự do khám phá Amsterdam.
-  Activities: Tham quan Van Gogh Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Poffertjes
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Van Gogh Museum
+  Guided visit to Van Gogh Museum. In the afternoon you will taste Poffertjes and have free time to explore Amsterdam at your own pace.
+  Activities: Guided visit to Van Gogh Museum, City sightseeing, Taste Poffertjes
+  Meals: Breakfast, Lunch
   Overnight: Amsterdam Grand Hotel
-Day 4: Khám phá Anne Frank House
-  Tham quan Anne Frank House cùng hướng dẫn viên. Buổi chiều thưởng thức Herring và có thời gian tự do khám phá Amsterdam.
-  Activities: Tham quan Anne Frank House, Chụp ảnh tại các điểm đẹp, Thưởng thức Herring
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Anne Frank House
+  Guided visit to Anne Frank House. In the afternoon you will taste Herring and have free time to explore Amsterdam at your own pace.
+  Activities: Guided visit to Anne Frank House, City sightseeing, Taste Herring
+  Meals: Breakfast, Lunch
   Overnight: Amsterdam Grand Hotel
-Day 5: Tạm biệt Amsterdam
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Netherlands.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Amsterdam
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Netherlands.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Amsterdam Grand Hotel (5 sao, 100-240 USD/đêm)
-- Amsterdam City Suites (4 sao, 140-336 USD/đêm)
+- Amsterdam Grand Hotel (5-star, 100-240 USD/night)
+- Amsterdam City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation

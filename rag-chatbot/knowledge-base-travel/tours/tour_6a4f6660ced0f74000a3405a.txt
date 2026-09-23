@@ -6,9 +6,9 @@ Country: Canada
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.6/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Nanaimo Bar
 
 Detailed itinerary:
-Day 1: Đến Vancouver
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Vancouver, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Vancouver
-  Meals: Bữa tối
+Day 1: Arrival in Vancouver
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Vancouver.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Vancouver
+  Meals: Dinner
   Overnight: Vancouver Grand Hotel
-Day 2: Khám phá Stanley Park
-  Tham quan Stanley Park cùng hướng dẫn viên. Buổi chiều thưởng thức Salmon và có thời gian tự do khám phá Vancouver.
-  Activities: Tham quan Stanley Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Salmon
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Stanley Park
+  Guided visit to Stanley Park. In the afternoon you will taste Salmon and have free time to explore Vancouver at your own pace.
+  Activities: Guided visit to Stanley Park, City sightseeing, Taste Salmon
+  Meals: Breakfast, Lunch
   Overnight: Vancouver Grand Hotel
-Day 3: Khám phá Granville Island
-  Tham quan Granville Island cùng hướng dẫn viên. Buổi chiều thưởng thức Japadog và có thời gian tự do khám phá Vancouver.
-  Activities: Tham quan Granville Island, Chụp ảnh tại các điểm đẹp, Thưởng thức Japadog
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Granville Island
+  Guided visit to Granville Island. In the afternoon you will taste Japadog and have free time to explore Vancouver at your own pace.
+  Activities: Guided visit to Granville Island, City sightseeing, Taste Japadog
+  Meals: Breakfast, Lunch
   Overnight: Vancouver Grand Hotel
-Day 4: Khám phá Capilano Suspension Bridge
-  Tham quan Capilano Suspension Bridge cùng hướng dẫn viên. Buổi chiều thưởng thức Nanaimo Bar và có thời gian tự do khám phá Vancouver.
-  Activities: Tham quan Capilano Suspension Bridge, Chụp ảnh tại các điểm đẹp, Thưởng thức Nanaimo Bar
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Capilano Suspension Bridge
+  Guided visit to Capilano Suspension Bridge. In the afternoon you will taste Nanaimo Bar and have free time to explore Vancouver at your own pace.
+  Activities: Guided visit to Capilano Suspension Bridge, City sightseeing, Taste Nanaimo Bar
+  Meals: Breakfast, Lunch
   Overnight: Vancouver Grand Hotel
-Day 5: Tạm biệt Vancouver
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Vancouver
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Canada.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Vancouver Grand Hotel (5 sao, 125-300 USD/đêm)
-- Vancouver City Suites (4 sao, 165-396 USD/đêm)
+- Vancouver Grand Hotel (5-star, 125-300 USD/night)
+- Vancouver City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation

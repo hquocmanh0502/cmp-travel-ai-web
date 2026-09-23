@@ -6,9 +6,9 @@ Country: France
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 1.8/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, budget, popular
 
@@ -23,41 +23,41 @@ Local food:
 - Pain au Chocolat
 
 Detailed itinerary:
-Day 1: Đến Bordeaux
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Bordeaux, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Bordeaux
-  Meals: Bữa tối
+Day 1: Arrival in Bordeaux
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Bordeaux.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Bordeaux
+  Meals: Dinner
   Overnight: Bordeaux Grand Hotel
-Day 2: Khám phá Place de la Bourse
-  Tham quan Place de la Bourse cùng hướng dẫn viên. Buổi chiều thưởng thức Entrecôte Bordelaise và có thời gian tự do khám phá Bordeaux.
-  Activities: Tham quan Place de la Bourse, Chụp ảnh tại các điểm đẹp, Thưởng thức Entrecôte Bordelaise
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Place de la Bourse
+  Guided visit to Place de la Bourse. In the afternoon you will taste Entrecôte Bordelaise and have free time to explore Bordeaux at your own pace.
+  Activities: Guided visit to Place de la Bourse, City sightseeing, Taste Entrecôte Bordelaise
+  Meals: Breakfast, Lunch
   Overnight: Bordeaux Grand Hotel
-Day 3: Khám phá Saint-André Cathedral
-  Tham quan Saint-André Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Canelés và có thời gian tự do khám phá Bordeaux.
-  Activities: Tham quan Saint-André Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Canelés
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Saint-André Cathedral
+  Guided visit to Saint-André Cathedral. In the afternoon you will taste Canelés and have free time to explore Bordeaux at your own pace.
+  Activities: Guided visit to Saint-André Cathedral, City sightseeing, Taste Canelés
+  Meals: Breakfast, Lunch
   Overnight: Bordeaux Grand Hotel
-Day 4: Khám phá La Cité du Vin
-  Tham quan La Cité du Vin cùng hướng dẫn viên. Buổi chiều thưởng thức Pain au Chocolat và có thời gian tự do khám phá Bordeaux.
-  Activities: Tham quan La Cité du Vin, Chụp ảnh tại các điểm đẹp, Thưởng thức Pain au Chocolat
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover La Cité du Vin
+  Guided visit to La Cité du Vin. In the afternoon you will taste Pain au Chocolat and have free time to explore Bordeaux at your own pace.
+  Activities: Guided visit to La Cité du Vin, City sightseeing, Taste Pain au Chocolat
+  Meals: Breakfast, Lunch
   Overnight: Bordeaux Grand Hotel
-Day 5: Tạm biệt Bordeaux
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Bordeaux
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in France.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Bordeaux Grand Hotel (5 sao, 100-240 USD/đêm)
-- Bordeaux City Suites (4 sao, 140-336 USD/đêm)
+- Bordeaux Grand Hotel (5-star, 100-240 USD/night)
+- Bordeaux City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation

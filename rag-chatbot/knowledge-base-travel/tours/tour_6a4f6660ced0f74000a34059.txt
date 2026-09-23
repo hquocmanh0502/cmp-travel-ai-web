@@ -6,9 +6,9 @@ Country: Canada
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Price: 4500 USD per adult | child: 3150 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Butter Tarts
 
 Detailed itinerary:
-Day 1: Đến Toronto
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Toronto, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Toronto
-  Meals: Bữa tối
+Day 1: Arrival in Toronto
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Toronto.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Toronto
+  Meals: Dinner
   Overnight: Toronto Grand Hotel
-Day 2: Khám phá CN Tower
-  Tham quan CN Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Poutine và có thời gian tự do khám phá Toronto.
-  Activities: Tham quan CN Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Poutine
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover CN Tower
+  Guided visit to CN Tower. In the afternoon you will taste Poutine and have free time to explore Toronto at your own pace.
+  Activities: Guided visit to CN Tower, City sightseeing, Taste Poutine
+  Meals: Breakfast, Lunch
   Overnight: Toronto Grand Hotel
-Day 3: Khám phá Royal Ontario Museum
-  Tham quan Royal Ontario Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Peameal Bacon Sandwich và có thời gian tự do khám phá Toronto.
-  Activities: Tham quan Royal Ontario Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Peameal Bacon Sandwich
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Royal Ontario Museum
+  Guided visit to Royal Ontario Museum. In the afternoon you will taste Peameal Bacon Sandwich and have free time to explore Toronto at your own pace.
+  Activities: Guided visit to Royal Ontario Museum, City sightseeing, Taste Peameal Bacon Sandwich
+  Meals: Breakfast, Lunch
   Overnight: Toronto Grand Hotel
-Day 4: Khám phá Distillery District
-  Tham quan Distillery District cùng hướng dẫn viên. Buổi chiều thưởng thức Butter Tarts và có thời gian tự do khám phá Toronto.
-  Activities: Tham quan Distillery District, Chụp ảnh tại các điểm đẹp, Thưởng thức Butter Tarts
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Distillery District
+  Guided visit to Distillery District. In the afternoon you will taste Butter Tarts and have free time to explore Toronto at your own pace.
+  Activities: Guided visit to Distillery District, City sightseeing, Taste Butter Tarts
+  Meals: Breakfast, Lunch
   Overnight: Toronto Grand Hotel
-Day 5: Tạm biệt Toronto
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Toronto
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Canada.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Toronto Grand Hotel (5 sao, 113-271 USD/đêm)
-- Toronto City Suites (4 sao, 153-367 USD/đêm)
+- Toronto Grand Hotel (5-star, 113-271 USD/night)
+- Toronto City Suites (4-star, 153-367 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+23/09/2026 (20 seats left, 4500 USD), 09/10/2026 (20 seats left, 4500 USD), 23/10/2026 (20 seats left, 4500 USD), 09/11/2026 (20 seats left, 4500 USD), 23/11/2026 (20 seats left, 4500 USD)
 
 Package includes:
 - Accommodation

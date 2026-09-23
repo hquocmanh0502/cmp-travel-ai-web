@@ -6,9 +6,9 @@ Country: Switzerland
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Price: 5500 USD per adult | child: 3850 USD
 Rating: 4.6/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: switzerland, luxury, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Hot Chocolate
 
 Detailed itinerary:
-Day 1: Đến Lauterbrunnen
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Lauterbrunnen, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Lauterbrunnen
-  Meals: Bữa tối
+Day 1: Arrival in Lauterbrunnen
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Lauterbrunnen.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Lauterbrunnen
+  Meals: Dinner
   Overnight: Lauterbrunnen Grand Hotel
-Day 2: Khám phá Staubbach Falls
-  Tham quan Staubbach Falls cùng hướng dẫn viên. Buổi chiều thưởng thức Swiss Fondue và có thời gian tự do khám phá Lauterbrunnen.
-  Activities: Tham quan Staubbach Falls, Chụp ảnh tại các điểm đẹp, Thưởng thức Swiss Fondue
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Staubbach Falls
+  Guided visit to Staubbach Falls. In the afternoon you will taste Swiss Fondue and have free time to explore Lauterbrunnen at your own pace.
+  Activities: Guided visit to Staubbach Falls, City sightseeing, Taste Swiss Fondue
+  Meals: Breakfast, Lunch
   Overnight: Lauterbrunnen Grand Hotel
-Day 3: Khám phá Lauterbrunnen Valley
-  Tham quan Lauterbrunnen Valley cùng hướng dẫn viên. Buổi chiều thưởng thức Raclette và có thời gian tự do khám phá Lauterbrunnen.
-  Activities: Tham quan Lauterbrunnen Valley, Chụp ảnh tại các điểm đẹp, Thưởng thức Raclette
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Lauterbrunnen Valley
+  Guided visit to Lauterbrunnen Valley. In the afternoon you will taste Raclette and have free time to explore Lauterbrunnen at your own pace.
+  Activities: Guided visit to Lauterbrunnen Valley, City sightseeing, Taste Raclette
+  Meals: Breakfast, Lunch
   Overnight: Lauterbrunnen Grand Hotel
-Day 4: Khám phá Trümmelbach Falls
-  Tham quan Trümmelbach Falls cùng hướng dẫn viên. Buổi chiều thưởng thức Hot Chocolate và có thời gian tự do khám phá Lauterbrunnen.
-  Activities: Tham quan Trümmelbach Falls, Chụp ảnh tại các điểm đẹp, Thưởng thức Hot Chocolate
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Trümmelbach Falls
+  Guided visit to Trümmelbach Falls. In the afternoon you will taste Hot Chocolate and have free time to explore Lauterbrunnen at your own pace.
+  Activities: Guided visit to Trümmelbach Falls, City sightseeing, Taste Hot Chocolate
+  Meals: Breakfast, Lunch
   Overnight: Lauterbrunnen Grand Hotel
-Day 5: Tạm biệt Lauterbrunnen
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Switzerland.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Lauterbrunnen
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Switzerland.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Lauterbrunnen Grand Hotel (5 sao, 138-331 USD/đêm)
-- Lauterbrunnen City Suites (4 sao, 178-427 USD/đêm)
+- Lauterbrunnen Grand Hotel (5-star, 138-331 USD/night)
+- Lauterbrunnen City Suites (4-star, 178-427 USD/night)
 
 Tour guides:
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+23/09/2026 (20 seats left, 5500 USD), 09/10/2026 (20 seats left, 5500 USD), 23/10/2026 (20 seats left, 5500 USD), 09/11/2026 (20 seats left, 5500 USD), 23/11/2026 (20 seats left, 5500 USD)
 
 Package includes:
 - Accommodation
@@ -84,9 +84,9 @@ Country: United Kingdom
 Duration: 5 days
 Tour type: international
 Difficulty: moderate
-Price: 8000 USD/người lớn | trẻ em: 5600 USD
+Price: 8000 USD per adult | child: 5600 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: united kingdom, luxury, popular
 
@@ -101,40 +101,40 @@ Local food:
 - Afternoon Tea
 
 Detailed itinerary:
-Day 1: Đến London
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm London, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm London
-  Meals: Bữa tối
+Day 1: Arrival in London
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central London.
+  Activities: Airport pickup, Hotel check-in, Evening walk around London
+  Meals: Dinner
   Overnight: London Grand Hotel
-Day 2: Khám phá Buckingham Palace
-  Tham quan Buckingham Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Fish and Chips và có thời gian tự do khám phá London.
-  Activities: Tham quan Buckingham Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Fish and Chips
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Buckingham Palace
+  Guided visit to Buckingham Palace. In the afternoon you will taste Fish and Chips and have free time to explore London at your own pace.
+  Activities: Guided visit to Buckingham Palace, City sightseeing, Taste Fish and Chips
+  Meals: Breakfast, Lunch
   Overnight: London Grand Hotel
-Day 3: Khám phá Tower of London
-  Tham quan Tower of London cùng hướng dẫn viên. Buổi chiều thưởng thức Full English Breakfast và có thời gian tự do khám phá London.
-  Activities: Tham quan Tower of London, Chụp ảnh tại các điểm đẹp, Thưởng thức Full English Breakfast
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Tower of London
+  Guided visit to Tower of London. In the afternoon you will taste Full English Breakfast and have free time to explore London at your own pace.
+  Activities: Guided visit to Tower of London, City sightseeing, Taste Full English Breakfast
+  Meals: Breakfast, Lunch
   Overnight: London Grand Hotel
-Day 4: Khám phá British Museum
-  Tham quan British Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Afternoon Tea và có thời gian tự do khám phá London.
-  Activities: Tham quan British Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Afternoon Tea
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover British Museum
+  Guided visit to British Museum. In the afternoon you will taste Afternoon Tea and have free time to explore London at your own pace.
+  Activities: Guided visit to British Museum, City sightseeing, Taste Afternoon Tea
+  Meals: Breakfast, Lunch
   Overnight: London Grand Hotel
-Day 5: Tạm biệt London
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại United Kingdom.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from London
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in United Kingdom.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- London Grand Hotel (5 sao, 200-480 USD/đêm)
-- London City Suites (4 sao, 240-576 USD/đêm)
+- London Grand Hotel (5-star, 200-480 USD/night)
+- London City Suites (4-star, 240-576 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 8000 USD), 09/10/2026 (còn 20 chỗ, 8000 USD), 23/10/2026 (còn 20 chỗ, 8000 USD), 09/11/2026 (còn 20 chỗ, 8000 USD), 23/11/2026 (còn 20 chỗ, 8000 USD)
+23/09/2026 (20 seats left, 8000 USD), 09/10/2026 (20 seats left, 8000 USD), 23/10/2026 (20 seats left, 8000 USD), 09/11/2026 (20 seats left, 8000 USD), 23/11/2026 (20 seats left, 8000 USD)
 
 Package includes:
 - Accommodation
@@ -162,9 +162,9 @@ Country: Thailand
 Duration: 5 days
 Tour type: international
 Difficulty: moderate
-Price: 7000 USD/người lớn | trẻ em: 4900 USD
+Price: 7000 USD per adult | child: 4900 USD
 Rating: 4.2/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: thailand, luxury, popular
 
@@ -179,40 +179,40 @@ Local food:
 - Mango Sticky Rice
 
 Detailed itinerary:
-Day 1: Đến Bangkok
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Bangkok, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Bangkok
-  Meals: Bữa tối
+Day 1: Arrival in Bangkok
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Bangkok.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Bangkok
+  Meals: Dinner
   Overnight: Mandarin Oriental Bangkok
-Day 2: Khám phá Grand Palace
-  Tham quan Grand Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Pad Thai và có thời gian tự do khám phá Bangkok.
-  Activities: Tham quan Grand Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Pad Thai
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Grand Palace
+  Guided visit to Grand Palace. In the afternoon you will taste Pad Thai and have free time to explore Bangkok at your own pace.
+  Activities: Guided visit to Grand Palace, City sightseeing, Taste Pad Thai
+  Meals: Breakfast, Lunch
   Overnight: Mandarin Oriental Bangkok
-Day 3: Khám phá Wat Arun
-  Tham quan Wat Arun cùng hướng dẫn viên. Buổi chiều thưởng thức Tom Yum Goong và có thời gian tự do khám phá Bangkok.
-  Activities: Tham quan Wat Arun, Chụp ảnh tại các điểm đẹp, Thưởng thức Tom Yum Goong
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Wat Arun
+  Guided visit to Wat Arun. In the afternoon you will taste Tom Yum Goong and have free time to explore Bangkok at your own pace.
+  Activities: Guided visit to Wat Arun, City sightseeing, Taste Tom Yum Goong
+  Meals: Breakfast, Lunch
   Overnight: Mandarin Oriental Bangkok
-Day 4: Khám phá Chatuchak Weekend Market
-  Tham quan Chatuchak Weekend Market cùng hướng dẫn viên. Buổi chiều thưởng thức Mango Sticky Rice và có thời gian tự do khám phá Bangkok.
-  Activities: Tham quan Chatuchak Weekend Market, Chụp ảnh tại các điểm đẹp, Thưởng thức Mango Sticky Rice
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Chatuchak Weekend Market
+  Guided visit to Chatuchak Weekend Market. In the afternoon you will taste Mango Sticky Rice and have free time to explore Bangkok at your own pace.
+  Activities: Guided visit to Chatuchak Weekend Market, City sightseeing, Taste Mango Sticky Rice
+  Meals: Breakfast, Lunch
   Overnight: Mandarin Oriental Bangkok
-Day 5: Tạm biệt Bangkok
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Thailand.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Bangkok
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Thailand.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Mandarin Oriental Bangkok (5 sao, 350-800 USD/đêm)
-- Bangkok Boutique Residence (4 sao, 195-468 USD/đêm)
+- Mandarin Oriental Bangkok (5-star, 350-800 USD/night)
+- Bangkok Boutique Residence (4-star, 195-468 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 7000 USD), 09/10/2026 (còn 20 chỗ, 7000 USD), 23/10/2026 (còn 20 chỗ, 7000 USD), 09/11/2026 (còn 20 chỗ, 7000 USD), 23/11/2026 (còn 20 chỗ, 7000 USD)
+23/09/2026 (20 seats left, 7000 USD), 09/10/2026 (20 seats left, 7000 USD), 23/10/2026 (20 seats left, 7000 USD), 09/11/2026 (20 seats left, 7000 USD), 23/11/2026 (20 seats left, 7000 USD)
 
 Package includes:
 - Accommodation
@@ -240,9 +240,9 @@ Country: Germany
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Price: 5500 USD per adult | child: 3850 USD
 Rating: 4.1/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: germany, luxury, popular
 
@@ -257,40 +257,40 @@ Local food:
 - Apfelstrudel
 
 Detailed itinerary:
-Day 1: Đến Munich
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Munich, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Munich
-  Meals: Bữa tối
+Day 1: Arrival in Munich
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Munich.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Munich
+  Meals: Dinner
   Overnight: Munich Grand Hotel
-Day 2: Khám phá Marienplatz
-  Tham quan Marienplatz cùng hướng dẫn viên. Buổi chiều thưởng thức Pretzels và có thời gian tự do khám phá Munich.
-  Activities: Tham quan Marienplatz, Chụp ảnh tại các điểm đẹp, Thưởng thức Pretzels
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Marienplatz
+  Guided visit to Marienplatz. In the afternoon you will taste Pretzels and have free time to explore Munich at your own pace.
+  Activities: Guided visit to Marienplatz, City sightseeing, Taste Pretzels
+  Meals: Breakfast, Lunch
   Overnight: Munich Grand Hotel
-Day 3: Khám phá Nymphenburg Palace
-  Tham quan Nymphenburg Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Weisswurst và có thời gian tự do khám phá Munich.
-  Activities: Tham quan Nymphenburg Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Weisswurst
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Nymphenburg Palace
+  Guided visit to Nymphenburg Palace. In the afternoon you will taste Weisswurst and have free time to explore Munich at your own pace.
+  Activities: Guided visit to Nymphenburg Palace, City sightseeing, Taste Weisswurst
+  Meals: Breakfast, Lunch
   Overnight: Munich Grand Hotel
-Day 4: Khám phá English Garden
-  Tham quan English Garden cùng hướng dẫn viên. Buổi chiều thưởng thức Apfelstrudel và có thời gian tự do khám phá Munich.
-  Activities: Tham quan English Garden, Chụp ảnh tại các điểm đẹp, Thưởng thức Apfelstrudel
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover English Garden
+  Guided visit to English Garden. In the afternoon you will taste Apfelstrudel and have free time to explore Munich at your own pace.
+  Activities: Guided visit to English Garden, City sightseeing, Taste Apfelstrudel
+  Meals: Breakfast, Lunch
   Overnight: Munich Grand Hotel
-Day 5: Tạm biệt Munich
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Germany.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Munich
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Germany.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Munich Grand Hotel (5 sao, 138-331 USD/đêm)
-- Munich City Suites (4 sao, 178-427 USD/đêm)
+- Munich Grand Hotel (5-star, 138-331 USD/night)
+- Munich City Suites (4-star, 178-427 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+23/09/2026 (20 seats left, 5500 USD), 09/10/2026 (20 seats left, 5500 USD), 23/10/2026 (20 seats left, 5500 USD), 09/11/2026 (20 seats left, 5500 USD), 23/11/2026 (20 seats left, 5500 USD)
 
 Package includes:
 - Accommodation
@@ -318,9 +318,9 @@ Country: Italy
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Price: 5500 USD per adult | child: 3850 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, luxury, popular
 
@@ -335,40 +335,40 @@ Local food:
 - Gelato
 
 Detailed itinerary:
-Day 1: Đến Florence
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Florence, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Florence
-  Meals: Bữa tối
+Day 1: Arrival in Florence
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Florence.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Florence
+  Meals: Dinner
   Overnight: Florence Grand Hotel
-Day 2: Khám phá Uffizi Gallery
-  Tham quan Uffizi Gallery cùng hướng dẫn viên. Buổi chiều thưởng thức Bistecca alla Fiorentina và có thời gian tự do khám phá Florence.
-  Activities: Tham quan Uffizi Gallery, Chụp ảnh tại các điểm đẹp, Thưởng thức Bistecca alla Fiorentina
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Uffizi Gallery
+  Guided visit to Uffizi Gallery. In the afternoon you will taste Bistecca alla Fiorentina and have free time to explore Florence at your own pace.
+  Activities: Guided visit to Uffizi Gallery, City sightseeing, Taste Bistecca alla Fiorentina
+  Meals: Breakfast, Lunch
   Overnight: Florence Grand Hotel
-Day 3: Khám phá Duomo
-  Tham quan Duomo cùng hướng dẫn viên. Buổi chiều thưởng thức Ribollita và có thời gian tự do khám phá Florence.
-  Activities: Tham quan Duomo, Chụp ảnh tại các điểm đẹp, Thưởng thức Ribollita
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Duomo
+  Guided visit to Duomo. In the afternoon you will taste Ribollita and have free time to explore Florence at your own pace.
+  Activities: Guided visit to Duomo, City sightseeing, Taste Ribollita
+  Meals: Breakfast, Lunch
   Overnight: Florence Grand Hotel
-Day 4: Khám phá Ponte Vecchio
-  Tham quan Ponte Vecchio cùng hướng dẫn viên. Buổi chiều thưởng thức Gelato và có thời gian tự do khám phá Florence.
-  Activities: Tham quan Ponte Vecchio, Chụp ảnh tại các điểm đẹp, Thưởng thức Gelato
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Ponte Vecchio
+  Guided visit to Ponte Vecchio. In the afternoon you will taste Gelato and have free time to explore Florence at your own pace.
+  Activities: Guided visit to Ponte Vecchio, City sightseeing, Taste Gelato
+  Meals: Breakfast, Lunch
   Overnight: Florence Grand Hotel
-Day 5: Tạm biệt Florence
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Florence
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Italy.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Florence Grand Hotel (5 sao, 138-331 USD/đêm)
-- Florence City Suites (4 sao, 178-427 USD/đêm)
+- Florence Grand Hotel (5-star, 138-331 USD/night)
+- Florence City Suites (4-star, 178-427 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+23/09/2026 (20 seats left, 5500 USD), 09/10/2026 (20 seats left, 5500 USD), 23/10/2026 (20 seats left, 5500 USD), 09/11/2026 (20 seats left, 5500 USD), 23/11/2026 (20 seats left, 5500 USD)
 
 Package includes:
 - Accommodation
@@ -396,9 +396,9 @@ Country: Spain
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 2.9/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: spain, budget, popular
 
@@ -413,40 +413,40 @@ Local food:
 - Buñuelos
 
 Detailed itinerary:
-Day 1: Đến Valencia
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Valencia, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Valencia
-  Meals: Bữa tối
+Day 1: Arrival in Valencia
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Valencia.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Valencia
+  Meals: Dinner
   Overnight: Valencia Grand Hotel
-Day 2: Khám phá City of Arts and Sciences
-  Tham quan City of Arts and Sciences cùng hướng dẫn viên. Buổi chiều thưởng thức Paella và có thời gian tự do khám phá Valencia.
-  Activities: Tham quan City of Arts and Sciences, Chụp ảnh tại các điểm đẹp, Thưởng thức Paella
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover City of Arts and Sciences
+  Guided visit to City of Arts and Sciences. In the afternoon you will taste Paella and have free time to explore Valencia at your own pace.
+  Activities: Guided visit to City of Arts and Sciences, City sightseeing, Taste Paella
+  Meals: Breakfast, Lunch
   Overnight: Valencia Grand Hotel
-Day 3: Khám phá Mercado Central
-  Tham quan Mercado Central cùng hướng dẫn viên. Buổi chiều thưởng thức Horchata và có thời gian tự do khám phá Valencia.
-  Activities: Tham quan Mercado Central, Chụp ảnh tại các điểm đẹp, Thưởng thức Horchata
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Mercado Central
+  Guided visit to Mercado Central. In the afternoon you will taste Horchata and have free time to explore Valencia at your own pace.
+  Activities: Guided visit to Mercado Central, City sightseeing, Taste Horchata
+  Meals: Breakfast, Lunch
   Overnight: Valencia Grand Hotel
-Day 4: Khám phá Bioparc Valencia
-  Tham quan Bioparc Valencia cùng hướng dẫn viên. Buổi chiều thưởng thức Buñuelos và có thời gian tự do khám phá Valencia.
-  Activities: Tham quan Bioparc Valencia, Chụp ảnh tại các điểm đẹp, Thưởng thức Buñuelos
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Bioparc Valencia
+  Guided visit to Bioparc Valencia. In the afternoon you will taste Buñuelos and have free time to explore Valencia at your own pace.
+  Activities: Guided visit to Bioparc Valencia, City sightseeing, Taste Buñuelos
+  Meals: Breakfast, Lunch
   Overnight: Valencia Grand Hotel
-Day 5: Tạm biệt Valencia
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Spain.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Valencia
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Spain.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Valencia Grand Hotel (5 sao, 100-240 USD/đêm)
-- Valencia City Suites (4 sao, 140-336 USD/đêm)
+- Valencia Grand Hotel (5-star, 100-240 USD/night)
+- Valencia City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation
@@ -474,9 +474,9 @@ Country: France
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 2.9/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, budget, popular
 
@@ -491,41 +491,41 @@ Local food:
 - Pastis
 
 Detailed itinerary:
-Day 1: Đến Marseille
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Marseille, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Marseille
-  Meals: Bữa tối
+Day 1: Arrival in Marseille
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Marseille.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Marseille
+  Meals: Dinner
   Overnight: Marseille Grand Hotel
-Day 2: Khám phá Old Port
-  Tham quan Old Port cùng hướng dẫn viên. Buổi chiều thưởng thức Bouillabaisse và có thời gian tự do khám phá Marseille.
-  Activities: Tham quan Old Port, Chụp ảnh tại các điểm đẹp, Thưởng thức Bouillabaisse
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Old Port
+  Guided visit to Old Port. In the afternoon you will taste Bouillabaisse and have free time to explore Marseille at your own pace.
+  Activities: Guided visit to Old Port, City sightseeing, Taste Bouillabaisse
+  Meals: Breakfast, Lunch
   Overnight: Marseille Grand Hotel
-Day 3: Khám phá Notre-Dame de la Garde
-  Tham quan Notre-Dame de la Garde cùng hướng dẫn viên. Buổi chiều thưởng thức Navettes và có thời gian tự do khám phá Marseille.
-  Activities: Tham quan Notre-Dame de la Garde, Chụp ảnh tại các điểm đẹp, Thưởng thức Navettes
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Notre-Dame de la Garde
+  Guided visit to Notre-Dame de la Garde. In the afternoon you will taste Navettes and have free time to explore Marseille at your own pace.
+  Activities: Guided visit to Notre-Dame de la Garde, City sightseeing, Taste Navettes
+  Meals: Breakfast, Lunch
   Overnight: Marseille Grand Hotel
-Day 4: Khám phá Calanques National Park
-  Tham quan Calanques National Park cùng hướng dẫn viên. Buổi chiều thưởng thức Pastis và có thời gian tự do khám phá Marseille.
-  Activities: Tham quan Calanques National Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Pastis
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Calanques National Park
+  Guided visit to Calanques National Park. In the afternoon you will taste Pastis and have free time to explore Marseille at your own pace.
+  Activities: Guided visit to Calanques National Park, City sightseeing, Taste Pastis
+  Meals: Breakfast, Lunch
   Overnight: Marseille Grand Hotel
-Day 5: Tạm biệt Marseille
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Marseille
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in France.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Marseille Grand Hotel (5 sao, 125-300 USD/đêm)
-- Marseille City Suites (4 sao, 165-396 USD/đêm)
+- Marseille Grand Hotel (5-star, 125-300 USD/night)
+- Marseille City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -553,9 +553,9 @@ Country: Canada
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Price: 4500 USD per adult | child: 3150 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
 
@@ -570,40 +570,40 @@ Local food:
 - Butter Tarts
 
 Detailed itinerary:
-Day 1: Đến Toronto
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Toronto, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Toronto
-  Meals: Bữa tối
+Day 1: Arrival in Toronto
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Toronto.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Toronto
+  Meals: Dinner
   Overnight: Toronto Grand Hotel
-Day 2: Khám phá CN Tower
-  Tham quan CN Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Poutine và có thời gian tự do khám phá Toronto.
-  Activities: Tham quan CN Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Poutine
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover CN Tower
+  Guided visit to CN Tower. In the afternoon you will taste Poutine and have free time to explore Toronto at your own pace.
+  Activities: Guided visit to CN Tower, City sightseeing, Taste Poutine
+  Meals: Breakfast, Lunch
   Overnight: Toronto Grand Hotel
-Day 3: Khám phá Royal Ontario Museum
-  Tham quan Royal Ontario Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Peameal Bacon Sandwich và có thời gian tự do khám phá Toronto.
-  Activities: Tham quan Royal Ontario Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Peameal Bacon Sandwich
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Royal Ontario Museum
+  Guided visit to Royal Ontario Museum. In the afternoon you will taste Peameal Bacon Sandwich and have free time to explore Toronto at your own pace.
+  Activities: Guided visit to Royal Ontario Museum, City sightseeing, Taste Peameal Bacon Sandwich
+  Meals: Breakfast, Lunch
   Overnight: Toronto Grand Hotel
-Day 4: Khám phá Distillery District
-  Tham quan Distillery District cùng hướng dẫn viên. Buổi chiều thưởng thức Butter Tarts và có thời gian tự do khám phá Toronto.
-  Activities: Tham quan Distillery District, Chụp ảnh tại các điểm đẹp, Thưởng thức Butter Tarts
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Distillery District
+  Guided visit to Distillery District. In the afternoon you will taste Butter Tarts and have free time to explore Toronto at your own pace.
+  Activities: Guided visit to Distillery District, City sightseeing, Taste Butter Tarts
+  Meals: Breakfast, Lunch
   Overnight: Toronto Grand Hotel
-Day 5: Tạm biệt Toronto
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Toronto
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Canada.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Toronto Grand Hotel (5 sao, 113-271 USD/đêm)
-- Toronto City Suites (4 sao, 153-367 USD/đêm)
+- Toronto Grand Hotel (5-star, 113-271 USD/night)
+- Toronto City Suites (4-star, 153-367 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+23/09/2026 (20 seats left, 4500 USD), 09/10/2026 (20 seats left, 4500 USD), 23/10/2026 (20 seats left, 4500 USD), 09/11/2026 (20 seats left, 4500 USD), 23/11/2026 (20 seats left, 4500 USD)
 
 Package includes:
 - Accommodation
@@ -631,9 +631,9 @@ Country: Canada
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.6/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
 
@@ -648,40 +648,40 @@ Local food:
 - Nanaimo Bar
 
 Detailed itinerary:
-Day 1: Đến Vancouver
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Vancouver, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Vancouver
-  Meals: Bữa tối
+Day 1: Arrival in Vancouver
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Vancouver.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Vancouver
+  Meals: Dinner
   Overnight: Vancouver Grand Hotel
-Day 2: Khám phá Stanley Park
-  Tham quan Stanley Park cùng hướng dẫn viên. Buổi chiều thưởng thức Salmon và có thời gian tự do khám phá Vancouver.
-  Activities: Tham quan Stanley Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Salmon
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Stanley Park
+  Guided visit to Stanley Park. In the afternoon you will taste Salmon and have free time to explore Vancouver at your own pace.
+  Activities: Guided visit to Stanley Park, City sightseeing, Taste Salmon
+  Meals: Breakfast, Lunch
   Overnight: Vancouver Grand Hotel
-Day 3: Khám phá Granville Island
-  Tham quan Granville Island cùng hướng dẫn viên. Buổi chiều thưởng thức Japadog và có thời gian tự do khám phá Vancouver.
-  Activities: Tham quan Granville Island, Chụp ảnh tại các điểm đẹp, Thưởng thức Japadog
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Granville Island
+  Guided visit to Granville Island. In the afternoon you will taste Japadog and have free time to explore Vancouver at your own pace.
+  Activities: Guided visit to Granville Island, City sightseeing, Taste Japadog
+  Meals: Breakfast, Lunch
   Overnight: Vancouver Grand Hotel
-Day 4: Khám phá Capilano Suspension Bridge
-  Tham quan Capilano Suspension Bridge cùng hướng dẫn viên. Buổi chiều thưởng thức Nanaimo Bar và có thời gian tự do khám phá Vancouver.
-  Activities: Tham quan Capilano Suspension Bridge, Chụp ảnh tại các điểm đẹp, Thưởng thức Nanaimo Bar
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Capilano Suspension Bridge
+  Guided visit to Capilano Suspension Bridge. In the afternoon you will taste Nanaimo Bar and have free time to explore Vancouver at your own pace.
+  Activities: Guided visit to Capilano Suspension Bridge, City sightseeing, Taste Nanaimo Bar
+  Meals: Breakfast, Lunch
   Overnight: Vancouver Grand Hotel
-Day 5: Tạm biệt Vancouver
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Vancouver
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Canada.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Vancouver Grand Hotel (5 sao, 125-300 USD/đêm)
-- Vancouver City Suites (4 sao, 165-396 USD/đêm)
+- Vancouver Grand Hotel (5-star, 125-300 USD/night)
+- Vancouver City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -709,9 +709,9 @@ Country: Greece
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Price: 4500 USD per adult | child: 3150 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: greece, budget, popular
 
@@ -726,40 +726,40 @@ Local food:
 - Spanakopita
 
 Detailed itinerary:
-Day 1: Đến Athens
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Athens, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Athens
-  Meals: Bữa tối
+Day 1: Arrival in Athens
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Athens.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Athens
+  Meals: Dinner
   Overnight: Athens Grand Hotel
-Day 2: Khám phá Acropolis
-  Tham quan Acropolis cùng hướng dẫn viên. Buổi chiều thưởng thức Moussaka và có thời gian tự do khám phá Athens.
-  Activities: Tham quan Acropolis, Chụp ảnh tại các điểm đẹp, Thưởng thức Moussaka
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Acropolis
+  Guided visit to Acropolis. In the afternoon you will taste Moussaka and have free time to explore Athens at your own pace.
+  Activities: Guided visit to Acropolis, City sightseeing, Taste Moussaka
+  Meals: Breakfast, Lunch
   Overnight: Athens Grand Hotel
-Day 3: Khám phá Parthenon
-  Tham quan Parthenon cùng hướng dẫn viên. Buổi chiều thưởng thức Souvlaki và có thời gian tự do khám phá Athens.
-  Activities: Tham quan Parthenon, Chụp ảnh tại các điểm đẹp, Thưởng thức Souvlaki
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Parthenon
+  Guided visit to Parthenon. In the afternoon you will taste Souvlaki and have free time to explore Athens at your own pace.
+  Activities: Guided visit to Parthenon, City sightseeing, Taste Souvlaki
+  Meals: Breakfast, Lunch
   Overnight: Athens Grand Hotel
-Day 4: Khám phá Plaka
-  Tham quan Plaka cùng hướng dẫn viên. Buổi chiều thưởng thức Spanakopita và có thời gian tự do khám phá Athens.
-  Activities: Tham quan Plaka, Chụp ảnh tại các điểm đẹp, Thưởng thức Spanakopita
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Plaka
+  Guided visit to Plaka. In the afternoon you will taste Spanakopita and have free time to explore Athens at your own pace.
+  Activities: Guided visit to Plaka, City sightseeing, Taste Spanakopita
+  Meals: Breakfast, Lunch
   Overnight: Athens Grand Hotel
-Day 5: Tạm biệt Athens
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Greece.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Athens
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Greece.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Athens Grand Hotel (5 sao, 113-271 USD/đêm)
-- Athens City Suites (4 sao, 153-367 USD/đêm)
+- Athens Grand Hotel (5-star, 113-271 USD/night)
+- Athens City Suites (4-star, 153-367 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+23/09/2026 (20 seats left, 4500 USD), 09/10/2026 (20 seats left, 4500 USD), 23/10/2026 (20 seats left, 4500 USD), 09/11/2026 (20 seats left, 4500 USD), 23/11/2026 (20 seats left, 4500 USD)
 
 Package includes:
 - Accommodation
@@ -787,9 +787,9 @@ Country: Greece
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Price: 5500 USD per adult | child: 3850 USD
 Rating: 4.8/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: greece, luxury, popular
 
@@ -804,40 +804,40 @@ Local food:
 - Loukoumades
 
 Detailed itinerary:
-Day 1: Đến Santorini
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Santorini, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Santorini
-  Meals: Bữa tối
+Day 1: Arrival in Santorini
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Santorini.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Santorini
+  Meals: Dinner
   Overnight: Santorini Grand Hotel
-Day 2: Khám phá Oia
-  Tham quan Oia cùng hướng dẫn viên. Buổi chiều thưởng thức Fava và có thời gian tự do khám phá Santorini.
-  Activities: Tham quan Oia, Chụp ảnh tại các điểm đẹp, Thưởng thức Fava
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Oia
+  Guided visit to Oia. In the afternoon you will taste Fava and have free time to explore Santorini at your own pace.
+  Activities: Guided visit to Oia, City sightseeing, Taste Fava
+  Meals: Breakfast, Lunch
   Overnight: Santorini Grand Hotel
-Day 3: Khám phá Fira
-  Tham quan Fira cùng hướng dẫn viên. Buổi chiều thưởng thức Santorini Tomatokeftedes và có thời gian tự do khám phá Santorini.
-  Activities: Tham quan Fira, Chụp ảnh tại các điểm đẹp, Thưởng thức Santorini Tomatokeftedes
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Fira
+  Guided visit to Fira. In the afternoon you will taste Santorini Tomatokeftedes and have free time to explore Santorini at your own pace.
+  Activities: Guided visit to Fira, City sightseeing, Taste Santorini Tomatokeftedes
+  Meals: Breakfast, Lunch
   Overnight: Santorini Grand Hotel
-Day 4: Khám phá Red Beach
-  Tham quan Red Beach cùng hướng dẫn viên. Buổi chiều thưởng thức Loukoumades và có thời gian tự do khám phá Santorini.
-  Activities: Tham quan Red Beach, Chụp ảnh tại các điểm đẹp, Thưởng thức Loukoumades
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Red Beach
+  Guided visit to Red Beach. In the afternoon you will taste Loukoumades and have free time to explore Santorini at your own pace.
+  Activities: Guided visit to Red Beach, City sightseeing, Taste Loukoumades
+  Meals: Breakfast, Lunch
   Overnight: Santorini Grand Hotel
-Day 5: Tạm biệt Santorini
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Greece.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Santorini
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Greece.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Santorini Grand Hotel (5 sao, 138-331 USD/đêm)
-- Santorini City Suites (4 sao, 178-427 USD/đêm)
+- Santorini Grand Hotel (5-star, 138-331 USD/night)
+- Santorini City Suites (4-star, 178-427 USD/night)
 
 Tour guides:
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+23/09/2026 (20 seats left, 5500 USD), 09/10/2026 (20 seats left, 5500 USD), 23/10/2026 (20 seats left, 5500 USD), 09/11/2026 (20 seats left, 5500 USD), 23/11/2026 (20 seats left, 5500 USD)
 
 Package includes:
 - Accommodation
@@ -865,9 +865,9 @@ Country: Japan
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: japan, budget, popular
 
@@ -882,41 +882,41 @@ Local food:
 - Tempura
 
 Detailed itinerary:
-Day 1: Đến Tokyo
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Tokyo, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Tokyo
-  Meals: Bữa tối
+Day 1: Arrival in Tokyo
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Tokyo.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Tokyo
+  Meals: Dinner
   Overnight: Tokyo Grand Imperial Hotel
-Day 2: Khám phá Senso-ji Temple
-  Tham quan Senso-ji Temple cùng hướng dẫn viên. Buổi chiều thưởng thức Sushi và có thời gian tự do khám phá Tokyo.
-  Activities: Tham quan Senso-ji Temple, Chụp ảnh tại các điểm đẹp, Thưởng thức Sushi
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Senso-ji Temple
+  Guided visit to Senso-ji Temple. In the afternoon you will taste Sushi and have free time to explore Tokyo at your own pace.
+  Activities: Guided visit to Senso-ji Temple, City sightseeing, Taste Sushi
+  Meals: Breakfast, Lunch
   Overnight: Tokyo Grand Imperial Hotel
-Day 3: Khám phá Shibuya Crossing
-  Tham quan Shibuya Crossing cùng hướng dẫn viên. Buổi chiều thưởng thức Ramen và có thời gian tự do khám phá Tokyo.
-  Activities: Tham quan Shibuya Crossing, Chụp ảnh tại các điểm đẹp, Thưởng thức Ramen
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Shibuya Crossing
+  Guided visit to Shibuya Crossing. In the afternoon you will taste Ramen and have free time to explore Tokyo at your own pace.
+  Activities: Guided visit to Shibuya Crossing, City sightseeing, Taste Ramen
+  Meals: Breakfast, Lunch
   Overnight: Tokyo Grand Imperial Hotel
-Day 4: Khám phá Tsukiji Outer Market
-  Tham quan Tsukiji Outer Market cùng hướng dẫn viên. Buổi chiều thưởng thức Tempura và có thời gian tự do khám phá Tokyo.
-  Activities: Tham quan Tsukiji Outer Market, Chụp ảnh tại các điểm đẹp, Thưởng thức Tempura
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Tsukiji Outer Market
+  Guided visit to Tsukiji Outer Market. In the afternoon you will taste Tempura and have free time to explore Tokyo at your own pace.
+  Activities: Guided visit to Tsukiji Outer Market, City sightseeing, Taste Tempura
+  Meals: Breakfast, Lunch
   Overnight: Tokyo Grand Imperial Hotel
-Day 5: Tạm biệt Tokyo
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Japan.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Tokyo
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Japan.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Tokyo Grand Imperial Hotel (5 sao, 300-800 USD/đêm)
-- Aman Tokyo (5 sao, 800-2000 USD/đêm)
+- Tokyo Grand Imperial Hotel (5-star, 300-800 USD/night)
+- Aman Tokyo (5-star, 800-2000 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -944,9 +944,9 @@ Country: Maldives
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.9/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: maldives, budget, popular
 
@@ -961,40 +961,40 @@ Local food:
 - Bis Keemiya
 
 Detailed itinerary:
-Day 1: Đến Maldives
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Maldives, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Maldives
-  Meals: Bữa tối
+Day 1: Arrival in Maldives
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Maldives.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Maldives
+  Meals: Dinner
   Overnight: Maldives Grand Hotel
-Day 2: Khám phá Male
-  Tham quan Male cùng hướng dẫn viên. Buổi chiều thưởng thức Mas Huni và có thời gian tự do khám phá Maldives.
-  Activities: Tham quan Male, Chụp ảnh tại các điểm đẹp, Thưởng thức Mas Huni
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Male
+  Guided visit to Male. In the afternoon you will taste Mas Huni and have free time to explore Maldives at your own pace.
+  Activities: Guided visit to Male, City sightseeing, Taste Mas Huni
+  Meals: Breakfast, Lunch
   Overnight: Maldives Grand Hotel
-Day 3: Khám phá Ari Atoll  
-  Tham quan Ari Atoll   cùng hướng dẫn viên. Buổi chiều thưởng thức Garudhiya và có thời gian tự do khám phá Maldives.
-  Activities: Tham quan Ari Atoll  , Chụp ảnh tại các điểm đẹp, Thưởng thức Garudhiya
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Ari Atoll  
+  Guided visit to Ari Atoll  . In the afternoon you will taste Garudhiya and have free time to explore Maldives at your own pace.
+  Activities: Guided visit to Ari Atoll  , City sightseeing, Taste Garudhiya
+  Meals: Breakfast, Lunch
   Overnight: Maldives Grand Hotel
-Day 4: Khám phá Bioluminescent Beaches
-  Tham quan Bioluminescent Beaches cùng hướng dẫn viên. Buổi chiều thưởng thức Bis Keemiya và có thời gian tự do khám phá Maldives.
-  Activities: Tham quan Bioluminescent Beaches, Chụp ảnh tại các điểm đẹp, Thưởng thức Bis Keemiya
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Bioluminescent Beaches
+  Guided visit to Bioluminescent Beaches. In the afternoon you will taste Bis Keemiya and have free time to explore Maldives at your own pace.
+  Activities: Guided visit to Bioluminescent Beaches, City sightseeing, Taste Bis Keemiya
+  Meals: Breakfast, Lunch
   Overnight: Maldives Grand Hotel
-Day 5: Tạm biệt Maldives
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Maldives.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Maldives
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Maldives.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Maldives Grand Hotel (5 sao, 125-300 USD/đêm)
-- Maldives City Suites (4 sao, 165-396 USD/đêm)
+- Maldives Grand Hotel (5-star, 125-300 USD/night)
+- Maldives City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -1022,9 +1022,9 @@ Country: Netherlands
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: netherlands, budget, popular
 
@@ -1039,40 +1039,40 @@ Local food:
 - Herring
 
 Detailed itinerary:
-Day 1: Đến Amsterdam
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Amsterdam, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Amsterdam
-  Meals: Bữa tối
+Day 1: Arrival in Amsterdam
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Amsterdam.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Amsterdam
+  Meals: Dinner
   Overnight: Amsterdam Grand Hotel
-Day 2: Khám phá Rijksmuseum
-  Tham quan Rijksmuseum cùng hướng dẫn viên. Buổi chiều thưởng thức Stroopwafel và có thời gian tự do khám phá Amsterdam.
-  Activities: Tham quan Rijksmuseum, Chụp ảnh tại các điểm đẹp, Thưởng thức Stroopwafel
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Rijksmuseum
+  Guided visit to Rijksmuseum. In the afternoon you will taste Stroopwafel and have free time to explore Amsterdam at your own pace.
+  Activities: Guided visit to Rijksmuseum, City sightseeing, Taste Stroopwafel
+  Meals: Breakfast, Lunch
   Overnight: Amsterdam Grand Hotel
-Day 3: Khám phá Van Gogh Museum
-  Tham quan Van Gogh Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Poffertjes và có thời gian tự do khám phá Amsterdam.
-  Activities: Tham quan Van Gogh Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Poffertjes
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Van Gogh Museum
+  Guided visit to Van Gogh Museum. In the afternoon you will taste Poffertjes and have free time to explore Amsterdam at your own pace.
+  Activities: Guided visit to Van Gogh Museum, City sightseeing, Taste Poffertjes
+  Meals: Breakfast, Lunch
   Overnight: Amsterdam Grand Hotel
-Day 4: Khám phá Anne Frank House
-  Tham quan Anne Frank House cùng hướng dẫn viên. Buổi chiều thưởng thức Herring và có thời gian tự do khám phá Amsterdam.
-  Activities: Tham quan Anne Frank House, Chụp ảnh tại các điểm đẹp, Thưởng thức Herring
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Anne Frank House
+  Guided visit to Anne Frank House. In the afternoon you will taste Herring and have free time to explore Amsterdam at your own pace.
+  Activities: Guided visit to Anne Frank House, City sightseeing, Taste Herring
+  Meals: Breakfast, Lunch
   Overnight: Amsterdam Grand Hotel
-Day 5: Tạm biệt Amsterdam
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Netherlands.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Amsterdam
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Netherlands.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Amsterdam Grand Hotel (5 sao, 100-240 USD/đêm)
-- Amsterdam City Suites (4 sao, 140-336 USD/đêm)
+- Amsterdam Grand Hotel (5-star, 100-240 USD/night)
+- Amsterdam City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation
@@ -1100,9 +1100,9 @@ Country: Canada
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
 
@@ -1117,40 +1117,40 @@ Local food:
 - Smoked Meat Sandwich
 
 Detailed itinerary:
-Day 1: Đến Montreal
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Montreal, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Montreal
-  Meals: Bữa tối
+Day 1: Arrival in Montreal
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Montreal.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Montreal
+  Meals: Dinner
   Overnight: Montreal Grand Hotel
-Day 2: Khám phá Old Montreal
-  Tham quan Old Montreal cùng hướng dẫn viên. Buổi chiều thưởng thức Bagels và có thời gian tự do khám phá Montreal.
-  Activities: Tham quan Old Montreal, Chụp ảnh tại các điểm đẹp, Thưởng thức Bagels
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Old Montreal
+  Guided visit to Old Montreal. In the afternoon you will taste Bagels and have free time to explore Montreal at your own pace.
+  Activities: Guided visit to Old Montreal, City sightseeing, Taste Bagels
+  Meals: Breakfast, Lunch
   Overnight: Montreal Grand Hotel
-Day 3: Khám phá Montreal Museum of Fine Arts
-  Tham quan Montreal Museum of Fine Arts cùng hướng dẫn viên. Buổi chiều thưởng thức Poutine và có thời gian tự do khám phá Montreal.
-  Activities: Tham quan Montreal Museum of Fine Arts, Chụp ảnh tại các điểm đẹp, Thưởng thức Poutine
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Montreal Museum of Fine Arts
+  Guided visit to Montreal Museum of Fine Arts. In the afternoon you will taste Poutine and have free time to explore Montreal at your own pace.
+  Activities: Guided visit to Montreal Museum of Fine Arts, City sightseeing, Taste Poutine
+  Meals: Breakfast, Lunch
   Overnight: Montreal Grand Hotel
-Day 4: Khám phá Mount Royal Park
-  Tham quan Mount Royal Park cùng hướng dẫn viên. Buổi chiều thưởng thức Smoked Meat Sandwich và có thời gian tự do khám phá Montreal.
-  Activities: Tham quan Mount Royal Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Smoked Meat Sandwich
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Mount Royal Park
+  Guided visit to Mount Royal Park. In the afternoon you will taste Smoked Meat Sandwich and have free time to explore Montreal at your own pace.
+  Activities: Guided visit to Mount Royal Park, City sightseeing, Taste Smoked Meat Sandwich
+  Meals: Breakfast, Lunch
   Overnight: Montreal Grand Hotel
-Day 5: Tạm biệt Montreal
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Montreal
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Canada.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Montreal Grand Hotel (5 sao, 100-240 USD/đêm)
-- Montreal City Suites (4 sao, 140-336 USD/đêm)
+- Montreal Grand Hotel (5-star, 100-240 USD/night)
+- Montreal City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation
@@ -1178,9 +1178,9 @@ Country: Malaysia
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.8/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: malaysia, budget, popular
 
@@ -1195,41 +1195,41 @@ Local food:
 - Satay
 
 Detailed itinerary:
-Day 1: Đến Langkawi
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Langkawi, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Langkawi
-  Meals: Bữa tối
+Day 1: Arrival in Langkawi
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Langkawi.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Langkawi
+  Meals: Dinner
   Overnight: Langkawi Grand Hotel
-Day 2: Khám phá Langkawi Cable Car
-  Tham quan Langkawi Cable Car cùng hướng dẫn viên. Buổi chiều thưởng thức Nasi Dagang và có thời gian tự do khám phá Langkawi.
-  Activities: Tham quan Langkawi Cable Car, Chụp ảnh tại các điểm đẹp, Thưởng thức Nasi Dagang
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Langkawi Cable Car
+  Guided visit to Langkawi Cable Car. In the afternoon you will taste Nasi Dagang and have free time to explore Langkawi at your own pace.
+  Activities: Guided visit to Langkawi Cable Car, City sightseeing, Taste Nasi Dagang
+  Meals: Breakfast, Lunch
   Overnight: Langkawi Grand Hotel
-Day 3: Khám phá Eagle Square
-  Tham quan Eagle Square cùng hướng dẫn viên. Buổi chiều thưởng thức Laksa và có thời gian tự do khám phá Langkawi.
-  Activities: Tham quan Eagle Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Laksa
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Eagle Square
+  Guided visit to Eagle Square. In the afternoon you will taste Laksa and have free time to explore Langkawi at your own pace.
+  Activities: Guided visit to Eagle Square, City sightseeing, Taste Laksa
+  Meals: Breakfast, Lunch
   Overnight: Langkawi Grand Hotel
-Day 4: Khám phá Tanah Rata Waterfall
-  Tham quan Tanah Rata Waterfall cùng hướng dẫn viên. Buổi chiều thưởng thức Satay và có thời gian tự do khám phá Langkawi.
-  Activities: Tham quan Tanah Rata Waterfall, Chụp ảnh tại các điểm đẹp, Thưởng thức Satay
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Tanah Rata Waterfall
+  Guided visit to Tanah Rata Waterfall. In the afternoon you will taste Satay and have free time to explore Langkawi at your own pace.
+  Activities: Guided visit to Tanah Rata Waterfall, City sightseeing, Taste Satay
+  Meals: Breakfast, Lunch
   Overnight: Langkawi Grand Hotel
-Day 5: Tạm biệt Langkawi
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Malaysia.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Langkawi
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Malaysia.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Langkawi Grand Hotel (5 sao, 125-300 USD/đêm)
-- Langkawi City Suites (4 sao, 165-396 USD/đêm)
+- Langkawi Grand Hotel (5-star, 125-300 USD/night)
+- Langkawi City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -1257,9 +1257,9 @@ Country: Hong Kong
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4200 USD/người lớn | trẻ em: 2940 USD
+Price: 4200 USD per adult | child: 2940 USD
 Rating: 4.4/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: hong kong, budget, popular
 
@@ -1274,40 +1274,40 @@ Local food:
 - Bubble Tea
 
 Detailed itinerary:
-Day 1: Đến Causeway Bay
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Causeway Bay, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Causeway Bay
-  Meals: Bữa tối
+Day 1: Arrival in Causeway Bay
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Causeway Bay.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Causeway Bay
+  Meals: Dinner
   Overnight: Causeway Bay Grand Hotel
-Day 2: Khám phá Times Square 
-  Tham quan Times Square  cùng hướng dẫn viên. Buổi chiều thưởng thức Wonton Noodles và có thời gian tự do khám phá Causeway Bay.
-  Activities: Tham quan Times Square , Chụp ảnh tại các điểm đẹp, Thưởng thức Wonton Noodles
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Times Square 
+  Guided visit to Times Square . In the afternoon you will taste Wonton Noodles and have free time to explore Causeway Bay at your own pace.
+  Activities: Guided visit to Times Square , City sightseeing, Taste Wonton Noodles
+  Meals: Breakfast, Lunch
   Overnight: Causeway Bay Grand Hotel
-Day 3: Khám phá Victoria Park 
-  Tham quan Victoria Park  cùng hướng dẫn viên. Buổi chiều thưởng thức Hotpot và có thời gian tự do khám phá Causeway Bay.
-  Activities: Tham quan Victoria Park , Chụp ảnh tại các điểm đẹp, Thưởng thức Hotpot
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Victoria Park 
+  Guided visit to Victoria Park . In the afternoon you will taste Hotpot and have free time to explore Causeway Bay at your own pace.
+  Activities: Guided visit to Victoria Park , City sightseeing, Taste Hotpot
+  Meals: Breakfast, Lunch
   Overnight: Causeway Bay Grand Hotel
-Day 4: Khám phá Hysan Place
-  Tham quan Hysan Place cùng hướng dẫn viên. Buổi chiều thưởng thức Bubble Tea và có thời gian tự do khám phá Causeway Bay.
-  Activities: Tham quan Hysan Place, Chụp ảnh tại các điểm đẹp, Thưởng thức Bubble Tea
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Hysan Place
+  Guided visit to Hysan Place. In the afternoon you will taste Bubble Tea and have free time to explore Causeway Bay at your own pace.
+  Activities: Guided visit to Hysan Place, City sightseeing, Taste Bubble Tea
+  Meals: Breakfast, Lunch
   Overnight: Causeway Bay Grand Hotel
-Day 5: Tạm biệt Causeway Bay
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Hong Kong.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Causeway Bay
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Hong Kong.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Causeway Bay Grand Hotel (5 sao, 105-252 USD/đêm)
-- Causeway Bay City Suites (4 sao, 145-348 USD/đêm)
+- Causeway Bay Grand Hotel (5-star, 105-252 USD/night)
+- Causeway Bay City Suites (4-star, 145-348 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4200 USD), 09/10/2026 (còn 20 chỗ, 4200 USD), 23/10/2026 (còn 20 chỗ, 4200 USD), 09/11/2026 (còn 20 chỗ, 4200 USD), 23/11/2026 (còn 20 chỗ, 4200 USD)
+23/09/2026 (20 seats left, 4200 USD), 09/10/2026 (20 seats left, 4200 USD), 23/10/2026 (20 seats left, 4200 USD), 09/11/2026 (20 seats left, 4200 USD), 23/11/2026 (20 seats left, 4200 USD)
 
 Package includes:
 - Accommodation
@@ -1335,9 +1335,9 @@ Country: Japan
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4200 USD/người lớn | trẻ em: 2940 USD
+Price: 4200 USD per adult | child: 2940 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: japan, budget, popular
 
@@ -1352,41 +1352,41 @@ Local food:
 - Kushikatsu
 
 Detailed itinerary:
-Day 1: Đến Osaka
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Osaka, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Osaka
-  Meals: Bữa tối
+Day 1: Arrival in Osaka
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Osaka.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Osaka
+  Meals: Dinner
   Overnight: Conrad Osaka
-Day 2: Khám phá Osaka Castle
-  Tham quan Osaka Castle cùng hướng dẫn viên. Buổi chiều thưởng thức Takoyaki và có thời gian tự do khám phá Osaka.
-  Activities: Tham quan Osaka Castle, Chụp ảnh tại các điểm đẹp, Thưởng thức Takoyaki
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Osaka Castle
+  Guided visit to Osaka Castle. In the afternoon you will taste Takoyaki and have free time to explore Osaka at your own pace.
+  Activities: Guided visit to Osaka Castle, City sightseeing, Taste Takoyaki
+  Meals: Breakfast, Lunch
   Overnight: Conrad Osaka
-Day 3: Khám phá Dotonbori
-  Tham quan Dotonbori cùng hướng dẫn viên. Buổi chiều thưởng thức Okonomiyaki và có thời gian tự do khám phá Osaka.
-  Activities: Tham quan Dotonbori, Chụp ảnh tại các điểm đẹp, Thưởng thức Okonomiyaki
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Dotonbori
+  Guided visit to Dotonbori. In the afternoon you will taste Okonomiyaki and have free time to explore Osaka at your own pace.
+  Activities: Guided visit to Dotonbori, City sightseeing, Taste Okonomiyaki
+  Meals: Breakfast, Lunch
   Overnight: Conrad Osaka
-Day 4: Khám phá Shinsaibashi Shopping Street
-  Tham quan Shinsaibashi Shopping Street cùng hướng dẫn viên. Buổi chiều thưởng thức Kushikatsu và có thời gian tự do khám phá Osaka.
-  Activities: Tham quan Shinsaibashi Shopping Street, Chụp ảnh tại các điểm đẹp, Thưởng thức Kushikatsu
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Shinsaibashi Shopping Street
+  Guided visit to Shinsaibashi Shopping Street. In the afternoon you will taste Kushikatsu and have free time to explore Osaka at your own pace.
+  Activities: Guided visit to Shinsaibashi Shopping Street, City sightseeing, Taste Kushikatsu
+  Meals: Breakfast, Lunch
   Overnight: Conrad Osaka
-Day 5: Tạm biệt Osaka
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Japan.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Osaka
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Japan.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Conrad Osaka (5 sao, 300-700 USD/đêm)
-- Osaka Castle View Hotel (4 sao, 250-600 USD/đêm)
+- Conrad Osaka (5-star, 300-700 USD/night)
+- Osaka Castle View Hotel (4-star, 250-600 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4200 USD), 09/10/2026 (còn 20 chỗ, 4200 USD), 23/10/2026 (còn 20 chỗ, 4200 USD), 09/11/2026 (còn 20 chỗ, 4200 USD), 23/11/2026 (còn 20 chỗ, 4200 USD)
+23/09/2026 (20 seats left, 4200 USD), 09/10/2026 (20 seats left, 4200 USD), 23/10/2026 (20 seats left, 4200 USD), 09/11/2026 (20 seats left, 4200 USD), 23/11/2026 (20 seats left, 4200 USD)
 
 Package includes:
 - Accommodation
@@ -1414,9 +1414,9 @@ Country: United Kingdom
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.3/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: united kingdom, budget, popular
 
@@ -1431,40 +1431,40 @@ Local food:
 - Fisherman's Breakfast
 
 Detailed itinerary:
-Day 1: Đến Manchester
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Manchester, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Manchester
-  Meals: Bữa tối
+Day 1: Arrival in Manchester
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Manchester.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Manchester
+  Meals: Dinner
   Overnight: Manchester Grand Hotel
-Day 2: Khám phá Old Trafford Stadium
-  Tham quan Old Trafford Stadium cùng hướng dẫn viên. Buổi chiều thưởng thức Lancashire Hotpot và có thời gian tự do khám phá Manchester.
-  Activities: Tham quan Old Trafford Stadium, Chụp ảnh tại các điểm đẹp, Thưởng thức Lancashire Hotpot
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Old Trafford Stadium
+  Guided visit to Old Trafford Stadium. In the afternoon you will taste Lancashire Hotpot and have free time to explore Manchester at your own pace.
+  Activities: Guided visit to Old Trafford Stadium, City sightseeing, Taste Lancashire Hotpot
+  Meals: Breakfast, Lunch
   Overnight: Manchester Grand Hotel
-Day 3: Khám phá Manchester Cathedral
-  Tham quan Manchester Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Manchester Tart và có thời gian tự do khám phá Manchester.
-  Activities: Tham quan Manchester Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Manchester Tart
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Manchester Cathedral
+  Guided visit to Manchester Cathedral. In the afternoon you will taste Manchester Tart and have free time to explore Manchester at your own pace.
+  Activities: Guided visit to Manchester Cathedral, City sightseeing, Taste Manchester Tart
+  Meals: Breakfast, Lunch
   Overnight: Manchester Grand Hotel
-Day 4: Khám phá The Lowry
-  Tham quan The Lowry cùng hướng dẫn viên. Buổi chiều thưởng thức Fisherman's Breakfast và có thời gian tự do khám phá Manchester.
-  Activities: Tham quan The Lowry, Chụp ảnh tại các điểm đẹp, Thưởng thức Fisherman's Breakfast
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover The Lowry
+  Guided visit to The Lowry. In the afternoon you will taste Fisherman's Breakfast and have free time to explore Manchester at your own pace.
+  Activities: Guided visit to The Lowry, City sightseeing, Taste Fisherman's Breakfast
+  Meals: Breakfast, Lunch
   Overnight: Manchester Grand Hotel
-Day 5: Tạm biệt Manchester
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại United Kingdom.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Manchester
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in United Kingdom.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Manchester Grand Hotel (5 sao, 125-300 USD/đêm)
-- Manchester City Suites (4 sao, 165-396 USD/đêm)
+- Manchester Grand Hotel (5-star, 125-300 USD/night)
+- Manchester City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -1492,9 +1492,9 @@ Country: Thailand
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Price: 6000 USD per adult | child: 4200 USD
 Rating: 3.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: thailand, luxury, popular
 
@@ -1509,41 +1509,41 @@ Local food:
 - Mango with Sticky Rice
 
 Detailed itinerary:
-Day 1: Đến Phuket
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Phuket, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Phuket
-  Meals: Bữa tối
+Day 1: Arrival in Phuket
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Phuket.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Phuket
+  Meals: Dinner
   Overnight: Phuket Grand Hotel
-Day 2: Khám phá Patong Beach
-  Tham quan Patong Beach cùng hướng dẫn viên. Buổi chiều thưởng thức Tom Kha Gai và có thời gian tự do khám phá Phuket.
-  Activities: Tham quan Patong Beach, Chụp ảnh tại các điểm đẹp, Thưởng thức Tom Kha Gai
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Patong Beach
+  Guided visit to Patong Beach. In the afternoon you will taste Tom Kha Gai and have free time to explore Phuket at your own pace.
+  Activities: Guided visit to Patong Beach, City sightseeing, Taste Tom Kha Gai
+  Meals: Breakfast, Lunch
   Overnight: Phuket Grand Hotel
-Day 3: Khám phá Phi Phi Islands
-  Tham quan Phi Phi Islands cùng hướng dẫn viên. Buổi chiều thưởng thức Massaman Curry và có thời gian tự do khám phá Phuket.
-  Activities: Tham quan Phi Phi Islands, Chụp ảnh tại các điểm đẹp, Thưởng thức Massaman Curry
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Phi Phi Islands
+  Guided visit to Phi Phi Islands. In the afternoon you will taste Massaman Curry and have free time to explore Phuket at your own pace.
+  Activities: Guided visit to Phi Phi Islands, City sightseeing, Taste Massaman Curry
+  Meals: Breakfast, Lunch
   Overnight: Phuket Grand Hotel
-Day 4: Khám phá Big Buddha
-  Tham quan Big Buddha cùng hướng dẫn viên. Buổi chiều thưởng thức Mango with Sticky Rice và có thời gian tự do khám phá Phuket.
-  Activities: Tham quan Big Buddha, Chụp ảnh tại các điểm đẹp, Thưởng thức Mango with Sticky Rice
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Big Buddha
+  Guided visit to Big Buddha. In the afternoon you will taste Mango with Sticky Rice and have free time to explore Phuket at your own pace.
+  Activities: Guided visit to Big Buddha, City sightseeing, Taste Mango with Sticky Rice
+  Meals: Breakfast, Lunch
   Overnight: Phuket Grand Hotel
-Day 5: Tạm biệt Phuket
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Thailand.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Phuket
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Thailand.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Phuket Grand Hotel (5 sao, 150-360 USD/đêm)
-- Phuket City Suites (4 sao, 190-456 USD/đêm)
+- Phuket Grand Hotel (5-star, 150-360 USD/night)
+- Phuket City Suites (4-star, 190-456 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+23/09/2026 (20 seats left, 6000 USD), 09/10/2026 (20 seats left, 6000 USD), 23/10/2026 (20 seats left, 6000 USD), 09/11/2026 (20 seats left, 6000 USD), 23/11/2026 (20 seats left, 6000 USD)
 
 Package includes:
 - Accommodation
@@ -1571,9 +1571,9 @@ Country: Germany
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Price: 6000 USD per adult | child: 4200 USD
 Rating: 3.8/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: germany, luxury, popular
 
@@ -1588,40 +1588,40 @@ Local food:
 - Berliner Pfannkuchen
 
 Detailed itinerary:
-Day 1: Đến Berlin
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Berlin, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Berlin
-  Meals: Bữa tối
+Day 1: Arrival in Berlin
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Berlin.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Berlin
+  Meals: Dinner
   Overnight: Berlin Grand Hotel
-Day 2: Khám phá Brandenburg Gate
-  Tham quan Brandenburg Gate cùng hướng dẫn viên. Buổi chiều thưởng thức Currywurst và có thời gian tự do khám phá Berlin.
-  Activities: Tham quan Brandenburg Gate, Chụp ảnh tại các điểm đẹp, Thưởng thức Currywurst
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Brandenburg Gate
+  Guided visit to Brandenburg Gate. In the afternoon you will taste Currywurst and have free time to explore Berlin at your own pace.
+  Activities: Guided visit to Brandenburg Gate, City sightseeing, Taste Currywurst
+  Meals: Breakfast, Lunch
   Overnight: Berlin Grand Hotel
-Day 3: Khám phá Berlin Wall
-  Tham quan Berlin Wall cùng hướng dẫn viên. Buổi chiều thưởng thức Schnitzel và có thời gian tự do khám phá Berlin.
-  Activities: Tham quan Berlin Wall, Chụp ảnh tại các điểm đẹp, Thưởng thức Schnitzel
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Berlin Wall
+  Guided visit to Berlin Wall. In the afternoon you will taste Schnitzel and have free time to explore Berlin at your own pace.
+  Activities: Guided visit to Berlin Wall, City sightseeing, Taste Schnitzel
+  Meals: Breakfast, Lunch
   Overnight: Berlin Grand Hotel
-Day 4: Khám phá Museum Island
-  Tham quan Museum Island cùng hướng dẫn viên. Buổi chiều thưởng thức Berliner Pfannkuchen và có thời gian tự do khám phá Berlin.
-  Activities: Tham quan Museum Island, Chụp ảnh tại các điểm đẹp, Thưởng thức Berliner Pfannkuchen
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Museum Island
+  Guided visit to Museum Island. In the afternoon you will taste Berliner Pfannkuchen and have free time to explore Berlin at your own pace.
+  Activities: Guided visit to Museum Island, City sightseeing, Taste Berliner Pfannkuchen
+  Meals: Breakfast, Lunch
   Overnight: Berlin Grand Hotel
-Day 5: Tạm biệt Berlin
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Germany.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Berlin
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Germany.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Berlin Grand Hotel (5 sao, 150-360 USD/đêm)
-- Berlin City Suites (4 sao, 190-456 USD/đêm)
+- Berlin Grand Hotel (5-star, 150-360 USD/night)
+- Berlin City Suites (4-star, 190-456 USD/night)
 
 Tour guides:
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+23/09/2026 (20 seats left, 6000 USD), 09/10/2026 (20 seats left, 6000 USD), 23/10/2026 (20 seats left, 6000 USD), 09/11/2026 (20 seats left, 6000 USD), 23/11/2026 (20 seats left, 6000 USD)
 
 Package includes:
 - Accommodation
@@ -1649,9 +1649,9 @@ Country: Italy
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Price: 6000 USD per adult | child: 4200 USD
 Rating: 4.3/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, luxury, popular
 
@@ -1666,40 +1666,40 @@ Local food:
 - Gelato
 
 Detailed itinerary:
-Day 1: Đến Rome
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Rome, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Rome
-  Meals: Bữa tối
+Day 1: Arrival in Rome
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Rome.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Rome
+  Meals: Dinner
   Overnight: Rome Grand Hotel
-Day 2: Khám phá Colosseum
-  Tham quan Colosseum cùng hướng dẫn viên. Buổi chiều thưởng thức Pizza và có thời gian tự do khám phá Rome.
-  Activities: Tham quan Colosseum, Chụp ảnh tại các điểm đẹp, Thưởng thức Pizza
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Colosseum
+  Guided visit to Colosseum. In the afternoon you will taste Pizza and have free time to explore Rome at your own pace.
+  Activities: Guided visit to Colosseum, City sightseeing, Taste Pizza
+  Meals: Breakfast, Lunch
   Overnight: Rome Grand Hotel
-Day 3: Khám phá Vatican City
-  Tham quan Vatican City cùng hướng dẫn viên. Buổi chiều thưởng thức Pasta Carbonara và có thời gian tự do khám phá Rome.
-  Activities: Tham quan Vatican City, Chụp ảnh tại các điểm đẹp, Thưởng thức Pasta Carbonara
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Vatican City
+  Guided visit to Vatican City. In the afternoon you will taste Pasta Carbonara and have free time to explore Rome at your own pace.
+  Activities: Guided visit to Vatican City, City sightseeing, Taste Pasta Carbonara
+  Meals: Breakfast, Lunch
   Overnight: Rome Grand Hotel
-Day 4: Khám phá Trevi Fountain
-  Tham quan Trevi Fountain cùng hướng dẫn viên. Buổi chiều thưởng thức Gelato và có thời gian tự do khám phá Rome.
-  Activities: Tham quan Trevi Fountain, Chụp ảnh tại các điểm đẹp, Thưởng thức Gelato
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Trevi Fountain
+  Guided visit to Trevi Fountain. In the afternoon you will taste Gelato and have free time to explore Rome at your own pace.
+  Activities: Guided visit to Trevi Fountain, City sightseeing, Taste Gelato
+  Meals: Breakfast, Lunch
   Overnight: Rome Grand Hotel
-Day 5: Tạm biệt Rome
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Rome
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Italy.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Rome Grand Hotel (5 sao, 150-360 USD/đêm)
-- Rome City Suites (4 sao, 190-456 USD/đêm)
+- Rome Grand Hotel (5-star, 150-360 USD/night)
+- Rome City Suites (4-star, 190-456 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+23/09/2026 (20 seats left, 6000 USD), 09/10/2026 (20 seats left, 6000 USD), 23/10/2026 (20 seats left, 6000 USD), 09/11/2026 (20 seats left, 6000 USD), 23/11/2026 (20 seats left, 6000 USD)
 
 Package includes:
 - Accommodation
@@ -1727,9 +1727,9 @@ Country: Italy
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.1/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, budget, popular
 
@@ -1744,40 +1744,40 @@ Local food:
 - Tiramisu
 
 Detailed itinerary:
-Day 1: Đến Venice
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Venice, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Venice
-  Meals: Bữa tối
+Day 1: Arrival in Venice
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Venice.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Venice
+  Meals: Dinner
   Overnight: Venice Grand Hotel
-Day 2: Khám phá St. Mark's Square
-  Tham quan St. Mark's Square cùng hướng dẫn viên. Buổi chiều thưởng thức Seafood Risotto và có thời gian tự do khám phá Venice.
-  Activities: Tham quan St. Mark's Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Seafood Risotto
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover St. Mark's Square
+  Guided visit to St. Mark's Square. In the afternoon you will taste Seafood Risotto and have free time to explore Venice at your own pace.
+  Activities: Guided visit to St. Mark's Square, City sightseeing, Taste Seafood Risotto
+  Meals: Breakfast, Lunch
   Overnight: Venice Grand Hotel
-Day 3: Khám phá Rialto Bridge
-  Tham quan Rialto Bridge cùng hướng dẫn viên. Buổi chiều thưởng thức Cicchetti và có thời gian tự do khám phá Venice.
-  Activities: Tham quan Rialto Bridge, Chụp ảnh tại các điểm đẹp, Thưởng thức Cicchetti
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Rialto Bridge
+  Guided visit to Rialto Bridge. In the afternoon you will taste Cicchetti and have free time to explore Venice at your own pace.
+  Activities: Guided visit to Rialto Bridge, City sightseeing, Taste Cicchetti
+  Meals: Breakfast, Lunch
   Overnight: Venice Grand Hotel
-Day 4: Khám phá Doge's Palace
-  Tham quan Doge's Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Tiramisu và có thời gian tự do khám phá Venice.
-  Activities: Tham quan Doge's Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Tiramisu
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Doge's Palace
+  Guided visit to Doge's Palace. In the afternoon you will taste Tiramisu and have free time to explore Venice at your own pace.
+  Activities: Guided visit to Doge's Palace, City sightseeing, Taste Tiramisu
+  Meals: Breakfast, Lunch
   Overnight: Venice Grand Hotel
-Day 5: Tạm biệt Venice
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Venice
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Italy.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Venice Grand Hotel (5 sao, 125-300 USD/đêm)
-- Venice City Suites (4 sao, 165-396 USD/đêm)
+- Venice Grand Hotel (5-star, 125-300 USD/night)
+- Venice City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -1805,9 +1805,9 @@ Country: Italy
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Price: 4500 USD per adult | child: 3150 USD
 Rating: 4.2/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, budget, popular
 
@@ -1822,40 +1822,40 @@ Local food:
 - Panettone
 
 Detailed itinerary:
-Day 1: Đến Milan
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Milan, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Milan
-  Meals: Bữa tối
+Day 1: Arrival in Milan
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Milan.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Milan
+  Meals: Dinner
   Overnight: Milan Grand Hotel
-Day 2: Khám phá Duomo
-  Tham quan Duomo cùng hướng dẫn viên. Buổi chiều thưởng thức Risotto alla Milanese và có thời gian tự do khám phá Milan.
-  Activities: Tham quan Duomo, Chụp ảnh tại các điểm đẹp, Thưởng thức Risotto alla Milanese
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Duomo
+  Guided visit to Duomo. In the afternoon you will taste Risotto alla Milanese and have free time to explore Milan at your own pace.
+  Activities: Guided visit to Duomo, City sightseeing, Taste Risotto alla Milanese
+  Meals: Breakfast, Lunch
   Overnight: Milan Grand Hotel
-Day 3: Khám phá Galleria Vittorio Emanuele II
-  Tham quan Galleria Vittorio Emanuele II cùng hướng dẫn viên. Buổi chiều thưởng thức Cotoletta alla Milanese và có thời gian tự do khám phá Milan.
-  Activities: Tham quan Galleria Vittorio Emanuele II, Chụp ảnh tại các điểm đẹp, Thưởng thức Cotoletta alla Milanese
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Galleria Vittorio Emanuele II
+  Guided visit to Galleria Vittorio Emanuele II. In the afternoon you will taste Cotoletta alla Milanese and have free time to explore Milan at your own pace.
+  Activities: Guided visit to Galleria Vittorio Emanuele II, City sightseeing, Taste Cotoletta alla Milanese
+  Meals: Breakfast, Lunch
   Overnight: Milan Grand Hotel
-Day 4: Khám phá The Last Supper
-  Tham quan The Last Supper cùng hướng dẫn viên. Buổi chiều thưởng thức Panettone và có thời gian tự do khám phá Milan.
-  Activities: Tham quan The Last Supper, Chụp ảnh tại các điểm đẹp, Thưởng thức Panettone
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover The Last Supper
+  Guided visit to The Last Supper. In the afternoon you will taste Panettone and have free time to explore Milan at your own pace.
+  Activities: Guided visit to The Last Supper, City sightseeing, Taste Panettone
+  Meals: Breakfast, Lunch
   Overnight: Milan Grand Hotel
-Day 5: Tạm biệt Milan
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Milan
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Italy.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Milan Grand Hotel (5 sao, 113-271 USD/đêm)
-- Milan City Suites (4 sao, 153-367 USD/đêm)
+- Milan Grand Hotel (5-star, 113-271 USD/night)
+- Milan City Suites (4-star, 153-367 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+23/09/2026 (20 seats left, 4500 USD), 09/10/2026 (20 seats left, 4500 USD), 23/10/2026 (20 seats left, 4500 USD), 09/11/2026 (20 seats left, 4500 USD), 23/11/2026 (20 seats left, 4500 USD)
 
 Package includes:
 - Accommodation
@@ -1883,9 +1883,9 @@ Country: France
 Duration: 5 days
 Tour type: international
 Difficulty: moderate
-Price: 7000 USD/người lớn | trẻ em: 4900 USD
+Price: 7000 USD per adult | child: 4900 USD
 Rating: 4.3/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, luxury, popular
 
@@ -1900,41 +1900,41 @@ Local food:
 - Macarons
 
 Detailed itinerary:
-Day 1: Đến Paris
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Paris, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Paris
-  Meals: Bữa tối
+Day 1: Arrival in Paris
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Paris.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Paris
+  Meals: Dinner
   Overnight: Paris Romance Boutique Hotel
-Day 2: Khám phá Eiffel Tower
-  Tham quan Eiffel Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Croissant và có thời gian tự do khám phá Paris.
-  Activities: Tham quan Eiffel Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Croissant
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Eiffel Tower
+  Guided visit to Eiffel Tower. In the afternoon you will taste Croissant and have free time to explore Paris at your own pace.
+  Activities: Guided visit to Eiffel Tower, City sightseeing, Taste Croissant
+  Meals: Breakfast, Lunch
   Overnight: Paris Romance Boutique Hotel
-Day 3: Khám phá Louvre Museum
-  Tham quan Louvre Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Escargot và có thời gian tự do khám phá Paris.
-  Activities: Tham quan Louvre Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Escargot
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Louvre Museum
+  Guided visit to Louvre Museum. In the afternoon you will taste Escargot and have free time to explore Paris at your own pace.
+  Activities: Guided visit to Louvre Museum, City sightseeing, Taste Escargot
+  Meals: Breakfast, Lunch
   Overnight: Paris Romance Boutique Hotel
-Day 4: Khám phá Notre-Dame Cathedral
-  Tham quan Notre-Dame Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Macarons và có thời gian tự do khám phá Paris.
-  Activities: Tham quan Notre-Dame Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Macarons
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Notre-Dame Cathedral
+  Guided visit to Notre-Dame Cathedral. In the afternoon you will taste Macarons and have free time to explore Paris at your own pace.
+  Activities: Guided visit to Notre-Dame Cathedral, City sightseeing, Taste Macarons
+  Meals: Breakfast, Lunch
   Overnight: Paris Romance Boutique Hotel
-Day 5: Tạm biệt Paris
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Paris
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in France.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Paris Romance Boutique Hotel (4 sao, 180-420 USD/đêm)
-- Champs-Élysées Palace (5 sao, 350-750 USD/đêm)
-- Montmartre Artist Hotel (3 sao, 120-280 USD/đêm)
+- Paris Romance Boutique Hotel (4-star, 180-420 USD/night)
+- Champs-Élysées Palace (5-star, 350-750 USD/night)
+- Montmartre Artist Hotel (3-star, 120-280 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 7000 USD), 09/10/2026 (còn 20 chỗ, 7000 USD), 23/10/2026 (còn 20 chỗ, 7000 USD), 09/11/2026 (còn 20 chỗ, 7000 USD), 23/11/2026 (còn 20 chỗ, 7000 USD)
+23/09/2026 (20 seats left, 7000 USD), 09/10/2026 (20 seats left, 7000 USD), 23/10/2026 (20 seats left, 7000 USD), 09/11/2026 (20 seats left, 7000 USD), 23/11/2026 (20 seats left, 7000 USD)
 
 Package includes:
 - Accommodation
@@ -1962,9 +1962,9 @@ Country: France
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 1.8/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, budget, popular
 
@@ -1979,41 +1979,41 @@ Local food:
 - Pain au Chocolat
 
 Detailed itinerary:
-Day 1: Đến Bordeaux
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Bordeaux, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Bordeaux
-  Meals: Bữa tối
+Day 1: Arrival in Bordeaux
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Bordeaux.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Bordeaux
+  Meals: Dinner
   Overnight: Bordeaux Grand Hotel
-Day 2: Khám phá Place de la Bourse
-  Tham quan Place de la Bourse cùng hướng dẫn viên. Buổi chiều thưởng thức Entrecôte Bordelaise và có thời gian tự do khám phá Bordeaux.
-  Activities: Tham quan Place de la Bourse, Chụp ảnh tại các điểm đẹp, Thưởng thức Entrecôte Bordelaise
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Place de la Bourse
+  Guided visit to Place de la Bourse. In the afternoon you will taste Entrecôte Bordelaise and have free time to explore Bordeaux at your own pace.
+  Activities: Guided visit to Place de la Bourse, City sightseeing, Taste Entrecôte Bordelaise
+  Meals: Breakfast, Lunch
   Overnight: Bordeaux Grand Hotel
-Day 3: Khám phá Saint-André Cathedral
-  Tham quan Saint-André Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Canelés và có thời gian tự do khám phá Bordeaux.
-  Activities: Tham quan Saint-André Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Canelés
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Saint-André Cathedral
+  Guided visit to Saint-André Cathedral. In the afternoon you will taste Canelés and have free time to explore Bordeaux at your own pace.
+  Activities: Guided visit to Saint-André Cathedral, City sightseeing, Taste Canelés
+  Meals: Breakfast, Lunch
   Overnight: Bordeaux Grand Hotel
-Day 4: Khám phá La Cité du Vin
-  Tham quan La Cité du Vin cùng hướng dẫn viên. Buổi chiều thưởng thức Pain au Chocolat và có thời gian tự do khám phá Bordeaux.
-  Activities: Tham quan La Cité du Vin, Chụp ảnh tại các điểm đẹp, Thưởng thức Pain au Chocolat
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover La Cité du Vin
+  Guided visit to La Cité du Vin. In the afternoon you will taste Pain au Chocolat and have free time to explore Bordeaux at your own pace.
+  Activities: Guided visit to La Cité du Vin, City sightseeing, Taste Pain au Chocolat
+  Meals: Breakfast, Lunch
   Overnight: Bordeaux Grand Hotel
-Day 5: Tạm biệt Bordeaux
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Bordeaux
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in France.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Bordeaux Grand Hotel (5 sao, 100-240 USD/đêm)
-- Bordeaux City Suites (4 sao, 140-336 USD/đêm)
+- Bordeaux Grand Hotel (5-star, 100-240 USD/night)
+- Bordeaux City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation
@@ -2041,9 +2041,9 @@ Country: Spain
 Duration: 5 days
 Tour type: international
 Difficulty: moderate
-Price: 6500 USD/người lớn | trẻ em: 4550 USD
+Price: 6500 USD per adult | child: 4550 USD
 Rating: 4.3/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: spain, luxury, popular
 
@@ -2058,40 +2058,40 @@ Local food:
 - Churros
 
 Detailed itinerary:
-Day 1: Đến Barcelona
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Barcelona, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Barcelona
-  Meals: Bữa tối
+Day 1: Arrival in Barcelona
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Barcelona.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Barcelona
+  Meals: Dinner
   Overnight: Barcelona Grand Hotel
-Day 2: Khám phá Sagrada Familia
-  Tham quan Sagrada Familia cùng hướng dẫn viên. Buổi chiều thưởng thức Tapas và có thời gian tự do khám phá Barcelona.
-  Activities: Tham quan Sagrada Familia, Chụp ảnh tại các điểm đẹp, Thưởng thức Tapas
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Sagrada Familia
+  Guided visit to Sagrada Familia. In the afternoon you will taste Tapas and have free time to explore Barcelona at your own pace.
+  Activities: Guided visit to Sagrada Familia, City sightseeing, Taste Tapas
+  Meals: Breakfast, Lunch
   Overnight: Barcelona Grand Hotel
-Day 3: Khám phá Park Güell
-  Tham quan Park Güell cùng hướng dẫn viên. Buổi chiều thưởng thức Paella và có thời gian tự do khám phá Barcelona.
-  Activities: Tham quan Park Güell, Chụp ảnh tại các điểm đẹp, Thưởng thức Paella
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Park Güell
+  Guided visit to Park Güell. In the afternoon you will taste Paella and have free time to explore Barcelona at your own pace.
+  Activities: Guided visit to Park Güell, City sightseeing, Taste Paella
+  Meals: Breakfast, Lunch
   Overnight: Barcelona Grand Hotel
-Day 4: Khám phá Gothic Quarter
-  Tham quan Gothic Quarter cùng hướng dẫn viên. Buổi chiều thưởng thức Churros và có thời gian tự do khám phá Barcelona.
-  Activities: Tham quan Gothic Quarter, Chụp ảnh tại các điểm đẹp, Thưởng thức Churros
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Gothic Quarter
+  Guided visit to Gothic Quarter. In the afternoon you will taste Churros and have free time to explore Barcelona at your own pace.
+  Activities: Guided visit to Gothic Quarter, City sightseeing, Taste Churros
+  Meals: Breakfast, Lunch
   Overnight: Barcelona Grand Hotel
-Day 5: Tạm biệt Barcelona
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Spain.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Barcelona
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Spain.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Barcelona Grand Hotel (5 sao, 163-391 USD/đêm)
-- Barcelona City Suites (4 sao, 203-487 USD/đêm)
+- Barcelona Grand Hotel (5-star, 163-391 USD/night)
+- Barcelona City Suites (4-star, 203-487 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 6500 USD), 09/10/2026 (còn 20 chỗ, 6500 USD), 23/10/2026 (còn 20 chỗ, 6500 USD), 09/11/2026 (còn 20 chỗ, 6500 USD), 23/11/2026 (còn 20 chỗ, 6500 USD)
+23/09/2026 (20 seats left, 6500 USD), 09/10/2026 (20 seats left, 6500 USD), 23/10/2026 (20 seats left, 6500 USD), 09/11/2026 (20 seats left, 6500 USD), 23/11/2026 (20 seats left, 6500 USD)
 
 Package includes:
 - Accommodation
@@ -2119,9 +2119,9 @@ Country: Portugal
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: portugal, budget, popular
 
@@ -2136,40 +2136,40 @@ Local food:
 - Sardines
 
 Detailed itinerary:
-Day 1: Đến Lisbon
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Lisbon, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Lisbon
-  Meals: Bữa tối
+Day 1: Arrival in Lisbon
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Lisbon.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Lisbon
+  Meals: Dinner
   Overnight: Lisbon Grand Hotel
-Day 2: Khám phá Belém Tower
-  Tham quan Belém Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Pastéis de Nata và có thời gian tự do khám phá Lisbon.
-  Activities: Tham quan Belém Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Pastéis de Nata
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Belém Tower
+  Guided visit to Belém Tower. In the afternoon you will taste Pastéis de Nata and have free time to explore Lisbon at your own pace.
+  Activities: Guided visit to Belém Tower, City sightseeing, Taste Pastéis de Nata
+  Meals: Breakfast, Lunch
   Overnight: Lisbon Grand Hotel
-Day 3: Khám phá Jerónimos Monastery
-  Tham quan Jerónimos Monastery cùng hướng dẫn viên. Buổi chiều thưởng thức Bacalhau và có thời gian tự do khám phá Lisbon.
-  Activities: Tham quan Jerónimos Monastery, Chụp ảnh tại các điểm đẹp, Thưởng thức Bacalhau
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Jerónimos Monastery
+  Guided visit to Jerónimos Monastery. In the afternoon you will taste Bacalhau and have free time to explore Lisbon at your own pace.
+  Activities: Guided visit to Jerónimos Monastery, City sightseeing, Taste Bacalhau
+  Meals: Breakfast, Lunch
   Overnight: Lisbon Grand Hotel
-Day 4: Khám phá Castelo de São Jorge
-  Tham quan Castelo de São Jorge cùng hướng dẫn viên. Buổi chiều thưởng thức Sardines và có thời gian tự do khám phá Lisbon.
-  Activities: Tham quan Castelo de São Jorge, Chụp ảnh tại các điểm đẹp, Thưởng thức Sardines
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Castelo de São Jorge
+  Guided visit to Castelo de São Jorge. In the afternoon you will taste Sardines and have free time to explore Lisbon at your own pace.
+  Activities: Guided visit to Castelo de São Jorge, City sightseeing, Taste Sardines
+  Meals: Breakfast, Lunch
   Overnight: Lisbon Grand Hotel
-Day 5: Tạm biệt Lisbon
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Portugal.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Lisbon
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Portugal.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Lisbon Grand Hotel (5 sao, 100-240 USD/đêm)
-- Lisbon City Suites (4 sao, 140-336 USD/đêm)
+- Lisbon Grand Hotel (5-star, 100-240 USD/night)
+- Lisbon City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation
@@ -2197,9 +2197,9 @@ Country: Portugal
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 3500 USD/người lớn | trẻ em: 2450 USD
+Price: 3500 USD per adult | child: 2450 USD
 Rating: 4.6/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: portugal, budget, popular
 
@@ -2214,40 +2214,40 @@ Local food:
 - Pastel de Chaves
 
 Detailed itinerary:
-Day 1: Đến Porto
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Porto, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Porto
-  Meals: Bữa tối
+Day 1: Arrival in Porto
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Porto.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Porto
+  Meals: Dinner
   Overnight: Porto Grand Hotel
-Day 2: Khám phá Ribeira Square
-  Tham quan Ribeira Square cùng hướng dẫn viên. Buổi chiều thưởng thức Francesinha và có thời gian tự do khám phá Porto.
-  Activities: Tham quan Ribeira Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Francesinha
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Ribeira Square
+  Guided visit to Ribeira Square. In the afternoon you will taste Francesinha and have free time to explore Porto at your own pace.
+  Activities: Guided visit to Ribeira Square, City sightseeing, Taste Francesinha
+  Meals: Breakfast, Lunch
   Overnight: Porto Grand Hotel
-Day 3: Khám phá Clerigos Tower
-  Tham quan Clerigos Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Tripas à Moda do Porto và có thời gian tự do khám phá Porto.
-  Activities: Tham quan Clerigos Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Tripas à Moda do Porto
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Clerigos Tower
+  Guided visit to Clerigos Tower. In the afternoon you will taste Tripas à Moda do Porto and have free time to explore Porto at your own pace.
+  Activities: Guided visit to Clerigos Tower, City sightseeing, Taste Tripas à Moda do Porto
+  Meals: Breakfast, Lunch
   Overnight: Porto Grand Hotel
-Day 4: Khám phá Serralves Museum
-  Tham quan Serralves Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Pastel de Chaves và có thời gian tự do khám phá Porto.
-  Activities: Tham quan Serralves Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Pastel de Chaves
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Serralves Museum
+  Guided visit to Serralves Museum. In the afternoon you will taste Pastel de Chaves and have free time to explore Porto at your own pace.
+  Activities: Guided visit to Serralves Museum, City sightseeing, Taste Pastel de Chaves
+  Meals: Breakfast, Lunch
   Overnight: Porto Grand Hotel
-Day 5: Tạm biệt Porto
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Portugal.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Porto
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Portugal.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Porto Grand Hotel (5 sao, 88-211 USD/đêm)
-- Porto City Suites (4 sao, 128-307 USD/đêm)
+- Porto Grand Hotel (5-star, 88-211 USD/night)
+- Porto City Suites (4-star, 128-307 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 3500 USD), 09/10/2026 (còn 20 chỗ, 3500 USD), 23/10/2026 (còn 20 chỗ, 3500 USD), 09/11/2026 (còn 20 chỗ, 3500 USD), 23/11/2026 (còn 20 chỗ, 3500 USD)
+23/09/2026 (20 seats left, 3500 USD), 09/10/2026 (20 seats left, 3500 USD), 23/10/2026 (20 seats left, 3500 USD), 09/11/2026 (20 seats left, 3500 USD), 23/11/2026 (20 seats left, 3500 USD)
 
 Package includes:
 - Accommodation
@@ -2275,9 +2275,9 @@ Country: Russia
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.8/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: russia, budget, popular
 
@@ -2292,40 +2292,40 @@ Local food:
 - Blini
 
 Detailed itinerary:
-Day 1: Đến Moscow
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Moscow, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Moscow
-  Meals: Bữa tối
+Day 1: Arrival in Moscow
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Moscow.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Moscow
+  Meals: Dinner
   Overnight: Moscow Grand Hotel
-Day 2: Khám phá Red Square
-  Tham quan Red Square cùng hướng dẫn viên. Buổi chiều thưởng thức Borscht và có thời gian tự do khám phá Moscow.
-  Activities: Tham quan Red Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Borscht
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Red Square
+  Guided visit to Red Square. In the afternoon you will taste Borscht and have free time to explore Moscow at your own pace.
+  Activities: Guided visit to Red Square, City sightseeing, Taste Borscht
+  Meals: Breakfast, Lunch
   Overnight: Moscow Grand Hotel
-Day 3: Khám phá Kremlin and St. Basil's Cathedral
-  Tham quan Kremlin and St. Basil's Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Pelmeni và có thời gian tự do khám phá Moscow.
-  Activities: Tham quan Kremlin and St. Basil's Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Pelmeni
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Kremlin and St. Basil's Cathedral
+  Guided visit to Kremlin and St. Basil's Cathedral. In the afternoon you will taste Pelmeni and have free time to explore Moscow at your own pace.
+  Activities: Guided visit to Kremlin and St. Basil's Cathedral, City sightseeing, Taste Pelmeni
+  Meals: Breakfast, Lunch
   Overnight: Moscow Grand Hotel
-Day 4: Khám phá Bolshoi Theatre
-  Tham quan Bolshoi Theatre cùng hướng dẫn viên. Buổi chiều thưởng thức Blini và có thời gian tự do khám phá Moscow.
-  Activities: Tham quan Bolshoi Theatre, Chụp ảnh tại các điểm đẹp, Thưởng thức Blini
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Bolshoi Theatre
+  Guided visit to Bolshoi Theatre. In the afternoon you will taste Blini and have free time to explore Moscow at your own pace.
+  Activities: Guided visit to Bolshoi Theatre, City sightseeing, Taste Blini
+  Meals: Breakfast, Lunch
   Overnight: Moscow Grand Hotel
-Day 5: Tạm biệt Moscow
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Russia.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Moscow
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Russia.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Moscow Grand Hotel (5 sao, 125-300 USD/đêm)
-- Moscow City Suites (4 sao, 165-396 USD/đêm)
+- Moscow Grand Hotel (5-star, 125-300 USD/night)
+- Moscow City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -2353,9 +2353,9 @@ Country: Russia
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 3800 USD/người lớn | trẻ em: 2660 USD
+Price: 3800 USD per adult | child: 2660 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: russia, budget, popular
 
@@ -2370,40 +2370,40 @@ Local food:
 - Ikra
 
 Detailed itinerary:
-Day 1: Đến Kazan
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Kazan, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Kazan
-  Meals: Bữa tối
+Day 1: Arrival in Kazan
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Kazan.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Kazan
+  Meals: Dinner
   Overnight: Kazan Grand Hotel
-Day 2: Khám phá Kazan Kremlin
-  Tham quan Kazan Kremlin cùng hướng dẫn viên. Buổi chiều thưởng thức Chak-Chak và có thời gian tự do khám phá Kazan.
-  Activities: Tham quan Kazan Kremlin, Chụp ảnh tại các điểm đẹp, Thưởng thức Chak-Chak
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Kazan Kremlin
+  Guided visit to Kazan Kremlin. In the afternoon you will taste Chak-Chak and have free time to explore Kazan at your own pace.
+  Activities: Guided visit to Kazan Kremlin, City sightseeing, Taste Chak-Chak
+  Meals: Breakfast, Lunch
   Overnight: Kazan Grand Hotel
-Day 3: Khám phá Kul Sharif Mosque
-  Tham quan Kul Sharif Mosque cùng hướng dẫn viên. Buổi chiều thưởng thức Tatar Plow và có thời gian tự do khám phá Kazan.
-  Activities: Tham quan Kul Sharif Mosque, Chụp ảnh tại các điểm đẹp, Thưởng thức Tatar Plow
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Kul Sharif Mosque
+  Guided visit to Kul Sharif Mosque. In the afternoon you will taste Tatar Plow and have free time to explore Kazan at your own pace.
+  Activities: Guided visit to Kul Sharif Mosque, City sightseeing, Taste Tatar Plow
+  Meals: Breakfast, Lunch
   Overnight: Kazan Grand Hotel
-Day 4: Khám phá Bauman Street
-  Tham quan Bauman Street cùng hướng dẫn viên. Buổi chiều thưởng thức Ikra và có thời gian tự do khám phá Kazan.
-  Activities: Tham quan Bauman Street, Chụp ảnh tại các điểm đẹp, Thưởng thức Ikra
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Bauman Street
+  Guided visit to Bauman Street. In the afternoon you will taste Ikra and have free time to explore Kazan at your own pace.
+  Activities: Guided visit to Bauman Street, City sightseeing, Taste Ikra
+  Meals: Breakfast, Lunch
   Overnight: Kazan Grand Hotel
-Day 5: Tạm biệt Kazan
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Russia.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Kazan
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Russia.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Kazan Grand Hotel (5 sao, 95-228 USD/đêm)
-- Kazan City Suites (4 sao, 135-324 USD/đêm)
+- Kazan Grand Hotel (5-star, 95-228 USD/night)
+- Kazan City Suites (4-star, 135-324 USD/night)
 
 Tour guides:
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 3800 USD), 09/10/2026 (còn 20 chỗ, 3800 USD), 23/10/2026 (còn 20 chỗ, 3800 USD), 09/11/2026 (còn 20 chỗ, 3800 USD), 23/11/2026 (còn 20 chỗ, 3800 USD)
+23/09/2026 (20 seats left, 3800 USD), 09/10/2026 (20 seats left, 3800 USD), 23/10/2026 (20 seats left, 3800 USD), 09/11/2026 (20 seats left, 3800 USD), 23/11/2026 (20 seats left, 3800 USD)
 
 Package includes:
 - Accommodation
@@ -2431,9 +2431,9 @@ Country: Malaysia
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Price: 4500 USD per adult | child: 3150 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: malaysia, budget, popular
 
@@ -2448,40 +2448,40 @@ Local food:
 - Roti Canai
 
 Detailed itinerary:
-Day 1: Đến Kuala Lumpur
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Kuala Lumpur, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Kuala Lumpur
-  Meals: Bữa tối
+Day 1: Arrival in Kuala Lumpur
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Kuala Lumpur.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Kuala Lumpur
+  Meals: Dinner
   Overnight: Kuala Lumpur Grand Hotel
-Day 2: Khám phá Petronas Twin Towers
-  Tham quan Petronas Twin Towers cùng hướng dẫn viên. Buổi chiều thưởng thức Nasi Lemak và có thời gian tự do khám phá Kuala Lumpur.
-  Activities: Tham quan Petronas Twin Towers, Chụp ảnh tại các điểm đẹp, Thưởng thức Nasi Lemak
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Petronas Twin Towers
+  Guided visit to Petronas Twin Towers. In the afternoon you will taste Nasi Lemak and have free time to explore Kuala Lumpur at your own pace.
+  Activities: Guided visit to Petronas Twin Towers, City sightseeing, Taste Nasi Lemak
+  Meals: Breakfast, Lunch
   Overnight: Kuala Lumpur Grand Hotel
-Day 3: Khám phá Batu Caves
-  Tham quan Batu Caves cùng hướng dẫn viên. Buổi chiều thưởng thức Char Kway Teow và có thời gian tự do khám phá Kuala Lumpur.
-  Activities: Tham quan Batu Caves, Chụp ảnh tại các điểm đẹp, Thưởng thức Char Kway Teow
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Batu Caves
+  Guided visit to Batu Caves. In the afternoon you will taste Char Kway Teow and have free time to explore Kuala Lumpur at your own pace.
+  Activities: Guided visit to Batu Caves, City sightseeing, Taste Char Kway Teow
+  Meals: Breakfast, Lunch
   Overnight: Kuala Lumpur Grand Hotel
-Day 4: Khám phá Merdeka Square
-  Tham quan Merdeka Square cùng hướng dẫn viên. Buổi chiều thưởng thức Roti Canai và có thời gian tự do khám phá Kuala Lumpur.
-  Activities: Tham quan Merdeka Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Roti Canai
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Merdeka Square
+  Guided visit to Merdeka Square. In the afternoon you will taste Roti Canai and have free time to explore Kuala Lumpur at your own pace.
+  Activities: Guided visit to Merdeka Square, City sightseeing, Taste Roti Canai
+  Meals: Breakfast, Lunch
   Overnight: Kuala Lumpur Grand Hotel
-Day 5: Tạm biệt Kuala Lumpur
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Malaysia.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Kuala Lumpur
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Malaysia.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Kuala Lumpur Grand Hotel (5 sao, 113-271 USD/đêm)
-- Kuala Lumpur City Suites (4 sao, 153-367 USD/đêm)
+- Kuala Lumpur Grand Hotel (5-star, 113-271 USD/night)
+- Kuala Lumpur City Suites (4-star, 153-367 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+23/09/2026 (20 seats left, 4500 USD), 09/10/2026 (20 seats left, 4500 USD), 23/10/2026 (20 seats left, 4500 USD), 09/11/2026 (20 seats left, 4500 USD), 23/11/2026 (20 seats left, 4500 USD)
 
 Package includes:
 - Accommodation
@@ -2509,9 +2509,9 @@ Country: Malaysia
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 3200 USD/người lớn | trẻ em: 2240 USD
+Price: 3200 USD per adult | child: 2240 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: malaysia, budget, popular
 
@@ -2526,41 +2526,41 @@ Local food:
 - Cendol
 
 Detailed itinerary:
-Day 1: Đến Malacca
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Malacca, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Malacca
-  Meals: Bữa tối
+Day 1: Arrival in Malacca
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Malacca.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Malacca
+  Meals: Dinner
   Overnight: Malacca Grand Hotel
-Day 2: Khám phá St. Paul's Hill
-  Tham quan St. Paul's Hill cùng hướng dẫn viên. Buổi chiều thưởng thức Chicken Rice Ball và có thời gian tự do khám phá Malacca.
-  Activities: Tham quan St. Paul's Hill, Chụp ảnh tại các điểm đẹp, Thưởng thức Chicken Rice Ball
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover St. Paul's Hill
+  Guided visit to St. Paul's Hill. In the afternoon you will taste Chicken Rice Ball and have free time to explore Malacca at your own pace.
+  Activities: Guided visit to St. Paul's Hill, City sightseeing, Taste Chicken Rice Ball
+  Meals: Breakfast, Lunch
   Overnight: Malacca Grand Hotel
-Day 3: Khám phá Jonker Street
-  Tham quan Jonker Street cùng hướng dẫn viên. Buổi chiều thưởng thức Nyonya Laksa và có thời gian tự do khám phá Malacca.
-  Activities: Tham quan Jonker Street, Chụp ảnh tại các điểm đẹp, Thưởng thức Nyonya Laksa
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Jonker Street
+  Guided visit to Jonker Street. In the afternoon you will taste Nyonya Laksa and have free time to explore Malacca at your own pace.
+  Activities: Guided visit to Jonker Street, City sightseeing, Taste Nyonya Laksa
+  Meals: Breakfast, Lunch
   Overnight: Malacca Grand Hotel
-Day 4: Khám phá A Famosa
-  Tham quan A Famosa cùng hướng dẫn viên. Buổi chiều thưởng thức Cendol và có thời gian tự do khám phá Malacca.
-  Activities: Tham quan A Famosa, Chụp ảnh tại các điểm đẹp, Thưởng thức Cendol
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover A Famosa
+  Guided visit to A Famosa. In the afternoon you will taste Cendol and have free time to explore Malacca at your own pace.
+  Activities: Guided visit to A Famosa, City sightseeing, Taste Cendol
+  Meals: Breakfast, Lunch
   Overnight: Malacca Grand Hotel
-Day 5: Tạm biệt Malacca
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Malaysia.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Malacca
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Malaysia.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Malacca Grand Hotel (5 sao, 80-192 USD/đêm)
-- Malacca City Suites (4 sao, 120-288 USD/đêm)
+- Malacca Grand Hotel (5-star, 80-192 USD/night)
+- Malacca City Suites (4-star, 120-288 USD/night)
 
 Tour guides:
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 3200 USD), 09/10/2026 (còn 20 chỗ, 3200 USD), 23/10/2026 (còn 20 chỗ, 3200 USD), 09/11/2026 (còn 20 chỗ, 3200 USD), 23/11/2026 (còn 20 chỗ, 3200 USD)
+23/09/2026 (20 seats left, 3200 USD), 09/10/2026 (20 seats left, 3200 USD), 23/10/2026 (20 seats left, 3200 USD), 09/11/2026 (20 seats left, 3200 USD), 23/11/2026 (20 seats left, 3200 USD)
 
 Package includes:
 - Accommodation
@@ -2588,9 +2588,9 @@ Country: Japan
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4800 USD/người lớn | trẻ em: 3360 USD
+Price: 4800 USD per adult | child: 3360 USD
 Rating: 4.6/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: japan, budget, popular
 
@@ -2605,40 +2605,40 @@ Local food:
 - Yudofu (Tofu Hot Pot)
 
 Detailed itinerary:
-Day 1: Đến Kyoto
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Kyoto, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Kyoto
-  Meals: Bữa tối
+Day 1: Arrival in Kyoto
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Kyoto.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Kyoto
+  Meals: Dinner
   Overnight: Gion Nanba
-Day 2: Khám phá Kinkaku-ji (Golden Pavilion)
-  Tham quan Kinkaku-ji (Golden Pavilion) cùng hướng dẫn viên. Buổi chiều thưởng thức Kaiseki Ryori và có thời gian tự do khám phá Kyoto.
-  Activities: Tham quan Kinkaku-ji (Golden Pavilion), Chụp ảnh tại các điểm đẹp, Thưởng thức Kaiseki Ryori
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Kinkaku-ji (Golden Pavilion)
+  Guided visit to Kinkaku-ji (Golden Pavilion). In the afternoon you will taste Kaiseki Ryori and have free time to explore Kyoto at your own pace.
+  Activities: Guided visit to Kinkaku-ji (Golden Pavilion), City sightseeing, Taste Kaiseki Ryori
+  Meals: Breakfast, Lunch
   Overnight: Gion Nanba
-Day 3: Khám phá Fushimi Inari Taisha
-  Tham quan Fushimi Inari Taisha cùng hướng dẫn viên. Buổi chiều thưởng thức Matcha Green Tea và có thời gian tự do khám phá Kyoto.
-  Activities: Tham quan Fushimi Inari Taisha, Chụp ảnh tại các điểm đẹp, Thưởng thức Matcha Green Tea
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Fushimi Inari Taisha
+  Guided visit to Fushimi Inari Taisha. In the afternoon you will taste Matcha Green Tea and have free time to explore Kyoto at your own pace.
+  Activities: Guided visit to Fushimi Inari Taisha, City sightseeing, Taste Matcha Green Tea
+  Meals: Breakfast, Lunch
   Overnight: Gion Nanba
-Day 4: Khám phá Arashiyama Bamboo Grove
-  Tham quan Arashiyama Bamboo Grove cùng hướng dẫn viên. Buổi chiều thưởng thức Yudofu (Tofu Hot Pot) và có thời gian tự do khám phá Kyoto.
-  Activities: Tham quan Arashiyama Bamboo Grove, Chụp ảnh tại các điểm đẹp, Thưởng thức Yudofu (Tofu Hot Pot)
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Arashiyama Bamboo Grove
+  Guided visit to Arashiyama Bamboo Grove. In the afternoon you will taste Yudofu (Tofu Hot Pot) and have free time to explore Kyoto at your own pace.
+  Activities: Guided visit to Arashiyama Bamboo Grove, City sightseeing, Taste Yudofu (Tofu Hot Pot)
+  Meals: Breakfast, Lunch
   Overnight: Gion Nanba
-Day 5: Tạm biệt Kyoto
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Japan.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Kyoto
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Japan.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Gion Nanba (5 sao, 400-800 USD/đêm)
-- Kyoto Traditional Ryokan (5 sao, 400-900 USD/đêm)
+- Gion Nanba (5-star, 400-800 USD/night)
+- Kyoto Traditional Ryokan (5-star, 400-900 USD/night)
 
 Tour guides:
-- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Phạm Minh Tuấn (languages: Vietnamese, English, Japanese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4800 USD), 09/10/2026 (còn 20 chỗ, 4800 USD), 23/10/2026 (còn 20 chỗ, 4800 USD), 09/11/2026 (còn 20 chỗ, 4800 USD), 23/11/2026 (còn 20 chỗ, 4800 USD)
+23/09/2026 (20 seats left, 4800 USD), 09/10/2026 (20 seats left, 4800 USD), 23/10/2026 (20 seats left, 4800 USD), 09/11/2026 (20 seats left, 4800 USD), 23/11/2026 (20 seats left, 4800 USD)
 
 Package includes:
 - Accommodation
@@ -2666,9 +2666,9 @@ Country: India
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.2/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: india, budget, popular
 
@@ -2683,40 +2683,40 @@ Local food:
 - Butter Chicken
 
 Detailed itinerary:
-Day 1: Đến Delhi
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Delhi, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Delhi
-  Meals: Bữa tối
+Day 1: Arrival in Delhi
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Delhi.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Delhi
+  Meals: Dinner
   Overnight: Delhi Grand Hotel
-Day 2: Khám phá Red Fort
-  Tham quan Red Fort cùng hướng dẫn viên. Buổi chiều thưởng thức Paratha và có thời gian tự do khám phá Delhi.
-  Activities: Tham quan Red Fort, Chụp ảnh tại các điểm đẹp, Thưởng thức Paratha
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Red Fort
+  Guided visit to Red Fort. In the afternoon you will taste Paratha and have free time to explore Delhi at your own pace.
+  Activities: Guided visit to Red Fort, City sightseeing, Taste Paratha
+  Meals: Breakfast, Lunch
   Overnight: Delhi Grand Hotel
-Day 3: Khám phá Qutub Minar
-  Tham quan Qutub Minar cùng hướng dẫn viên. Buổi chiều thưởng thức Chole Bhature và có thời gian tự do khám phá Delhi.
-  Activities: Tham quan Qutub Minar, Chụp ảnh tại các điểm đẹp, Thưởng thức Chole Bhature
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Qutub Minar
+  Guided visit to Qutub Minar. In the afternoon you will taste Chole Bhature and have free time to explore Delhi at your own pace.
+  Activities: Guided visit to Qutub Minar, City sightseeing, Taste Chole Bhature
+  Meals: Breakfast, Lunch
   Overnight: Delhi Grand Hotel
-Day 4: Khám phá India Gate
-  Tham quan India Gate cùng hướng dẫn viên. Buổi chiều thưởng thức Butter Chicken và có thời gian tự do khám phá Delhi.
-  Activities: Tham quan India Gate, Chụp ảnh tại các điểm đẹp, Thưởng thức Butter Chicken
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover India Gate
+  Guided visit to India Gate. In the afternoon you will taste Butter Chicken and have free time to explore Delhi at your own pace.
+  Activities: Guided visit to India Gate, City sightseeing, Taste Butter Chicken
+  Meals: Breakfast, Lunch
   Overnight: Delhi Grand Hotel
-Day 5: Tạm biệt Delhi
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại India.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Delhi
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in India.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Delhi Grand Hotel (5 sao, 125-300 USD/đêm)
-- Delhi City Suites (4 sao, 165-396 USD/đêm)
+- Delhi Grand Hotel (5-star, 125-300 USD/night)
+- Delhi City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation
@@ -2744,9 +2744,9 @@ Country: France
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Price: 5500 USD per adult | child: 3850 USD
 Rating: 4.5/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, luxury, popular
 
@@ -2761,41 +2761,41 @@ Local food:
 - Tarte Tatin
 
 Detailed itinerary:
-Day 1: Đến Lyon
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Lyon, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Lyon
-  Meals: Bữa tối
+Day 1: Arrival in Lyon
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Lyon.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Lyon
+  Meals: Dinner
   Overnight: Lyon Grand Hotel
-Day 2: Khám phá Basilica of Notre-Dame de Fourvière
-  Tham quan Basilica of Notre-Dame de Fourvière cùng hướng dẫn viên. Buổi chiều thưởng thức Coq au Vin và có thời gian tự do khám phá Lyon.
-  Activities: Tham quan Basilica of Notre-Dame de Fourvière, Chụp ảnh tại các điểm đẹp, Thưởng thức Coq au Vin
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Basilica of Notre-Dame de Fourvière
+  Guided visit to Basilica of Notre-Dame de Fourvière. In the afternoon you will taste Coq au Vin and have free time to explore Lyon at your own pace.
+  Activities: Guided visit to Basilica of Notre-Dame de Fourvière, City sightseeing, Taste Coq au Vin
+  Meals: Breakfast, Lunch
   Overnight: Lyon Grand Hotel
-Day 3: Khám phá Vieux Lyon
-  Tham quan Vieux Lyon cùng hướng dẫn viên. Buổi chiều thưởng thức Quenelle và có thời gian tự do khám phá Lyon.
-  Activities: Tham quan Vieux Lyon, Chụp ảnh tại các điểm đẹp, Thưởng thức Quenelle
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Vieux Lyon
+  Guided visit to Vieux Lyon. In the afternoon you will taste Quenelle and have free time to explore Lyon at your own pace.
+  Activities: Guided visit to Vieux Lyon, City sightseeing, Taste Quenelle
+  Meals: Breakfast, Lunch
   Overnight: Lyon Grand Hotel
-Day 4: Khám phá Musée des Confluences
-  Tham quan Musée des Confluences cùng hướng dẫn viên. Buổi chiều thưởng thức Tarte Tatin và có thời gian tự do khám phá Lyon.
-  Activities: Tham quan Musée des Confluences, Chụp ảnh tại các điểm đẹp, Thưởng thức Tarte Tatin
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Musée des Confluences
+  Guided visit to Musée des Confluences. In the afternoon you will taste Tarte Tatin and have free time to explore Lyon at your own pace.
+  Activities: Guided visit to Musée des Confluences, City sightseeing, Taste Tarte Tatin
+  Meals: Breakfast, Lunch
   Overnight: Lyon Grand Hotel
-Day 5: Tạm biệt Lyon
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Lyon
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in France.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Lyon Grand Hotel (5 sao, 138-331 USD/đêm)
-- Lyon City Suites (4 sao, 178-427 USD/đêm)
+- Lyon Grand Hotel (5-star, 138-331 USD/night)
+- Lyon City Suites (4-star, 178-427 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+23/09/2026 (20 seats left, 5500 USD), 09/10/2026 (20 seats left, 5500 USD), 23/10/2026 (20 seats left, 5500 USD), 09/11/2026 (20 seats left, 5500 USD), 23/11/2026 (20 seats left, 5500 USD)
 
 Package includes:
 - Accommodation

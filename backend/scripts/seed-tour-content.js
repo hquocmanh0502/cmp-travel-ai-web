@@ -38,9 +38,9 @@ const FALLBACK_IMAGES = [
 ];
 
 const HOTEL_STYLES = [
-  { suffix: 'Grand Hotel', star: 5, kind: 'sang trọng ngay trung tâm' },
-  { suffix: 'Boutique Residence', star: 4, kind: 'boutique ấm cúng' },
-  { suffix: 'City Suites', star: 4, kind: 'căn hộ dịch vụ rộng rãi' }
+  { suffix: 'Grand Hotel', star: 5, kind: 'an elegant five-star hotel in the heart of' },
+  { suffix: 'Boutique Residence', star: 4, kind: 'a cosy boutique stay in' },
+  { suffix: 'City Suites', star: 4, kind: 'spacious serviced apartments in' }
 ];
 
 const AMENITY_SETS = [
@@ -100,7 +100,7 @@ function buildHotel(tour, index, imagePool) {
           size: 32,
           bedInfo: '1 King Bed',
           amenities: ['wifi', 'air-conditioning', 'minibar'],
-          description: `Phòng Deluxe hướng thành phố tại ${city}.`,
+          description: `Deluxe room with city view in ${city}.`,
           totalRooms: 12,
           availableRooms: 12
         },
@@ -112,19 +112,19 @@ function buildHotel(tour, index, imagePool) {
           size: 58,
           bedInfo: '1 King Bed + Sofa Bed',
           amenities: ['wifi', 'air-conditioning', 'bathtub', 'lounge-access'],
-          description: `Suite rộng rãi, phù hợp gia đình, tại ${city}.`,
+          description: `Spacious suite ideal for families, in ${city}.`,
           totalRooms: 5,
           availableRooms: 5
         }
       ],
       images: [pick(imagePool, index), pick(imagePool, index + 1)],
-      description: `Khách sạn ${style.kind} tại ${city}, ${country}. Thuận tiện di chuyển tới các điểm tham quan chính trong hành trình.`,
+      description: `${style.kind} ${city}, ${country}. Well located for the main sights included in this tour.`,
       checkInTime: '14:00',
       checkOutTime: '12:00',
       policies: {
-        cancellation: 'Miễn phí huỷ trước 7 ngày so với ngày nhận phòng.',
-        petPolicy: 'Không nhận thú cưng.',
-        childPolicy: 'Trẻ dưới 6 tuổi ở cùng bố mẹ miễn phí.'
+        cancellation: 'Free cancellation up to 7 days before check-in.',
+        petPolicy: 'Pets are not allowed.',
+        childPolicy: 'Children under 6 stay free with parents.'
       }
     },
     reviewsSummary: { totalReviews: 0, averageRating: 0 },
@@ -152,10 +152,10 @@ function buildItinerary(tour, hotelId) {
 
   plan.push({
     day: 1,
-    title: `Đến ${city}`,
-    description: `Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm ${city}, làm quen với nhịp sống địa phương.`,
-    activities: ['Đón tại sân bay', 'Nhận phòng khách sạn', `Dạo bộ trung tâm ${city}`],
-    meals: ['Bữa tối'],
+    title: `Arrival in ${city}`,
+    description: `Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central ${city}.`,
+    activities: ["Airport pickup", "Hotel check-in", `Evening walk around ${city}`],
+    meals: ["Dinner"],
     accommodation: hotelId
   });
 
@@ -167,19 +167,19 @@ function buildItinerary(tour, hotelId) {
     if (spot) {
       plan.push({
         day: i + 2,
-        title: `Khám phá ${spot}`,
-        description: `Tham quan ${spot} cùng hướng dẫn viên. Buổi chiều thưởng thức ${dish || 'ẩm thực địa phương'} và có thời gian tự do khám phá ${city}.`,
-        activities: [`Tham quan ${spot}`, 'Chụp ảnh tại các điểm đẹp', dish ? `Thưởng thức ${dish}` : 'Ẩm thực địa phương'],
-        meals: ['Bữa sáng', 'Bữa trưa'],
+        title: `Discover ${spot}`,
+        description: `Guided visit to ${spot}. In the afternoon you will taste ${dish || "local specialities"} and have free time to explore ${city} at your own pace.`,
+        activities: [`Guided visit to ${spot}`, "City sightseeing", dish ? `Taste ${dish}` : "Local cuisine tasting"],
+        meals: ["Breakfast", "Lunch"],
         accommodation: hotelId
       });
     } else {
       plan.push({
         day: i + 2,
-        title: `Tự do tại ${city}`,
-        description: `Ngày tự do. Bạn có thể mua sắm, nghỉ dưỡng tại khách sạn hoặc đăng ký thêm tour tự chọn.`,
-        activities: ['Thời gian tự do', 'Mua sắm quà lưu niệm'],
-        meals: ['Bữa sáng'],
+        title: `Free day in ${city}`,
+        description: `A free day. You can go shopping, relax at the hotel or join one of our optional excursions.`,
+        activities: ["Free time", "Local market tour"],
+        meals: ["Breakfast"],
         accommodation: hotelId
       });
     }
@@ -187,17 +187,15 @@ function buildItinerary(tour, hotelId) {
 
   plan.push({
     day: days,
-    title: `Tạm biệt ${city}`,
-    description: `Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình ${tour.duration} tại ${tour.country}.`,
-    activities: ['Bữa sáng tại khách sạn', 'Trả phòng', 'Tiễn ra sân bay'],
-    meals: ['Bữa sáng'],
+    title: `Departure from ${city}`,
+    description: `Breakfast at the hotel, check-out and transfer to the airport. End of your ${tour.duration} journey in ${tour.country}.`,
+    activities: ["Breakfast at hotel", "Hotel check-out", "Transfer to airport"],
+    meals: ["Breakfast"],
     accommodation: null
   });
 
   return plan;
 }
-
-// ------------------------------------------------------- hướng dẫn viên & lịch
 
 const LANGUAGE_BY_COUNTRY = {
   France: 'French', Japan: 'Japanese', Thailand: 'Thai',
@@ -273,6 +271,7 @@ function buildAvailability(tour) {
   }
 
   let createdHotels = 0;
+  let refreshedHotels = 0;
   let updatedTours = 0;
   let skipped = 0;
 
@@ -302,6 +301,20 @@ function buildAvailability(tour) {
       }
       createdHotels++;
     }
+    // Khach san seed tao tu lan chay truoc co noi dung tieng Viet. Voi --force,
+    // ghi de lai bang noi dung tieng Anh. Chi dung vao khach san do script nay tao ra
+    // (ten khop mau "{Thanh pho} {suffix}"), khong dung toi 30 khach san goc.
+    if (force && !dryRun) {
+      const generatedNames = HOTEL_STYLES.map(st => `${tour.name} ${st.suffix}`);
+      for (const h of cityHotels) {
+        const pos = generatedNames.indexOf(h.name);
+        if (pos < 0) continue;
+        const fresh = buildHotel(tour, pos, imagePool);
+        await Hotel.updateOne({ _id: h._id }, { $set: { details: fresh.details, updatedAt: new Date() } });
+        refreshedHotels++;
+      }
+    }
+
     hotelsByCity.set(cityKey, cityHotels);
 
     const selectedHotels = cityHotels.slice(0, 3).map(h => h._id);
@@ -326,6 +339,7 @@ function buildAvailability(tour) {
   console.log(`Tour được cập nhật : ${updatedTours}`);
   console.log(`Tour bỏ qua (đã có): ${skipped}${skipped ? '  -> dùng --force để làm lại' : ''}`);
   console.log(`Khách sạn tạo mới  : ${createdHotels}`);
+  console.log(`Khách sạn cập nhật : ${refreshedHotels}`);
   console.log('='.repeat(50));
   if (dryRun) console.log('\nDRY-RUN: chưa có gì được ghi vào DB.');
 

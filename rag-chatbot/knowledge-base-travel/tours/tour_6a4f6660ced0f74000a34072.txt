@@ -6,9 +6,9 @@ Country: Italy
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 4.1/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, budget, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Tiramisu
 
 Detailed itinerary:
-Day 1: Đến Venice
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Venice, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Venice
-  Meals: Bữa tối
+Day 1: Arrival in Venice
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Venice.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Venice
+  Meals: Dinner
   Overnight: Venice Grand Hotel
-Day 2: Khám phá St. Mark's Square
-  Tham quan St. Mark's Square cùng hướng dẫn viên. Buổi chiều thưởng thức Seafood Risotto và có thời gian tự do khám phá Venice.
-  Activities: Tham quan St. Mark's Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Seafood Risotto
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover St. Mark's Square
+  Guided visit to St. Mark's Square. In the afternoon you will taste Seafood Risotto and have free time to explore Venice at your own pace.
+  Activities: Guided visit to St. Mark's Square, City sightseeing, Taste Seafood Risotto
+  Meals: Breakfast, Lunch
   Overnight: Venice Grand Hotel
-Day 3: Khám phá Rialto Bridge
-  Tham quan Rialto Bridge cùng hướng dẫn viên. Buổi chiều thưởng thức Cicchetti và có thời gian tự do khám phá Venice.
-  Activities: Tham quan Rialto Bridge, Chụp ảnh tại các điểm đẹp, Thưởng thức Cicchetti
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Rialto Bridge
+  Guided visit to Rialto Bridge. In the afternoon you will taste Cicchetti and have free time to explore Venice at your own pace.
+  Activities: Guided visit to Rialto Bridge, City sightseeing, Taste Cicchetti
+  Meals: Breakfast, Lunch
   Overnight: Venice Grand Hotel
-Day 4: Khám phá Doge's Palace
-  Tham quan Doge's Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Tiramisu và có thời gian tự do khám phá Venice.
-  Activities: Tham quan Doge's Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Tiramisu
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Doge's Palace
+  Guided visit to Doge's Palace. In the afternoon you will taste Tiramisu and have free time to explore Venice at your own pace.
+  Activities: Guided visit to Doge's Palace, City sightseeing, Taste Tiramisu
+  Meals: Breakfast, Lunch
   Overnight: Venice Grand Hotel
-Day 5: Tạm biệt Venice
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Venice
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Italy.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Venice Grand Hotel (5 sao, 125-300 USD/đêm)
-- Venice City Suites (4 sao, 165-396 USD/đêm)
+- Venice Grand Hotel (5-star, 125-300 USD/night)
+- Venice City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Võ Thị Lan (languages: Vietnamese, English, Thai)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation

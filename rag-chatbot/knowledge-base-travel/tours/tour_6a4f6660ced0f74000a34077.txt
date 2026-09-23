@@ -6,9 +6,9 @@ Country: France
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Price: 5000 USD per adult | child: 3500 USD
 Rating: 2.9/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, budget, popular
 
@@ -23,41 +23,41 @@ Local food:
 - Pastis
 
 Detailed itinerary:
-Day 1: Đến Marseille
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Marseille, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Marseille
-  Meals: Bữa tối
+Day 1: Arrival in Marseille
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Marseille.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Marseille
+  Meals: Dinner
   Overnight: Marseille Grand Hotel
-Day 2: Khám phá Old Port
-  Tham quan Old Port cùng hướng dẫn viên. Buổi chiều thưởng thức Bouillabaisse và có thời gian tự do khám phá Marseille.
-  Activities: Tham quan Old Port, Chụp ảnh tại các điểm đẹp, Thưởng thức Bouillabaisse
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Old Port
+  Guided visit to Old Port. In the afternoon you will taste Bouillabaisse and have free time to explore Marseille at your own pace.
+  Activities: Guided visit to Old Port, City sightseeing, Taste Bouillabaisse
+  Meals: Breakfast, Lunch
   Overnight: Marseille Grand Hotel
-Day 3: Khám phá Notre-Dame de la Garde
-  Tham quan Notre-Dame de la Garde cùng hướng dẫn viên. Buổi chiều thưởng thức Navettes và có thời gian tự do khám phá Marseille.
-  Activities: Tham quan Notre-Dame de la Garde, Chụp ảnh tại các điểm đẹp, Thưởng thức Navettes
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Notre-Dame de la Garde
+  Guided visit to Notre-Dame de la Garde. In the afternoon you will taste Navettes and have free time to explore Marseille at your own pace.
+  Activities: Guided visit to Notre-Dame de la Garde, City sightseeing, Taste Navettes
+  Meals: Breakfast, Lunch
   Overnight: Marseille Grand Hotel
-Day 4: Khám phá Calanques National Park
-  Tham quan Calanques National Park cùng hướng dẫn viên. Buổi chiều thưởng thức Pastis và có thời gian tự do khám phá Marseille.
-  Activities: Tham quan Calanques National Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Pastis
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Calanques National Park
+  Guided visit to Calanques National Park. In the afternoon you will taste Pastis and have free time to explore Marseille at your own pace.
+  Activities: Guided visit to Calanques National Park, City sightseeing, Taste Pastis
+  Meals: Breakfast, Lunch
   Overnight: Marseille Grand Hotel
-Day 5: Tạm biệt Marseille
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Marseille
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in France.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Marseille Grand Hotel (5 sao, 125-300 USD/đêm)
-- Marseille City Suites (4 sao, 165-396 USD/đêm)
+- Marseille Grand Hotel (5-star, 125-300 USD/night)
+- Marseille City Suites (4-star, 165-396 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
-- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
+- Lê Hoàng Phúc (languages: Vietnamese, English, Chinese)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+23/09/2026 (20 seats left, 5000 USD), 09/10/2026 (20 seats left, 5000 USD), 23/10/2026 (20 seats left, 5000 USD), 09/11/2026 (20 seats left, 5000 USD), 23/11/2026 (20 seats left, 5000 USD)
 
 Package includes:
 - Accommodation

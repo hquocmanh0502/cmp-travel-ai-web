@@ -6,9 +6,9 @@ Country: Spain
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Price: 4000 USD per adult | child: 2800 USD
 Rating: 2.9/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: spain, budget, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Buñuelos
 
 Detailed itinerary:
-Day 1: Đến Valencia
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Valencia, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Valencia
-  Meals: Bữa tối
+Day 1: Arrival in Valencia
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Valencia.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Valencia
+  Meals: Dinner
   Overnight: Valencia Grand Hotel
-Day 2: Khám phá City of Arts and Sciences
-  Tham quan City of Arts and Sciences cùng hướng dẫn viên. Buổi chiều thưởng thức Paella và có thời gian tự do khám phá Valencia.
-  Activities: Tham quan City of Arts and Sciences, Chụp ảnh tại các điểm đẹp, Thưởng thức Paella
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover City of Arts and Sciences
+  Guided visit to City of Arts and Sciences. In the afternoon you will taste Paella and have free time to explore Valencia at your own pace.
+  Activities: Guided visit to City of Arts and Sciences, City sightseeing, Taste Paella
+  Meals: Breakfast, Lunch
   Overnight: Valencia Grand Hotel
-Day 3: Khám phá Mercado Central
-  Tham quan Mercado Central cùng hướng dẫn viên. Buổi chiều thưởng thức Horchata và có thời gian tự do khám phá Valencia.
-  Activities: Tham quan Mercado Central, Chụp ảnh tại các điểm đẹp, Thưởng thức Horchata
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Mercado Central
+  Guided visit to Mercado Central. In the afternoon you will taste Horchata and have free time to explore Valencia at your own pace.
+  Activities: Guided visit to Mercado Central, City sightseeing, Taste Horchata
+  Meals: Breakfast, Lunch
   Overnight: Valencia Grand Hotel
-Day 4: Khám phá Bioparc Valencia
-  Tham quan Bioparc Valencia cùng hướng dẫn viên. Buổi chiều thưởng thức Buñuelos và có thời gian tự do khám phá Valencia.
-  Activities: Tham quan Bioparc Valencia, Chụp ảnh tại các điểm đẹp, Thưởng thức Buñuelos
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Bioparc Valencia
+  Guided visit to Bioparc Valencia. In the afternoon you will taste Buñuelos and have free time to explore Valencia at your own pace.
+  Activities: Guided visit to Bioparc Valencia, City sightseeing, Taste Buñuelos
+  Meals: Breakfast, Lunch
   Overnight: Valencia Grand Hotel
-Day 5: Tạm biệt Valencia
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Spain.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Valencia
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Spain.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Valencia Grand Hotel (5 sao, 100-240 USD/đêm)
-- Valencia City Suites (4 sao, 140-336 USD/đêm)
+- Valencia Grand Hotel (5-star, 100-240 USD/night)
+- Valencia City Suites (4-star, 140-336 USD/night)
 
 Tour guides:
-- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+- Trần Thị Mai (languages: Vietnamese, English, Korean)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+23/09/2026 (20 seats left, 4000 USD), 09/10/2026 (20 seats left, 4000 USD), 23/10/2026 (20 seats left, 4000 USD), 09/11/2026 (20 seats left, 4000 USD), 23/11/2026 (20 seats left, 4000 USD)
 
 Package includes:
 - Accommodation

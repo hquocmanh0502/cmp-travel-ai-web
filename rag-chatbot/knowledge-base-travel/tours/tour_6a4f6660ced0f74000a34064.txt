@@ -6,9 +6,9 @@ Country: Greece
 Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
-Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Price: 4500 USD per adult | child: 3150 USD
 Rating: 4.7/5
-Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: greece, budget, popular
 
@@ -23,40 +23,40 @@ Local food:
 - Spanakopita
 
 Detailed itinerary:
-Day 1: Đến Athens
-  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Athens, làm quen với nhịp sống địa phương.
-  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Athens
-  Meals: Bữa tối
+Day 1: Arrival in Athens
+  Our driver meets you at the airport and transfers you to the hotel. The rest of the day is free to rest and take a first stroll around central Athens.
+  Activities: Airport pickup, Hotel check-in, Evening walk around Athens
+  Meals: Dinner
   Overnight: Athens Grand Hotel
-Day 2: Khám phá Acropolis
-  Tham quan Acropolis cùng hướng dẫn viên. Buổi chiều thưởng thức Moussaka và có thời gian tự do khám phá Athens.
-  Activities: Tham quan Acropolis, Chụp ảnh tại các điểm đẹp, Thưởng thức Moussaka
-  Meals: Bữa sáng, Bữa trưa
+Day 2: Discover Acropolis
+  Guided visit to Acropolis. In the afternoon you will taste Moussaka and have free time to explore Athens at your own pace.
+  Activities: Guided visit to Acropolis, City sightseeing, Taste Moussaka
+  Meals: Breakfast, Lunch
   Overnight: Athens Grand Hotel
-Day 3: Khám phá Parthenon
-  Tham quan Parthenon cùng hướng dẫn viên. Buổi chiều thưởng thức Souvlaki và có thời gian tự do khám phá Athens.
-  Activities: Tham quan Parthenon, Chụp ảnh tại các điểm đẹp, Thưởng thức Souvlaki
-  Meals: Bữa sáng, Bữa trưa
+Day 3: Discover Parthenon
+  Guided visit to Parthenon. In the afternoon you will taste Souvlaki and have free time to explore Athens at your own pace.
+  Activities: Guided visit to Parthenon, City sightseeing, Taste Souvlaki
+  Meals: Breakfast, Lunch
   Overnight: Athens Grand Hotel
-Day 4: Khám phá Plaka
-  Tham quan Plaka cùng hướng dẫn viên. Buổi chiều thưởng thức Spanakopita và có thời gian tự do khám phá Athens.
-  Activities: Tham quan Plaka, Chụp ảnh tại các điểm đẹp, Thưởng thức Spanakopita
-  Meals: Bữa sáng, Bữa trưa
+Day 4: Discover Plaka
+  Guided visit to Plaka. In the afternoon you will taste Spanakopita and have free time to explore Athens at your own pace.
+  Activities: Guided visit to Plaka, City sightseeing, Taste Spanakopita
+  Meals: Breakfast, Lunch
   Overnight: Athens Grand Hotel
-Day 5: Tạm biệt Athens
-  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Greece.
-  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
-  Meals: Bữa sáng
+Day 5: Departure from Athens
+  Breakfast at the hotel, check-out and transfer to the airport. End of your 5 days journey in Greece.
+  Activities: Breakfast at hotel, Hotel check-out, Transfer to airport
+  Meals: Breakfast
 
 Hotels used in this tour:
-- Athens Grand Hotel (5 sao, 113-271 USD/đêm)
-- Athens City Suites (4 sao, 153-367 USD/đêm)
+- Athens Grand Hotel (5-star, 113-271 USD/night)
+- Athens City Suites (4-star, 153-367 USD/night)
 
 Tour guides:
-- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Nguyễn Văn An (languages: Vietnamese, English, French)
 
 Upcoming departures:
-23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+23/09/2026 (20 seats left, 4500 USD), 09/10/2026 (20 seats left, 4500 USD), 23/10/2026 (20 seats left, 4500 USD), 09/11/2026 (20 seats left, 4500 USD), 23/11/2026 (20 seats left, 4500 USD)
 
 Package includes:
 - Accommodation
