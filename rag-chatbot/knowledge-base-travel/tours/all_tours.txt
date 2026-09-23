@@ -1,1553 +1,2812 @@
-
-
-================================================================================TOUR: Maldives
-
-Description: The Maldives is a tropical paradise renowned for its luxurious resorts, and vibrant marine life, making it a top destination for beach lovers and divers.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Maldives', 'region': 'Maldives'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Maldives', 'activities': ['Snorkeling', 'Scuba Diving'], 'meals': ['Mas Huni'], '_id': '690c7f0bb6d8904848c30508'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Lauterbrunnen
+TOUR: Lauterbrunnen - Switzerland
 
 Description: Lauterbrunnen, in the Swiss Alps, is known for its stunning waterfalls and scenic beauty. It's a serene valley with lush meadows and towering mountains, perfect for nature lovers.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Switzerland', 'region': 'Switzerland'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: Switzerland
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Rating: 4.6/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: switzerland, luxury, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Staubbach Falls
+- Lauterbrunnen Valley
+- Trümmelbach Falls
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Lauterbrunnen', 'activities': ['Cable Car Rides', 'Waterfalls Tour'], 'meals': ['Swiss Fondue'], '_id': '690c7f0bb6d8904848c3050b'}]
+Local food:
+- Swiss Fondue
+- Raclette
+- Hot Chocolate
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Lauterbrunnen
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Lauterbrunnen, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Lauterbrunnen
+  Meals: Bữa tối
+  Overnight: Lauterbrunnen Grand Hotel
+Day 2: Khám phá Staubbach Falls
+  Tham quan Staubbach Falls cùng hướng dẫn viên. Buổi chiều thưởng thức Swiss Fondue và có thời gian tự do khám phá Lauterbrunnen.
+  Activities: Tham quan Staubbach Falls, Chụp ảnh tại các điểm đẹp, Thưởng thức Swiss Fondue
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lauterbrunnen Grand Hotel
+Day 3: Khám phá Lauterbrunnen Valley
+  Tham quan Lauterbrunnen Valley cùng hướng dẫn viên. Buổi chiều thưởng thức Raclette và có thời gian tự do khám phá Lauterbrunnen.
+  Activities: Tham quan Lauterbrunnen Valley, Chụp ảnh tại các điểm đẹp, Thưởng thức Raclette
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lauterbrunnen Grand Hotel
+Day 4: Khám phá Trümmelbach Falls
+  Tham quan Trümmelbach Falls cùng hướng dẫn viên. Buổi chiều thưởng thức Hot Chocolate và có thời gian tự do khám phá Lauterbrunnen.
+  Activities: Tham quan Trümmelbach Falls, Chụp ảnh tại các điểm đẹp, Thưởng thức Hot Chocolate
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lauterbrunnen Grand Hotel
+Day 5: Tạm biệt Lauterbrunnen
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Switzerland.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Lauterbrunnen Grand Hotel (5 sao, 138-331 USD/đêm)
+- Lauterbrunnen City Suites (4 sao, 178-427 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
 
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
 
-TOUR: Amsterdam
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
 
-Description: Amsterdam is the capital of the Netherlands, known for its picturesque canals, historic architecture, and vibrant cultural scene.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Netherlands', 'region': 'Netherlands'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Amsterdam', 'activities': ['Boat Tour', 'Biking'], 'meals': ['Stroopwafel'], '_id': '690c7f0bb6d8904848c3050e'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Toronto
+================================================================================
 
-Description: Toronto is Canada's largest city, a vibrant metropolis with diverse neighborhoods, iconic landmarks like the CN Tower, and a thriving arts and culture scene.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Canada', 'region': 'Canada'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Toronto', 'activities': ['Harbourfront Centre', 'Explore Toronto Islands'], 'meals': ['Poutine'], '_id': '690c7f0bb6d8904848c30511'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Vancouver
-
-Description: Vancouver is a coastal city known for its stunning natural beauty, surrounded by mountains and ocean, offering a mix of outdoor activities and urban experiences.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Canada', 'region': 'Canada'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Vancouver', 'activities': ['Grouse Mountain Hike', 'Seawall Biking'], 'meals': ['Salmon'], '_id': '690c7f0bb6d8904848c30514'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Montreal
-
-Description: Montreal is a vibrant city with a strong French influence, known for its historic architecture, artsy neighborhoods, and lively festivals.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Canada', 'region': 'Canada'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Montreal', 'activities': ['Explore Plateau-Mont-Royal', 'Bike along Lachine Canal'], 'meals': ['Bagels'], '_id': '690c7f0bb6d8904848c30517'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Lisbon
-
-Description: Lisbon, the capital city of Portugal, is a charming destination with narrow cobblestone streets, colorful buildings, and stunning viewpoints over the Tagus River.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Portugal', 'region': 'Portugal'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Lisbon', 'activities': ['Tram 28 Ride', 'Explore Alfama District'], 'meals': ['Pastéis de Nata'], '_id': '690c7f0bb6d8904848c3051a'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Porto
-
-Description: Porto is a picturesque city known for its Port wine cellars, historic Ribeira district, and iconic Dom Luís I Bridge crossing the Douro River.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Portugal', 'region': 'Portugal'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Porto', 'activities': ['Port Wine Tasting', 'Boat Cruise on Douro River'], 'meals': ['Francesinha'], '_id': '690c7f0bb6d8904848c3051d'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Moscow
-
-Description: Moscow is the capital city of Russia, known for its iconic landmarks, rich history, and vibrant cultural scene.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Russia', 'region': 'Russia'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Moscow', 'activities': ['Visiting Moscow Metro Stations', 'Exploring Gorky Park'], 'meals': ['Borscht'], '_id': '690c7f0bb6d8904848c30520'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Kazan
-
-Description: Kazan is a city where East meets West, showcasing its unique blend of Islamic and Russian cultures, with a stunning Kremlin and a vibrant city center.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Russia', 'region': 'Russia'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Kazan', 'activities': ['Explore Kazan Riviera', 'Visit Raifa Monastery'], 'meals': ['Chak-Chak'], '_id': '690c7f0bb6d8904848c30523'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Kuala Lumpur
-
-Description: Kuala Lumpur is the vibrant capital city of Malaysia, famous for its modern skyline, iconic Petronas Twin Towers, and diverse cultural heritage.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Malaysia', 'region': 'Malaysia'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Kuala Lumpur', 'activities': ['Shopping at Bukit Bintang', 'Visiting KL Tower'], 'meals': ['Nasi Lemak'], '_id': '690c7f0bb6d8904848c30526'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Malacca
-
-Description: Malacca (Melaka) is a historical city with a rich colonial past, featuring well-preserved heritage buildings and a unique blend of cultures.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Malaysia', 'region': 'Malaysia'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Malacca', 'activities': ['River Cruise in Malacca River', 'Visiting Dutch Square'], 'meals': ['Chicken Rice Ball'], '_id': '690c7f0bb6d8904848c30529'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Langkawi
-
-Description: Langkawi is a tropical paradise with beautiful beaches, lush rainforests, and a laid-back atmosphere, perfect for relaxation and adventure.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Malaysia', 'region': 'Malaysia'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Langkawi', 'activities': ['Island Hopping Tour', 'Jet Ski Adventure'], 'meals': ['Nasi Dagang'], '_id': '690c7f0bb6d8904848c3052c'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Causeway Bay
-
-Description: Causeway Bay is a popular shopping and entertainment district, home to large department stores, trendy boutiques, and a vibrant food scene.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Hong Kong', 'region': 'Hong Kong'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Causeway Bay', 'activities': ['Shopping in Causeway Bay', 'Relaxing in Victoria Park'], 'meals': ['Wonton Noodles'], '_id': '690c7f0bb6d8904848c3052f'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Athens
-
-Description: Athens, the ancient capital, is a city steeped in history, showcasing iconic ruins, ancient temples, and a rich cultural heritage.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Greece', 'region': 'Greece'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Athens', 'activities': ['Visit Acropolis Museum', 'Explore Ancient Agora'], 'meals': ['Moussaka'], '_id': '690c7f0bb6d8904848c30532'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Santorini
-
-Description: Santorini is a stunning volcanic island known for its white-washed buildings, dramatic sunsets, and picturesque cliffside villages.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Greece', 'region': 'Greece'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Santorini', 'activities': ['Sail around Caldera', 'Explore Akrotiri Archaeological Site'], 'meals': ['Fava'], '_id': '690c7f0bb6d8904848c30535'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Tokyo
-
-Description: Tokyo, the capital city, is a bustling metropolis known for its modernity, ancient traditions, and vibrant pop culture.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Japan', 'region': 'Japan'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Tokyo', 'activities': ['Visit Tokyo Skytree', 'Explore Akihabara'], 'meals': ['Sushi'], '_id': '690c7f0bb6d8904848c30538'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Kyoto
-
-Description: Kyoto is a city with a rich history, showcasing stunning temples, traditional tea houses, and beautiful cherry blossoms in spring.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Japan', 'region': 'Japan'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Kyoto', 'activities': ['Experience a Tea Ceremony', 'Visit Gion District'], 'meals': ['Kaiseki Ryori'], '_id': '690c7f0bb6d8904848c3053b'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Osaka
-
-Description: Osaka is a lively city known for its delicious street food, modern architecture, and vibrant nightlife.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Japan', 'region': 'Japan'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Osaka', 'activities': ['Taste Okonomiyaki', 'Visit Umeda Sky Building'], 'meals': ['Takoyaki'], '_id': '690c7f0bb6d8904848c3053e'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Delhi
-
-Description: Delhi, the capital city of India, is a historical and cultural hub known for its magnificent architecture, bustling markets, and diverse cuisine.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'India', 'region': 'India'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Delhi', 'activities': ['Heritage Walk', 'Rickshaw Ride in Old Delhi'], 'meals': ['Paratha'], '_id': '690c7f0bb6d8904848c30541'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: London
+TOUR: London - United Kingdom
 
 Description: London, the capital city of the United Kingdom, is a global metropolis known for its iconic landmarks, rich history, and diverse cultural offerings.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'United Kingdom', 'region': 'United Kingdom'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: United Kingdom
+Duration: 5 days
+Tour type: international
+Difficulty: moderate
+Price: 8000 USD/người lớn | trẻ em: 5600 USD
+Rating: 4.7/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: united kingdom, luxury, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Buckingham Palace
+- Tower of London
+- British Museum
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore London', 'activities': ['West End Theatre Show', 'River Thames Cruise'], 'meals': ['Fish and Chips'], '_id': '690c7f0bb6d8904848c30544'}]
+Local food:
+- Fish and Chips
+- Full English Breakfast
+- Afternoon Tea
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến London
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm London, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm London
+  Meals: Bữa tối
+  Overnight: London Grand Hotel
+Day 2: Khám phá Buckingham Palace
+  Tham quan Buckingham Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Fish and Chips và có thời gian tự do khám phá London.
+  Activities: Tham quan Buckingham Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Fish and Chips
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: London Grand Hotel
+Day 3: Khám phá Tower of London
+  Tham quan Tower of London cùng hướng dẫn viên. Buổi chiều thưởng thức Full English Breakfast và có thời gian tự do khám phá London.
+  Activities: Tham quan Tower of London, Chụp ảnh tại các điểm đẹp, Thưởng thức Full English Breakfast
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: London Grand Hotel
+Day 4: Khám phá British Museum
+  Tham quan British Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Afternoon Tea và có thời gian tự do khám phá London.
+  Activities: Tham quan British Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Afternoon Tea
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: London Grand Hotel
+Day 5: Tạm biệt London
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại United Kingdom.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- London Grand Hotel (5 sao, 200-480 USD/đêm)
+- London City Suites (4 sao, 240-576 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
 
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 8000 USD), 09/10/2026 (còn 20 chỗ, 8000 USD), 23/10/2026 (còn 20 chỗ, 8000 USD), 09/11/2026 (còn 20 chỗ, 8000 USD), 23/11/2026 (còn 20 chỗ, 8000 USD)
 
-TOUR: Manchester
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
 
-Description: Manchester, a vibrant city in England, is renowned for its rich industrial heritage, world-class music scene, and famous football clubs.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'United Kingdom', 'region': 'United Kingdom'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Manchester', 'activities': ['Manchester United Stadium Tour', 'Exploring the Northern Quarter'], 'meals': ['Lancashire Hotpot'], '_id': '690c7f0bb6d8904848c30547'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Bangkok
+================================================================================
+
+TOUR: Bangkok - Thailand
 
 Description: Bangkok, the capital city of Thailand, is a vibrant metropolis known for its ornate temples, bustling markets, and vibrant street life.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Thailand', 'region': 'Thailand'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: Thailand
+Duration: 5 days
+Tour type: international
+Difficulty: moderate
+Price: 7000 USD/người lớn | trẻ em: 4900 USD
+Rating: 4.2/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: thailand, luxury, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Grand Palace
+- Wat Arun
+- Chatuchak Weekend Market
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Bangkok', 'activities': ['Tuk-Tuk Tour', 'Boat Trip along the Chao Phraya River'], 'meals': ['Pad Thai'], '_id': '690c7f0bb6d8904848c3054a'}]
+Local food:
+- Pad Thai
+- Tom Yum Goong
+- Mango Sticky Rice
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Bangkok
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Bangkok, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Bangkok
+  Meals: Bữa tối
+  Overnight: Mandarin Oriental Bangkok
+Day 2: Khám phá Grand Palace
+  Tham quan Grand Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Pad Thai và có thời gian tự do khám phá Bangkok.
+  Activities: Tham quan Grand Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Pad Thai
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Mandarin Oriental Bangkok
+Day 3: Khám phá Wat Arun
+  Tham quan Wat Arun cùng hướng dẫn viên. Buổi chiều thưởng thức Tom Yum Goong và có thời gian tự do khám phá Bangkok.
+  Activities: Tham quan Wat Arun, Chụp ảnh tại các điểm đẹp, Thưởng thức Tom Yum Goong
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Mandarin Oriental Bangkok
+Day 4: Khám phá Chatuchak Weekend Market
+  Tham quan Chatuchak Weekend Market cùng hướng dẫn viên. Buổi chiều thưởng thức Mango Sticky Rice và có thời gian tự do khám phá Bangkok.
+  Activities: Tham quan Chatuchak Weekend Market, Chụp ảnh tại các điểm đẹp, Thưởng thức Mango Sticky Rice
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Mandarin Oriental Bangkok
+Day 5: Tạm biệt Bangkok
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Thailand.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Mandarin Oriental Bangkok (5 sao, 350-800 USD/đêm)
+- Bangkok Boutique Residence (4 sao, 195-468 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
 
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 7000 USD), 09/10/2026 (còn 20 chỗ, 7000 USD), 23/10/2026 (còn 20 chỗ, 7000 USD), 09/11/2026 (còn 20 chỗ, 7000 USD), 23/11/2026 (còn 20 chỗ, 7000 USD)
 
-TOUR: Phuket
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
 
-Description: Phuket, an island province in southern Thailand, is renowned for its stunning beaches, clear turquoise waters, and vibrant nightlife.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Thailand', 'region': 'Thailand'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Phuket', 'activities': ['Island Hopping', 'Snorkeling or Scuba Diving'], 'meals': ['Tom Kha Gai'], '_id': '690c7f0bb6d8904848c3054d'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Berlin
+================================================================================
 
-Description: Berlin, the capital city of Germany, is known for its rich history, vibrant cultural scene, and iconic landmarks.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Germany', 'region': 'Germany'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Berlin', 'activities': ['Visit to Checkpoint Charlie', 'Exploring the Reichstag Building'], 'meals': ['Currywurst'], '_id': '690c7f0bb6d8904848c30550'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Munich
+TOUR: Munich - Germany
 
 Description: Munich, the capital of Bavaria, is famous for its Oktoberfest celebrations, stunning architecture, and vibrant beer gardens.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Germany', 'region': 'Germany'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: Germany
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Rating: 4.1/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: germany, luxury, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Marienplatz
+- Nymphenburg Palace
+- English Garden
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Munich', 'activities': ['Beer Tasting in a Beer Hall', 'Visiting the BMW Museum'], 'meals': ['Pretzels'], '_id': '690c7f0bb6d8904848c30553'}]
+Local food:
+- Pretzels
+- Weisswurst
+- Apfelstrudel
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Munich
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Munich, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Munich
+  Meals: Bữa tối
+  Overnight: Munich Grand Hotel
+Day 2: Khám phá Marienplatz
+  Tham quan Marienplatz cùng hướng dẫn viên. Buổi chiều thưởng thức Pretzels và có thời gian tự do khám phá Munich.
+  Activities: Tham quan Marienplatz, Chụp ảnh tại các điểm đẹp, Thưởng thức Pretzels
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Munich Grand Hotel
+Day 3: Khám phá Nymphenburg Palace
+  Tham quan Nymphenburg Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Weisswurst và có thời gian tự do khám phá Munich.
+  Activities: Tham quan Nymphenburg Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Weisswurst
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Munich Grand Hotel
+Day 4: Khám phá English Garden
+  Tham quan English Garden cùng hướng dẫn viên. Buổi chiều thưởng thức Apfelstrudel và có thời gian tự do khám phá Munich.
+  Activities: Tham quan English Garden, Chụp ảnh tại các điểm đẹp, Thưởng thức Apfelstrudel
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Munich Grand Hotel
+Day 5: Tạm biệt Munich
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Germany.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Munich Grand Hotel (5 sao, 138-331 USD/đêm)
+- Munich City Suites (4 sao, 178-427 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
 
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
 
-TOUR: Rome
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
 
-Description: Rome, the capital city of Italy, is a treasure trove of ancient ruins, majestic churches, and exquisite art. It's known for its rich history and vibrant street life.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Rome', 'activities': ['Visit to the Roman Forum', 'Exploring the Pantheon'], 'meals': ['Pizza'], '_id': '690c7f0bb6d8904848c30556'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Florence
+================================================================================
+
+TOUR: Florence - Italy
 
 Description: Florence, the birthplace of the Renaissance, is renowned for its extraordinary art, magnificent architecture, and charming streets lined with boutiques and cafes.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: Italy
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Rating: 4.5/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: italy, luxury, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Uffizi Gallery
+- Duomo
+- Ponte Vecchio
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Florence', 'activities': ["Admiring Michelangelo's David", 'Exploring the Boboli Gardens'], 'meals': ['Bistecca alla Fiorentina'], '_id': '690c7f0bb6d8904848c30559'}]
+Local food:
+- Bistecca alla Fiorentina
+- Ribollita
+- Gelato
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Florence
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Florence, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Florence
+  Meals: Bữa tối
+  Overnight: Florence Grand Hotel
+Day 2: Khám phá Uffizi Gallery
+  Tham quan Uffizi Gallery cùng hướng dẫn viên. Buổi chiều thưởng thức Bistecca alla Fiorentina và có thời gian tự do khám phá Florence.
+  Activities: Tham quan Uffizi Gallery, Chụp ảnh tại các điểm đẹp, Thưởng thức Bistecca alla Fiorentina
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Florence Grand Hotel
+Day 3: Khám phá Duomo
+  Tham quan Duomo cùng hướng dẫn viên. Buổi chiều thưởng thức Ribollita và có thời gian tự do khám phá Florence.
+  Activities: Tham quan Duomo, Chụp ảnh tại các điểm đẹp, Thưởng thức Ribollita
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Florence Grand Hotel
+Day 4: Khám phá Ponte Vecchio
+  Tham quan Ponte Vecchio cùng hướng dẫn viên. Buổi chiều thưởng thức Gelato và có thời gian tự do khám phá Florence.
+  Activities: Tham quan Ponte Vecchio, Chụp ảnh tại các điểm đẹp, Thưởng thức Gelato
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Florence Grand Hotel
+Day 5: Tạm biệt Florence
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Florence Grand Hotel (5 sao, 138-331 USD/đêm)
+- Florence City Suites (4 sao, 178-427 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
 
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
 
-TOUR: Venice
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
 
-Description: Venice, a city built on water, is famous for its canals, romantic gondolas, and stunning architecture. It's a unique and enchanting destination in Italy.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Venice', 'activities': ['Gondola Ride along the Canals', 'Visiting Murano Island for Glassmaking'], 'meals': ['Seafood Risotto'], '_id': '690c7f0bb6d8904848c3055c'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Milan
+================================================================================
 
-Description: Milan, the fashion capital of Italy, is known for its stylish boutiques, stunning architecture, and vibrant arts scene. It's a bustling metropolis with a cosmopolitan vibe.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Italy', 'region': 'Italy'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Milan', 'activities': ['Shopping in the Fashion District', 'Exploring the Brera Art Gallery'], 'meals': ['Risotto alla Milanese'], '_id': '690c7f0bb6d8904848c3055f'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Valencia
+TOUR: Valencia - Spain
 
 Description: Valencia, located on the southeastern coast of Spain, is famous for its futuristic architecture, delicious cuisine, and lively street festivals.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Spain', 'region': 'Spain'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: Spain
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Rating: 2.9/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: spain, budget, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- City of Arts and Sciences
+- Mercado Central
+- Bioparc Valencia
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Valencia', 'activities': ['Visiting the Oceanografic', 'Exploring the Historic Center'], 'meals': ['Paella'], '_id': '690c7f0bb6d8904848c30562'}]
+Local food:
+- Paella
+- Horchata
+- Buñuelos
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Valencia
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Valencia, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Valencia
+  Meals: Bữa tối
+  Overnight: Valencia Grand Hotel
+Day 2: Khám phá City of Arts and Sciences
+  Tham quan City of Arts and Sciences cùng hướng dẫn viên. Buổi chiều thưởng thức Paella và có thời gian tự do khám phá Valencia.
+  Activities: Tham quan City of Arts and Sciences, Chụp ảnh tại các điểm đẹp, Thưởng thức Paella
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Valencia Grand Hotel
+Day 3: Khám phá Mercado Central
+  Tham quan Mercado Central cùng hướng dẫn viên. Buổi chiều thưởng thức Horchata và có thời gian tự do khám phá Valencia.
+  Activities: Tham quan Mercado Central, Chụp ảnh tại các điểm đẹp, Thưởng thức Horchata
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Valencia Grand Hotel
+Day 4: Khám phá Bioparc Valencia
+  Tham quan Bioparc Valencia cùng hướng dẫn viên. Buổi chiều thưởng thức Buñuelos và có thời gian tự do khám phá Valencia.
+  Activities: Tham quan Bioparc Valencia, Chụp ảnh tại các điểm đẹp, Thưởng thức Buñuelos
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Valencia Grand Hotel
+Day 5: Tạm biệt Valencia
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Spain.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Valencia Grand Hotel (5 sao, 100-240 USD/đêm)
+- Valencia City Suites (4 sao, 140-336 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
 
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
 
-TOUR: Paris
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
 
-Description: Paris, the capital city of France, is known as the 'City of Love' and is famous for its iconic landmarks, rich history, and exquisite cuisine.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Paris', 'activities': ['Cruise on the Seine River', 'Exploring Montmartre'], 'meals': ['Croissant'], '_id': '690c7f0bb6d8904848c30565'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Lyon
+================================================================================
 
-Description: Lyon, located in east-central France, is renowned for its gastronomy, historical architecture, and vibrant cultural scene.
-
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
-
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
-
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Lyon', 'activities': ['Culinary Tour in Les Halles de Lyon', 'Exploring the Traboules'], 'meals': ['Coq au Vin'], '_id': '690c7f0bb6d8904848c30568'}]
-
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
-
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
-
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
-
-Booking Information:
-Contact CMP Travel for reservations and custom itineraries.
-Phone: +84 28 1234 5678
-Email: booking@cmp-travel.com
-
-TOUR: Marseille
+TOUR: Marseille - France
 
 Description: Marseille, located on the Mediterranean coast, is the second-largest city in France and is known for its rich history, vibrant culture, and beautiful waterfront.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: France
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 2.9/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: france, budget, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Old Port
+- Notre-Dame de la Garde
+- Calanques National Park
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Marseille', 'activities': ['Boat Trip to Frioul Archipelago', 'Exploring Le Panier'], 'meals': ['Bouillabaisse'], '_id': '690c7f0bb6d8904848c3056b'}]
+Local food:
+- Bouillabaisse
+- Navettes
+- Pastis
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Marseille
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Marseille, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Marseille
+  Meals: Bữa tối
+  Overnight: Marseille Grand Hotel
+Day 2: Khám phá Old Port
+  Tham quan Old Port cùng hướng dẫn viên. Buổi chiều thưởng thức Bouillabaisse và có thời gian tự do khám phá Marseille.
+  Activities: Tham quan Old Port, Chụp ảnh tại các điểm đẹp, Thưởng thức Bouillabaisse
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Marseille Grand Hotel
+Day 3: Khám phá Notre-Dame de la Garde
+  Tham quan Notre-Dame de la Garde cùng hướng dẫn viên. Buổi chiều thưởng thức Navettes và có thời gian tự do khám phá Marseille.
+  Activities: Tham quan Notre-Dame de la Garde, Chụp ảnh tại các điểm đẹp, Thưởng thức Navettes
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Marseille Grand Hotel
+Day 4: Khám phá Calanques National Park
+  Tham quan Calanques National Park cùng hướng dẫn viên. Buổi chiều thưởng thức Pastis và có thời gian tự do khám phá Marseille.
+  Activities: Tham quan Calanques National Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Pastis
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Marseille Grand Hotel
+Day 5: Tạm biệt Marseille
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Marseille Grand Hotel (5 sao, 125-300 USD/đêm)
+- Marseille City Suites (4 sao, 165-396 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Bordeaux
+================================================================================
+
+TOUR: Toronto - Canada
+
+Description: Toronto is Canada's largest city, a vibrant metropolis with diverse neighborhoods, iconic landmarks like the CN Tower, and a thriving arts and culture scene.
+
+Country: Canada
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Rating: 4.7/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: canada, budget, popular
+
+Attractions:
+- CN Tower
+- Royal Ontario Museum
+- Distillery District
+
+Local food:
+- Poutine
+- Peameal Bacon Sandwich
+- Butter Tarts
+
+Detailed itinerary:
+Day 1: Đến Toronto
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Toronto, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Toronto
+  Meals: Bữa tối
+  Overnight: Toronto Grand Hotel
+Day 2: Khám phá CN Tower
+  Tham quan CN Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Poutine và có thời gian tự do khám phá Toronto.
+  Activities: Tham quan CN Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Poutine
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Toronto Grand Hotel
+Day 3: Khám phá Royal Ontario Museum
+  Tham quan Royal Ontario Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Peameal Bacon Sandwich và có thời gian tự do khám phá Toronto.
+  Activities: Tham quan Royal Ontario Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Peameal Bacon Sandwich
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Toronto Grand Hotel
+Day 4: Khám phá Distillery District
+  Tham quan Distillery District cùng hướng dẫn viên. Buổi chiều thưởng thức Butter Tarts và có thời gian tự do khám phá Toronto.
+  Activities: Tham quan Distillery District, Chụp ảnh tại các điểm đẹp, Thưởng thức Butter Tarts
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Toronto Grand Hotel
+Day 5: Tạm biệt Toronto
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Toronto Grand Hotel (5 sao, 113-271 USD/đêm)
+- Toronto City Suites (4 sao, 153-367 USD/đêm)
+
+Tour guides:
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Vancouver - Canada
+
+Description: Vancouver is a coastal city known for its stunning natural beauty, surrounded by mountains and ocean, offering a mix of outdoor activities and urban experiences.
+
+Country: Canada
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.6/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: canada, budget, popular
+
+Attractions:
+- Stanley Park
+- Granville Island
+- Capilano Suspension Bridge
+
+Local food:
+- Salmon
+- Japadog
+- Nanaimo Bar
+
+Detailed itinerary:
+Day 1: Đến Vancouver
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Vancouver, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Vancouver
+  Meals: Bữa tối
+  Overnight: Vancouver Grand Hotel
+Day 2: Khám phá Stanley Park
+  Tham quan Stanley Park cùng hướng dẫn viên. Buổi chiều thưởng thức Salmon và có thời gian tự do khám phá Vancouver.
+  Activities: Tham quan Stanley Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Salmon
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Vancouver Grand Hotel
+Day 3: Khám phá Granville Island
+  Tham quan Granville Island cùng hướng dẫn viên. Buổi chiều thưởng thức Japadog và có thời gian tự do khám phá Vancouver.
+  Activities: Tham quan Granville Island, Chụp ảnh tại các điểm đẹp, Thưởng thức Japadog
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Vancouver Grand Hotel
+Day 4: Khám phá Capilano Suspension Bridge
+  Tham quan Capilano Suspension Bridge cùng hướng dẫn viên. Buổi chiều thưởng thức Nanaimo Bar và có thời gian tự do khám phá Vancouver.
+  Activities: Tham quan Capilano Suspension Bridge, Chụp ảnh tại các điểm đẹp, Thưởng thức Nanaimo Bar
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Vancouver Grand Hotel
+Day 5: Tạm biệt Vancouver
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Vancouver Grand Hotel (5 sao, 125-300 USD/đêm)
+- Vancouver City Suites (4 sao, 165-396 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Athens - Greece
+
+Description: Athens, the ancient capital, is a city steeped in history, showcasing iconic ruins, ancient temples, and a rich cultural heritage.
+
+Country: Greece
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Rating: 4.7/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: greece, budget, popular
+
+Attractions:
+- Acropolis
+- Parthenon
+- Plaka
+
+Local food:
+- Moussaka
+- Souvlaki
+- Spanakopita
+
+Detailed itinerary:
+Day 1: Đến Athens
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Athens, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Athens
+  Meals: Bữa tối
+  Overnight: Athens Grand Hotel
+Day 2: Khám phá Acropolis
+  Tham quan Acropolis cùng hướng dẫn viên. Buổi chiều thưởng thức Moussaka và có thời gian tự do khám phá Athens.
+  Activities: Tham quan Acropolis, Chụp ảnh tại các điểm đẹp, Thưởng thức Moussaka
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Athens Grand Hotel
+Day 3: Khám phá Parthenon
+  Tham quan Parthenon cùng hướng dẫn viên. Buổi chiều thưởng thức Souvlaki và có thời gian tự do khám phá Athens.
+  Activities: Tham quan Parthenon, Chụp ảnh tại các điểm đẹp, Thưởng thức Souvlaki
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Athens Grand Hotel
+Day 4: Khám phá Plaka
+  Tham quan Plaka cùng hướng dẫn viên. Buổi chiều thưởng thức Spanakopita và có thời gian tự do khám phá Athens.
+  Activities: Tham quan Plaka, Chụp ảnh tại các điểm đẹp, Thưởng thức Spanakopita
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Athens Grand Hotel
+Day 5: Tạm biệt Athens
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Greece.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Athens Grand Hotel (5 sao, 113-271 USD/đêm)
+- Athens City Suites (4 sao, 153-367 USD/đêm)
+
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Santorini - Greece
+
+Description: Santorini is a stunning volcanic island known for its white-washed buildings, dramatic sunsets, and picturesque cliffside villages.
+
+Country: Greece
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Rating: 4.8/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: greece, luxury, popular
+
+Attractions:
+- Oia
+- Fira
+- Red Beach
+
+Local food:
+- Fava
+- Santorini Tomatokeftedes
+- Loukoumades
+
+Detailed itinerary:
+Day 1: Đến Santorini
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Santorini, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Santorini
+  Meals: Bữa tối
+  Overnight: Santorini Grand Hotel
+Day 2: Khám phá Oia
+  Tham quan Oia cùng hướng dẫn viên. Buổi chiều thưởng thức Fava và có thời gian tự do khám phá Santorini.
+  Activities: Tham quan Oia, Chụp ảnh tại các điểm đẹp, Thưởng thức Fava
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Santorini Grand Hotel
+Day 3: Khám phá Fira
+  Tham quan Fira cùng hướng dẫn viên. Buổi chiều thưởng thức Santorini Tomatokeftedes và có thời gian tự do khám phá Santorini.
+  Activities: Tham quan Fira, Chụp ảnh tại các điểm đẹp, Thưởng thức Santorini Tomatokeftedes
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Santorini Grand Hotel
+Day 4: Khám phá Red Beach
+  Tham quan Red Beach cùng hướng dẫn viên. Buổi chiều thưởng thức Loukoumades và có thời gian tự do khám phá Santorini.
+  Activities: Tham quan Red Beach, Chụp ảnh tại các điểm đẹp, Thưởng thức Loukoumades
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Santorini Grand Hotel
+Day 5: Tạm biệt Santorini
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Greece.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Santorini Grand Hotel (5 sao, 138-331 USD/đêm)
+- Santorini City Suites (4 sao, 178-427 USD/đêm)
+
+Tour guides:
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Tokyo - Japan
+
+Description: Tokyo, the capital city, is a bustling metropolis known for its modernity, ancient traditions, and vibrant pop culture.
+
+Country: Japan
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.7/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: japan, budget, popular
+
+Attractions:
+- Senso-ji Temple
+- Shibuya Crossing
+- Tsukiji Outer Market
+
+Local food:
+- Sushi
+- Ramen
+- Tempura
+
+Detailed itinerary:
+Day 1: Đến Tokyo
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Tokyo, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Tokyo
+  Meals: Bữa tối
+  Overnight: Tokyo Grand Imperial Hotel
+Day 2: Khám phá Senso-ji Temple
+  Tham quan Senso-ji Temple cùng hướng dẫn viên. Buổi chiều thưởng thức Sushi và có thời gian tự do khám phá Tokyo.
+  Activities: Tham quan Senso-ji Temple, Chụp ảnh tại các điểm đẹp, Thưởng thức Sushi
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Tokyo Grand Imperial Hotel
+Day 3: Khám phá Shibuya Crossing
+  Tham quan Shibuya Crossing cùng hướng dẫn viên. Buổi chiều thưởng thức Ramen và có thời gian tự do khám phá Tokyo.
+  Activities: Tham quan Shibuya Crossing, Chụp ảnh tại các điểm đẹp, Thưởng thức Ramen
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Tokyo Grand Imperial Hotel
+Day 4: Khám phá Tsukiji Outer Market
+  Tham quan Tsukiji Outer Market cùng hướng dẫn viên. Buổi chiều thưởng thức Tempura và có thời gian tự do khám phá Tokyo.
+  Activities: Tham quan Tsukiji Outer Market, Chụp ảnh tại các điểm đẹp, Thưởng thức Tempura
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Tokyo Grand Imperial Hotel
+Day 5: Tạm biệt Tokyo
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Japan.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Tokyo Grand Imperial Hotel (5 sao, 300-800 USD/đêm)
+- Aman Tokyo (5 sao, 800-2000 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Maldives - Maldives
+
+Description: The Maldives is a tropical paradise renowned for its luxurious resorts, and vibrant marine life, making it a top destination for beach lovers and divers.
+
+Country: Maldives
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.9/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: maldives, budget, popular
+
+Attractions:
+- Male
+- Ari Atoll  
+- Bioluminescent Beaches
+
+Local food:
+- Mas Huni
+- Garudhiya
+- Bis Keemiya
+
+Detailed itinerary:
+Day 1: Đến Maldives
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Maldives, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Maldives
+  Meals: Bữa tối
+  Overnight: Maldives Grand Hotel
+Day 2: Khám phá Male
+  Tham quan Male cùng hướng dẫn viên. Buổi chiều thưởng thức Mas Huni và có thời gian tự do khám phá Maldives.
+  Activities: Tham quan Male, Chụp ảnh tại các điểm đẹp, Thưởng thức Mas Huni
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Maldives Grand Hotel
+Day 3: Khám phá Ari Atoll  
+  Tham quan Ari Atoll   cùng hướng dẫn viên. Buổi chiều thưởng thức Garudhiya và có thời gian tự do khám phá Maldives.
+  Activities: Tham quan Ari Atoll  , Chụp ảnh tại các điểm đẹp, Thưởng thức Garudhiya
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Maldives Grand Hotel
+Day 4: Khám phá Bioluminescent Beaches
+  Tham quan Bioluminescent Beaches cùng hướng dẫn viên. Buổi chiều thưởng thức Bis Keemiya và có thời gian tự do khám phá Maldives.
+  Activities: Tham quan Bioluminescent Beaches, Chụp ảnh tại các điểm đẹp, Thưởng thức Bis Keemiya
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Maldives Grand Hotel
+Day 5: Tạm biệt Maldives
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Maldives.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Maldives Grand Hotel (5 sao, 125-300 USD/đêm)
+- Maldives City Suites (4 sao, 165-396 USD/đêm)
+
+Tour guides:
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Amsterdam - Netherlands
+
+Description: Amsterdam is the capital of the Netherlands, known for its picturesque canals, historic architecture, and vibrant cultural scene.
+
+Country: Netherlands
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Rating: 4.5/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: netherlands, budget, popular
+
+Attractions:
+- Rijksmuseum
+- Van Gogh Museum
+- Anne Frank House
+
+Local food:
+- Stroopwafel
+- Poffertjes
+- Herring
+
+Detailed itinerary:
+Day 1: Đến Amsterdam
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Amsterdam, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Amsterdam
+  Meals: Bữa tối
+  Overnight: Amsterdam Grand Hotel
+Day 2: Khám phá Rijksmuseum
+  Tham quan Rijksmuseum cùng hướng dẫn viên. Buổi chiều thưởng thức Stroopwafel và có thời gian tự do khám phá Amsterdam.
+  Activities: Tham quan Rijksmuseum, Chụp ảnh tại các điểm đẹp, Thưởng thức Stroopwafel
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Amsterdam Grand Hotel
+Day 3: Khám phá Van Gogh Museum
+  Tham quan Van Gogh Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Poffertjes và có thời gian tự do khám phá Amsterdam.
+  Activities: Tham quan Van Gogh Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Poffertjes
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Amsterdam Grand Hotel
+Day 4: Khám phá Anne Frank House
+  Tham quan Anne Frank House cùng hướng dẫn viên. Buổi chiều thưởng thức Herring và có thời gian tự do khám phá Amsterdam.
+  Activities: Tham quan Anne Frank House, Chụp ảnh tại các điểm đẹp, Thưởng thức Herring
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Amsterdam Grand Hotel
+Day 5: Tạm biệt Amsterdam
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Netherlands.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Amsterdam Grand Hotel (5 sao, 100-240 USD/đêm)
+- Amsterdam City Suites (4 sao, 140-336 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Montreal - Canada
+
+Description: Montreal is a vibrant city with a strong French influence, known for its historic architecture, artsy neighborhoods, and lively festivals.
+
+Country: Canada
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Rating: 4.5/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: canada, budget, popular
+
+Attractions:
+- Old Montreal
+- Montreal Museum of Fine Arts
+- Mount Royal Park
+
+Local food:
+- Bagels
+- Poutine
+- Smoked Meat Sandwich
+
+Detailed itinerary:
+Day 1: Đến Montreal
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Montreal, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Montreal
+  Meals: Bữa tối
+  Overnight: Montreal Grand Hotel
+Day 2: Khám phá Old Montreal
+  Tham quan Old Montreal cùng hướng dẫn viên. Buổi chiều thưởng thức Bagels và có thời gian tự do khám phá Montreal.
+  Activities: Tham quan Old Montreal, Chụp ảnh tại các điểm đẹp, Thưởng thức Bagels
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Montreal Grand Hotel
+Day 3: Khám phá Montreal Museum of Fine Arts
+  Tham quan Montreal Museum of Fine Arts cùng hướng dẫn viên. Buổi chiều thưởng thức Poutine và có thời gian tự do khám phá Montreal.
+  Activities: Tham quan Montreal Museum of Fine Arts, Chụp ảnh tại các điểm đẹp, Thưởng thức Poutine
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Montreal Grand Hotel
+Day 4: Khám phá Mount Royal Park
+  Tham quan Mount Royal Park cùng hướng dẫn viên. Buổi chiều thưởng thức Smoked Meat Sandwich và có thời gian tự do khám phá Montreal.
+  Activities: Tham quan Mount Royal Park, Chụp ảnh tại các điểm đẹp, Thưởng thức Smoked Meat Sandwich
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Montreal Grand Hotel
+Day 5: Tạm biệt Montreal
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Canada.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Montreal Grand Hotel (5 sao, 100-240 USD/đêm)
+- Montreal City Suites (4 sao, 140-336 USD/đêm)
+
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Langkawi - Malaysia
+
+Description: Langkawi is a tropical paradise with beautiful beaches, lush rainforests, and a laid-back atmosphere, perfect for relaxation and adventure.
+
+Country: Malaysia
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.8/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: malaysia, budget, popular
+
+Attractions:
+- Langkawi Cable Car
+- Eagle Square
+- Tanah Rata Waterfall
+
+Local food:
+- Nasi Dagang
+- Laksa
+- Satay
+
+Detailed itinerary:
+Day 1: Đến Langkawi
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Langkawi, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Langkawi
+  Meals: Bữa tối
+  Overnight: Langkawi Grand Hotel
+Day 2: Khám phá Langkawi Cable Car
+  Tham quan Langkawi Cable Car cùng hướng dẫn viên. Buổi chiều thưởng thức Nasi Dagang và có thời gian tự do khám phá Langkawi.
+  Activities: Tham quan Langkawi Cable Car, Chụp ảnh tại các điểm đẹp, Thưởng thức Nasi Dagang
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Langkawi Grand Hotel
+Day 3: Khám phá Eagle Square
+  Tham quan Eagle Square cùng hướng dẫn viên. Buổi chiều thưởng thức Laksa và có thời gian tự do khám phá Langkawi.
+  Activities: Tham quan Eagle Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Laksa
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Langkawi Grand Hotel
+Day 4: Khám phá Tanah Rata Waterfall
+  Tham quan Tanah Rata Waterfall cùng hướng dẫn viên. Buổi chiều thưởng thức Satay và có thời gian tự do khám phá Langkawi.
+  Activities: Tham quan Tanah Rata Waterfall, Chụp ảnh tại các điểm đẹp, Thưởng thức Satay
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Langkawi Grand Hotel
+Day 5: Tạm biệt Langkawi
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Malaysia.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Langkawi Grand Hotel (5 sao, 125-300 USD/đêm)
+- Langkawi City Suites (4 sao, 165-396 USD/đêm)
+
+Tour guides:
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Causeway Bay - Hong Kong
+
+Description: Causeway Bay is a popular shopping and entertainment district, home to large department stores, trendy boutiques, and a vibrant food scene.
+
+Country: Hong Kong
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4200 USD/người lớn | trẻ em: 2940 USD
+Rating: 4.4/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: hong kong, budget, popular
+
+Attractions:
+- Times Square 
+- Victoria Park 
+- Hysan Place
+
+Local food:
+- Wonton Noodles
+- Hotpot
+- Bubble Tea
+
+Detailed itinerary:
+Day 1: Đến Causeway Bay
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Causeway Bay, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Causeway Bay
+  Meals: Bữa tối
+  Overnight: Causeway Bay Grand Hotel
+Day 2: Khám phá Times Square 
+  Tham quan Times Square  cùng hướng dẫn viên. Buổi chiều thưởng thức Wonton Noodles và có thời gian tự do khám phá Causeway Bay.
+  Activities: Tham quan Times Square , Chụp ảnh tại các điểm đẹp, Thưởng thức Wonton Noodles
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Causeway Bay Grand Hotel
+Day 3: Khám phá Victoria Park 
+  Tham quan Victoria Park  cùng hướng dẫn viên. Buổi chiều thưởng thức Hotpot và có thời gian tự do khám phá Causeway Bay.
+  Activities: Tham quan Victoria Park , Chụp ảnh tại các điểm đẹp, Thưởng thức Hotpot
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Causeway Bay Grand Hotel
+Day 4: Khám phá Hysan Place
+  Tham quan Hysan Place cùng hướng dẫn viên. Buổi chiều thưởng thức Bubble Tea và có thời gian tự do khám phá Causeway Bay.
+  Activities: Tham quan Hysan Place, Chụp ảnh tại các điểm đẹp, Thưởng thức Bubble Tea
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Causeway Bay Grand Hotel
+Day 5: Tạm biệt Causeway Bay
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Hong Kong.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Causeway Bay Grand Hotel (5 sao, 105-252 USD/đêm)
+- Causeway Bay City Suites (4 sao, 145-348 USD/đêm)
+
+Tour guides:
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4200 USD), 09/10/2026 (còn 20 chỗ, 4200 USD), 23/10/2026 (còn 20 chỗ, 4200 USD), 09/11/2026 (còn 20 chỗ, 4200 USD), 23/11/2026 (còn 20 chỗ, 4200 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Osaka - Japan
+
+Description: Osaka is a lively city known for its delicious street food, modern architecture, and vibrant nightlife.
+
+Country: Japan
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4200 USD/người lớn | trẻ em: 2940 USD
+Rating: 4.5/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: japan, budget, popular
+
+Attractions:
+- Osaka Castle
+- Dotonbori
+- Shinsaibashi Shopping Street
+
+Local food:
+- Takoyaki
+- Okonomiyaki
+- Kushikatsu
+
+Detailed itinerary:
+Day 1: Đến Osaka
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Osaka, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Osaka
+  Meals: Bữa tối
+  Overnight: Conrad Osaka
+Day 2: Khám phá Osaka Castle
+  Tham quan Osaka Castle cùng hướng dẫn viên. Buổi chiều thưởng thức Takoyaki và có thời gian tự do khám phá Osaka.
+  Activities: Tham quan Osaka Castle, Chụp ảnh tại các điểm đẹp, Thưởng thức Takoyaki
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Conrad Osaka
+Day 3: Khám phá Dotonbori
+  Tham quan Dotonbori cùng hướng dẫn viên. Buổi chiều thưởng thức Okonomiyaki và có thời gian tự do khám phá Osaka.
+  Activities: Tham quan Dotonbori, Chụp ảnh tại các điểm đẹp, Thưởng thức Okonomiyaki
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Conrad Osaka
+Day 4: Khám phá Shinsaibashi Shopping Street
+  Tham quan Shinsaibashi Shopping Street cùng hướng dẫn viên. Buổi chiều thưởng thức Kushikatsu và có thời gian tự do khám phá Osaka.
+  Activities: Tham quan Shinsaibashi Shopping Street, Chụp ảnh tại các điểm đẹp, Thưởng thức Kushikatsu
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Conrad Osaka
+Day 5: Tạm biệt Osaka
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Japan.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Conrad Osaka (5 sao, 300-700 USD/đêm)
+- Osaka Castle View Hotel (4 sao, 250-600 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4200 USD), 09/10/2026 (còn 20 chỗ, 4200 USD), 23/10/2026 (còn 20 chỗ, 4200 USD), 09/11/2026 (còn 20 chỗ, 4200 USD), 23/11/2026 (còn 20 chỗ, 4200 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Manchester - United Kingdom
+
+Description: Manchester, a vibrant city in England, is renowned for its rich industrial heritage, world-class music scene, and famous football clubs.
+
+Country: United Kingdom
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.3/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: united kingdom, budget, popular
+
+Attractions:
+- Old Trafford Stadium
+- Manchester Cathedral
+- The Lowry
+
+Local food:
+- Lancashire Hotpot
+- Manchester Tart
+- Fisherman's Breakfast
+
+Detailed itinerary:
+Day 1: Đến Manchester
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Manchester, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Manchester
+  Meals: Bữa tối
+  Overnight: Manchester Grand Hotel
+Day 2: Khám phá Old Trafford Stadium
+  Tham quan Old Trafford Stadium cùng hướng dẫn viên. Buổi chiều thưởng thức Lancashire Hotpot và có thời gian tự do khám phá Manchester.
+  Activities: Tham quan Old Trafford Stadium, Chụp ảnh tại các điểm đẹp, Thưởng thức Lancashire Hotpot
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Manchester Grand Hotel
+Day 3: Khám phá Manchester Cathedral
+  Tham quan Manchester Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Manchester Tart và có thời gian tự do khám phá Manchester.
+  Activities: Tham quan Manchester Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Manchester Tart
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Manchester Grand Hotel
+Day 4: Khám phá The Lowry
+  Tham quan The Lowry cùng hướng dẫn viên. Buổi chiều thưởng thức Fisherman's Breakfast và có thời gian tự do khám phá Manchester.
+  Activities: Tham quan The Lowry, Chụp ảnh tại các điểm đẹp, Thưởng thức Fisherman's Breakfast
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Manchester Grand Hotel
+Day 5: Tạm biệt Manchester
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại United Kingdom.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Manchester Grand Hotel (5 sao, 125-300 USD/đêm)
+- Manchester City Suites (4 sao, 165-396 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Phuket - Thailand
+
+Description: Phuket, an island province in southern Thailand, is renowned for its stunning beaches, clear turquoise waters, and vibrant nightlife.
+
+Country: Thailand
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Rating: 3.7/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: thailand, luxury, popular
+
+Attractions:
+- Patong Beach
+- Phi Phi Islands
+- Big Buddha
+
+Local food:
+- Tom Kha Gai
+- Massaman Curry
+- Mango with Sticky Rice
+
+Detailed itinerary:
+Day 1: Đến Phuket
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Phuket, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Phuket
+  Meals: Bữa tối
+  Overnight: Phuket Grand Hotel
+Day 2: Khám phá Patong Beach
+  Tham quan Patong Beach cùng hướng dẫn viên. Buổi chiều thưởng thức Tom Kha Gai và có thời gian tự do khám phá Phuket.
+  Activities: Tham quan Patong Beach, Chụp ảnh tại các điểm đẹp, Thưởng thức Tom Kha Gai
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Phuket Grand Hotel
+Day 3: Khám phá Phi Phi Islands
+  Tham quan Phi Phi Islands cùng hướng dẫn viên. Buổi chiều thưởng thức Massaman Curry và có thời gian tự do khám phá Phuket.
+  Activities: Tham quan Phi Phi Islands, Chụp ảnh tại các điểm đẹp, Thưởng thức Massaman Curry
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Phuket Grand Hotel
+Day 4: Khám phá Big Buddha
+  Tham quan Big Buddha cùng hướng dẫn viên. Buổi chiều thưởng thức Mango with Sticky Rice và có thời gian tự do khám phá Phuket.
+  Activities: Tham quan Big Buddha, Chụp ảnh tại các điểm đẹp, Thưởng thức Mango with Sticky Rice
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Phuket Grand Hotel
+Day 5: Tạm biệt Phuket
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Thailand.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Phuket Grand Hotel (5 sao, 150-360 USD/đêm)
+- Phuket City Suites (4 sao, 190-456 USD/đêm)
+
+Tour guides:
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Berlin - Germany
+
+Description: Berlin, the capital city of Germany, is known for its rich history, vibrant cultural scene, and iconic landmarks.
+
+Country: Germany
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Rating: 3.8/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: germany, luxury, popular
+
+Attractions:
+- Brandenburg Gate
+- Berlin Wall
+- Museum Island
+
+Local food:
+- Currywurst
+- Schnitzel
+- Berliner Pfannkuchen
+
+Detailed itinerary:
+Day 1: Đến Berlin
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Berlin, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Berlin
+  Meals: Bữa tối
+  Overnight: Berlin Grand Hotel
+Day 2: Khám phá Brandenburg Gate
+  Tham quan Brandenburg Gate cùng hướng dẫn viên. Buổi chiều thưởng thức Currywurst và có thời gian tự do khám phá Berlin.
+  Activities: Tham quan Brandenburg Gate, Chụp ảnh tại các điểm đẹp, Thưởng thức Currywurst
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Berlin Grand Hotel
+Day 3: Khám phá Berlin Wall
+  Tham quan Berlin Wall cùng hướng dẫn viên. Buổi chiều thưởng thức Schnitzel và có thời gian tự do khám phá Berlin.
+  Activities: Tham quan Berlin Wall, Chụp ảnh tại các điểm đẹp, Thưởng thức Schnitzel
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Berlin Grand Hotel
+Day 4: Khám phá Museum Island
+  Tham quan Museum Island cùng hướng dẫn viên. Buổi chiều thưởng thức Berliner Pfannkuchen và có thời gian tự do khám phá Berlin.
+  Activities: Tham quan Museum Island, Chụp ảnh tại các điểm đẹp, Thưởng thức Berliner Pfannkuchen
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Berlin Grand Hotel
+Day 5: Tạm biệt Berlin
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Germany.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Berlin Grand Hotel (5 sao, 150-360 USD/đêm)
+- Berlin City Suites (4 sao, 190-456 USD/đêm)
+
+Tour guides:
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Rome - Italy
+
+Description: Rome, the capital city of Italy, is a treasure trove of ancient ruins, majestic churches, and exquisite art. It's known for its rich history and vibrant street life.
+
+Country: Italy
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 6000 USD/người lớn | trẻ em: 4200 USD
+Rating: 4.3/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: italy, luxury, popular
+
+Attractions:
+- Colosseum
+- Vatican City
+- Trevi Fountain
+
+Local food:
+- Pizza
+- Pasta Carbonara
+- Gelato
+
+Detailed itinerary:
+Day 1: Đến Rome
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Rome, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Rome
+  Meals: Bữa tối
+  Overnight: Rome Grand Hotel
+Day 2: Khám phá Colosseum
+  Tham quan Colosseum cùng hướng dẫn viên. Buổi chiều thưởng thức Pizza và có thời gian tự do khám phá Rome.
+  Activities: Tham quan Colosseum, Chụp ảnh tại các điểm đẹp, Thưởng thức Pizza
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Rome Grand Hotel
+Day 3: Khám phá Vatican City
+  Tham quan Vatican City cùng hướng dẫn viên. Buổi chiều thưởng thức Pasta Carbonara và có thời gian tự do khám phá Rome.
+  Activities: Tham quan Vatican City, Chụp ảnh tại các điểm đẹp, Thưởng thức Pasta Carbonara
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Rome Grand Hotel
+Day 4: Khám phá Trevi Fountain
+  Tham quan Trevi Fountain cùng hướng dẫn viên. Buổi chiều thưởng thức Gelato và có thời gian tự do khám phá Rome.
+  Activities: Tham quan Trevi Fountain, Chụp ảnh tại các điểm đẹp, Thưởng thức Gelato
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Rome Grand Hotel
+Day 5: Tạm biệt Rome
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Rome Grand Hotel (5 sao, 150-360 USD/đêm)
+- Rome City Suites (4 sao, 190-456 USD/đêm)
+
+Tour guides:
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 6000 USD), 09/10/2026 (còn 20 chỗ, 6000 USD), 23/10/2026 (còn 20 chỗ, 6000 USD), 09/11/2026 (còn 20 chỗ, 6000 USD), 23/11/2026 (còn 20 chỗ, 6000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Venice - Italy
+
+Description: Venice, a city built on water, is famous for its canals, romantic gondolas, and stunning architecture. It's a unique and enchanting destination in Italy.
+
+Country: Italy
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.1/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: italy, budget, popular
+
+Attractions:
+- St. Mark's Square
+- Rialto Bridge
+- Doge's Palace
+
+Local food:
+- Seafood Risotto
+- Cicchetti
+- Tiramisu
+
+Detailed itinerary:
+Day 1: Đến Venice
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Venice, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Venice
+  Meals: Bữa tối
+  Overnight: Venice Grand Hotel
+Day 2: Khám phá St. Mark's Square
+  Tham quan St. Mark's Square cùng hướng dẫn viên. Buổi chiều thưởng thức Seafood Risotto và có thời gian tự do khám phá Venice.
+  Activities: Tham quan St. Mark's Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Seafood Risotto
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Venice Grand Hotel
+Day 3: Khám phá Rialto Bridge
+  Tham quan Rialto Bridge cùng hướng dẫn viên. Buổi chiều thưởng thức Cicchetti và có thời gian tự do khám phá Venice.
+  Activities: Tham quan Rialto Bridge, Chụp ảnh tại các điểm đẹp, Thưởng thức Cicchetti
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Venice Grand Hotel
+Day 4: Khám phá Doge's Palace
+  Tham quan Doge's Palace cùng hướng dẫn viên. Buổi chiều thưởng thức Tiramisu và có thời gian tự do khám phá Venice.
+  Activities: Tham quan Doge's Palace, Chụp ảnh tại các điểm đẹp, Thưởng thức Tiramisu
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Venice Grand Hotel
+Day 5: Tạm biệt Venice
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Venice Grand Hotel (5 sao, 125-300 USD/đêm)
+- Venice City Suites (4 sao, 165-396 USD/đêm)
+
+Tour guides:
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Milan - Italy
+
+Description: Milan, the fashion capital of Italy, is known for its stylish boutiques, stunning architecture, and vibrant arts scene. It's a bustling metropolis with a cosmopolitan vibe.
+
+Country: Italy
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Rating: 4.2/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: italy, budget, popular
+
+Attractions:
+- Duomo
+- Galleria Vittorio Emanuele II
+- The Last Supper
+
+Local food:
+- Risotto alla Milanese
+- Cotoletta alla Milanese
+- Panettone
+
+Detailed itinerary:
+Day 1: Đến Milan
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Milan, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Milan
+  Meals: Bữa tối
+  Overnight: Milan Grand Hotel
+Day 2: Khám phá Duomo
+  Tham quan Duomo cùng hướng dẫn viên. Buổi chiều thưởng thức Risotto alla Milanese và có thời gian tự do khám phá Milan.
+  Activities: Tham quan Duomo, Chụp ảnh tại các điểm đẹp, Thưởng thức Risotto alla Milanese
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Milan Grand Hotel
+Day 3: Khám phá Galleria Vittorio Emanuele II
+  Tham quan Galleria Vittorio Emanuele II cùng hướng dẫn viên. Buổi chiều thưởng thức Cotoletta alla Milanese và có thời gian tự do khám phá Milan.
+  Activities: Tham quan Galleria Vittorio Emanuele II, Chụp ảnh tại các điểm đẹp, Thưởng thức Cotoletta alla Milanese
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Milan Grand Hotel
+Day 4: Khám phá The Last Supper
+  Tham quan The Last Supper cùng hướng dẫn viên. Buổi chiều thưởng thức Panettone và có thời gian tự do khám phá Milan.
+  Activities: Tham quan The Last Supper, Chụp ảnh tại các điểm đẹp, Thưởng thức Panettone
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Milan Grand Hotel
+Day 5: Tạm biệt Milan
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Italy.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Milan Grand Hotel (5 sao, 113-271 USD/đêm)
+- Milan City Suites (4 sao, 153-367 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Paris - France
+
+Description: Paris, the capital city of France, is known as the 'City of Love' and is famous for its iconic landmarks, rich history, and exquisite cuisine.
+
+Country: France
+Duration: 5 days
+Tour type: international
+Difficulty: moderate
+Price: 7000 USD/người lớn | trẻ em: 4900 USD
+Rating: 4.3/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: france, luxury, popular
+
+Attractions:
+- Eiffel Tower
+- Louvre Museum
+- Notre-Dame Cathedral
+
+Local food:
+- Croissant
+- Escargot
+- Macarons
+
+Detailed itinerary:
+Day 1: Đến Paris
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Paris, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Paris
+  Meals: Bữa tối
+  Overnight: Paris Romance Boutique Hotel
+Day 2: Khám phá Eiffel Tower
+  Tham quan Eiffel Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Croissant và có thời gian tự do khám phá Paris.
+  Activities: Tham quan Eiffel Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Croissant
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Paris Romance Boutique Hotel
+Day 3: Khám phá Louvre Museum
+  Tham quan Louvre Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Escargot và có thời gian tự do khám phá Paris.
+  Activities: Tham quan Louvre Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Escargot
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Paris Romance Boutique Hotel
+Day 4: Khám phá Notre-Dame Cathedral
+  Tham quan Notre-Dame Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Macarons và có thời gian tự do khám phá Paris.
+  Activities: Tham quan Notre-Dame Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Macarons
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Paris Romance Boutique Hotel
+Day 5: Tạm biệt Paris
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Paris Romance Boutique Hotel (4 sao, 180-420 USD/đêm)
+- Champs-Élysées Palace (5 sao, 350-750 USD/đêm)
+- Montmartre Artist Hotel (3 sao, 120-280 USD/đêm)
+
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 7000 USD), 09/10/2026 (còn 20 chỗ, 7000 USD), 23/10/2026 (còn 20 chỗ, 7000 USD), 09/11/2026 (còn 20 chỗ, 7000 USD), 23/11/2026 (còn 20 chỗ, 7000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Bordeaux - France
 
 Description: Bordeaux, located in southwestern France, is famous for its world-class wines, beautiful architecture, and charming historic center.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'France', 'region': 'France'}
-Price: $2366 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: France
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Rating: 1.8/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: france, budget, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Place de la Bourse
+- Saint-André Cathedral
+- La Cité du Vin
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Bordeaux', 'activities': ['Wine Tasting in the Vineyards', 'Exploring the Quais des Chartrons'], 'meals': ['Entrecôte Bordelaise'], '_id': '690c7f0bb6d8904848c3056e'}]
+Local food:
+- Entrecôte Bordelaise
+- Canelés
+- Pain au Chocolat
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Bordeaux
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Bordeaux, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Bordeaux
+  Meals: Bữa tối
+  Overnight: Bordeaux Grand Hotel
+Day 2: Khám phá Place de la Bourse
+  Tham quan Place de la Bourse cùng hướng dẫn viên. Buổi chiều thưởng thức Entrecôte Bordelaise và có thời gian tự do khám phá Bordeaux.
+  Activities: Tham quan Place de la Bourse, Chụp ảnh tại các điểm đẹp, Thưởng thức Entrecôte Bordelaise
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Bordeaux Grand Hotel
+Day 3: Khám phá Saint-André Cathedral
+  Tham quan Saint-André Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Canelés và có thời gian tự do khám phá Bordeaux.
+  Activities: Tham quan Saint-André Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Canelés
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Bordeaux Grand Hotel
+Day 4: Khám phá La Cité du Vin
+  Tham quan La Cité du Vin cùng hướng dẫn viên. Buổi chiều thưởng thức Pain au Chocolat và có thời gian tự do khám phá Bordeaux.
+  Activities: Tham quan La Cité du Vin, Chụp ảnh tại các điểm đẹp, Thưởng thức Pain au Chocolat
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Bordeaux Grand Hotel
+Day 5: Tạm biệt Bordeaux
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Bordeaux Grand Hotel (5 sao, 100-240 USD/đêm)
+- Bordeaux City Suites (4 sao, 140-336 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Barcelona
+================================================================================
+
+TOUR: Barcelona - Spain
 
 Description: Barcelona, located on the northeastern coast of Spain, is known for its unique architecture, vibrant street life, and beautiful beaches.
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'Spain', 'region': 'Spain'}
-Price: $3032 USD (includes accommodation, meals, and guided tours)
-Duration: 3-5 days
-Tour Type: international
+Country: Spain
+Duration: 5 days
+Tour type: international
+Difficulty: moderate
+Price: 6500 USD/người lớn | trẻ em: 4550 USD
+Rating: 4.3/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: spain, luxury, popular
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Attractions:
+- Sagrada Familia
+- Park Güell
+- Gothic Quarter
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Explore Barcelona', 'activities': ['Exploring La Rambla', 'Visiting Casa Batlló'], 'meals': ['Tapas'], '_id': '690c7f0bb6d8904848c30571'}]
+Local food:
+- Tapas
+- Paella
+- Churros
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Detailed itinerary:
+Day 1: Đến Barcelona
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Barcelona, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Barcelona
+  Meals: Bữa tối
+  Overnight: Barcelona Grand Hotel
+Day 2: Khám phá Sagrada Familia
+  Tham quan Sagrada Familia cùng hướng dẫn viên. Buổi chiều thưởng thức Tapas và có thời gian tự do khám phá Barcelona.
+  Activities: Tham quan Sagrada Familia, Chụp ảnh tại các điểm đẹp, Thưởng thức Tapas
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Barcelona Grand Hotel
+Day 3: Khám phá Park Güell
+  Tham quan Park Güell cùng hướng dẫn viên. Buổi chiều thưởng thức Paella và có thời gian tự do khám phá Barcelona.
+  Activities: Tham quan Park Güell, Chụp ảnh tại các điểm đẹp, Thưởng thức Paella
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Barcelona Grand Hotel
+Day 4: Khám phá Gothic Quarter
+  Tham quan Gothic Quarter cùng hướng dẫn viên. Buổi chiều thưởng thức Churros và có thời gian tự do khám phá Barcelona.
+  Activities: Tham quan Gothic Quarter, Chụp ảnh tại các điểm đẹp, Thưởng thức Churros
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Barcelona Grand Hotel
+Day 5: Tạm biệt Barcelona
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Spain.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Hotels used in this tour:
+- Barcelona Grand Hotel (5 sao, 163-391 USD/đêm)
+- Barcelona City Suites (4 sao, 203-487 USD/đêm)
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Tour guides:
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 6500 USD), 09/10/2026 (còn 20 chỗ, 6500 USD), 23/10/2026 (còn 20 chỗ, 6500 USD), 09/11/2026 (còn 20 chỗ, 6500 USD), 23/11/2026 (còn 20 chỗ, 6500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 
-TOUR: Ha Noi
+================================================================================
 
-Description: Ha Noi Beautiful
+TOUR: Lisbon - Portugal
 
-Destination: Premium Destination
-Location: {'coordinates': [0, 0], 'address': 'vn', 'region': 'asia'}
-Price: $1700 USD (includes accommodation, meals, and guided tours)
-Duration: 4 Days
-Tour Type: domestic
+Description: Lisbon, the capital city of Portugal, is a charming destination with narrow cobblestone streets, colorful buildings, and stunning viewpoints over the Tagus River.
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+Country: Portugal
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4000 USD/người lớn | trẻ em: 2800 USD
+Rating: 4.7/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: portugal, budget, popular
 
-Detailed Itinerary:
-[{'day': 1, 'title': 'Day 1', 'activities': ['Xich du', 'ssss', ''], 'meals': ['sss', 'ss'], '_id': '690ce6bfaff34467086b4c96'}, {'day': 2, 'title': 'Day 2', 'activities': ['sss', 'sss'], 'meals': ['ss'], '_id': '690ce6bfaff34467086b4c97'}]
+Attractions:
+- Belém Tower
+- Jerónimos Monastery
+- Castelo de São Jorge
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+Local food:
+- Pastéis de Nata
+- Bacalhau
+- Sardines
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+Detailed itinerary:
+Day 1: Đến Lisbon
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Lisbon, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Lisbon
+  Meals: Bữa tối
+  Overnight: Lisbon Grand Hotel
+Day 2: Khám phá Belém Tower
+  Tham quan Belém Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Pastéis de Nata và có thời gian tự do khám phá Lisbon.
+  Activities: Tham quan Belém Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Pastéis de Nata
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lisbon Grand Hotel
+Day 3: Khám phá Jerónimos Monastery
+  Tham quan Jerónimos Monastery cùng hướng dẫn viên. Buổi chiều thưởng thức Bacalhau và có thời gian tự do khám phá Lisbon.
+  Activities: Tham quan Jerónimos Monastery, Chụp ảnh tại các điểm đẹp, Thưởng thức Bacalhau
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lisbon Grand Hotel
+Day 4: Khám phá Castelo de São Jorge
+  Tham quan Castelo de São Jorge cùng hướng dẫn viên. Buổi chiều thưởng thức Sardines và có thời gian tự do khám phá Lisbon.
+  Activities: Tham quan Castelo de São Jorge, Chụp ảnh tại các điểm đẹp, Thưởng thức Sardines
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lisbon Grand Hotel
+Day 5: Tạm biệt Lisbon
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Portugal.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
 
-Special Notes:
-Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.
+Hotels used in this tour:
+- Lisbon Grand Hotel (5 sao, 100-240 USD/đêm)
+- Lisbon City Suites (4 sao, 140-336 USD/đêm)
+
+Tour guides:
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4000 USD), 09/10/2026 (còn 20 chỗ, 4000 USD), 23/10/2026 (còn 20 chỗ, 4000 USD), 09/11/2026 (còn 20 chỗ, 4000 USD), 23/11/2026 (còn 20 chỗ, 4000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Porto - Portugal
+
+Description: Porto is a picturesque city known for its Port wine cellars, historic Ribeira district, and iconic Dom Luís I Bridge crossing the Douro River.
+
+Country: Portugal
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 3500 USD/người lớn | trẻ em: 2450 USD
+Rating: 4.6/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: portugal, budget, popular
+
+Attractions:
+- Ribeira Square
+- Clerigos Tower
+- Serralves Museum
+
+Local food:
+- Francesinha
+- Tripas à Moda do Porto
+- Pastel de Chaves
+
+Detailed itinerary:
+Day 1: Đến Porto
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Porto, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Porto
+  Meals: Bữa tối
+  Overnight: Porto Grand Hotel
+Day 2: Khám phá Ribeira Square
+  Tham quan Ribeira Square cùng hướng dẫn viên. Buổi chiều thưởng thức Francesinha và có thời gian tự do khám phá Porto.
+  Activities: Tham quan Ribeira Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Francesinha
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Porto Grand Hotel
+Day 3: Khám phá Clerigos Tower
+  Tham quan Clerigos Tower cùng hướng dẫn viên. Buổi chiều thưởng thức Tripas à Moda do Porto và có thời gian tự do khám phá Porto.
+  Activities: Tham quan Clerigos Tower, Chụp ảnh tại các điểm đẹp, Thưởng thức Tripas à Moda do Porto
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Porto Grand Hotel
+Day 4: Khám phá Serralves Museum
+  Tham quan Serralves Museum cùng hướng dẫn viên. Buổi chiều thưởng thức Pastel de Chaves và có thời gian tự do khám phá Porto.
+  Activities: Tham quan Serralves Museum, Chụp ảnh tại các điểm đẹp, Thưởng thức Pastel de Chaves
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Porto Grand Hotel
+Day 5: Tạm biệt Porto
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Portugal.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Porto Grand Hotel (5 sao, 88-211 USD/đêm)
+- Porto City Suites (4 sao, 128-307 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 3500 USD), 09/10/2026 (còn 20 chỗ, 3500 USD), 23/10/2026 (còn 20 chỗ, 3500 USD), 09/11/2026 (còn 20 chỗ, 3500 USD), 23/11/2026 (còn 20 chỗ, 3500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Moscow - Russia
+
+Description: Moscow is the capital city of Russia, known for its iconic landmarks, rich history, and vibrant cultural scene.
+
+Country: Russia
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.8/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: russia, budget, popular
+
+Attractions:
+- Red Square
+- Kremlin and St. Basil's Cathedral
+- Bolshoi Theatre
+
+Local food:
+- Borscht
+- Pelmeni
+- Blini
+
+Detailed itinerary:
+Day 1: Đến Moscow
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Moscow, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Moscow
+  Meals: Bữa tối
+  Overnight: Moscow Grand Hotel
+Day 2: Khám phá Red Square
+  Tham quan Red Square cùng hướng dẫn viên. Buổi chiều thưởng thức Borscht và có thời gian tự do khám phá Moscow.
+  Activities: Tham quan Red Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Borscht
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Moscow Grand Hotel
+Day 3: Khám phá Kremlin and St. Basil's Cathedral
+  Tham quan Kremlin and St. Basil's Cathedral cùng hướng dẫn viên. Buổi chiều thưởng thức Pelmeni và có thời gian tự do khám phá Moscow.
+  Activities: Tham quan Kremlin and St. Basil's Cathedral, Chụp ảnh tại các điểm đẹp, Thưởng thức Pelmeni
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Moscow Grand Hotel
+Day 4: Khám phá Bolshoi Theatre
+  Tham quan Bolshoi Theatre cùng hướng dẫn viên. Buổi chiều thưởng thức Blini và có thời gian tự do khám phá Moscow.
+  Activities: Tham quan Bolshoi Theatre, Chụp ảnh tại các điểm đẹp, Thưởng thức Blini
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Moscow Grand Hotel
+Day 5: Tạm biệt Moscow
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Russia.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Moscow Grand Hotel (5 sao, 125-300 USD/đêm)
+- Moscow City Suites (4 sao, 165-396 USD/đêm)
+
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Kazan - Russia
+
+Description: Kazan is a city where East meets West, showcasing its unique blend of Islamic and Russian cultures, with a stunning Kremlin and a vibrant city center.
+
+Country: Russia
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 3800 USD/người lớn | trẻ em: 2660 USD
+Rating: 4.5/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: russia, budget, popular
+
+Attractions:
+- Kazan Kremlin
+- Kul Sharif Mosque
+- Bauman Street
+
+Local food:
+- Chak-Chak
+- Tatar Plow
+- Ikra
+
+Detailed itinerary:
+Day 1: Đến Kazan
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Kazan, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Kazan
+  Meals: Bữa tối
+  Overnight: Kazan Grand Hotel
+Day 2: Khám phá Kazan Kremlin
+  Tham quan Kazan Kremlin cùng hướng dẫn viên. Buổi chiều thưởng thức Chak-Chak và có thời gian tự do khám phá Kazan.
+  Activities: Tham quan Kazan Kremlin, Chụp ảnh tại các điểm đẹp, Thưởng thức Chak-Chak
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Kazan Grand Hotel
+Day 3: Khám phá Kul Sharif Mosque
+  Tham quan Kul Sharif Mosque cùng hướng dẫn viên. Buổi chiều thưởng thức Tatar Plow và có thời gian tự do khám phá Kazan.
+  Activities: Tham quan Kul Sharif Mosque, Chụp ảnh tại các điểm đẹp, Thưởng thức Tatar Plow
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Kazan Grand Hotel
+Day 4: Khám phá Bauman Street
+  Tham quan Bauman Street cùng hướng dẫn viên. Buổi chiều thưởng thức Ikra và có thời gian tự do khám phá Kazan.
+  Activities: Tham quan Bauman Street, Chụp ảnh tại các điểm đẹp, Thưởng thức Ikra
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Kazan Grand Hotel
+Day 5: Tạm biệt Kazan
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Russia.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Kazan Grand Hotel (5 sao, 95-228 USD/đêm)
+- Kazan City Suites (4 sao, 135-324 USD/đêm)
+
+Tour guides:
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 3800 USD), 09/10/2026 (còn 20 chỗ, 3800 USD), 23/10/2026 (còn 20 chỗ, 3800 USD), 09/11/2026 (còn 20 chỗ, 3800 USD), 23/11/2026 (còn 20 chỗ, 3800 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Kuala Lumpur - Malaysia
+
+Description: Kuala Lumpur is the vibrant capital city of Malaysia, famous for its modern skyline, iconic Petronas Twin Towers, and diverse cultural heritage.
+
+Country: Malaysia
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4500 USD/người lớn | trẻ em: 3150 USD
+Rating: 4.7/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: malaysia, budget, popular
+
+Attractions:
+- Petronas Twin Towers
+- Batu Caves
+- Merdeka Square
+
+Local food:
+- Nasi Lemak
+- Char Kway Teow
+- Roti Canai
+
+Detailed itinerary:
+Day 1: Đến Kuala Lumpur
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Kuala Lumpur, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Kuala Lumpur
+  Meals: Bữa tối
+  Overnight: Kuala Lumpur Grand Hotel
+Day 2: Khám phá Petronas Twin Towers
+  Tham quan Petronas Twin Towers cùng hướng dẫn viên. Buổi chiều thưởng thức Nasi Lemak và có thời gian tự do khám phá Kuala Lumpur.
+  Activities: Tham quan Petronas Twin Towers, Chụp ảnh tại các điểm đẹp, Thưởng thức Nasi Lemak
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Kuala Lumpur Grand Hotel
+Day 3: Khám phá Batu Caves
+  Tham quan Batu Caves cùng hướng dẫn viên. Buổi chiều thưởng thức Char Kway Teow và có thời gian tự do khám phá Kuala Lumpur.
+  Activities: Tham quan Batu Caves, Chụp ảnh tại các điểm đẹp, Thưởng thức Char Kway Teow
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Kuala Lumpur Grand Hotel
+Day 4: Khám phá Merdeka Square
+  Tham quan Merdeka Square cùng hướng dẫn viên. Buổi chiều thưởng thức Roti Canai và có thời gian tự do khám phá Kuala Lumpur.
+  Activities: Tham quan Merdeka Square, Chụp ảnh tại các điểm đẹp, Thưởng thức Roti Canai
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Kuala Lumpur Grand Hotel
+Day 5: Tạm biệt Kuala Lumpur
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Malaysia.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Kuala Lumpur Grand Hotel (5 sao, 113-271 USD/đêm)
+- Kuala Lumpur City Suites (4 sao, 153-367 USD/đêm)
+
+Tour guides:
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4500 USD), 09/10/2026 (còn 20 chỗ, 4500 USD), 23/10/2026 (còn 20 chỗ, 4500 USD), 09/11/2026 (còn 20 chỗ, 4500 USD), 23/11/2026 (còn 20 chỗ, 4500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Malacca - Malaysia
+
+Description: Malacca (Melaka) is a historical city with a rich colonial past, featuring well-preserved heritage buildings and a unique blend of cultures.
+
+Country: Malaysia
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 3200 USD/người lớn | trẻ em: 2240 USD
+Rating: 4.5/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: malaysia, budget, popular
+
+Attractions:
+- St. Paul's Hill
+- Jonker Street
+- A Famosa
+
+Local food:
+- Chicken Rice Ball
+- Nyonya Laksa
+- Cendol
+
+Detailed itinerary:
+Day 1: Đến Malacca
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Malacca, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Malacca
+  Meals: Bữa tối
+  Overnight: Malacca Grand Hotel
+Day 2: Khám phá St. Paul's Hill
+  Tham quan St. Paul's Hill cùng hướng dẫn viên. Buổi chiều thưởng thức Chicken Rice Ball và có thời gian tự do khám phá Malacca.
+  Activities: Tham quan St. Paul's Hill, Chụp ảnh tại các điểm đẹp, Thưởng thức Chicken Rice Ball
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Malacca Grand Hotel
+Day 3: Khám phá Jonker Street
+  Tham quan Jonker Street cùng hướng dẫn viên. Buổi chiều thưởng thức Nyonya Laksa và có thời gian tự do khám phá Malacca.
+  Activities: Tham quan Jonker Street, Chụp ảnh tại các điểm đẹp, Thưởng thức Nyonya Laksa
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Malacca Grand Hotel
+Day 4: Khám phá A Famosa
+  Tham quan A Famosa cùng hướng dẫn viên. Buổi chiều thưởng thức Cendol và có thời gian tự do khám phá Malacca.
+  Activities: Tham quan A Famosa, Chụp ảnh tại các điểm đẹp, Thưởng thức Cendol
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Malacca Grand Hotel
+Day 5: Tạm biệt Malacca
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Malaysia.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Malacca Grand Hotel (5 sao, 80-192 USD/đêm)
+- Malacca City Suites (4 sao, 120-288 USD/đêm)
+
+Tour guides:
+- Lê Hoàng Phúc (ngôn ngữ: Vietnamese, English, Chinese)
+- Võ Thị Lan (ngôn ngữ: Vietnamese, English, Thai)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 3200 USD), 09/10/2026 (còn 20 chỗ, 3200 USD), 23/10/2026 (còn 20 chỗ, 3200 USD), 09/11/2026 (còn 20 chỗ, 3200 USD), 23/11/2026 (còn 20 chỗ, 3200 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Kyoto - Japan
+
+Description: Kyoto is a city with a rich history, showcasing stunning temples, traditional tea houses, and beautiful cherry blossoms in spring.
+
+Country: Japan
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 4800 USD/người lớn | trẻ em: 3360 USD
+Rating: 4.6/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: japan, budget, popular
+
+Attractions:
+- Kinkaku-ji (Golden Pavilion)
+- Fushimi Inari Taisha
+- Arashiyama Bamboo Grove
+
+Local food:
+- Kaiseki Ryori
+- Matcha Green Tea
+- Yudofu (Tofu Hot Pot)
+
+Detailed itinerary:
+Day 1: Đến Kyoto
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Kyoto, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Kyoto
+  Meals: Bữa tối
+  Overnight: Gion Nanba
+Day 2: Khám phá Kinkaku-ji (Golden Pavilion)
+  Tham quan Kinkaku-ji (Golden Pavilion) cùng hướng dẫn viên. Buổi chiều thưởng thức Kaiseki Ryori và có thời gian tự do khám phá Kyoto.
+  Activities: Tham quan Kinkaku-ji (Golden Pavilion), Chụp ảnh tại các điểm đẹp, Thưởng thức Kaiseki Ryori
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Gion Nanba
+Day 3: Khám phá Fushimi Inari Taisha
+  Tham quan Fushimi Inari Taisha cùng hướng dẫn viên. Buổi chiều thưởng thức Matcha Green Tea và có thời gian tự do khám phá Kyoto.
+  Activities: Tham quan Fushimi Inari Taisha, Chụp ảnh tại các điểm đẹp, Thưởng thức Matcha Green Tea
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Gion Nanba
+Day 4: Khám phá Arashiyama Bamboo Grove
+  Tham quan Arashiyama Bamboo Grove cùng hướng dẫn viên. Buổi chiều thưởng thức Yudofu (Tofu Hot Pot) và có thời gian tự do khám phá Kyoto.
+  Activities: Tham quan Arashiyama Bamboo Grove, Chụp ảnh tại các điểm đẹp, Thưởng thức Yudofu (Tofu Hot Pot)
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Gion Nanba
+Day 5: Tạm biệt Kyoto
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại Japan.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Gion Nanba (5 sao, 400-800 USD/đêm)
+- Kyoto Traditional Ryokan (5 sao, 400-900 USD/đêm)
+
+Tour guides:
+- Phạm Minh Tuấn (ngôn ngữ: Vietnamese, English, Japanese)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 4800 USD), 09/10/2026 (còn 20 chỗ, 4800 USD), 23/10/2026 (còn 20 chỗ, 4800 USD), 09/11/2026 (còn 20 chỗ, 4800 USD), 23/11/2026 (còn 20 chỗ, 4800 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Delhi - India
+
+Description: Delhi, the capital city of India, is a historical and cultural hub known for its magnificent architecture, bustling markets, and diverse cuisine.
+
+Country: India
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5000 USD/người lớn | trẻ em: 3500 USD
+Rating: 4.2/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: india, budget, popular
+
+Attractions:
+- Red Fort
+- Qutub Minar
+- India Gate
+
+Local food:
+- Paratha
+- Chole Bhature
+- Butter Chicken
+
+Detailed itinerary:
+Day 1: Đến Delhi
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Delhi, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Delhi
+  Meals: Bữa tối
+  Overnight: Delhi Grand Hotel
+Day 2: Khám phá Red Fort
+  Tham quan Red Fort cùng hướng dẫn viên. Buổi chiều thưởng thức Paratha và có thời gian tự do khám phá Delhi.
+  Activities: Tham quan Red Fort, Chụp ảnh tại các điểm đẹp, Thưởng thức Paratha
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Delhi Grand Hotel
+Day 3: Khám phá Qutub Minar
+  Tham quan Qutub Minar cùng hướng dẫn viên. Buổi chiều thưởng thức Chole Bhature và có thời gian tự do khám phá Delhi.
+  Activities: Tham quan Qutub Minar, Chụp ảnh tại các điểm đẹp, Thưởng thức Chole Bhature
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Delhi Grand Hotel
+Day 4: Khám phá India Gate
+  Tham quan India Gate cùng hướng dẫn viên. Buổi chiều thưởng thức Butter Chicken và có thời gian tự do khám phá Delhi.
+  Activities: Tham quan India Gate, Chụp ảnh tại các điểm đẹp, Thưởng thức Butter Chicken
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Delhi Grand Hotel
+Day 5: Tạm biệt Delhi
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại India.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Delhi Grand Hotel (5 sao, 125-300 USD/đêm)
+- Delhi City Suites (4 sao, 165-396 USD/đêm)
+
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5000 USD), 09/10/2026 (còn 20 chỗ, 5000 USD), 23/10/2026 (còn 20 chỗ, 5000 USD), 09/11/2026 (còn 20 chỗ, 5000 USD), 23/11/2026 (còn 20 chỗ, 5000 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
+
+Booking Information:
+Contact CMP Travel for reservations and custom itineraries.
+Phone: +84 28 1234 5678
+Email: booking@cmp-travel.com
+
+================================================================================
+
+TOUR: Lyon - France
+
+Description: Lyon, located in east-central France, is renowned for its gastronomy, historical architecture, and vibrant cultural scene.
+
+Country: France
+Duration: 5 days
+Tour type: domestic
+Difficulty: moderate
+Price: 5500 USD/người lớn | trẻ em: 3850 USD
+Rating: 4.5/5
+Group size: tối đa 20 người | Độ tuổi tối thiểu: 0
+Best time to visit: spring, summer, fall
+Tags: france, luxury, popular
+
+Attractions:
+- Basilica of Notre-Dame de Fourvière
+- Vieux Lyon
+- Musée des Confluences
+
+Local food:
+- Coq au Vin
+- Quenelle
+- Tarte Tatin
+
+Detailed itinerary:
+Day 1: Đến Lyon
+  Xe đón tại sân bay và đưa về khách sạn. Thời gian còn lại trong ngày để nghỉ ngơi và dạo quanh khu trung tâm Lyon, làm quen với nhịp sống địa phương.
+  Activities: Đón tại sân bay, Nhận phòng khách sạn, Dạo bộ trung tâm Lyon
+  Meals: Bữa tối
+  Overnight: Lyon Grand Hotel
+Day 2: Khám phá Basilica of Notre-Dame de Fourvière
+  Tham quan Basilica of Notre-Dame de Fourvière cùng hướng dẫn viên. Buổi chiều thưởng thức Coq au Vin và có thời gian tự do khám phá Lyon.
+  Activities: Tham quan Basilica of Notre-Dame de Fourvière, Chụp ảnh tại các điểm đẹp, Thưởng thức Coq au Vin
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lyon Grand Hotel
+Day 3: Khám phá Vieux Lyon
+  Tham quan Vieux Lyon cùng hướng dẫn viên. Buổi chiều thưởng thức Quenelle và có thời gian tự do khám phá Lyon.
+  Activities: Tham quan Vieux Lyon, Chụp ảnh tại các điểm đẹp, Thưởng thức Quenelle
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lyon Grand Hotel
+Day 4: Khám phá Musée des Confluences
+  Tham quan Musée des Confluences cùng hướng dẫn viên. Buổi chiều thưởng thức Tarte Tatin và có thời gian tự do khám phá Lyon.
+  Activities: Tham quan Musée des Confluences, Chụp ảnh tại các điểm đẹp, Thưởng thức Tarte Tatin
+  Meals: Bữa sáng, Bữa trưa
+  Overnight: Lyon Grand Hotel
+Day 5: Tạm biệt Lyon
+  Dùng bữa sáng tại khách sạn, làm thủ tục trả phòng và di chuyển ra sân bay. Kết thúc hành trình 5 days tại France.
+  Activities: Bữa sáng tại khách sạn, Trả phòng, Tiễn ra sân bay
+  Meals: Bữa sáng
+
+Hotels used in this tour:
+- Lyon Grand Hotel (5 sao, 138-331 USD/đêm)
+- Lyon City Suites (4 sao, 178-427 USD/đêm)
+
+Tour guides:
+- Nguyễn Văn An (ngôn ngữ: Vietnamese, English, French)
+- Trần Thị Mai (ngôn ngữ: Vietnamese, English, Korean)
+
+Upcoming departures:
+23/09/2026 (còn 20 chỗ, 5500 USD), 09/10/2026 (còn 20 chỗ, 5500 USD), 23/10/2026 (còn 20 chỗ, 5500 USD), 09/11/2026 (còn 20 chỗ, 5500 USD), 23/11/2026 (còn 20 chỗ, 5500 USD)
+
+Package includes:
+- Accommodation
+- Transportation
+- Tour guide
+- Entrance fees
+
+Not included:
+- Personal expenses
+- Travel insurance
+- Tips
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.

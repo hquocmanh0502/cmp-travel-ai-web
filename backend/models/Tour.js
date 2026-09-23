@@ -26,6 +26,7 @@ const tourSchema = new mongoose.Schema({
   itinerary: [{
     day: Number,
     title: String,
+    description: String, // mô tả ngắn của ngày, hiển thị trên tab lịch trình
     activities: [String],
     meals: [String],
     accommodation: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }

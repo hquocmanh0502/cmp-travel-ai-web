@@ -5497,3 +5497,16 @@ input:focus,
     justify-content: center;
   }
 }
+/* Bua an va noi luu tru trong tung ngay cua lich trinh */
+.day-meals,
+.day-stay {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.day-meals i,
+.day-stay i {
+    color: #ff6600;
+    margin-right: 6px;
+}

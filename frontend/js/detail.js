@@ -1778,27 +1778,20 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!itineraryTabs || !tabContent) return;
         
-        const sampleItinerary = tour.itinerary || [
-            {
-                day: 1,
-                title: 'Arrival & City Tour',
-                description: 'Welcome to your adventure! Today we\'ll explore the city center and iconic landmarks.',
-                activities: ['Airport pickup', 'Hotel check-in', 'City sightseeing', 'Welcome dinner']
-            },
-            {
-                day: 2,
-                title: 'Cultural Exploration',
-                description: 'Immerse yourself in local culture and visit historical sites.',
-                activities: ['Museum visit', 'Local market tour', 'Traditional lunch', 'Cultural show']
-            },
-            {
-                day: 3,
-                title: 'Adventure & Nature',
-                description: 'Experience the natural beauty and outdoor activities.',
-                activities: ['Nature hike', 'Scenic viewpoints', 'Adventure sports', 'Picnic lunch']
-            }
-        ];
-        
+        // Dung dung lich trinh cua tour nay. Truoc day o day co mot lich trinh mau
+        // viet cung 3 ngay, va vi ca 36 tour deu rong nen moi tour deu hien y het nhau.
+        const sampleItinerary = tour.itinerary || [];
+
+        if (sampleItinerary.length === 0) {
+            itineraryTabs.innerHTML = '';
+            tabContent.innerHTML = `
+                <div class="alert alert-light border text-center my-3">
+                    <i class="fas fa-route mb-2" style="font-size:24px;color:#ff6600"></i>
+                    <p class="mb-0">Lịch trình chi tiết của tour này đang được cập nhật.</p>
+                </div>`;
+            return;
+        }
+
         // Build itinerary tabs
         let tabsHTML = '';
         let contentHTML = '';
@@ -1837,14 +1830,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             }).join('');
             
+            // Bua an va noi luu tru cua ngay do (accommodation da duoc populate o API)
+            const mealsHTML = (day.meals && day.meals.length)
+                ? `<div class="day-meals"><i class="fas fa-utensils"></i> Bữa ăn: ${day.meals.join(", ")}</div>`
+                : "";
+
+            const hotelName = day.accommodation && day.accommodation.name ? day.accommodation.name : null;
+            const stayHTML = hotelName
+                ? `<div class="day-stay"><i class="fas fa-bed"></i> Nghỉ đêm tại: <strong>${hotelName}</strong></div>`
+                : "";
+
             contentHTML += `
                 <div class="tab-pane ${isActive}" id="day${day.day}">
                     <div class="day-content">
                         <h4>${day.title}</h4>
-                        <p>${day.description}</p>
+                        <p>${day.description || ""}</p>
                         <div class="day-activities">
                             ${activitiesHTML}
                         </div>
+                        ${mealsHTML}
+                        ${stayHTML}
                     </div>
                 </div>
             `;

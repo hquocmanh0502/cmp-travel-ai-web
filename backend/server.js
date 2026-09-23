@@ -164,16 +164,16 @@ app.get('/api/tours/:id', async (req, res) => {
     let tour = null;
     
     // Try string id first with populated selectedHotels
-    tour = await Tour.findOne({ id: id }).populate('selectedHotels');
+    tour = await Tour.findOne({ id: id }).populate('selectedHotels').populate('assignedGuide').populate('itinerary.accommodation', 'name location.city details.starRating');
     
     // Try number id
     if (!tour && !isNaN(id)) {
-      tour = await Tour.findOne({ id: parseInt(id) }).populate('selectedHotels');
+      tour = await Tour.findOne({ id: parseInt(id) }).populate('selectedHotels').populate('assignedGuide').populate('itinerary.accommodation', 'name location.city details.starRating');
     }
     
     // Try ObjectId
     if (!tour && id.match(/^[0-9a-fA-F]{24}$/)) {
-      tour = await Tour.findById(id).populate('selectedHotels');
+      tour = await Tour.findById(id).populate('selectedHotels').populate('assignedGuide').populate('itinerary.accommodation', 'name location.city details.starRating');
     }
     
     if (!tour) {

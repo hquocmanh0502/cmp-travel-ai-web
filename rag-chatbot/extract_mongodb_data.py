@@ -98,110 +98,165 @@ def convert_objectid_to_string(obj):
     else:
         return obj
 
-def create_tour_documents(tours, base_path):
-    """Create documents for tours with realistic USD pricing"""
+def create_tour_documents(tours, base_path, hotels=None, guides=None):
+    """Tạo tài liệu tri thức cho tour, lấy nguyên dữ liệu thật từ MongoDB.
+
+    Bản cũ tự sinh giá theo bảng price_ranges viết cứng, nên chatbot báo giá khác
+    với giá hiển thị trên website. Bản này dùng pricing.adult / estimatedCost thật,
+    và in lịch trình theo từng ngày thay vì đổ nguyên list Python ra file.
+    """
     tour_texts = []
-    
-    # Sample realistic prices in USD for different tour types
-    tour_price_ranges = {
-        'maldives': {'min': 2500, 'max': 4500},
-        'switzerland': {'min': 2800, 'max': 5200},
-        'amsterdam': {'min': 1800, 'max': 3200},
-        'vietnam': {'min': 800, 'max': 2500},
-        'japan': {'min': 2200, 'max': 4800},
-        'thailand': {'min': 1200, 'max': 2800},
-        'singapore': {'min': 1500, 'max': 3500},
-        'default': {'min': 1500, 'max': 3500}
-    }
-    
-    for i, tour in enumerate(tours):
-        # Convert ObjectId to string
+
+    # Bảng tra tên khách sạn và hướng dẫn viên theo _id, để thay ObjectId bằng tên thật.
+    hotel_by_id = {}
+    for h in (hotels or []):
+        hotel_by_id[str(h.get('_id'))] = h
+
+    guide_by_id = {}
+    for g in (guides or []):
+        guide_by_id[str(g.get('_id'))] = g
+
+    for tour in tours:
         tour_clean = convert_objectid_to_string(tour)
-        
-        # Generate realistic price based on destination
-        destination_name = str(tour_clean.get('destination', {}).get('name', '')).lower()
-        price_range = tour_price_ranges.get('default')
-        
-        for key, range_val in tour_price_ranges.items():
-            if key in destination_name:
-                price_range = range_val
-                break
-        
-        # Generate price based on duration and type
-        duration_str = tour_clean.get('duration', '3-5 days')
-        if 'days' in str(duration_str):
-            try:
-                duration_parts = str(duration_str).split()
-                if '-' in duration_parts[0]:
-                    avg_days = sum(map(int, duration_parts[0].split('-'))) / 2
-                else:
-                    avg_days = int(duration_parts[0])
-            except:
-                avg_days = 4
-        else:
-            avg_days = 4
-            
-        # Calculate realistic price
-        base_price = price_range['min'] + (i % 3) * ((price_range['max'] - price_range['min']) // 3)
-        final_price = int(base_price + (avg_days - 3) * 200)
-        
-        # Create text content for tour
-        content = f"""
-TOUR: {tour_clean.get('name', 'Amazing Travel Experience')}
 
-Description: {tour_clean.get('description', 'Discover breathtaking destinations with our expertly crafted tour packages. Experience local culture, stunning landscapes, and unforgettable adventures.')}
+        name = tour_clean.get('name', 'Tour')
+        country = tour_clean.get('country', '')
+        pricing = tour_clean.get('pricing') or {}
+        price = pricing.get('adult') or tour_clean.get('estimatedCost') or 0
+        child_price = pricing.get('child')
 
-Destination: {tour_clean.get('destination', {}).get('name', 'Premium Destination')}
-Location: {tour_clean.get('location', 'Beautiful scenic location')}
-Price: ${final_price} USD (includes accommodation, meals, and guided tours)
-Duration: {duration_str}
-Tour Type: {tour_clean.get('type', 'Cultural & Adventure')}
+        attractions = tour_clean.get('attractions') or []
+        food = tour_clean.get('food') or []
+        inclusions = tour_clean.get('inclusions') or []
+        exclusions = tour_clean.get('exclusions') or []
+        tags = tour_clean.get('tags') or []
+        best_time = tour_clean.get('bestTimeToVisit') or []
 
-Highlights:
-• Stunning scenic views and photo opportunities
-• Professional English-speaking guide
-• Authentic local cuisine experience  
-• Comfortable accommodation included
-• Small group tours (max 12 people)
+        # Lịch trình từng ngày, kèm bữa ăn và khách sạn nghỉ đêm.
+        itinerary_lines = []
+        for day in (tour_clean.get('itinerary') or []):
+            parts = ["Day {0}: {1}".format(day.get('day'), day.get('title', ''))]
+            if day.get('description'):
+                parts.append("  {0}".format(day['description']))
+            if day.get('activities'):
+                parts.append("  Activities: {0}".format(', '.join(day['activities'])))
+            if day.get('meals'):
+                parts.append("  Meals: {0}".format(', '.join(day['meals'])))
+            stay = hotel_by_id.get(str(day.get('accommodation')))
+            if stay:
+                parts.append("  Overnight: {0}".format(stay.get('name', '')))
+            itinerary_lines.append('\n'.join(parts))
+        itinerary_text = '\n'.join(itinerary_lines) if itinerary_lines else 'Đang cập nhật.'
 
-Detailed Itinerary:
-{tour_clean.get('itinerary', 'Day 1: Arrival and city exploration | Day 2: Main attractions and cultural sites | Day 3: Adventure activities and local experiences | Day 4: Departure')}
+        # Khách sạn sử dụng trong tour
+        hotel_lines = []
+        for hid in (tour_clean.get('selectedHotels') or []):
+            h = hotel_by_id.get(str(hid))
+            if not h:
+                continue
+            details = h.get('details') or {}
+            pr = details.get('priceRange') or {}
+            hotel_lines.append("- {0} ({1} sao, {2} USD/đêm)".format(
+                h.get('name', ''), details.get('starRating', '?'),
+                "{0}-{1}".format(pr.get('min', '?'), pr.get('max', '?'))))
+        hotels_text = '\n'.join(hotel_lines) if hotel_lines else 'Đang cập nhật.'
 
-Package Includes:
-• Round-trip transportation
-• Professional tour guide
-• All entrance fees
-• Daily breakfast and select meals
-• Comfortable accommodation
-• Travel insurance
+        # Hướng dẫn viên phụ trách
+        guide_lines = []
+        for gid in (tour_clean.get('assignedGuide') or []):
+            g = guide_by_id.get(str(gid))
+            if not g:
+                continue
+            guide_lines.append("- {0} (ngôn ngữ: {1})".format(
+                g.get('name', ''), ', '.join(g.get('languages') or [])))
+        guides_text = '\n'.join(guide_lines) if guide_lines else 'Sẽ được sắp xếp khi đặt tour.'
 
-Not Included:
-• International flights
-• Personal expenses
-• Optional activities
-• Tips for guide and driver
+        # Vài ngày khởi hành gần nhất
+        departures = []
+        for slot in (tour_clean.get('availability') or [])[:5]:
+            start = slot.get('startDate')
+            start_str = start.strftime('%d/%m/%Y') if hasattr(start, 'strftime') else str(start)[:10]
+            departures.append("{0} (còn {1} chỗ, {2} USD)".format(
+                start_str, slot.get('availableSlots', '?'), slot.get('price', price)))
+        departures_text = ', '.join(departures) if departures else 'Liên hệ để biết lịch khởi hành.'
 
-Special Notes:
-{tour_clean.get('notes', 'Book early for best rates! Group discounts available. Free cancellation up to 7 days before departure.')}
+        content = """
+TOUR: {name} - {country}
+
+Description: {description}
+
+Country: {country}
+Duration: {duration}
+Tour type: {ttype}
+Difficulty: {difficulty}
+Price: {price} USD/người lớn{child}
+Rating: {rating}/5
+Group size: tối đa {group} người | Độ tuổi tối thiểu: {min_age}
+Best time to visit: {best_time}
+Tags: {tags}
+
+Attractions:
+{attractions}
+
+Local food:
+{food}
+
+Detailed itinerary:
+{itinerary}
+
+Hotels used in this tour:
+{hotels}
+
+Tour guides:
+{guides}
+
+Upcoming departures:
+{departures}
+
+Package includes:
+{inclusions}
+
+Not included:
+{exclusions}
 
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
-"""
-        
+""".format(
+            name=name,
+            country=country,
+            description=tour_clean.get('description', ''),
+            duration=tour_clean.get('duration', ''),
+            ttype=tour_clean.get('type', ''),
+            difficulty=tour_clean.get('difficulty', 'moderate'),
+            price=price,
+            child=" | trẻ em: {0} USD".format(child_price) if child_price else "",
+            rating=tour_clean.get('rating', 0),
+            group=tour_clean.get('maxGroupSize', 20),
+            min_age=tour_clean.get('minAge', 0),
+            best_time=', '.join(best_time) if best_time else 'Quanh năm',
+            tags=', '.join(tags) if tags else '-',
+            attractions='\n'.join("- {0}".format(a) for a in attractions) if attractions else '-',
+            food='\n'.join("- {0}".format(f) for f in food) if food else '-',
+            itinerary=itinerary_text,
+            hotels=hotels_text,
+            guides=guides_text,
+            departures=departures_text,
+            inclusions='\n'.join("- {0}".format(x) for x in inclusions) if inclusions else '-',
+            exclusions='\n'.join("- {0}".format(x) for x in exclusions) if exclusions else '-'
+        )
+
         tour_texts.append(content.strip())
-        
-        # Save each tour as separate file
-        filename = f"{base_path}/tours/tour_{tour_clean.get('_id', 'unknown')}.txt"
+
+        filename = "{0}/tours/tour_{1}.txt".format(base_path, tour_clean.get('_id', 'unknown'))
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(content.strip())
-    
-    # Save all tours in one file
-    with open(f"{base_path}/tours/all_tours.txt", 'w', encoding='utf-8') as f:
-        f.write("\n\n" + "="*80 + "\n\n".join(tour_texts))
-    
-    print(f"✅ Đã tạo {len(tour_texts)} tour documents")
+
+    with open("{0}/tours/all_tours.txt".format(base_path), 'w', encoding='utf-8') as f:
+        f.write(("\n\n" + "=" * 80 + "\n\n").join(tour_texts))
+
+    print("✅ Đã tạo {0} tour documents".format(len(tour_texts)))
     return tour_texts
 
 def create_hotel_documents(hotels, base_path):
@@ -438,7 +493,7 @@ def main():
         
         # Tạo knowledge base documents
         print("\n📝 Tạo knowledge base documents...")
-        create_tour_documents(tours, base_path)
+        create_tour_documents(tours, base_path, hotels, guides)
         create_hotel_documents(hotels, base_path)
         create_blog_documents(blogs, base_path)
         create_guide_documents(guides, base_path)

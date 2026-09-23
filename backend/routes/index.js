@@ -31,12 +31,12 @@ router.get('/tours/:id', async (req, res) => {
     // Try to find by MongoDB _id first (if it's a valid ObjectId)
     let tour = null;
     if (tourId.match(/^[0-9a-fA-F]{24}$/)) {
-      tour = await Tour.findById(tourId).populate('selectedHotels').populate('assignedGuide');
+      tour = await Tour.findById(tourId).populate('selectedHotels').populate('assignedGuide').populate('itinerary.accommodation', 'name location.city details.starRating details.priceRange');
     }
     
     // If not found, try to find by custom id field
     if (!tour) {
-      tour = await Tour.findOne({ id: tourId }).populate('selectedHotels').populate('assignedGuide');
+      tour = await Tour.findOne({ id: tourId }).populate('selectedHotels').populate('assignedGuide').populate('itinerary.accommodation', 'name location.city details.starRating details.priceRange');
     }
     
     if (!tour) {
