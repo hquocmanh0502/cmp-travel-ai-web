@@ -7,7 +7,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5500 USD per adult | child: 3850 USD
-Rating: 4.6/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: switzerland, luxury, popular
@@ -85,7 +85,7 @@ Duration: 5 days
 Tour type: international
 Difficulty: moderate
 Price: 8000 USD per adult | child: 5600 USD
-Rating: 4.7/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: united kingdom, luxury, popular
@@ -163,7 +163,7 @@ Duration: 5 days
 Tour type: international
 Difficulty: moderate
 Price: 7000 USD per adult | child: 4900 USD
-Rating: 4.2/5
+Rating: 4.5/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: thailand, luxury, popular
@@ -241,7 +241,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5500 USD per adult | child: 3850 USD
-Rating: 4.1/5
+Rating: 4.3/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: germany, luxury, popular
@@ -319,7 +319,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5500 USD per adult | child: 3850 USD
-Rating: 4.5/5
+Rating: 4.4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, luxury, popular
@@ -397,7 +397,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4000 USD per adult | child: 2800 USD
-Rating: 2.9/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: spain, budget, popular
@@ -475,7 +475,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 2.9/5
+Rating: 4.6/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, budget, popular
@@ -554,7 +554,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4500 USD per adult | child: 3150 USD
-Rating: 4.7/5
+Rating: 4.4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
@@ -632,7 +632,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 4.6/5
+Rating: 4.4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
@@ -710,7 +710,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4500 USD per adult | child: 3150 USD
-Rating: 4.7/5
+Rating: 4.5/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: greece, budget, popular
@@ -788,7 +788,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5500 USD per adult | child: 3850 USD
-Rating: 4.8/5
+Rating: 4.3/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: greece, luxury, popular
@@ -866,7 +866,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 4.7/5
+Rating: 4.3/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: japan, budget, popular
@@ -945,7 +945,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 4.9/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: maldives, budget, popular
@@ -1023,7 +1023,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4000 USD per adult | child: 2800 USD
-Rating: 4.5/5
+Rating: 3.8/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: netherlands, budget, popular
@@ -1101,7 +1101,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4000 USD per adult | child: 2800 USD
-Rating: 4.5/5
+Rating: 4.2/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: canada, budget, popular
@@ -1179,7 +1179,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 4.8/5
+Rating: 3.8/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: malaysia, budget, popular
@@ -1258,7 +1258,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4200 USD per adult | child: 2940 USD
-Rating: 4.4/5
+Rating: 4.5/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: hong kong, budget, popular
@@ -1336,7 +1336,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4200 USD per adult | child: 2940 USD
-Rating: 4.5/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: japan, budget, popular
@@ -1415,7 +1415,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 4.3/5
+Rating: 4.4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: united kingdom, budget, popular
@@ -1493,7 +1493,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 6000 USD per adult | child: 4200 USD
-Rating: 3.7/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: thailand, luxury, popular
@@ -1572,7 +1572,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 6000 USD per adult | child: 4200 USD
-Rating: 3.8/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: germany, luxury, popular
@@ -1650,7 +1650,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 6000 USD per adult | child: 4200 USD
-Rating: 4.3/5
+Rating: 3.9/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, luxury, popular
@@ -1806,7 +1806,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4500 USD per adult | child: 3150 USD
-Rating: 4.2/5
+Rating: 4.8/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: italy, budget, popular
@@ -1884,7 +1884,7 @@ Duration: 5 days
 Tour type: international
 Difficulty: moderate
 Price: 7000 USD per adult | child: 4900 USD
-Rating: 4.3/5
+Rating: 4.5/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, luxury, popular
@@ -1963,7 +1963,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4000 USD per adult | child: 2800 USD
-Rating: 1.8/5
+Rating: 4.6/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, budget, popular
@@ -2042,7 +2042,7 @@ Duration: 5 days
 Tour type: international
 Difficulty: moderate
 Price: 6500 USD per adult | child: 4550 USD
-Rating: 4.3/5
+Rating: 4.2/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: spain, luxury, popular
@@ -2120,7 +2120,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4000 USD per adult | child: 2800 USD
-Rating: 4.7/5
+Rating: 4.8/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: portugal, budget, popular
@@ -2198,7 +2198,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 3500 USD per adult | child: 2450 USD
-Rating: 4.6/5
+Rating: 4.7/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: portugal, budget, popular
@@ -2276,7 +2276,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 4.8/5
+Rating: 4.2/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: russia, budget, popular
@@ -2432,7 +2432,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4500 USD per adult | child: 3150 USD
-Rating: 4.7/5
+Rating: 3.4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: malaysia, budget, popular
@@ -2510,7 +2510,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 3200 USD per adult | child: 2240 USD
-Rating: 4.5/5
+Rating: 4.6/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: malaysia, budget, popular
@@ -2589,7 +2589,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 4800 USD per adult | child: 3360 USD
-Rating: 4.6/5
+Rating: 4.9/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: japan, budget, popular
@@ -2667,7 +2667,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5000 USD per adult | child: 3500 USD
-Rating: 4.2/5
+Rating: 4.3/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: india, budget, popular
@@ -2745,7 +2745,7 @@ Duration: 5 days
 Tour type: domestic
 Difficulty: moderate
 Price: 5500 USD per adult | child: 3850 USD
-Rating: 4.5/5
+Rating: 4/5
 Group size: max 20 people | Minimum age: 0
 Best time to visit: spring, summer, fall
 Tags: france, luxury, popular

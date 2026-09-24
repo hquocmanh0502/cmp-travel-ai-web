@@ -420,7 +420,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const cardRate = document.createElement("span");
         cardRate.classList.add("card-rate");
-        cardRate.innerHTML = `<i class="fa-solid fa-star"></i>${destination.rating}`;
+        cardRate.innerHTML = `<i class="fa-solid fa-star"></i>${Number(destination.rating || 0).toFixed(1)}`;
 
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
