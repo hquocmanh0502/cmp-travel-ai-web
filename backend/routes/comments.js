@@ -50,6 +50,53 @@ const checkBanStatus = async (req, res, next) => {
 };
 
 // GET - Lấy reviews của tour với sorting và filtering
+/**
+ * GET /api/comments/stats?tourId=...
+ *
+ * Trả về thống kê đánh giá THẬT của một tour: tổng số, điểm trung bình và phân bố
+ * số sao. Trước đây trang chi tiết hiển thị cứng "4.9" và "(324 reviews)" trong
+ * HTML, còn JS thì lấy nhầm analytics.viewCount (lượt xem) làm số lượt đánh giá.
+ */
+router.get('/stats', async (req, res) => {
+  try {
+    const { tourId } = req.query;
+
+    if (!tourId || !mongoose.Types.ObjectId.isValid(tourId)) {
+      return res.status(400).json({ error: 'Valid Tour ID is required' });
+    }
+
+    const rows = await Comment.aggregate([
+      { $match: { tourId: new mongoose.Types.ObjectId(tourId) } },
+      { $group: { _id: '$content.rating', count: { $sum: 1 } } }
+    ]);
+
+    const distribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    let total = 0;
+    let sum = 0;
+
+    for (const row of rows) {
+      const star = Number(row._id);
+      if (!distribution.hasOwnProperty(star)) continue;
+      distribution[star] = row.count;
+      total += row.count;
+      sum += star * row.count;
+    }
+
+    const average = total > 0 ? Number((sum / total).toFixed(1)) : 0;
+
+    // Phần trăm cho thanh biểu đồ, làm tròn để tổng luôn hiển thị hợp lý.
+    const percentages = {};
+    for (const star of [1, 2, 3, 4, 5]) {
+      percentages[star] = total > 0 ? Math.round((distribution[star] / total) * 100) : 0;
+    }
+
+    res.json({ tourId, total, average, distribution, percentages });
+  } catch (err) {
+    console.error('Error fetching review stats:', err);
+    res.status(500).json({ error: 'Error fetching review stats' });
+  }
+});
+
 router.get('/', async (req, res) => {
   try {
     const { tourId, sort = 'newest', rating, verified } = req.query;

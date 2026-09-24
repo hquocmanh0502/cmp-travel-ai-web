@@ -75,6 +75,20 @@ const tourSchema = new mongoose.Schema({
   
   // SEO and categorization
   tags: [String],
+
+  // Chu de cua tour, dung chung tu vung voi TourGuide.specialtyThemes.
+  // Nho truong nay moi ghep duoc "tour thien ve van hoa" voi "HDV manh ve van hoa".
+  // Duoc suy ra tu attractions/food/description boi scripts/seed-matching-data.js
+  themes: [{
+    type: String,
+    enum: [
+      'culture', 'history', 'architecture', 'museum',
+      'nature', 'mountain', 'beach', 'island', 'wildlife',
+      'adventure', 'trekking', 'water-sports',
+      'food', 'nightlife', 'shopping',
+      'photography', 'family', 'romantic', 'wellness', 'luxury', 'budget'
+    ]
+  }],
   difficulty: { type: String, enum: ['easy', 'moderate', 'challenging'] },
   bestTimeToVisit: [String], // months
   

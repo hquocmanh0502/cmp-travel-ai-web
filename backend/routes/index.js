@@ -12,6 +12,7 @@ const Recommendation = require('../models/Recommendation');
 const recommendationService = require('../services/recommendationService');
 const sentimentService = require('../services/sentimentService');
 const chatbotService = require('../services/chatbotService');
+const matchingService = require('../services/matchingService');
 const { requireSelfOrAdmin } = require('../middleware/auth');
 
 // Tours Routes
@@ -47,6 +48,38 @@ router.get('/tours/:id', async (req, res) => {
   } catch (err) {
     console.error('Error fetching tour:', err);
     res.status(500).json({ error: 'Error fetching tour' });
+  }
+});
+
+
+// Tour tương tự ("You might also like") - xem services/matchingService.js
+router.get('/tours/:id/related', async (req, res) => {
+  try {
+    const { limit, strategy } = req.query;
+    const result = await matchingService.getRelatedTours(req.params.id, {
+      limit: Math.min(parseInt(limit) || 3, 12),
+      strategy: strategy || 'content'
+    });
+    res.json(result);
+  } catch (err) {
+    console.error('Error fetching related tours:', err);
+    res.status(500).json({ error: 'Error fetching related tours' });
+  }
+});
+
+// Hướng dẫn viên phù hợp với một tour, có kèm lý do để chatbot giải thích được
+router.get('/tours/:id/suggested-guides', async (req, res) => {
+  try {
+    const { limit, language, departureDate } = req.query;
+    const result = await matchingService.getSuggestedGuides(req.params.id, {
+      limit: Math.min(parseInt(limit) || 5, 20),
+      preferredLanguage: language,
+      departureDate
+    });
+    res.json(result);
+  } catch (err) {
+    console.error('Error fetching suggested guides:', err);
+    res.status(500).json({ error: 'Error fetching suggested guides' });
   }
 });
 

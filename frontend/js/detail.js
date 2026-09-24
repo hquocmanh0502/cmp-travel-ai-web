@@ -1507,14 +1507,74 @@ document.addEventListener('DOMContentLoaded', function() {
         // Rating
         updateRating(tour.rating || 4.5);
         
-        // Review count
-        const reviewCount = document.querySelector('.review-count');
-        if (reviewCount) reviewCount.textContent = `(${tour.analytics?.viewCount || 324} reviews)`;
+        // So luot danh gia lay tu API thong ke that (xem updateReviewStats).
+        // Ban cu dung analytics.viewCount (luot XEM) lam so luot DANH GIA, va neu
+        // khong co thi rot ve hang so 324.
+        updateReviewStats(tour._id || tour.id);
         
         // Tour badges
         updateTourBadges(tour);
     }
     
+    /**
+     * Lay thong ke danh gia that tu /api/comments/stats va do vao giao dien:
+     * diem trung binh, tong so luot, va bieu do phan bo sao.
+     */
+    async function updateReviewStats(tourId) {
+        const setText = (selector, value) => {
+            const el = document.querySelector(selector);
+            if (el) el.textContent = value;
+        };
+
+        try {
+            const res = await fetch(`http://localhost:3000/api/comments/stats?tourId=${tourId}`);
+            if (!res.ok) throw new Error(`stats ${res.status}`);
+            const stats = await res.json();
+
+            const label = stats.total === 1 ? "(1 review)" : `(${stats.total} reviews)`;
+            setText(".review-count", stats.total > 0 ? label : "(no reviews yet)");
+
+            if (stats.total > 0) {
+                setText(".rating-number", stats.average);
+                setText(".rating-big", stats.average);
+                setText(".rating-details span:last-child", `Based on ${stats.total} review${stats.total === 1 ? "" : "s"}`);
+                updateRating(stats.average);
+            } else {
+                // Khong bia diem khi chua ai danh gia: sao rong, diem hien dau gach.
+                updateRating(0);
+                setText(".rating-number", "-");
+                setText(".rating-big", "-");
+                setText(".rating-details span:last-child", "No reviews yet");
+            }
+
+            // Hang sao lon trong khu vuc Customer Reviews cung dang fix cung 5 sao.
+            const starsBig = document.querySelector(".stars-big");
+            if (starsBig) {
+                const full = Math.floor(stats.average);
+                const half = stats.average % 1 >= 0.5;
+                let html = "";
+                for (let i = 0; i < full; i++) html += '<i class="fas fa-star"></i>';
+                if (half) html += '<i class="fas fa-star-half-alt"></i>';
+                for (let i = 0; i < 5 - full - (half ? 1 : 0); i++) html += '<i class="far fa-star"></i>';
+                starsBig.innerHTML = html;
+            }
+
+            // Bieu do phan bo sao: 5 sao o tren cung, 1 sao duoi cung.
+            const bars = document.querySelectorAll(".rating-breakdown .rating-bar");
+            bars.forEach((bar, index) => {
+                const star = 5 - index;
+                const percent = stats.percentages?.[star] ?? 0;
+                const fill = bar.querySelector(".fill");
+                const value = bar.querySelector("span:last-child");
+                if (fill) fill.style.width = percent + "%";
+                if (value) value.textContent = percent + "%";
+            });
+        } catch (error) {
+            console.error("Khong lay duoc thong ke danh gia:", error);
+            setText(".review-count", "");
+        }
+    }
+
     function updateTourBadges(tour) {
         const badgesContainer = document.querySelector('.tour-badges');
         if (!badgesContainer) return;
@@ -1883,14 +1943,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ==================== RELATED DATA LOADING ====================
+    /**
+     * Tour tuong tu. Truoc day chi lay 3 tour DAU TIEN trong danh sach, khong lien
+     * quan gi toi tour dang xem. Gio goi API xep hang theo do tuong dong
+     * (chu de, quoc gia, tam gia...) - xem backend/services/matchingService.js.
+     */
     async function loadRelatedTours() {
         try {
-            const response = await fetch('http://localhost:3000/api/tours?limit=4');
-            const tours = await response.json();
-            
-            displayRelatedTours(tours.filter(t => t._id !== currentTour._id).slice(0, 3));
+            const response = await fetch(
+                `http://localhost:3000/api/tours/${currentTour._id}/related?limit=3`);
+            if (!response.ok) throw new Error(`related ${response.status}`);
+
+            const data = await response.json();
+            displayRelatedTours(data.items || []);
         } catch (error) {
             console.error('Error loading related tours:', error);
+            const grid = document.getElementById('relatedToursGrid');
+            if (grid) grid.innerHTML = '';
         }
     }
     
@@ -1910,7 +1979,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             <i class="fas fa-map-marker-alt"></i>
                             <span>${tour.country}</span>
                         </div>
-                        <div class="related-tour-price">$${tour.estimatedCost.toLocaleString()}</div>
+                        <div class="related-tour-price">${tour.estimatedCost.toLocaleString()}</div>
+                        ${tour.reasons && tour.reasons.length
+                            ? `<div class="related-tour-reason">${tour.reasons[0]}</div>`
+                            : ''}
                     </div>
                 </div>
             `;
