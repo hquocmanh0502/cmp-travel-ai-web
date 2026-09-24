@@ -27,6 +27,7 @@ const Tour = require('../models/Tour');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
 const Comment = require('../models/Comment');
+const { calculateVIPLevel } = require('../services/vipService');
 
 const dryRun = process.argv.includes('--dry-run');
 const force = process.argv.includes('--force');
@@ -47,16 +48,23 @@ const RATING_WEIGHTS = [
   { rating: 1, weight: 2 }
 ];
 
-const REVIEWERS = [
-  ['Emma Wilson', 'female'], ['James Carter', 'male'], ['Sofia Rossi', 'female'],
-  ['Liam Nguyen', 'male'], ['Olivia Brown', 'female'], ['Noah Tanaka', 'male'],
-  ['Mia Hernandez', 'female'], ['Lucas Meyer', 'male'], ['Chloe Dubois', 'female'],
-  ['Ethan Clark', 'male'], ['Hannah Kim', 'female'], ['Daniel Silva', 'male'],
-  ['Grace Miller', 'female'], ['Anh Tran', 'female'], ['Mateo Garcia', 'male'],
-  ['Ava Johnson', 'female'], ['Leon Fischer', 'male'], ['Isabella Conti', 'female'],
-  ['Minh Pham', 'male'], ['Sarah Evans', 'female'], ['Victor Lopez', 'male'],
-  ['Yuki Sato', 'female'], ['Oscar Lindqvist', 'male'], ['Priya Sharma', 'female']
+// Danh sach nguoi danh gia sinh tu kho ho + ten, de co du so luong khach hang.
+// Truoc day chi co 24 nguoi nen ai cung tren 6 booking va deu len hang diamond,
+// lam bang Top VIP mat y nghia.
+const FIRST_NAMES = [
+  'Emma', 'James', 'Sofia', 'Liam', 'Olivia', 'Noah', 'Mia', 'Lucas',
+  'Chloe', 'Ethan', 'Hannah', 'Daniel', 'Grace', 'Anh', 'Mateo', 'Ava',
+  'Leon', 'Isabella', 'Minh', 'Sarah', 'Victor', 'Yuki', 'Oscar', 'Priya'
 ];
+const LAST_NAMES = [
+  'Wilson', 'Carter', 'Rossi', 'Nguyen', 'Brown', 'Tanaka', 'Hernandez',
+  'Meyer', 'Dubois', 'Clark', 'Kim', 'Silva'
+];
+
+const REVIEWERS = Array.from({ length: 60 }, (_, i) => [
+  `${FIRST_NAMES[i % FIRST_NAMES.length]} ${LAST_NAMES[Math.floor(i / FIRST_NAMES.length) % LAST_NAMES.length]}`,
+  i % 2 === 0 ? 'female' : 'male'
+]);
 
 // Câu mở đầu theo mức sao
 const OPENERS = {
@@ -229,7 +237,10 @@ const ADMIN_REPLIES = [
     const ratings = [];
 
     for (let i = 0; i < count; i++) {
-      const reviewer = reviewers[(index * 5 + i * 7) % reviewers.length];
+      // Chon lech theo luy thua: r^2 keo phan lon luot chon ve dau danh sach,
+      // tao ra vai khach di thuong xuyen va mot duoi dai khach di 1-2 chuyen.
+      const r = rnd();
+      const reviewer = reviewers[Math.floor(r * r * reviewers.length)];
       const rating = pickRating(rnd);
       ratings.push(rating);
       distribution[rating]++;
@@ -243,7 +254,7 @@ const ADMIN_REPLIES = [
       const checkout = new Date(departure);
       checkout.setDate(checkout.getDate() + days - 1);
 
-      const adults = intBetween(rnd, 1, 4);
+      const adults = intBetween(rnd, 1, 3);
       const children = intBetween(rnd, 0, 2);
       // Booking bat buoc phai co phong, va suc chua phai du cho so khach.
       // deluxe chua 3 nguoi, family chua 4 (xem Booking.validateRoomCapacity).
@@ -285,6 +296,9 @@ const ADMIN_REPLIES = [
           tourBaseCost: unitPrice,
           totalAmount: total,
           status: 'completed',
+          // Dashboard tinh doanh thu tu paymentStatus = paid, khong phai tu status.
+          paymentStatus: 'paid',
+          paymentMethod: 'cmp_wallet',
           hasReviewed: true
         });
         bookingId = String(booking._id);
@@ -359,10 +373,45 @@ const ADMIN_REPLIES = [
     }
   }
 
+  // --- 5. Cap nhat tong chi tieu / hang VIP cho nguoi dung ---
+  //
+  // Widget "Top VIP Users" sap xep theo User.totalSpent chu khong tinh tu booking.
+  // Neu chi tao booking ma khong cap nhat o day thi ca bang hien totalSpent = 0
+  // va ai cung la bronze.
+  let vipUpdated = 0;
+  if (!dryRun) {
+    // Dat lai truoc khi tinh: nguoi dung o lan chay truoc co the khong con booking
+    // nao (da bi --force xoa) nhung van giu totalSpent cu -> so lieu VIP bi sai.
+    // Chi dung vao tai khoan mau (@example.com), khong dung toi khach that.
+    await User.updateMany(
+      { email: /@example.com$/ },
+      { $set: { totalSpent: 0, totalBookings: 0, membershipLevel: 'bronze', vipSince: null } }
+    );
+
+    const rows = await Booking.aggregate([
+      { $match: { paymentStatus: 'paid' } },
+      { $group: { _id: '$userId', spent: { $sum: '$totalAmount' }, count: { $sum: 1 } } }
+    ]);
+
+    for (const row of rows) {
+      const level = calculateVIPLevel(row.spent);
+      await User.updateOne({ _id: row._id }, {
+        $set: {
+          totalSpent: row.spent,
+          totalBookings: row.count,
+          membershipLevel: level,
+          ...(level !== 'bronze' ? { vipSince: new Date() } : {})
+        }
+      });
+      vipUpdated++;
+    }
+  }
+
   console.log(`\n${'='.repeat(52)}`);
   console.log(`Người đánh giá tạo mới : ${createdUsers}`);
   console.log(`Booking (đã hoàn thành): ${totalBookings}`);
   console.log(`Đánh giá tạo mới       : ${totalReviews}`);
+  console.log(`User cập nhật hạng VIP : ${vipUpdated}`);
   console.log(`Tour bỏ qua (đã có)    : ${skipped}${skipped ? '  -> dùng --force để làm lại' : ''}`);
   console.log(`Phân bố sao            : ${[5,4,3,2,1].map(s => `${s}★ ${distribution[s]}`).join('  ')}`);
   console.log('='.repeat(52));
