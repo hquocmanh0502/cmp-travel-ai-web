@@ -92,6 +92,61 @@ const tourSchema = new mongoose.Schema({
   difficulty: { type: String, enum: ['easy', 'moderate', 'challenging'] },
   bestTimeToVisit: [String], // months
   
+
+  // ==========================================================================
+  // Dữ liệu chi tiết phục vụ SmartTour và Chatbot RAG.
+  //
+  // Được điền bởi scripts/enrich-tour-core.js và scripts/enrich-tour-content.js
+  // ==========================================================================
+
+  // Nhịp độ hành trình, khớp với nhu cầu "đi thong thả" hay "đi được nhiều nơi"
+  pace: { type: String, enum: ['relaxed', 'balanced', 'packed'], default: 'balanced' },
+
+  // Mức vận động 1 (đi bộ nhẹ) -> 5 (leo núi nhiều ngày). Chi tiết hơn difficulty.
+  physicalLevel: { type: Number, min: 1, max: 5, default: 2 },
+
+  // Nhóm khách phù hợp, dùng để cá nhân hoá và cho chatbot tư vấn
+  suitableFor: [{
+    type: String,
+    enum: ['solo', 'couple', 'family', 'friends', 'seniors', 'honeymoon', 'business']
+  }],
+
+  // Tách giá thành phần: nhờ đó SmartTour trả lời được "thêm tiền thì nâng được gì"
+  priceBreakdown: {
+    accommodation: Number,
+    meals: Number,
+    transport: Number,
+    guide: Number,
+    entranceFees: Number
+  },
+
+  // Các mức khách sạn có thể chọn, surcharge là phụ phí so với mức tiêu chuẩn
+  hotelTiers: [{
+    level: { type: Number, min: 3, max: 5 },
+    hotelId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' },
+    hotelName: String,
+    surcharge: { type: Number, default: 0 }
+  }],
+
+  // Cách di chuyển sang chặng kế tiếp khi SmartTour ghép nhiều thành phố
+  transport: {
+    toNextCity: String,
+    distanceKm: Number,
+    mode: { type: String, enum: ['train', 'flight', 'bus', 'ferry'] },
+    durationHours: Number
+  },
+
+  // --- Nội dung dài cho Chatbot RAG ---
+  longDescription: String,
+  highlights: [String],
+  faq: [{ question: String, answer: String }],
+  whatToBring: [String],
+  policies: {
+    cancellation: String,
+    payment: String,
+    refund: String
+  },
+
   // AI Analytics (mở rộng)
   analytics: {
     viewCount: { type: Number, default: 0 },

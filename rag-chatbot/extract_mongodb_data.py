@@ -12,6 +12,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Dung hang de tranh escape long nhau khi sinh chuoi nhieu dong
+NEWLINE = chr(10)
+
 # Cấu hình MongoDB
 MONGODB_URI = os.environ.get("MONGODB_URI")
 
@@ -180,10 +183,48 @@ def create_tour_documents(tours, base_path, hotels=None, guides=None):
                 start_str, slot.get('availableSlots', '?'), slot.get('price', price)))
         departures_text = ', '.join(departures) if departures else 'Contact us for departure dates.'
 
+        # Noi dung dai phuc vu RAG: diem nhan, FAQ, chinh sach, nang hang khach san.
+        highlights = tour_clean.get("highlights") or []
+        highlights_text = NEWLINE.join("- {0}".format(h) for h in highlights) if highlights else "-"
+
+        faq = tour_clean.get("faq") or []
+        faq_text = (NEWLINE * 2).join(
+            "Q: {0}{1}A: {2}".format(f.get("question", ""), NEWLINE, f.get("answer", ""))
+            for f in faq) if faq else "-"
+
+        bring = tour_clean.get("whatToBring") or []
+        bring_text = ", ".join(bring) if bring else "-"
+
+        policies = tour_clean.get("policies") or {}
+        policy_parts = []
+        if policies.get("cancellation"):
+            policy_parts.append("Cancellation: " + policies["cancellation"])
+        if policies.get("payment"):
+            policy_parts.append("Payment: " + policies["payment"])
+        if policies.get("refund"):
+            policy_parts.append("Refund: " + policies["refund"])
+        policies_text = NEWLINE.join(policy_parts) if policy_parts else "-"
+
+        transport = tour_clean.get("transport") or {}
+        if transport.get("toNextCity"):
+            transport_text = "{0} is {1} km away, about {2}h by {3}".format(
+                transport.get("toNextCity"), transport.get("distanceKm"),
+                transport.get("durationHours"), transport.get("mode"))
+        else:
+            transport_text = "Contact us about combining destinations."
+
+        tiers = tour_clean.get("hotelTiers") or []
+        tiers_text = NEWLINE.join(
+            "- {0}-star {1} (surcharge {2} USD)".format(
+                t.get("level"), t.get("hotelName"), t.get("surcharge", 0))
+            for t in tiers) if tiers else "-"
+
+        long_desc = tour_clean.get("longDescription") or tour_clean.get("description", "")
         content = """
 TOUR: {name} - {country}
 
-Description: {description}
+Description:
+{long_description}
 
 Country: {country}
 Duration: {duration}
@@ -219,11 +260,41 @@ Package includes:
 Not included:
 {exclusions}
 
+Highlights:
+{highlights}
+
+Pace: {pace} | Physical level: {physical}/5 | Suitable for: {suitable}
+
+Hotel upgrade options:
+{tiers}
+
+Combine with a nearby destination:
+{transport}
+
+What to bring:
+{bring}
+
+Policies:
+{policies}
+
+Frequently asked questions:
+{faq}
+
 Booking Information:
 Contact CMP Travel for reservations and custom itineraries.
 Phone: +84 28 1234 5678
 Email: booking@cmp-travel.com
 """.format(
+            long_description=long_desc,
+            highlights=highlights_text,
+            faq=faq_text,
+            bring=bring_text,
+            policies=policies_text,
+            transport=transport_text,
+            tiers=tiers_text,
+            pace=tour_clean.get("pace", "balanced"),
+            physical=tour_clean.get("physicalLevel", 2),
+            suitable=", ".join(tour_clean.get("suitableFor") or []) or "-",
             name=name,
             country=country,
             description=tour_clean.get('description', ''),
