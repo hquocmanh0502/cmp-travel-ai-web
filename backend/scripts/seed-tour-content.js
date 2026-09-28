@@ -317,6 +317,10 @@ function buildAvailability(tour) {
 
     hotelsByCity.set(cityKey, cityHotels);
 
+    // Sap theo gia tang dan: khach san re nhat la HANG TIEU CHUAN da nam trong
+    // gia tour, va cung la khach san hien trong lich trinh. Cac hang cao hon chi
+    // xuat hien khi khach chon nang hang (xem services/pricingService.js).
+    cityHotels.sort((a, b) => (a.details?.priceRange?.min || 0) - (b.details?.priceRange?.min || 0));
     const selectedHotels = cityHotels.slice(0, 3).map(h => h._id);
     const assignedGuide = pickGuides(tour, guides, index);
 

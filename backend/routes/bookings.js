@@ -5,6 +5,7 @@ const Tour = require('../models/Tour');
 const Hotel = require('../models/Hotel');
 const User = require('../models/User');
 const { applyVIPDiscount, calculateVIPLevel } = require('../services/vipService');
+const { calculateBookingPrice } = require('../services/pricingService');
 const { requireAuth, requireSelfOrAdmin } = require('../middleware/auth');
 
 // Xác thực bằng JWT thật.
@@ -121,8 +122,21 @@ router.post('/', verifyAuth, async (req, res) => {
     }
     
     // Calculate VIP discount
-    const originalAmount = parseFloat(totalAmount) || 0;
-    const discountResult = applyVIPDiscount(originalAmount, user.membershipLevel || 'bronze');
+    // Tinh lai toan bo gia o SERVER.
+    //
+    // Truoc day backend nhan thang totalAmount va accommodationCost do client gui,
+    // nen chi can sua request la dat duoc tour gia 0 dong. Gio moi con so deu tinh
+    // lai tu du lieu tour trong DB; so client gui len chi dung de doi chieu.
+    const priced = calculateBookingPrice(tour, {
+      adults, children, infants, hotelId, guide, servicesCost
+    });
+
+    const clientTotal = parseFloat(totalAmount) || 0;
+    if (clientTotal && Math.abs(clientTotal - priced.subtotal) > 1) {
+      console.warn(`Gia client gui (${clientTotal}) lech gia server tinh (${priced.subtotal}) - dung gia server`);
+    }
+
+    const discountResult = applyVIPDiscount(priced.subtotal, user.membershipLevel || 'bronze');
     
     // Create booking with VIP discount
     const booking = new Booking({
@@ -142,9 +156,10 @@ router.post('/', verifyAuth, async (req, res) => {
       rooms: rooms || {},
       services: services || {},
       customerInfo,
-      tourBaseCost: parseFloat(tourBaseCost) || 0,
-      accommodationCost: parseFloat(accommodationCost) || 0,
-      servicesCost: parseFloat(servicesCost) || 0,
+      tourBaseCost: priced.tourBaseCost,
+      accommodationCost: priced.accommodationCost,
+      hotelTierLevel: priced.hotelTier ? priced.hotelTier.level : null,
+      servicesCost: priced.servicesCost,
       vipDiscount: {
         membershipLevel: user.membershipLevel || 'bronze',
         discountPercentage: discountResult.discount,

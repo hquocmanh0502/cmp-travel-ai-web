@@ -183,6 +183,15 @@ const bookingSchema = new mongoose.Schema({
     required: true,
     min: 0
   },
+  // Hang khach san khach chon (3/4/5 sao). Gia tour da gom hang tieu chuan,
+  // accommodationCost ben duoi la PHU PHI nang hang, khong phai tien phong.
+  hotelTierLevel: {
+    type: Number,
+    min: 3,
+    max: 5,
+    default: null
+  },
+
   accommodationCost: {
     type: Number,
     default: 0,

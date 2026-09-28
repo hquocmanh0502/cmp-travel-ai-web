@@ -13,6 +13,7 @@ const recommendationService = require('../services/recommendationService');
 const sentimentService = require('../services/sentimentService');
 const chatbotService = require('../services/chatbotService');
 const matchingService = require('../services/matchingService');
+const { calculateBookingPrice } = require('../services/pricingService');
 const { requireSelfOrAdmin } = require('../middleware/auth');
 
 // Tours Routes
@@ -80,6 +81,28 @@ router.get('/tours/:id/suggested-guides', async (req, res) => {
   } catch (err) {
     console.error('Error fetching suggested guides:', err);
     res.status(500).json({ error: 'Error fetching suggested guides' });
+  }
+});
+
+// Bao gia mot tour theo so khach va hang khach san.
+// Frontend goi endpoint nay thay vi tu tinh, de gia tren man hinh luon khop
+// voi gia server tinh luc dat tour.
+router.get('/tours/:id/quote', async (req, res) => {
+  try {
+    const tour = await Tour.findById(req.params.id).lean();
+    if (!tour) return res.status(404).json({ error: 'Tour not found' });
+
+    const quote = calculateBookingPrice(tour, {
+      adults: req.query.adults,
+      children: req.query.children,
+      infants: req.query.infants,
+      hotelId: req.query.hotelId
+    });
+
+    res.json({ tourId: tour._id, currency: 'USD', ...quote });
+  } catch (err) {
+    console.error('Error building quote:', err);
+    res.status(500).json({ error: 'Error building quote' });
   }
 });
 

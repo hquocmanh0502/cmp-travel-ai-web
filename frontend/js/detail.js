@@ -2040,6 +2040,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ✅ UNIFIED HOTEL ITEM RENDERER 
+    /**
+     * Phu phi nang hang cua mot khach san, lay tu tour.hotelTiers.
+     *
+     * Gia tour DA bao gom khach san tieu chuan (hang re nhat, phu phi 0), nen o
+     * day hien "+$360 ca chuyen" chu khong hien gia/dem - gia/dem de khien khach
+     * tuong phai tra them toan bo tien phong.
+     */
+    function getHotelTier(hotelId) {
+        const tiers = currentTour?.hotelTiers || [];
+        return tiers.find(t => String(t.hotelId) === String(hotelId)) || null;
+    }
+
+    function renderTierBadge(hotelId) {
+        const tier = getHotelTier(hotelId);
+        if (!tier) return "";
+        return tier.surcharge > 0
+            ? `<div class="hotel-surcharge">+$${tier.surcharge.toLocaleString()} for the whole trip</div>`
+            : `<div class="hotel-surcharge included">Included in tour price</div>`;
+    }
+
     function renderHotelItem(hotel) {
         // Handle both database structure and sample structure
         const hotelId = hotel._id || hotel.id;
@@ -2082,6 +2102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             `<span class="amenity-preview">${getAmenityName(amenity)}</span>`
                         ).join(' • ')}
                     </div>
+                    ${renderTierBadge(hotelId)}
                 </div>
             </div>
         `;
@@ -5553,7 +5574,11 @@ document.addEventListener('DOMContentLoaded', function() {
             tourDuration: currentTour?.duration || null,
             selectedHotel: {
                 id: hotelId,
-                name: hotelName
+                name: hotelName,
+                tierLevel: getHotelTier(hotelId)?.level || null,
+                // Phu phi nang hang cho ca chuyen. Server se tinh lai, day chi
+                // de hien thi tren man hinh xac nhan.
+                surcharge: getHotelTier(hotelId)?.surcharge || 0
             },
             selectedGuide: selectedGuide ? {
                 id: selectedGuide._id || selectedGuide.id,
@@ -5570,6 +5595,10 @@ document.addEventListener('DOMContentLoaded', function() {
             timestamp: new Date().toISOString()
         };
         
+        // Lich trinh dang hien khach san TIEU CHUAN. Khach vua doi hang thi cap
+        // nhat lai cac dong "Overnight" cho khop voi lua chon.
+        document.querySelectorAll('.day-stay strong').forEach(el => { el.textContent = hotelName; });
+
         sessionStorage.setItem('pendingBooking', JSON.stringify(bookingData));
         
         // Show confirmation message

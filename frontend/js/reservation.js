@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tourBaseCost: pendingBooking.tourPrice || pendingBooking.totalPrice || 0,
         accommodationCost: calculateAccommodationCost(),
         servicesCost: calculateServicesCost(),
-        totalAmount: pendingBooking.totalPrice || 0
+        totalAmount: (pendingBooking.totalPrice || 0) + calculateAccommodationCost() + calculateServicesCost()
       };
       
       // Validation
@@ -553,8 +553,13 @@ function populateBookingSummary() {
   // Populate total price
   const price = document.getElementById('summary-price');
   if (price) {
-    const totalPrice = pendingBooking.totalPrice || 0;
-    price.textContent = `$${totalPrice.toLocaleString()}`;
+    const tourCost = pendingBooking.totalPrice || 0;
+    const upgrade = calculateAccommodationCost();
+    const totalPrice = tourCost + upgrade + calculateServicesCost();
+    // Tach ro de khach biet vi sao tong tien khac gia tour niem yet
+    price.innerHTML = upgrade > 0
+      ? `<div>$${totalPrice.toLocaleString()}</div><small style="color:#666">Tour $${tourCost.toLocaleString()} + hotel upgrade $${upgrade.toLocaleString()}</small>`
+      : `$${totalPrice.toLocaleString()}`;
     console.log('✅ Set price:', price.textContent);
   } else {
     console.error('❌ Element #summary-price not found');
@@ -988,9 +993,21 @@ function showNotification(message, type = 'info') {
   }, 4000);
 }
 
+/**
+ * Phu phi nang hang khach san cho ca chuyen.
+ *
+ * Gia tour da bao gom khach san TIEU CHUAN (hang re nhat). Chon hang cao hon thi
+ * tra them dung phan chenh lech nay. Server tinh lai con so nay khi tao booking,
+ * o day chi de hien thi cho khach thay truoc.
+ */
 function calculateAccommodationCost() {
-  // Placeholder function - implement pricing logic
-  return 0;
+  const booking = JSON.parse(sessionStorage.getItem('pendingBooking') || '{}');
+  const surcharge = booking.selectedHotel?.surcharge || 0;
+  if (!surcharge) return 0;
+
+  // Phu phi tinh theo so phong (2 khach moi phong)
+  const guests = (booking.adults || 1) + (booking.children || 0);
+  return surcharge * Math.max(1, Math.ceil(guests / 2));
 }
 
 function calculateServicesCost() {
