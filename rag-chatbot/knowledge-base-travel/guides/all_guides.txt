@@ -10,7 +10,7 @@ Specialties: Cultural Heritage, Temple Tours, Traditional Crafts, Historical Tou
 Languages: Vietnamese, English, Thai
 
 Biography:
-Cultural heritage specialist with deep knowledge of Vietnamese history and traditions. Expert in temple tours and traditional crafts. 9 years experience.
+Cultural heritage specialist with deep knowledge of history, temples and traditional crafts. Nine years guiding heritage tours.
 
 Rating: 4.571428571428571/5
 Operating Regions: 
@@ -27,7 +27,7 @@ Specialties: Cultural Tours, Adventure Activities, Historical Sites, Photography
 Languages: Vietnamese, English, French
 
 Biography:
-Passionate tour guide with over 10 years of experience exploring Vietnam. Specialized in cultural tours and adventure activities. Fluent in English, French, and Vietnamese.
+Fluent French speaker specialising in Western Europe. Years of experience with premium and private groups.
 
 Rating: 4.4/5
 Operating Regions: 
@@ -44,7 +44,7 @@ Specialties: Culinary Tours, Food & Drink, Local Markets, Cooking Classes
 Languages: Vietnamese, English, Korean
 
 Biography:
-Enthusiastic guide specializing in culinary tours and local food experiences. Love sharing Vietnamese culture through its amazing cuisine. 8 years of guiding experience.
+Culinary guide with 7 years of experience leading food and market tours across Asia. Known for finding the stalls tourists never notice.
 
 Rating: 4.2/5
 Operating Regions: 
@@ -61,7 +61,7 @@ Specialties: Trekking, Mountain Climbing, Eco-Tours, Wildlife Photography
 Languages: Vietnamese, English, Chinese
 
 Biography:
-Adventure specialist with expertise in trekking, mountain climbing, and eco-tours. Certified in outdoor safety and wilderness first aid. 12 years guiding experience.
+Certified mountain guide focused on trekking, nature and wildlife photography. Comfortable leading multi-day routes at altitude.
 
 Rating: 4.4/5
 Operating Regions: 
@@ -78,7 +78,7 @@ Specialties: Beach Tours, Water Sports, Island Hopping, Scuba Diving
 Languages: Vietnamese, English, Japanese
 
 Biography:
-Beach and coastal tour expert. Specialized in water sports, island hopping, and marine activities. Fun and energetic guide with 6 years experience.
+PADI-certified guide for beach and island tours. Experienced with families and first-time snorkellers.
 
 Rating: 4.625/5
 Operating Regions: 
@@ -95,7 +95,7 @@ Specialties: culture, history, architecture, museum, food
 Languages: Vietnamese, English, Italian
 
 Biography:
-Chuyên tuyến Nam Âu, gắn bó với các thành phố di sản của Ý và Hy Lạp gần 8 năm.
+Southern Europe specialist with nearly 8 years guiding heritage cities in Italy and Greece.
 
 Rating: 0/5
 Operating Regions: 
@@ -112,7 +112,7 @@ Specialties: history, architecture, nightlife, budget
 Languages: Vietnamese, English, German
 
 Biography:
-Hướng dẫn viên tuyến Trung Âu, thông thạo tiếng Đức và hệ thống tàu châu Âu.
+Central Europe guide, fluent in German and very familiar with the European rail network.
 
 Rating: 0/5
 Operating Regions: 
@@ -129,7 +129,7 @@ Specialties: culture, food, photography, wellness
 Languages: Vietnamese, English, Japanese
 
 Biography:
-Sống tại Kyoto 6 năm, chuyên các tour văn hoá và ẩm thực Nhật Bản.
+Lived in Kyoto for six years. Specialises in Japanese culture, cuisine and photography tours.
 
 Rating: 0/5
 Operating Regions: 
@@ -146,7 +146,7 @@ Specialties: history, architecture, museum, culture
 Languages: Vietnamese, English, Russian
 
 Biography:
-Tốt nghiệp tại Moscow, chuyên tuyến Nga với hơn 12 năm kinh nghiệm.
+Graduated in Moscow, specialising in Russian routes with more than 12 years of experience.
 
 Rating: 0/5
 Operating Regions: 
@@ -163,7 +163,7 @@ Specialties: shopping, food, nightlife, budget
 Languages: Vietnamese, English, Chinese
 
 Biography:
-Chuyên tour mua sắm và ẩm thực đường phố khu vực Hoa ngữ.
+Shopping and street-food specialist across Chinese-speaking destinations.
 
 Rating: 0/5
 Operating Regions: 
@@ -180,7 +180,7 @@ Specialties: beach, nightlife, culture, food
 Languages: Vietnamese, English, Spanish
 
 Biography:
-Chuyên tuyến bán đảo Iberia, kết hợp biển, ẩm thực và đời sống về đêm.
+Iberian peninsula specialist combining beaches, cuisine and nightlife.
 
 Rating: 0/5
 Operating Regions: 
@@ -197,7 +197,7 @@ Specialties: luxury, romantic, food, shopping, museum
 Languages: Vietnamese, English, French
 
 Biography:
-Chuyên phục vụ khách cao cấp tuyến Pháp - Anh, ưu tiên trải nghiệm riêng tư.
+Serves premium travellers on France and UK routes, with a focus on private experiences.
 
 Rating: 0/5
 Operating Regions: 
@@ -214,7 +214,7 @@ Specialties: mountain, trekking, nature, adventure, wildlife
 Languages: Vietnamese, English
 
 Biography:
-Hướng dẫn viên leo núi có chứng chỉ cứu hộ, chuyên tuyến Rockies và Alps.
+Mountain guide with wilderness rescue certification, specialising in the Rockies and the Alps.
 
 Rating: 0/5
 Operating Regions: 
@@ -231,7 +231,7 @@ Specialties: beach, island, water sports, wellness, family
 Languages: Vietnamese, English, Thai
 
 Biography:
-Chuyên tour biển đảo cho gia đình có trẻ nhỏ, có chứng chỉ sơ cấp cứu.
+Beach and island guide for families with children, holds a first-aid certificate.
 
 Rating: 0/5
 Operating Regions: 
@@ -248,7 +248,7 @@ Specialties: culture, history, food, photography, budget
 Languages: Vietnamese, English, Hindi
 
 Biography:
-Chuyên tuyến Ấn Độ, am hiểu văn hoá và ẩm thực địa phương.
+India specialist with strong knowledge of local culture and regional cuisine.
 
 Rating: 0/5
 Operating Regions: 
