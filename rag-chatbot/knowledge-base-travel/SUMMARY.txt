@@ -2,15 +2,15 @@
 TỔNG KẾT KNOWLEDGE BASE
 =======================
 
-Ngày tạo: 2026-09-28 15:19:10
+Ngày tạo: 2026-09-30 16:10:49
 
 Dữ liệu đã trích xuất:
 - Tours: 36 items
 - Hotels: 93 items  
 - Blogs: 5 items
-- Guides: 5 items
+- Guides: 15 items
 
-Tổng cộng: 139 documents
+Tổng cộng: 149 documents
 
 Cấu trúc thư mục:
 - knowledge-base-travel/tours/ - Thông tin các tour du lịch

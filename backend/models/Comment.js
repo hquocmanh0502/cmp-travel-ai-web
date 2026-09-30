@@ -98,6 +98,14 @@ const commentSchema = new mongoose.Schema({
     moderatedAt: Date
   },
   
+  // Nhan chuan (ground truth) cho viec danh gia mo hinh AI kiem duyet.
+  // Chi dung cho tap du lieu kiem thu, khong phai ket qua model du doan.
+  datasetLabel: {
+    type: String,
+    enum: ['normal', 'spam', 'toxic', 'offtopic'],
+    default: null
+  },
+
   // Content moderation
   moderation: {
     status: { type: String, enum: ['approved', 'pending', 'rejected'], default: 'pending' },

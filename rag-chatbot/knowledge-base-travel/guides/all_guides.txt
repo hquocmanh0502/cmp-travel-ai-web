@@ -1,6 +1,40 @@
 
 
-================================================================================TOUR GUIDE: Trần Thị Mai
+================================================================================TOUR GUIDE: Võ Thị Lan
+
+Email: vo.lan@cmptravel.com
+Phone: 0945678901
+
+Experience: 9 years
+Specialties: Cultural Heritage, Temple Tours, Traditional Crafts, Historical Tours
+Languages: Vietnamese, English, Thai
+
+Biography:
+Cultural heritage specialist with deep knowledge of Vietnamese history and traditions. Expert in temple tours and traditional crafts. 9 years experience.
+
+Rating: 4.571428571428571/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Nguyễn Văn An
+
+Email: nguyen.an@cmptravel.com
+Phone: 0901234567
+
+Experience: 10 years
+Specialties: Cultural Tours, Adventure Activities, Historical Sites, Photography Tours
+Languages: Vietnamese, English, French
+
+Biography:
+Passionate tour guide with over 10 years of experience exploring Vietnam. Specialized in cultural tours and adventure activities. Fluent in English, French, and Vietnamese.
+
+Rating: 4.4/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Trần Thị Mai
 
 Email: tran.mai@cmptravel.com
 Phone: 0912345678
@@ -12,7 +46,7 @@ Languages: Vietnamese, English, Korean
 Biography:
 Enthusiastic guide specializing in culinary tours and local food experiences. Love sharing Vietnamese culture through its amazing cuisine. 8 years of guiding experience.
 
-Rating: 4.25/5
+Rating: 4.2/5
 Operating Regions: 
 
 Hourly Rate: N/A VND/hour
@@ -34,23 +68,6 @@ Operating Regions:
 
 Hourly Rate: N/A VND/hour
 
-TOUR GUIDE: Võ Thị Lan
-
-Email: vo.lan@cmptravel.com
-Phone: 0945678901
-
-Experience: 9 years
-Specialties: Cultural Heritage, Temple Tours, Traditional Crafts, Historical Tours
-Languages: Vietnamese, English, Thai
-
-Biography:
-Cultural heritage specialist with deep knowledge of Vietnamese history and traditions. Expert in temple tours and traditional crafts. 9 years experience.
-
-Rating: 4.5/5
-Operating Regions: 
-
-Hourly Rate: N/A VND/hour
-
 TOUR GUIDE: Phạm Minh Tuấn
 
 Email: pham.tuan@cmptravel.com
@@ -63,24 +80,177 @@ Languages: Vietnamese, English, Japanese
 Biography:
 Beach and coastal tour expert. Specialized in water sports, island hopping, and marine activities. Fun and energetic guide with 6 years experience.
 
-Rating: 4.4/5
+Rating: 4.625/5
 Operating Regions: 
 
 Hourly Rate: N/A VND/hour
 
-TOUR GUIDE: Nguyễn Văn An
+TOUR GUIDE: Đặng Thu Hà
 
-Email: nguyen.an@cmptravel.com
-Phone: 0901234567
+Email: dang.thu.ha@cmptravel.com
+Phone: 0930000000
+
+Experience: 8 years
+Specialties: culture, history, architecture, museum, food
+Languages: Vietnamese, English, Italian
+
+Biography:
+Chuyên tuyến Nam Âu, gắn bó với các thành phố di sản của Ý và Hy Lạp gần 8 năm.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Bùi Quang Huy
+
+Email: bui.quang.huy@cmptravel.com
+Phone: 0931111111
+
+Experience: 6 years
+Specialties: history, architecture, nightlife, budget
+Languages: Vietnamese, English, German
+
+Biography:
+Hướng dẫn viên tuyến Trung Âu, thông thạo tiếng Đức và hệ thống tàu châu Âu.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Ngô Thanh Vân
+
+Email: ngo.thanh.van@cmptravel.com
+Phone: 0932222222
 
 Experience: 10 years
-Specialties: Cultural Tours, Adventure Activities, Historical Sites, Photography Tours
+Specialties: culture, food, photography, wellness
+Languages: Vietnamese, English, Japanese
+
+Biography:
+Sống tại Kyoto 6 năm, chuyên các tour văn hoá và ẩm thực Nhật Bản.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Hoàng Đức Thắng
+
+Email: hoang.duc.thang@cmptravel.com
+Phone: 0933333333
+
+Experience: 12 years
+Specialties: history, architecture, museum, culture
+Languages: Vietnamese, English, Russian
+
+Biography:
+Tốt nghiệp tại Moscow, chuyên tuyến Nga với hơn 12 năm kinh nghiệm.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Lý Mỹ Linh
+
+Email: ly.my.linh@cmptravel.com
+Phone: 0934444444
+
+Experience: 5 years
+Specialties: shopping, food, nightlife, budget
+Languages: Vietnamese, English, Chinese
+
+Biography:
+Chuyên tour mua sắm và ẩm thực đường phố khu vực Hoa ngữ.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Trịnh Bảo Nam
+
+Email: trinh.bao.nam@cmptravel.com
+Phone: 0935555555
+
+Experience: 9 years
+Specialties: beach, nightlife, culture, food
+Languages: Vietnamese, English, Spanish
+
+Biography:
+Chuyên tuyến bán đảo Iberia, kết hợp biển, ẩm thực và đời sống về đêm.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Phan Kiều Anh
+
+Email: phan.kieu.anh@cmptravel.com
+Phone: 0936666666
+
+Experience: 7 years
+Specialties: luxury, romantic, food, shopping, museum
 Languages: Vietnamese, English, French
 
 Biography:
-Passionate tour guide with over 10 years of experience exploring Vietnam. Specialized in cultural tours and adventure activities. Fluent in English, French, and Vietnamese.
+Chuyên phục vụ khách cao cấp tuyến Pháp - Anh, ưu tiên trải nghiệm riêng tư.
 
-Rating: 4.8/5
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Vũ Đình Khoa
+
+Email: vu.dinh.khoa@cmptravel.com
+Phone: 0937777777
+
+Experience: 11 years
+Specialties: mountain, trekking, nature, adventure, wildlife
+Languages: Vietnamese, English
+
+Biography:
+Hướng dẫn viên leo núi có chứng chỉ cứu hộ, chuyên tuyến Rockies và Alps.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Đỗ Hải Yến
+
+Email: do.hai.yen@cmptravel.com
+Phone: 0938888888
+
+Experience: 4 years
+Specialties: beach, island, water sports, wellness, family
+Languages: Vietnamese, English, Thai
+
+Biography:
+Chuyên tour biển đảo cho gia đình có trẻ nhỏ, có chứng chỉ sơ cấp cứu.
+
+Rating: 0/5
+Operating Regions: 
+
+Hourly Rate: N/A VND/hour
+
+TOUR GUIDE: Nguyễn Trọng Tín
+
+Email: nguyen.trong.tin@cmptravel.com
+Phone: 0939999999
+
+Experience: 6 years
+Specialties: culture, history, food, photography, budget
+Languages: Vietnamese, English, Hindi
+
+Biography:
+Chuyên tuyến Ấn Độ, am hiểu văn hoá và ẩm thực địa phương.
+
+Rating: 0/5
 Operating Regions: 
 
 Hourly Rate: N/A VND/hour

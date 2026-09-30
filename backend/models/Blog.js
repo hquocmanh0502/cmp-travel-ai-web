@@ -56,6 +56,10 @@ const blogSchema = new mongoose.Schema({
     trim: true,
     lowercase: true 
   }],
+
+  // Tour lien quan toi bai viet. Nho truong nay chatbot moi tra loi duoc
+  // "co bai viet nao ve Nhat khong" va trang tour goi y duoc bai doc them.
+  relatedTours: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tour' }],
   status: { 
     type: String, 
     enum: ['draft', 'published', 'archived'],

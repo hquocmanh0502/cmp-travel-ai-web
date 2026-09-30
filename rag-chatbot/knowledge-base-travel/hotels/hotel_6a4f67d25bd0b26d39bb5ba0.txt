@@ -8,7 +8,7 @@ Description: Elegant 3-star accommodation offering exceptional comfort and servi
 
 Star Rating: 3 stars
 Hotel Type: 3-star Hotel
-Price: $125 USD per night (excluding taxes and fees)
+Price: $50 USD per night (excluding taxes and fees)
 
 Amenities & Facilities:
 • Free Wi-Fi
