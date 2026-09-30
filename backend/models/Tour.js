@@ -70,6 +70,9 @@ const tourSchema = new mongoose.Schema({
     startDate: Date,
     endDate: Date,
     availableSlots: Number,
+    // Huong dan vien duoc phan cong cho DUNG chuyen nay. Tour.assignedGuide chi la
+    // danh sach nguoi DU DIEU KIEN; mot nguoi khong the dan 2 chuyen cung ngay.
+    guideId: { type: mongoose.Schema.Types.ObjectId, ref: 'TourGuide' },
     price: Number
   }],
   
