@@ -27,19 +27,19 @@ const requireBookingOwner = async (req, res, next) => {
       const booking = await Booking.findById(req.params.bookingId).select('userId');
 
       if (!booking) {
-        return res.status(404).json({ success: false, error: 'Không tìm thấy đơn đặt' });
+        return res.status(404).json({ success: false, error: 'Booking not found' });
       }
       if (req.user.role !== 'admin' && String(booking.userId) !== req.user.id) {
         return res.status(403).json({
           success: false,
-          error: 'Bạn không có quyền thao tác với đơn đặt này'
+          error: 'You do not have permission to manage this booking'
         });
       }
 
       next();
     } catch (err) {
       console.error('requireBookingOwner error:', err);
-      return res.status(500).json({ success: false, error: 'Lỗi kiểm tra quyền truy cập' });
+      return res.status(500).json({ success: false, error: 'Failed to verify access rights' });
     }
   });
 };

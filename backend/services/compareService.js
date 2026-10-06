@@ -145,9 +145,10 @@ async function buildComparison(ids, userId = null) {
     bestValue = {
       tourId: String(w._id),
       name: w.name,
+      // Giao diện đang dùng tiếng Anh nên chuỗi sinh ở server cũng phải tiếng Anh.
       reason: diff
-        ? `rẻ hơn tới ${diff}% mà điểm đánh giá vẫn ${w.rating}/5`
-        : `cân bằng tốt nhất giữa giá mỗi ngày ($${w.pricePerDay}) và điểm đánh giá ${w.rating}/5`
+        ? `up to ${diff}% cheaper while still rated ${w.rating}/5`
+        : `best balance between price per day ($${w.pricePerDay}) and a ${w.rating}/5 rating`
     };
   }
 

@@ -12,7 +12,7 @@ const loginLimiter = rateLimit({
   skipSuccessfulRequests: true,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Quá nhiều lần đăng nhập thất bại. Vui lòng thử lại sau 15 phút.' }
+  message: { error: 'Too many failed sign-in attempts. Please try again in 15 minutes.' }
 });
 
 const registerLimiter = rateLimit({
@@ -20,7 +20,7 @@ const registerLimiter = rateLimit({
   max: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Quá nhiều tài khoản được tạo từ địa chỉ này. Vui lòng thử lại sau.' }
+  message: { error: 'Too many accounts created from this address. Please try again later.' }
 });
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,7 +48,7 @@ router.post('/login', loginLimiter, async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email và mật khẩu là bắt buộc' });
+      return res.status(400).json({ error: 'Email and password are required' });
     }
 
     // password có select: false nên phải xin thêm rõ ràng.
@@ -58,7 +58,7 @@ router.post('/login', loginLimiter, async (req, res) => {
     // Thông báo lỗi giống hệt nhau cho "email không tồn tại" và "sai mật khẩu".
     // Nếu tách riêng, kẻ tấn công có thể dò xem email nào đã đăng ký.
     const invalidCredentials = () =>
-      res.status(401).json({ error: 'Email hoặc mật khẩu không chính xác' });
+      res.status(401).json({ error: 'Incorrect email or password' });
 
     if (!user) return invalidCredentials();
 
@@ -67,7 +67,7 @@ router.post('/login', loginLimiter, async (req, res) => {
 
     if (user.blocked) {
       return res.status(403).json({
-        error: 'Tài khoản đã bị khoá',
+        error: 'This account has been locked',
         reason: user.blockReason || undefined
       });
     }
@@ -75,14 +75,14 @@ router.post('/login', loginLimiter, async (req, res) => {
     const authToken = signToken(user);
 
     return res.json({
-      message: 'Đăng nhập thành công',
+      message: 'Signed in successfully',
       authToken,
       expiresIn: JWT_EXPIRES_IN,
       user: toPublicUser(user)
     });
   } catch (err) {
     console.error('Login error:', err);
-    return res.status(500).json({ error: 'Lỗi server khi đăng nhập' });
+    return res.status(500).json({ error: 'Server error while signing in' });
   }
 });
 
@@ -104,7 +104,7 @@ router.post('/register', registerLimiter, async (req, res) => {
     }
 
     if (!EMAIL_REGEX.test(email)) {
-      return res.status(400).json({ error: 'Định dạng email không hợp lệ' });
+      return res.status(400).json({ error: 'Invalid email format' });
     }
 
     if (String(password).length < MIN_PASSWORD_LENGTH) {
@@ -126,8 +126,8 @@ router.post('/register', registerLimiter, async (req, res) => {
     if (existingUser) {
       return res.status(409).json({
         error: existingUser.email === normalizedEmail
-          ? 'Email đã được sử dụng'
-          : 'Tên đăng nhập đã tồn tại'
+          ? 'That email is already in use'
+          : 'That username is already taken'
       });
     }
 
@@ -144,7 +144,7 @@ router.post('/register', registerLimiter, async (req, res) => {
     await user.save();
 
     return res.status(201).json({
-      message: 'Tạo tài khoản thành công',
+      message: 'Account created successfully',
       authToken: signToken(user),
       expiresIn: JWT_EXPIRES_IN,
       user: toPublicUser(user)
@@ -157,7 +157,7 @@ router.post('/register', registerLimiter, async (req, res) => {
       });
     }
     console.error('Register error:', err);
-    return res.status(500).json({ error: 'Lỗi server khi tạo tài khoản' });
+    return res.status(500).json({ error: 'Server error while creating the account' });
   }
 });
 
@@ -171,16 +171,16 @@ router.get('/me', requireAuth, async (req, res) => {
     const user = await User.findById(req.user.id);
 
     if (!user) {
-      return res.status(404).json({ error: 'Không tìm thấy tài khoản', code: 'USER_NOT_FOUND' });
+      return res.status(404).json({ error: 'Account not found', code: 'USER_NOT_FOUND' });
     }
     if (user.blocked) {
-      return res.status(403).json({ error: 'Tài khoản đã bị khoá', code: 'ACCOUNT_BLOCKED' });
+      return res.status(403).json({ error: 'This account has been locked', code: 'ACCOUNT_BLOCKED' });
     }
 
     return res.json({ user: toPublicUser(user) });
   } catch (err) {
     console.error('Auth /me error:', err);
-    return res.status(500).json({ error: 'Lỗi server' });
+    return res.status(500).json({ error: 'Server error' });
   }
 });
 
@@ -190,7 +190,7 @@ router.get('/me', requireAuth, async (req, res) => {
  * Giữ endpoint để client có một nơi gọi thống nhất.
  */
 router.post('/logout', (req, res) => {
-  res.json({ message: 'Đã đăng xuất' });
+  res.json({ message: 'Signed out' });
 });
 
 module.exports = router;

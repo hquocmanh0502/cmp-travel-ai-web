@@ -33,7 +33,7 @@ const pinAttemptLimiter = rateLimit({
   // Đếm theo tài khoản. Dự phòng theo IP thì phải qua ipKeyGenerator để gom
   // cả dải IPv6 /56 lại, nếu không có thể đổi địa chỉ trong dải để né giới hạn.
   keyGenerator: (req) => req.user?.id || ipKeyGenerator(req.ip),
-  message: { success: false, error: 'Nhập sai PIN quá nhiều lần. Vui lòng thử lại sau 15 phút.' }
+  message: { success: false, error: 'Too many incorrect PIN attempts. Please try again in 15 minutes.' }
 });
 
 // Set or update wallet PIN

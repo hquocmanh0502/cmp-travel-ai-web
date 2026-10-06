@@ -73,7 +73,7 @@ router.post('/:userId/topup', async (req, res) => {
     if (!amount || amount <= 0) {
       return res.status(400).json({
         success: false,
-        error: 'Số tiền không hợp lệ'
+        error: 'Invalid amount'
       });
     }
     
@@ -81,7 +81,7 @@ router.post('/:userId/topup', async (req, res) => {
     if (amount < 10000) {
       return res.status(400).json({
         success: false,
-        error: 'Số tiền tối thiểu là 10,000 VND'
+        error: 'The minimum amount is 10,000 VND'
       });
     }
     
@@ -89,7 +89,7 @@ router.post('/:userId/topup', async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        error: 'Không tìm thấy người dùng'
+        error: 'User not found'
       });
     }
     
@@ -114,7 +114,7 @@ router.post('/:userId/topup', async (req, res) => {
     console.error('Top-up error:', error);
     res.status(500).json({
       success: false,
-      error: error.message || 'Lỗi khi tạo thanh toán'
+      error: error.message || 'Failed to create the payment'
     });
   }
 });
@@ -211,14 +211,14 @@ router.post('/:userId/pay', async (req, res) => {
     if (!amount || amount <= 0) {
       return res.status(400).json({
         success: false,
-        error: 'Số tiền không hợp lệ'
+        error: 'Invalid amount'
       });
     }
     
     if (!bookingId) {
       return res.status(400).json({
         success: false,
-        error: 'Thiếu thông tin booking'
+        error: 'Missing booking information'
       });
     }
     
@@ -226,7 +226,7 @@ router.post('/:userId/pay', async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        error: 'Không tìm thấy người dùng'
+        error: 'User not found'
       });
     }
     
@@ -234,7 +234,7 @@ router.post('/:userId/pay', async (req, res) => {
     if (!user.wallet || user.wallet.balance < amount) {
       return res.status(400).json({
         success: false,
-        error: 'Số dư không đủ',
+        error: 'Insufficient balance',
         balance: user.wallet?.balance || 0,
         required: amount
       });
@@ -257,7 +257,7 @@ router.post('/:userId/pay', async (req, res) => {
     
     res.json({
       success: true,
-      message: 'Thanh toán thành công',
+      message: 'Payment successful',
       remainingBalance: user.wallet.balance
     });
     
@@ -265,7 +265,7 @@ router.post('/:userId/pay', async (req, res) => {
     console.error('Payment error:', error);
     res.status(500).json({
       success: false,
-      error: error.message || 'Lỗi khi thanh toán'
+      error: error.message || 'Payment failed'
     });
   }
 });
@@ -369,7 +369,7 @@ router.post('/:userId/check-payment', async (req, res) => {
       return res.json({
         success: true,
         canPay: false,
-        reason: 'Chưa có ví',
+        reason: 'No wallet yet',
         balance: 0,
         required: amount,
         shortage: amount
@@ -416,7 +416,7 @@ router.post('/:userId/check-transfer', async (req, res) => {
     res.json({
       success: true,
       verified: false,
-      message: 'Chưa nhận được giao dịch. Vui lòng liên hệ admin để xác nhận thủ công.',
+      message: 'Transaction not received yet. Please contact an administrator for manual confirmation.',
       orderId,
       amount,
       status: 'pending'
@@ -458,7 +458,7 @@ router.post('/:userId/check-transfer', async (req, res) => {
           return res.json({
             success: true,
             verified: true,
-            message: 'Đã xác nhận thanh toán thành công!',
+            message: 'Payment confirmed successfully!',
             newBalance: user.wallet.balance,
             transaction: result.transaction
           });
@@ -470,7 +470,7 @@ router.post('/:userId/check-transfer', async (req, res) => {
     res.json({
       success: true,
       verified: false,
-      message: 'Chưa nhận được giao dịch. Hệ thống sẽ tự động kiểm tra...',
+      message: 'Transaction not received yet. The system will keep checking automatically...',
       orderId,
       amount,
       status: 'pending'
@@ -499,7 +499,7 @@ router.post('/admin/confirm-transfer', requireAdmin, async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        error: 'Không tìm thấy người dùng'
+        error: 'User not found'
       });
     }
     
@@ -629,8 +629,8 @@ router.post('/:userId/topup/payos', async (req, res) => {
     if (!payosService.isConfigured) {
       return res.status(503).json({
         success: false,
-        error: 'Cong thanh toan chua duoc cau hinh',
-        detail: 'Thieu PAYOS_CLIENT_ID, PAYOS_API_KEY, PAYOS_CHECKSUM_KEY trong backend/.env',
+        error: 'Payment gateway is not configured',
+        detail: 'Missing PAYOS_CLIENT_ID, PAYOS_API_KEY and PAYOS_CHECKSUM_KEY in backend/.env',
         code: 'PAYMENT_NOT_CONFIGURED'
       });
     }

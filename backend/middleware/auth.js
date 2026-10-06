@@ -44,7 +44,7 @@ async function requireAuth(req, res, next) {
 
   if (!token) {
     return res.status(401).json({
-      error: 'Chưa đăng nhập',
+      error: 'You are not signed in',
       code: 'NO_TOKEN'
     });
   }
@@ -56,7 +56,7 @@ async function requireAuth(req, res, next) {
   } catch (err) {
     const expired = err.name === 'TokenExpiredError';
     return res.status(401).json({
-      error: expired ? 'Phiên đăng nhập đã hết hạn' : 'Token không hợp lệ',
+      error: expired ? 'Your session has expired' : 'Invalid token',
       code: expired ? 'TOKEN_EXPIRED' : 'INVALID_TOKEN'
     });
   }
@@ -89,17 +89,17 @@ async function requireAdmin(req, res, next) {
       const user = await User.findById(req.user.id).select('role blocked');
 
       if (!user || user.blocked) {
-        return res.status(403).json({ error: 'Tài khoản không khả dụng', code: 'ACCOUNT_UNAVAILABLE' });
+        return res.status(403).json({ error: 'This account is not available', code: 'ACCOUNT_UNAVAILABLE' });
       }
       if (user.role !== 'admin') {
-        return res.status(403).json({ error: 'Yêu cầu quyền quản trị', code: 'NOT_ADMIN' });
+        return res.status(403).json({ error: 'Administrator access required', code: 'NOT_ADMIN' });
       }
 
       req.user.role = user.role;
       return next();
     } catch (err) {
       console.error('requireAdmin error:', err);
-      return res.status(500).json({ error: 'Lỗi kiểm tra quyền truy cập' });
+      return res.status(500).json({ error: 'Failed to verify access rights' });
     }
   });
 }
@@ -122,7 +122,7 @@ function requireSelfOrAdmin(paramName = 'userId') {
       }
 
       return res.status(403).json({
-        error: 'Bạn không có quyền truy cập dữ liệu của người dùng khác',
+        error: 'You do not have access to another user’s data',
         code: 'FORBIDDEN'
       });
     });
