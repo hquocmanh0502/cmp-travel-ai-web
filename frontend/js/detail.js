@@ -4068,35 +4068,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Compare functionality
+    /**
+     * Them/bo tour khoi danh sach so sanh.
+     *
+     * Truoc day ham nay tu quan ly localStorage va ve badge rieng, nhung khong co
+     * trang nao hien ket qua nen nguoi dung bam xong khong di dau duoc. Gio dung
+     * chung CompareBar (js/compare-bar.js) - thanh noi o day man hinh dan sang
+     * compare.html.
+     */
     function toggleCompare() {
-        if (!currentTour) return;
-        
-        const compareBtn = document.getElementById('compareBtn');
-        const tourId = currentTour._id;
-        
-        if (compareItems.includes(tourId)) {
-            // Remove from compare
-            compareItems = compareItems.filter(id => id !== tourId);
-            compareBtn.classList.remove('active');
-            showAlert('Removed from comparison', 'info');
-        } else {
-            // Add to compare (max 3 items)
-            if (compareItems.length >= 3) {
-                showAlert('You can compare maximum 3 tours', 'warning');
-                return;
-            }
-            
-            compareItems.push(tourId);
-            compareBtn.classList.add('active');
-            showAlert('Added to comparison', 'success');
-        }
-        
-        localStorage.setItem('compare', JSON.stringify(compareItems));
-        
-        // Update compare badge
-        updateCompareBadge();
+        if (!currentTour || !window.CompareBar) return;
+
+        const tourId = String(currentTour._id);
+        const btn = document.getElementById('compareBtn');
+        const selected = window.CompareBar.toggle(tourId, currentTour.name);
+
+        if (btn) btn.classList.toggle('active', selected);
     }
-    
+
     function updateCompareBadge() {
         let badge = document.querySelector('.compare-badge');
         

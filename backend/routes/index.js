@@ -14,8 +14,9 @@ const recommendationService = require('../services/recommendationService');
 const sentimentService = require('../services/sentimentService');
 const chatbotService = require('../services/chatbotService');
 const matchingService = require('../services/matchingService');
+const compareService = require('../services/compareService');
 const { calculateBookingPrice } = require('../services/pricingService');
-const { requireSelfOrAdmin } = require('../middleware/auth');
+const { requireSelfOrAdmin, optionalAuth } = require('../middleware/auth');
 
 // Public social proof: avatars of the most recent customers who booked (no PII besides avatar/initials)
 router.get('/social-proof/recent-bookers', async (req, res) => {
@@ -80,10 +81,34 @@ router.get('/tours', async (req, res) => {
   }
 });
 
-// Tour noi bat cho cac the o trang chu va trang gioi thieu.
+// So sanh 2-4 tour. PHAI khai bao TRUOC /tours/:id, neu khong Express se coi
+// 'compare' la mot id tour.
 //
-// PHAI khai bao TRUOC /tours/:id, neu khong Express se coi 'featured' la mot id.
-// Chi tra ve dung nhung truong the can, khong populate gi cho nhe.
+// optionalAuth: khong bat buoc dang nhap, nhung neu co thi tinh them muc phu hop
+// voi so thich cua chinh nguoi do.
+router.get('/tours/compare', optionalAuth, async (req, res) => {
+  try {
+    const ids = String(req.query.ids || '').split(',').map(s => s.trim()).filter(Boolean);
+
+    if (ids.length < 2) {
+      return res.status(400).json({ success: false, error: 'Can it nhat 2 tour de so sanh' });
+    }
+
+    const valid = ids.filter(id => /^[0-9a-fA-F]{24}$/.test(id));
+    if (valid.length < 2) {
+      return res.status(400).json({ success: false, error: 'Danh sach id khong hop le' });
+    }
+
+    const result = await compareService.buildComparison(valid, req.user?.id || null);
+    res.json({ success: true, ...result });
+  } catch (err) {
+    console.error('Error building comparison:', err);
+    res.status(500).json({ success: false, error: 'Error building comparison' });
+  }
+});
+
+// Tour noi bat cho cac the o trang chu va trang gioi thieu.
+// Cung phai dung truoc /tours/:id. Chi tra ve dung truong the can cho nhe.
 router.get('/tours/featured', async (req, res) => {
   try {
     const limit = Math.min(parseInt(req.query.limit) || 3, 24);
