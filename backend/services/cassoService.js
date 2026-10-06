@@ -279,15 +279,10 @@ class CassoService {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     }
-
-    /**
-     * Verify webhook signature (khi Casso gửi webhook)
-     */
-    verifyWebhookSignature(data, signature) {
-        // Implement signature verification
-        // Documentation: https://docs.casso.vn/
-        return true;
-    }
+    // Ham verifyWebhookSignature thu hai o day da bi xoa.
+    //
+    // No chi co mot dong 'return true' nhung vi khai bao SAU nen ghi de len ban
+    // HMAC-SHA256 that o tren, khien moi chu ky sai deu duoc chap nhan.
 }
 
 module.exports = new CassoService();

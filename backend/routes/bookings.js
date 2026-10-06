@@ -548,28 +548,37 @@ router.post('/:bookingId/pay-with-wallet', requireBookingOwner, async (req, res)
       });
     }
 
-    // Deduct from wallet
-    user.wallet.balance -= bookingAmount;
-
-    // Add transaction to wallet history
-    user.wallet.transactions.push({
-      type: 'payment',
-      amount: bookingAmount,
-      description: `Payment for booking: ${booking.tourName || 'Tour'}`,
-      reference: bookingId,
-      status: 'completed',
-      date: new Date(),
-      completedAt: new Date(),
-      bookingDetails: {
-        tourName: booking.tourName,
-        checkinDate: booking.checkinDate,
-        checkoutDate: booking.checkoutDate,
-        adults: booking.adults,
-        children: booking.children
+    // Tru tien nguyen tu, kem dieu kien so du van du.
+    //
+    // Truoc day la kiem tra so du roi moi tru trong buoc rieng, nen hai request
+    // thanh toan dong thoi deu vuot qua buoc kiem tra va tai khoan bi am tien.
+    const payResult = await User.updateOne(
+      { _id: user._id, 'wallet.balance': { $gte: bookingAmount } },
+      {
+        $inc: { 'wallet.balance': -bookingAmount },
+        $push: {
+          'wallet.transactions': {
+            type: 'payment',
+            amount: bookingAmount,
+            description: `Payment for booking: ${booking.tourName || 'Tour'}`,
+            reference: bookingId,
+            status: 'completed',
+            date: new Date(),
+            completedAt: new Date()
+          }
+        }
       }
-    });
+    );
 
-    await user.save();
+    if (payResult.modifiedCount === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Insufficient wallet balance'
+      });
+    }
+
+    const freshUser = await User.findById(user._id, 'wallet.balance').lean();
+    user.wallet.balance = freshUser.wallet.balance;
 
     // Update booking payment status
     booking.paymentStatus = 'paid';

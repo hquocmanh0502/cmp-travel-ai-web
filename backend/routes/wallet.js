@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const { requireSelfOrAdmin } = require('../middleware/auth');
+const { requireSelfOrAdmin, requireAdmin } = require('../middleware/auth');
 // Payment services removed - using PayOS instead
 
 /**
@@ -107,33 +107,9 @@ router.post('/:userId/topup', async (req, res) => {
       success: false,
       error: 'Payment service not configured. Please use PayOS integration.'
     });
-    
-    if (!paymentResult.success) {
-      return res.status(400).json({
-        success: false,
-        error: paymentResult.message || 'Không thể tạo thanh toán'
-      });
-    }
-    
-    // Save pending transaction
-    user.wallet.transactions.push({
-      type: 'topup',
-      amount: amount, // VND amount (will convert to USD when completed)
-      description: orderInfo,
-      orderId: paymentResult.orderId,
-      status: 'pending',
-      timestamp: new Date()
-    });
-    
-    await user.save();
-    
-    res.json({
-      success: true,
-      payUrl: paymentResult.payUrl,
-      orderId: paymentResult.orderId,
-      message: 'Đã tạo thanh toán MoMo thành công'
-    });
-    
+    // Khoang 30 dong code phia sau da bi xoa: chung nam sau lenh return o tren
+    // nen khong bao gio chay (su dung paymentResult/orderInfo khong ton tai).
+
   } catch (error) {
     console.error('Top-up error:', error);
     res.status(500).json({
@@ -513,11 +489,11 @@ router.post('/:userId/check-transfer', async (req, res) => {
 // =============================================
 // ADMIN: CONFIRM BANK TRANSFER (Manual approval)
 // =============================================
-router.post('/admin/confirm-transfer', async (req, res) => {
+router.post('/admin/confirm-transfer', requireAdmin, async (req, res) => {
   try {
     const { userId, orderId, amount, transactionId } = req.body;
     
-    // TODO: Add admin authentication
+    // Da duoc bao ve boi requireAdmin o tren: endpoint nay nam duoi /api/wallet
     
     const user = await User.findById(userId);
     if (!user) {
@@ -846,7 +822,19 @@ router.post('/webhook/payos', async (req, res) => {
     console.log('🔔 PayOS Webhook received:', JSON.stringify(webhookData, null, 2));
     
     // PayOS webhook structure
-    const paymentData = webhookData.data || webhookData;
+    // Xac minh chu ky TRUOC khi dung bat ky du lieu nao trong request.
+    //
+    // Truoc day handler nay khong kiem tra gi ca va cong tien theo amount lay thang
+    // tu body, nen bat ky ai cung co the tu goi webhook de nap tien cho minh.
+    // Ham verify da ton tai san trong payosService nhung khong ai goi.
+    const verified = await payosService.verifyWebhookSignature(webhookData);
+    if (!verified) {
+      console.error('Webhook PayOS co chu ky khong hop le - tu choi');
+      return res.status(401).json({ success: false, error: 'Invalid signature' });
+    }
+
+    // Chi dung du lieu DA duoc PayOS xac thuc, khong dung req.body nua.
+    const paymentData = verified;
     const { orderCode, amount, description, transactionDateTime, reference, code } = paymentData;
     
     // Check payment status
@@ -882,19 +870,35 @@ router.post('/webhook/payos', async (req, res) => {
       return res.json({ success: true, message: 'Transaction already completed' });
     }
     
-    // Update wallet balance
+    // Cong tien bang mot cau lenh nguyen tu, kem dieu kien giao dich van dang
+    // pending. Nho the vua tranh mat cap nhat khi co nhieu request dong thoi,
+    // vua dam bao webhook goi lai nhieu lan cung khong cong tien hai lan.
     const walletAmount = payosService.convertToWalletCurrency(amount);
-    user.wallet.balance += walletAmount;
-    
-    // Update transaction status
-    transaction.status = 'completed';
-    transaction.completedAt = transactionDateTime ? new Date(transactionDateTime) : new Date();
-    transaction.reference = reference || orderCode;
-    
-    await user.save();
+
+    const result = await User.updateOne(
+      {
+        _id: user._id,
+        'wallet.transactions': {
+          $elemMatch: { orderCode: Number(orderCode), status: 'pending' }
+        }
+      },
+      {
+        $inc: { 'wallet.balance': walletAmount },
+        $set: {
+          'wallet.transactions.$.status': 'completed',
+          'wallet.transactions.$.completedAt': transactionDateTime ? new Date(transactionDateTime) : new Date(),
+          'wallet.transactions.$.reference': reference || String(orderCode)
+        }
+      }
+    );
+
+    if (result.modifiedCount === 0) {
+      console.log('Giao dich da duoc xu ly truoc do, bo qua');
+      return res.json({ success: true, message: 'Transaction already processed' });
+    }
     
     console.log(`✅ Wallet updated for user ${user._id}: +$${walletAmount} (${amount} VND)`);
-    console.log(`💵 New balance: $${user.wallet.balance}`);
+    // (khong log so du tu bien trong bo nho vi no da cu sau khi dung $inc)
     
     res.json({
       success: true,
@@ -921,7 +925,9 @@ router.post('/webhook/casso', async (req, res) => {
     
     // Verify webhook signature (if using secure webhook)
     const signature = req.headers['x-casso-signature'];
-    if (signature && !cassoService.verifyWebhookSignature(webhookData, signature)) {
+    // Bat buoc phai co chu ky. Truoc day dieu kien la 'signature && !verify(...)',
+    // nghia la khong gui header thi bo qua kiem tra luon.
+    if (!signature || !cassoService.verifyWebhookSignature(webhookData, signature)) {
       console.error('❌ Invalid webhook signature');
       return res.status(401).json({
         success: false,
@@ -1073,12 +1079,31 @@ router.get('/:userId/topup/check-payos/:orderCode', async (req, res) => {
       
       if (paymentInfo.success && paymentInfo.status === 'PAID') {
         // Update wallet
-        user.wallet.balance += transaction.amount;
+        // Cong tien nguyen tu, dieu kien giao dich con pending de polling va webhook
+        // chay song song cung khong cong hai lan.
+        const upd = await User.updateOne(
+          {
+            _id: user._id,
+            'wallet.transactions': { $elemMatch: { orderCode: Number(orderCode), status: 'pending' } }
+          },
+          {
+            $inc: { 'wallet.balance': transaction.amount },
+            $set: {
+              'wallet.transactions.$.status': 'completed',
+              'wallet.transactions.$.completedAt': new Date(),
+              'wallet.transactions.$.reference': paymentInfo.reference
+            }
+          }
+        );
+
+        if (upd.modifiedCount === 0) {
+          return res.json({ success: true, status: 'completed', message: 'Payment already processed' });
+        }
+
+        const fresh = await User.findById(user._id, 'wallet.balance').lean();
+        user.wallet.balance = fresh.wallet.balance;
         transaction.status = 'completed';
         transaction.completedAt = new Date();
-        transaction.reference = paymentInfo.reference;
-        
-        await user.save();
         
         console.log(`✅ Payment confirmed via polling: +$${transaction.amount}`);
         
