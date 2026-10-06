@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="./css/chatbot.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 45vh;">
+    <!-- Header: dùng đúng khuôn của my-wishlist.html để không lệch bố cục -->
+    <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
         <div class="overlay"></div>
         <div class="header-text">
             <div id="up-title">DECIDE BETTER</div>
@@ -40,6 +40,7 @@
                             <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
                             <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a>
                             <a href="my-wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+                            <a href="compare.html"><i class="fas fa-scale-balanced"></i> Compare Tours</a>
                             <a href="preferences.html"><i class="fas fa-cog"></i> AI Preferences</a>
                             <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         </div>
@@ -56,13 +57,18 @@
         </div>
     </header>
 
-    <!-- Nội dung được dựng bởi js/compare-page.js -->
-    <main class="compare-page">
+    <!-- Main content: rendered by js/compare-page.js -->
+    <div class="compare-container">
+        <div class="compare-page-header">
+            <h1><i class="fas fa-scale-balanced"></i> Compare Tours</h1>
+            <p>See the differences side by side before you book</p>
+        </div>
+
         <div id="compare-verdict" class="compare-verdict"></div>
         <div id="compare-content">
             <p style="text-align:center;padding:40px;color:#666">Loading comparison…</p>
         </div>
-    </main>
+    </div>
 
     <footer></footer>
 

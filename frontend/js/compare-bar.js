@@ -41,7 +41,7 @@
   };
 
   function toast(message, type) {
-    if (typeof showToast === 'function') showToast(type === 'warning' ? 'Chú ý' : 'So sánh', message, type);
+    if (typeof showToast === 'function') showToast(type === 'warning' ? 'Notice' : 'Compare', message, type);
     else console.log(message);
   }
 
@@ -53,19 +53,19 @@
     if (index >= 0) {
       ids.splice(index, 1);
       write(ids);
-      toast('Đã bỏ khỏi danh sách so sánh', 'info');
+      toast('Removed from comparison', 'info');
       return false;
     }
 
     if (ids.length >= MAX) {
-      toast(`Chỉ so sánh được tối đa ${MAX} tour`, 'warning');
+      toast(`You can compare up to ${MAX} tours`, 'warning');
       return false;
     }
 
     ids.push(tourId);
     if (tourName) saveName(tourId, tourName);
     write(ids);
-    toast('Đã thêm vào danh sách so sánh', 'success');
+    toast('Added to comparison', 'success');
     return true;
   }
 
@@ -95,7 +95,7 @@
     const chips = ids.map(id => `
       <span class="compare-chip">
         ${escapeHtml(names[id] || 'Tour')}
-        <button type="button" class="compare-chip-remove" data-id="${escapeHtml(id)}" title="Bỏ chọn">&times;</button>
+        <button type="button" class="compare-chip-remove" data-id="${escapeHtml(id)}" title="Remove">&times;</button>
       </span>`).join('');
 
     const canCompare = ids.length >= MIN_TO_COMPARE;
@@ -104,9 +104,9 @@
       <div class="compare-bar-inner">
         <div class="compare-chips">${chips}</div>
         <div class="compare-actions">
-          <button type="button" id="compare-clear" class="compare-clear">Xoá hết</button>
+          <button type="button" id="compare-clear" class="compare-clear">Clear all</button>
           <a href="compare.html" class="compare-go ${canCompare ? '' : 'disabled'}">
-            ${canCompare ? `So sánh (${ids.length})` : `Chọn thêm ${MIN_TO_COMPARE - ids.length} tour`}
+            ${canCompare ? `Compare (${ids.length})` : `Add ${MIN_TO_COMPARE - ids.length} more tour`}
           </a>
         </div>
       </div>`;

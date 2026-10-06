@@ -14,38 +14,38 @@
 
   const money = (n) => '$' + Number(n || 0).toLocaleString();
 
-  const dateVi = (d) => d ? new Date(d).toLocaleDateString('vi-VN') : '—';
+  const formatDate = (d) => d ? new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
 
   // Mỗi dòng của bảng: nhãn, cách lấy giá trị, và khoá để biết tour nào thắng.
   const ROWS = [
-    { label: 'Giá / người lớn', key: 'price', value: i => money(i.price) },
-    { label: 'Số ngày', key: 'days', value: i => i.duration },
-    { label: 'Giá mỗi ngày', key: 'pricePerDay', value: i => i.pricePerDay ? money(i.pricePerDay) : '—' },
-    { label: 'Đánh giá', key: 'rating', value: i => i.rating ? `${i.rating} ★` : 'Chưa có' },
-    { label: 'Lượt đánh giá', key: 'reviewCount', value: i => i.reviewCount },
-    { label: 'Độ khó', value: i => i.difficulty || '—' },
-    { label: 'Mức vận động', value: i => i.physicalLevel ? `${i.physicalLevel}/5` : '—' },
-    { label: 'Nhịp độ', value: i => i.pace || '—' },
-    { label: 'Đoàn tối đa', key: 'maxGroupSize', value: i => `${i.maxGroupSize} người` },
-    { label: 'Tuổi tối thiểu', value: i => i.minAge > 0 ? `${i.minAge}+` : 'Mọi lứa tuổi' },
-    { label: 'Phù hợp với', value: i => (i.suitableFor || []).join(', ') || '—' },
-    { label: 'Chủ đề', value: i => (i.themes || []).join(', ') || '—' },
-    { label: 'Mùa đẹp nhất', value: i => (i.bestTimeToVisit || []).slice(0, 4).join(', ') || '—' },
+    { label: 'Price / adult', key: 'price', value: i => money(i.price) },
+    { label: 'Duration', key: 'days', value: i => i.duration },
+    { label: 'Price per day', key: 'pricePerDay', value: i => i.pricePerDay ? money(i.pricePerDay) : '—' },
+    { label: 'Rating', key: 'rating', value: i => i.rating ? `${i.rating} ★` : 'No reviews' },
+    { label: 'Reviews', key: 'reviewCount', value: i => i.reviewCount },
+    { label: 'Difficulty', value: i => i.difficulty || '—' },
+    { label: 'Physical level', value: i => i.physicalLevel ? `${i.physicalLevel}/5` : '—' },
+    { label: 'Pace', value: i => i.pace || '—' },
+    { label: 'Max group size', key: 'maxGroupSize', value: i => `${i.maxGroupSize} people` },
+    { label: 'Minimum age', value: i => i.minAge > 0 ? `${i.minAge}+` : 'All ages' },
+    { label: 'Suitable for', value: i => (i.suitableFor || []).join(', ') || '—' },
+    { label: 'Themes', value: i => (i.themes || []).join(', ') || '—' },
+    { label: 'Best time to visit', value: i => (i.bestTimeToVisit || []).slice(0, 4).join(', ') || '—' },
     {
-      label: 'Hạng khách sạn',
+      label: 'Hotel options',
       value: i => (i.hotelTiers || []).length
         ? i.hotelTiers.map(h => `${h.level}★${h.surcharge ? ` (+$${h.surcharge})` : ''}`).join(' · ')
         : '—'
     },
     {
-      label: 'Khởi hành gần nhất',
+      label: 'Next departure',
       value: i => i.nextDeparture
-        ? `${dateVi(i.nextDeparture.startDate)} — còn ${i.nextDeparture.availableSlots} chỗ`
-        : 'Đang cập nhật'
+        ? `${formatDate(i.nextDeparture.startDate)} — ${i.nextDeparture.availableSlots} seats left`
+        : 'To be announced'
     },
-    { label: 'Số mục bao gồm', key: 'inclusionCount', value: i => `${(i.inclusions || []).length} mục` },
+    { label: 'Inclusions', key: 'inclusionCount', value: i => `${(i.inclusions || []).length} items` },
     {
-      label: 'Chỉ tour này có',
+      label: 'Only in this tour',
       value: i => (i.uniqueInclusions || []).length
         ? i.uniqueInclusions.slice(0, 3).join(', ')
         : '—'
@@ -59,7 +59,7 @@
         <h3>${escapeHtml(item.name)}</h3>
         <div class="country">${escapeHtml(item.country)}</div>
         <a href="detail.html?id=${escapeHtml(item.id || item._id)}" class="compare-go"
-           style="display:inline-block;margin-top:8px;padding:6px 14px;font-size:13px">Xem tour</a>
+           style="display:inline-block;margin-top:8px;padding:6px 14px;font-size:13px">View tour</a>
       </th>`;
   }
 
@@ -80,7 +80,7 @@
     if (verdict.bestValue) {
       cards.push(`
         <div class="verdict-card">
-          <h4>💰 Đáng tiền nhất</h4>
+          <h4>💰 Best value</h4>
           <div class="verdict-name">${escapeHtml(verdict.bestValue.name)}</div>
           <p style="margin:4px 0 0;color:#666">${escapeHtml(verdict.bestValue.reason)}</p>
         </div>`);
@@ -89,16 +89,16 @@
     if (verdict.bestForYou) {
       cards.push(`
         <div class="verdict-card">
-          <h4>🎯 Phù hợp với bạn nhất — ${verdict.bestForYou.matchPercentage}%</h4>
+          <h4>🎯 Best match for you — ${verdict.bestForYou.matchPercentage}%</h4>
           <div class="verdict-name">${escapeHtml(verdict.bestForYou.name)}</div>
           <p style="margin:4px 0 0;color:#666">${escapeHtml((verdict.bestForYou.reasons || []).join(' · '))}</p>
         </div>`);
     } else {
       cards.push(`
         <div class="verdict-card" style="border-left-color:#ccc">
-          <h4>🎯 Phù hợp với bạn nhất</h4>
+          <h4>🎯 Best match for you</h4>
           <p style="margin:4px 0 0;color:#666">
-            Đăng nhập và cập nhật sở thích để xem tour nào hợp với bạn nhất.
+            Sign in and set your travel preferences to see which tour fits you best.
           </p>
         </div>`);
     }
@@ -111,7 +111,7 @@
       <div class="compare-empty">
         <i class="fas fa-scale-balanced" style="font-size:40px;color:#ff6600"></i>
         <p style="margin-top:14px">${escapeHtml(message)}</p>
-        <a href="destination.html" class="compare-go" style="display:inline-block;margin-top:10px">Chọn tour</a>
+        <a href="destination.html" class="compare-go" style="display:inline-block;margin-top:10px">Browse tours</a>
       </div>`;
     document.getElementById('compare-verdict').innerHTML = '';
   }
@@ -120,7 +120,7 @@
     const ids = window.CompareBar ? window.CompareBar.read() : [];
 
     if (ids.length < 2) {
-      empty('Hãy chọn ít nhất 2 tour để so sánh. Dùng nút "Compare" ở trang danh sách hoặc trang chi tiết tour.');
+      empty('Pick at least 2 tours to compare. Use the Compare button on the destination list or a tour detail page.');
       return;
     }
 
@@ -129,7 +129,7 @@
       const data = await res.json();
 
       if (!res.ok || !data.success || (data.items || []).length < 2) {
-        empty(data.error || 'Không tải được dữ liệu so sánh.');
+        empty(data.error || 'Could not load comparison data.');
         return;
       }
 
@@ -145,7 +145,7 @@
         </table>`;
     } catch (err) {
       console.error('Lỗi khi so sánh tour:', err);
-      empty('Có lỗi khi tải dữ liệu so sánh. Vui lòng thử lại.');
+      empty('Something went wrong while loading the comparison. Please try again.');
     }
   }
 
