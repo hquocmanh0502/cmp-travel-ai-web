@@ -624,6 +624,17 @@ const payosService = require('../services/payosService');
 
 router.post('/:userId/topup/payos', async (req, res) => {
   try {
+    // Thieu khoa PayOS la loi CAU HINH, khong phai loi he thong. Tra 503 kem thong
+    // bao ro rang de giao dien hien duoc dung van de thay vi 'Internal Server Error'.
+    if (!payosService.isConfigured) {
+      return res.status(503).json({
+        success: false,
+        error: 'Cong thanh toan chua duoc cau hinh',
+        detail: 'Thieu PAYOS_CLIENT_ID, PAYOS_API_KEY, PAYOS_CHECKSUM_KEY trong backend/.env',
+        code: 'PAYMENT_NOT_CONFIGURED'
+      });
+    }
+
     const { userId } = req.params;
     const { amount } = req.body;
     

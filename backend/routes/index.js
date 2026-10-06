@@ -5,6 +5,7 @@ const router = express.Router();
 const Tour = require('../models/Tour');
 const Blog = require('../models/Blog');
 const User = require('../models/User');
+const Booking = require('../models/Booking');
 const Feedback = require('../models/Feedback');
 const ChatConversation = require('../models/ChatConversation');
 const Recommendation = require('../models/Recommendation');
@@ -15,6 +16,59 @@ const chatbotService = require('../services/chatbotService');
 const matchingService = require('../services/matchingService');
 const { calculateBookingPrice } = require('../services/pricingService');
 const { requireSelfOrAdmin } = require('../middleware/auth');
+
+// Public social proof: avatars of the most recent customers who booked (no PII besides avatar/initials)
+router.get('/social-proof/recent-bookers', async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit, 10) || 6, 10);
+    const bookings = await Booking.find({ status: { $ne: 'cancelled' } })
+      .sort({ createdAt: -1 })
+      .limit(200)
+      .select('userId')
+      .populate('userId', 'fullName avatar blocked');
+
+    const seen = new Set();
+    const bookers = [];
+    for (const b of bookings) {
+      const u = b.userId;
+      if (!u || u.blocked || seen.has(String(u._id))) continue;
+      seen.add(String(u._id));
+      const initials = (u.fullName || 'U').split(/\s+/).filter(Boolean)
+        .slice(0, 2).map(w => w[0]).join('').toUpperCase() || 'U';
+      bookers.push({
+        // Avatars may be stored as base64 data URIs, so serve them via a cacheable image endpoint
+        avatar: u.avatar
+          ? `/api/social-proof/avatar/${u._id}`
+          : `https://ui-avatars.com/api/?name=${encodeURIComponent(initials)}&background=DF6951&color=fff&size=64`
+      });
+      if (bookers.length >= limit) break;
+    }
+
+    res.json({ success: true, bookers });
+  } catch (err) {
+    res.status(500).json({ success: false, bookers: [] });
+  }
+});
+
+router.get('/social-proof/avatar/:userId', async (req, res) => {
+  try {
+    if (!/^[a-f\d]{24}$/i.test(req.params.userId)) return res.status(404).end();
+    const user = await User.findById(req.params.userId).select('avatar blocked');
+    if (!user || user.blocked || !user.avatar) return res.status(404).end();
+
+    const match = user.avatar.match(/^data:(image\/[\w.+-]+);base64,(.+)$/s);
+    if (match) {
+      res.set({ 'Content-Type': match[1], 'Cache-Control': 'public, max-age=3600' });
+      return res.send(Buffer.from(match[2], 'base64'));
+    }
+    if (/^(https?:\/\/|\/)/.test(user.avatar) && !user.avatar.startsWith('//')) {
+      return res.redirect(user.avatar);
+    }
+    res.status(404).end();
+  } catch (err) {
+    res.status(500).end();
+  }
+});
 
 // Tours Routes
 router.get('/tours', async (req, res) => {
