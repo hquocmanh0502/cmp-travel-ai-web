@@ -54,19 +54,19 @@ function scoreTourSimilarity(candidate, source) {
   breakdown.themes = jaccard(candidate.themes, source.themes);
   if (breakdown.themes >= 0.4) {
     const shared = (candidate.themes || []).filter(t => (source.themes || []).includes(t));
-    if (shared.length) reasons.push(`Cùng chủ đề: ${shared.slice(0, 3).join(', ')}`);
+    if (shared.length) reasons.push(`Similar themes: ${shared.slice(0, 3).join(', ')}`);
   }
 
   breakdown.country = candidate.country === source.country ? 1 : 0;
-  if (breakdown.country) reasons.push(`Cùng điểm đến ${candidate.country}`);
+  if (breakdown.country) reasons.push(`Same destination: ${candidate.country}`);
 
   breakdown.price = priceCloseness(candidate.estimatedCost, source.estimatedCost);
-  if (breakdown.price >= 0.85) reasons.push('Cùng tầm giá');
+  if (breakdown.price >= 0.85) reasons.push('Similar price range');
 
   breakdown.type = candidate.type === source.type ? 1 : 0;
   breakdown.duration = candidate.duration === source.duration ? 1 : 0;
   breakdown.rating = (candidate.rating || 0) / 5;
-  if ((candidate.rating || 0) >= 4.5) reasons.push(`Được đánh giá cao (${candidate.rating}/5)`);
+  if ((candidate.rating || 0) >= 4.5) reasons.push(`Highly rated (${candidate.rating}/5)`);
 
   let score = 0;
   for (const [key, weight] of Object.entries(TOUR_WEIGHTS)) {
@@ -153,12 +153,12 @@ function scoreGuideForTour(guide, tour, { preferredLanguage } = {}) {
   // 1. Địa bàn
   const countries = guide.coverage?.countries || [];
   breakdown.coverage = countries.includes(tour.country) ? 1 : 0;
-  if (breakdown.coverage) reasons.push(`Thông thạo địa bàn ${tour.country}`);
+  if (breakdown.coverage) reasons.push(`Knows ${tour.country} well`);
 
   // 2. Sở trường theo chủ đề
   breakdown.themes = jaccard(guide.specialtyThemes, tour.themes);
   const sharedThemes = (guide.specialtyThemes || []).filter(t => (tour.themes || []).includes(t));
-  if (sharedThemes.length) reasons.push(`Sở trường: ${sharedThemes.slice(0, 3).join(', ')}`);
+  if (sharedThemes.length) reasons.push(`Specialties: ${sharedThemes.slice(0, 3).join(', ')}`);
 
   // 3. Ngôn ngữ: ưu tiên ngôn ngữ khách chọn, sau đó tới tiếng bản địa điểm đến
   const skills = guide.languageSkills || [];
@@ -169,13 +169,13 @@ function scoreGuideForTour(guide, tour, { preferredLanguage } = {}) {
   if (preferredLanguage && spoken.includes(preferredLanguage)) {
     const lv = skills.find(s => s.language === preferredLanguage)?.level;
     languageScore = levelScore[lv] || 0.5;
-    reasons.push(`Nói ${preferredLanguage} (${lv})`);
+    reasons.push(`Speaks ${preferredLanguage} (${lv})`);
   } else {
     const local = LOCAL_LANGUAGE[tour.country];
     if (local && spoken.includes(local)) {
       const lv = skills.find(s => s.language === local)?.level;
       languageScore = (levelScore[lv] || 0.5) * 0.8;
-      reasons.push(`Nói được tiếng bản địa (${local})`);
+      reasons.push(`Speaks the local language (${local})`);
     } else if (spoken.includes('English')) {
       languageScore = 0.6;
     }
@@ -185,7 +185,7 @@ function scoreGuideForTour(guide, tour, { preferredLanguage } = {}) {
   // 4. Đánh giá
   breakdown.rating = (guide.rating || 0) / 5;
   if ((guide.rating || 0) >= 4.5) {
-    reasons.push(`Điểm đánh giá ${Number(guide.rating).toFixed(1)}/5`);
+    reasons.push(`Rated ${Number(guide.rating).toFixed(1)}/5`);
   }
 
   // 5. Độ khó tour có nằm trong khả năng nhận dẫn không

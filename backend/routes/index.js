@@ -80,6 +80,30 @@ router.get('/tours', async (req, res) => {
   }
 });
 
+// Tour noi bat cho cac the o trang chu va trang gioi thieu.
+//
+// PHAI khai bao TRUOC /tours/:id, neu khong Express se coi 'featured' la mot id.
+// Chi tra ve dung nhung truong the can, khong populate gi cho nhe.
+router.get('/tours/featured', async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit) || 3, 24);
+    const sort = req.query.sort === 'rating'
+      ? { rating: -1, 'analytics.bookingCount': -1 }
+      : { 'analytics.bookingCount': -1, rating: -1 };
+
+    const tours = await Tour.find({ status: 'active' })
+      .select('id name country img rating estimatedCost pricing duration description themes analytics.bookingCount')
+      .sort(sort)
+      .limit(limit)
+      .lean();
+
+    res.json({ success: true, count: tours.length, tours });
+  } catch (err) {
+    console.error('Error fetching featured tours:', err);
+    res.status(500).json({ success: false, error: 'Error fetching featured tours' });
+  }
+});
+
 router.get('/tours/:id', async (req, res) => {
   try {
     const tourId = req.params.id;

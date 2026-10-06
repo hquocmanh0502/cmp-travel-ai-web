@@ -128,17 +128,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div style="color: #ff6600; font-size: 3rem; margin-bottom: 1rem;">
           <i class="fas fa-user-lock"></i>
         </div>
-        <h3 style="color: #333; margin-bottom: 1rem;">Đăng nhập để nhận gợi ý</h3>
+        <h3 style="color: #333; margin-bottom: 1rem;">Log in to get recommendations</h3>
         <p style="color: #666; margin-bottom: 1.5rem;">
-          Bạn cần đăng nhập để nhận được gợi ý tour phù hợp từ AI!
+          You need to log in to get AI-powered tour recommendations!
         </p>
         <button onclick="window.location.href='login.html'" 
                 style="background: #ff6600; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
-          Đăng nhập
+          Log in
         </button>
         <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
                 style="background: #ccc; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">
-          Đóng
+          Close
         </button>
       `;
       
@@ -210,17 +210,17 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div style="color: #ff6600; font-size: 3rem; margin-bottom: 1rem;">
             <i class="fas fa-sliders-h"></i>
           </div>
-          <h3 style="color: #333; margin-bottom: 1rem;">Cập nhật sở thích của bạn</h3>
+          <h3 style="color: #333; margin-bottom: 1rem;">Update your preferences</h3>
           <p style="color: #666; margin-bottom: 1.5rem;">
-            Vui lòng cập nhật sở thích trong trang Profile để nhận gợi ý tour phù hợp!
+            Please update your preferences in your Profile to get tour recommendations that suit you!
           </p>
           <button onclick="window.location.href='preferences.html'" 
                   style="background: #ff6600; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem;">
-            Cập nhật ngay
+            Update now
           </button>
           <button onclick="this.closest('[style*=\"position: fixed\"]').remove()" 
                   style="background: #ccc; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 5px; cursor: pointer;">
-            Đóng
+            Close
           </button>
         `;
         

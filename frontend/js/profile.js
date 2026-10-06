@@ -308,10 +308,10 @@ function getActivityColor(type) {
 
 function getStatusText(status) {
     const statusMap = {
-        'confirmed': 'Đã xác nhận',
-        'pending': 'Chờ xử lý',
-        'completed': 'Hoàn thành',
-        'cancelled': 'Đã hủy'
+        'confirmed': 'Confirmed',
+        'pending': 'Pending',
+        'completed': 'Completed',
+        'cancelled': 'Cancelled'
     };
     return statusMap[status] || status;
 }
@@ -477,12 +477,12 @@ async function handlePasswordChange(e) {
     
     // Validate passwords
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-        showNotification('Mật khẩu xác nhận không khớp', 'error');
+        showNotification('Password confirmation does not match', 'error');
         return;
     }
     
     if (passwordData.newPassword.length < 6) {
-        showNotification('Mật khẩu mới phải có ít nhất 6 ký tự', 'error');
+        showNotification('New password must be at least 6 characters', 'error');
         return;
     }
     
@@ -494,7 +494,7 @@ async function handlePasswordChange(e) {
         if (!submitBtn) return;
         
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
         submitBtn.disabled = true;
         
         // Call API to change password
@@ -517,8 +517,7 @@ async function handlePasswordChange(e) {
             submitBtn.disabled = false;
             
             // Highlight the problematic field
-            if (data.message.includes('Mật khẩu hiện tại không đúng') || 
-                data.message.includes('Current password is incorrect')) {
+            if (data.message.includes('Current password is incorrect')) {
                 const currentPasswordField = document.getElementById('currentPassword');
                 if (currentPasswordField) {
                     currentPasswordField.style.borderColor = '#e74c3c';
@@ -544,16 +543,16 @@ async function handlePasswordChange(e) {
             input.style.borderColor = '';
         });
         
-        showNotification('Mật khẩu đã được thay đổi thành công!', 'success');
+        showNotification('Password changed successfully!', 'success');
         
     } catch (error) {
         console.error('Error changing password:', error);
-        showNotification(error.message || 'Đã xảy ra lỗi khi đổi mật khẩu', 'error');
+        showNotification(error.message || 'An error occurred while changing the password', 'error');
         
         // Reset button state
         const submitBtn = e.target.querySelector('button[type="submit"]');
         if (submitBtn) {
-            submitBtn.innerHTML = '<i class="fas fa-key"></i> Đổi mật khẩu';
+            submitBtn.innerHTML = '<i class="fas fa-key"></i> Change Password';
             submitBtn.disabled = false;
         }
     }
@@ -639,7 +638,7 @@ function setupFormValidation() {
             
             if (email && !emailRegex.test(email)) {
                 this.style.borderColor = '#e74c3c';
-                showNotification('Email không hợp lệ', 'error');
+                showNotification('Invalid email address', 'error');
             } else if (email) {
                 this.style.borderColor = '#28a745';
             }
@@ -655,7 +654,7 @@ function setupFormValidation() {
             
             if (phone && !phoneRegex.test(phone)) {
                 this.style.borderColor = '#e74c3c';
-                showNotification('Số điện thoại không hợp lệ', 'error');
+                showNotification('Invalid phone number', 'error');
             } else if (phone) {
                 this.style.borderColor = '#28a745';
             }
@@ -926,7 +925,7 @@ function getPaymentMethodName(method) {
         'momo': 'MoMo',
         'zalopay': 'ZaloPay',
         'vnpay': 'VNPay',
-        'bank': 'Ngân hàng'
+        'bank': 'Bank'
     };
     return methods[method] || method;
 }
@@ -1238,7 +1237,7 @@ function initializeMockTransactions() {
                 id: Date.now().toString(),
                 type: 'income',
                 amount: 500000,
-                description: 'Nạp tiền qua MoMo',
+                description: 'Top-up via MoMo',
                 date: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
                 status: 'completed'
             },
@@ -1246,7 +1245,7 @@ function initializeMockTransactions() {
                 id: (Date.now() - 1).toString(),
                 type: 'expense',
                 amount: 150000,
-                description: 'Thanh toán tour "Hà Nội - Sapa"',
+                description: 'Tour payment "Hanoi - Sapa"',
                 date: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
                 status: 'completed'
             }

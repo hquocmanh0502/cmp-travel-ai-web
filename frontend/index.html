@@ -385,15 +385,7 @@
       <div class="search-suggestions" id="search-suggestions"></div>
     </div>
     <div class="customer">
-      <ul>
-        <li><img src="./images/header/client1.jpg" alt="" /></li>
-        <li><img src="./images/header/client3.jpg" alt="" /></li>
-        <li><img src="./images/header/client1.jpg" alt="" /></li>
-        <li><img src="./images/header/client4.jpg" alt="" /></li>
-        <li><img src="./images/header/client5.jpg" alt="" /></li>
-        <li><img src="./images/header/client6.jpg" alt="" /></li>
-        <li><img src="./images/header/hinhtron.png" alt="" /></li>
-      </ul>
+      <ul id="recent-bookers" hidden></ul>
       <span>2,500 people booked Tommorowland Event in last 24 hours</span>
     </div>
   </header>
@@ -483,122 +475,8 @@
     <section class="trending-tours">
       <h2 class="title1">Trendy</h2>
       <h1 class="title2">Our Trending Tour Packages</h1>
-      <div class="tour-packages">
-        <!-- Tour Card 1 -->
-        <div id="paris" class="tour-card reveal-delay">
-          <img
-            src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwzfHxQYXJpc3xlbnwwfHx8fDE3MTkyMzUxOTl8MA&ixlib=rb-4.0.3&q=80&w=1080"
-            alt="Paris" class="thumbnail">
-          <div class="tour-info">
-            <div class="tour-header">
-              <div class="country-flag">
-                <img src="./images/homepage/body/france.png" alt="Switzerland Flag">
-              </div>
-              <div class="tour-details">
-                <div class="tour-duration"><img src="./images/homepage/body/calendar.png" alt="Calendar Icon"> 8
-                  Days</div>
-                <div class="tour-people"><img src="./images/homepage/body/people.png" alt="People Icon"> 25
-                  People
-                  Going</div>
-              </div>
-            </div>
-            <div class="tour-title">
-              <h2>Paris</h2>
-              <div class="rating">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star-half"></i>
-              </div>
-            </div>
-            <p class="location"><img src="./images/homepage/body/location.png" alt="Map Icon"> France</p>
-            <div class="rating-price">
-              <span class="price">7,000$ <del>7,500 $</del></span>
-            </div>
-            <p class="description">Known as the City of Love, Paris enchants visitors with its romantic ambiance and
-              classical architecture. Highlights include the iconic Eiffel Tower, the historic Louvre Museum, and
-              charming sidewalk cafes along the Seine River.
-            </p>
-            <button>Explore Now</button>
-          </div>
-        </div>
-        <!-- Tour Card 2 -->
-        <div id="switzerland" class="tour-card reveal-delay">
-          <img
-            src="https://images.unsplash.com/photo-1559754417-c1304ca2f80f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHwxOXx8TGF1dGVyYnJ1bm5lbnxlbnwwfDB8fHwxNzE4NjE1NTQ3fDA&ixlib=rb-4.0.3&q=80&w=1080"
-            alt="Amazon" class="thumbnail">
-          <div class="tour-info">
-            <div class="tour-header">
-              <div class="country-flag">
-                <img src="./images/homepage/body/switzerland.png" alt="Brazil Flag">
-              </div>
-              <div class="tour-details">
-                <div class="tour-duration"><img src="./images/homepage/body/calendar.png" alt="Calendar Icon"> 8
-                  Days</div>
-                <div class="tour-people"><img src="./images/homepage/body/people.png" alt="People Icon"> 30
-                  People
-                  Going</div>
-              </div>
-            </div>
-            <div class="tour-title">
-              <h2>Lauterbrunnen</h2>
-              <div class="rating">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star-half"></i>
-              </div>
-            </div>
-            <p class="location"><img src="./images/homepage/body/location.png" alt="Map Icon"> Switzerland</p>
-            <div class="rating-price">
-              <span class="price">5,500$ <del>6,200 $</del></span>
-            </div>
-            <p class="description">Renowned for its stunning Alpine landscapes, Switzerland offers breathtaking scenery
-              year-round. Visitors can explore picturesque villages like Zermatt, enjoy outdoor activities in
-              Interlaken, or indulge in Swiss chocolate and cheese.
-            </p>
-            <button>Explore Now</button>
-          </div>
-        </div>
-        <!-- Tour Card 3 -->
-        <div id="venice" class="tour-card reveal-delay">
-          <img
-            src="https://images.unsplash.com/photo-1511135570219-bbad9a02f103?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjA4MjB8MHwxfHNlYXJjaHw5fHxWZW5pY2V8ZW58MHx8fHwxNzE5MjM1MzYyfDA&ixlib=rb-4.0.3&q=80&w=1080"
-            alt="Italy" class="thumbnail">
-          <div class="tour-info">
-            <div class="tour-header">
-              <div class="country-flag">
-                <img src="./images/homepage/body/italy.png" alt="Egypt Flag">
-              </div>
-              <div class="tour-details">
-                <div class="tour-duration"><img src="./images/homepage/body/calendar.png" alt="Calendar Icon"> 8
-                  Days</div>
-                <div class="tour-people"><img src="./images/homepage/body/people.png" alt="People Icon"> 155
-                  People Going</div>
-              </div>
-            </div>
-            <div class="tour-title">
-              <h2>Venice</h2>
-              <div class="rating">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-            <p class="location"><img src="./images/homepage/body/location.png" alt="Map Icon"> Italy</p>
-            <div class="rating-price">
-              <span class="price">5,000$ <del>6,000 $</del></span>
-            </div>
-            <p class="description">Built on a network of canals, Venice is a city like no other. It's famous for its
-              gondola rides along the Grand Canal, intricate Gothic architecture seen in St. Mark's Basilica, and
-              vibrant Venetian masks during the annual Carnival.</p>
-            <button>Explore Now</button>
-          </div>
-        </div>
-      </div>
+      <!-- Cac the duoc dung tu du lieu that boi js/trending-tours.js -->
+      <div class="tour-packages"></div>
     </section>
 
   </section>
@@ -622,6 +500,8 @@
   <script src="./js/api-auth.js"></script>
   <script src="./js/toast.js"></script>
   <script src="./js/search.js"></script>
+  <script src="./js/trending-tours.js"></script>
+  <script src="./js/recent-bookers.js"></script>
   <script src="./js/newsletter.js"></script>
   <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
   <script src="./js/scroll-navigation.js"></script>

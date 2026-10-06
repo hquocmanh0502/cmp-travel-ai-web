@@ -190,14 +190,14 @@ router.put('/:userId/password', async (req, res) => {
         if (!currentPassword || !newPassword) {
             return res.status(400).json({ 
                 success: false, 
-                message: 'Vui lòng nhập đầy đủ mật khẩu hiện tại và mật khẩu mới' 
+                message: 'Please enter both your current password and a new password' 
             });
         }
 
         if (newPassword.length < 6) {
             return res.status(400).json({ 
                 success: false, 
-                message: 'Mật khẩu mới phải có ít nhất 6 ký tự' 
+                message: 'New password must be at least 6 characters' 
             });
         }
 
@@ -217,7 +217,7 @@ router.put('/:userId/password', async (req, res) => {
         if (!isPasswordValid) {
             return res.status(401).json({
                 success: false,
-                message: 'Mật khẩu hiện tại không đúng. Vui lòng kiểm tra lại.'
+                message: 'Current password is incorrect. Please check again.'
             });
         }
 
@@ -228,7 +228,7 @@ router.put('/:userId/password', async (req, res) => {
 
         res.json({
             success: true,
-            message: 'Đổi mật khẩu thành công!'
+            message: 'Password changed successfully!'
         });
     } catch (error) {
         console.error('Error changing password:', error);
@@ -987,8 +987,8 @@ router.get('/:userId/recent-activity', async (req, res) => {
             activities.push({
                 type: 'profile_update',
                 icon: 'fa-user-edit',
-                title: 'Cập nhật thông tin',
-                description: 'Đã cập nhật thông tin cá nhân',
+                title: 'Profile Updated',
+                description: 'Personal information was updated',
                 timestamp: user.updatedAt,
                 time: getTimeAgo(user.updatedAt),
                 data: {}
@@ -1011,7 +1011,7 @@ router.get('/:userId/recent-activity', async (req, res) => {
         console.error('Error fetching recent activity:', error);
         res.status(500).json({ 
             success: false, 
-            message: 'Lỗi khi tải hoạt động gần đây',
+            message: 'Failed to load recent activity',
             error: error.message
         });
     }
@@ -1020,14 +1020,14 @@ router.get('/:userId/recent-activity', async (req, res) => {
 // Helper function to calculate time ago
 function getTimeAgo(date) {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-    
-    if (seconds < 60) return 'Vừa xong';
-    if (seconds < 3600) return `${Math.floor(seconds / 60)} phút trước`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)} giờ trước`;
-    if (seconds < 604800) return `${Math.floor(seconds / 86400)} ngày trước`;
-    if (seconds < 2592000) return `${Math.floor(seconds / 604800)} tuần trước`;
-    if (seconds < 31536000) return `${Math.floor(seconds / 2592000)} tháng trước`;
-    return `${Math.floor(seconds / 31536000)} năm trước`;
-}
+    const plural = (n, unit) => `${n} ${unit}${n === 1 ? '' : 's'} ago`;
 
+    if (seconds < 60) return 'Just now';
+    if (seconds < 3600) return plural(Math.floor(seconds / 60), 'minute');
+    if (seconds < 86400) return plural(Math.floor(seconds / 3600), 'hour');
+    if (seconds < 604800) return plural(Math.floor(seconds / 86400), 'day');
+    if (seconds < 2592000) return plural(Math.floor(seconds / 604800), 'week');
+    if (seconds < 31536000) return plural(Math.floor(seconds / 2592000), 'month');
+    return plural(Math.floor(seconds / 31536000), 'year');
+}
 module.exports = router;

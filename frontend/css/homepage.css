@@ -373,6 +373,10 @@ a {
     margin: 20px 0;
 }
 
+.customer ul[hidden] {
+    display: none;
+}
+
 .customer ul li:not(:first-child) {
     text-indent: -12px;
     position: relative;
