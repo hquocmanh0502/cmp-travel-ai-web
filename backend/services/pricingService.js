@@ -42,6 +42,13 @@ function calculateBookingPrice(tour, input = {}) {
   const children = Math.max(0, parseInt(input.children) || 0);
   const infants = Math.max(0, parseInt(input.infants) || 0);
 
+  // Gia TINH TIEN chinh thuc la pricing.adult (gia co ban).
+  //
+  // Luu y cho nguoi sua sau: availability[].price co he so theo mua (+20% chinh
+  // mua, -15% thap diem, do scripts/fix-availability-seasonality.js sinh ra) va
+  // hien CHUA duoc dung de tinh tien - no la du lieu cho SmartTour tra loi "di
+  // thang nao re hon". Neu sau nay cho giao dien hien gia theo mua thi phai sua
+  // ca o day, neu khong khach se thay mot gia nhung bi tru mot gia khac.
   const adultPrice = tour.pricing?.adult || tour.estimatedCost || 0;
   const childPrice = tour.pricing?.child ?? Math.round(adultPrice * CHILD_RATE);
   const infantPrice = tour.pricing?.infant ?? Math.round(adultPrice * INFANT_RATE);
@@ -55,7 +62,7 @@ function calculateBookingPrice(tour, input = {}) {
   const accommodationCost = tier ? (tier.surcharge || 0) * Math.max(1, Math.ceil(payingGuests / 2)) : 0;
 
   // Phí hướng dẫn viên riêng (nếu khách chọn người ngoài nhóm mặc định)
-  const days = parseInt(String(tour.duration).match(/\d+/)?.[0] || '5', 10);
+  const days = tour.durationDays || parseInt(String(tour.duration).match(/\d+/)?.[0] || '5', 10);
   const guideCost = input.guide?.pricing?.perDay
     ? input.guide.pricing.perDay * days
     : 0;

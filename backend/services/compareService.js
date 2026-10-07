@@ -55,7 +55,9 @@ async function buildComparison(ids, userId = null) {
   const reviewCount = new Map(counts.map(c => [String(c._id), c.n]));
 
   const items = ordered.map(tour => {
-    const days = parseDays(tour.duration);
+    // durationDays la ban so cua duration; parseDays chi con la duong lui cho
+    // du lieu cu chua chay scripts/fix-tour-taxonomy.js
+    const days = tour.durationDays || parseDays(tour.duration);
     const price = tour.pricing?.adult || tour.estimatedCost || 0;
 
     return {

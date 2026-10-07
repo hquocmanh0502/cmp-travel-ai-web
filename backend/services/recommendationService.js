@@ -2,6 +2,31 @@
 const Tour = require('../models/Tour');
 const User = require('../models/User');
 const tourMapping = require('../config/tour-mapping');
+const {
+  stylesToThemes,
+  activitiesToThemes,
+  normalizeStyle,
+  normalizeActivity,
+  climateOf
+} = require('../config/travel-vocabulary');
+
+/** Ty le trung nhau giua hai tap (Jaccard). Tra 0 khi mot ben rong. */
+function jaccard(a, b) {
+  const setA = new Set(a);
+  const setB = new Set(b);
+  if (!setA.size || !setB.size) return 0;
+  let inter = 0;
+  for (const v of setA) if (setB.has(v)) inter++;
+  return inter / (setA.size + setB.size - inter);
+}
+
+/** Ty le cac chu de nguoi dung muon ma tour co (recall, khong doi xung). */
+function coverage(wanted, available) {
+  const have = new Set(available);
+  const want = [...new Set(wanted)];
+  if (!want.length) return 0;
+  return want.filter(w => have.has(w)).length / want.length;
+}
 
 class RecommendationService {
   /**
@@ -134,62 +159,34 @@ class RecommendationService {
    */
   calculateStyleMatch(tour, travelStyles) {
     if (!travelStyles || travelStyles.length === 0) {
-      return 0.5;
+      return 0.5; // khong co so thich -> trung tinh
     }
 
-    let matchScore = 0;
-    const tourTags = (tour.tags || []).map(t => t.toLowerCase());
-    const tourCost = tour.estimatedCost || 0;
+    const tourThemes = tour.themes || [];
     const tourDifficulty = (tour.difficulty || '').toLowerCase();
 
-    for (const style of travelStyles) {
-      const mapping = tourMapping.travelStyle[style.toLowerCase()];
-      if (!mapping) {
-        console.log(`⚠️ No mapping found for style: ${style}`);
-        continue;
-      }
+    // Diem cua TUNG phong cach, roi lay cao nhat: nguoi chon nhieu phong cach
+    // chi can tour khop MOT trong so do la du tot.
+    let best = 0;
 
-      let styleScore = 0;
-      let factors = 0;
+    for (const raw of travelStyles) {
+      const key = normalizeStyle(raw);
+      if (!key) continue;
 
-      // Check cost range
-      if (mapping.minCost !== undefined && mapping.maxCost !== undefined) {
-        if (tourCost >= mapping.minCost && tourCost <= mapping.maxCost) {
-          styleScore += 1;
-        }
-        factors++;
-      }
+      const mapping = tourMapping.travelStyle[key];
+      const wanted = mapping.themes || [];
 
-      // Check tags
-      if (mapping.tags && mapping.tags.length > 0) {
-        const matchingTags = mapping.tags.filter(tag => 
-          tourTags.some(tourTag => 
-            tourTag.includes(tag.toLowerCase()) || 
-            tag.toLowerCase().includes(tourTag)
-          )
-        );
-        styleScore += matchingTags.length / mapping.tags.length;
-        factors++;
-      }
+      // 70% tu do trung chu de, 30% tu do kho phu hop.
+      //
+      // Dung coverage (bao nhieu % chu de nguoi dung muon ma tour co) chu khong
+      // dung Jaccard o day: tour co nhieu chu de khac khong phai la diem tru.
+      const themeScore = coverage(wanted, tourThemes);
+      const difficultyScore = (mapping.difficulty || []).includes(tourDifficulty) ? 1 : 0;
 
-      // Check difficulty
-      if (mapping.difficulty && mapping.difficulty.length > 0) {
-        if (mapping.difficulty.map(d => d.toLowerCase()).includes(tourDifficulty)) {
-          styleScore += 1;
-        }
-        factors++;
-      }
-
-      // Avoid division by zero - ensure we have at least one factor
-      if (factors === 0) {
-        factors = 1; // Default to 1 to avoid NaN
-      }
-      
-      const currentScore = styleScore / factors;
-      matchScore = Math.max(matchScore, currentScore);
+      best = Math.max(best, themeScore * 0.7 + difficultyScore * 0.3);
     }
 
-    return Math.min(matchScore, 1.0); // Cap at 1.0
+    return Math.min(best, 1.0);
   }
 
   /**
@@ -200,22 +197,28 @@ class RecommendationService {
       return 0.5;
     }
 
-    const tourTags = (tour.tags || []).map(t => t.toLowerCase());
-    const tourAttractions = (tour.attractions || []).map(a => a.toLowerCase());
-    const allTourContent = [...tourTags, ...tourAttractions, tour.description?.toLowerCase() || ''].join(' ');
+    const tourThemes = new Set(tour.themes || []);
 
-    let matchCount = 0;
-    for (const activity of activities) {
-      const mapping = tourMapping.activities[activity.toLowerCase()];
-      if (!mapping) continue;
+    // Chi dem nhung hoat dong NHAN RA DUOC vao mau so.
+    //
+    // Truoc day gia tri la ('cultural', 'beaches', 'nature') khong co trong bang
+    // anh xa nen bi `continue` bo qua, NHUNG van nam trong mau so
+    // `activities.length`. Ket qua: nguoi dung chon 3 hoat dong ma 1 cai khong
+    // nhan ra thi diem toi da chi con 2/3 du ho khong chon gi sai.
+    let recognised = 0;
+    let matched = 0;
 
-      const hasMatch = mapping.some(keyword => 
-        allTourContent.includes(keyword.toLowerCase())
-      );
-      if (hasMatch) matchCount++;
+    for (const raw of activities) {
+      const key = normalizeActivity(raw);
+      if (!key) continue;
+      recognised++;
+      if ((tourMapping.activities[key] || []).some(theme => tourThemes.has(theme))) {
+        matched++;
+      }
     }
 
-    return activities.length > 0 ? matchCount / activities.length : 0;
+    if (recognised === 0) return 0.5; // khong hieu duoc so thich -> trung tinh
+    return matched / recognised;
   }
 
   /**
@@ -243,22 +246,20 @@ class RecommendationService {
       return 0.5;
     }
 
-    const mapping = tourMapping.climate[climatePreference.toLowerCase()];
+    const wanted = climatePreference.toLowerCase();
+
+    // Tra cuu truc tiep theo quoc gia truoc. Bang CLIMATE_BY_COUNTRY da duoc bo
+    // sung cho du ca 17 quoc gia dang co tour - truoc day Hong Kong, Portugal,
+    // Greece, Netherlands, India deu bi thieu nen luon bi cham 0.3 du dung y khach.
+    const tourClimate = climateOf(tour.country);
+    if (tourClimate) return tourClimate === wanted ? 1.0 : 0.3;
+
+    // Khong biet quoc gia -> doan theo chu de dac trung cua vung khi hau
+    const mapping = tourMapping.climate[wanted];
     if (!mapping) return 0.5;
 
-    // Check country
-    const tourCountry = tour.country || '';
-    const countryMatch = mapping.countries.some(country => 
-      tourCountry.toLowerCase().includes(country.toLowerCase())
-    );
-
-    // Check tags
-    const tourTags = (tour.tags || []).map(t => t.toLowerCase());
-    const tagMatch = mapping.tags.some(tag => 
-      tourTags.includes(tag.toLowerCase())
-    );
-
-    return countryMatch || tagMatch ? 1.0 : 0.3;
+    const tourThemes = new Set(tour.themes || []);
+    return (mapping.themes || []).some(t => tourThemes.has(t)) ? 1.0 : 0.3;
   }
 
   /**

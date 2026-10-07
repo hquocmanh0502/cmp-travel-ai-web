@@ -64,7 +64,13 @@ function scoreTourSimilarity(candidate, source) {
   if (breakdown.price >= 0.85) reasons.push('Similar price range');
 
   breakdown.type = candidate.type === source.type ? 1 : 0;
-  breakdown.duration = candidate.duration === source.duration ? 1 : 0;
+  // So sanh do dai theo DO GAN chu khong phai bang nhau y nguyen: tour 5 ngay va
+  // 7 ngay van la lua chon thay the hop ly cho nhau, truoc day bi cham 0 diem.
+  const candidateDays = candidate.durationDays || 0;
+  const sourceDays = source.durationDays || 0;
+  breakdown.duration = (candidateDays && sourceDays)
+    ? Math.max(0, 1 - Math.abs(candidateDays - sourceDays) / Math.max(candidateDays, sourceDays))
+    : (candidate.duration === source.duration ? 1 : 0);
   breakdown.rating = (candidate.rating || 0) / 5;
   if ((candidate.rating || 0) >= 4.5) reasons.push(`Highly rated (${candidate.rating}/5)`);
 
