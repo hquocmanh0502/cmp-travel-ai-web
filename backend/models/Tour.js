@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { TOUR_THEMES, CURRENCY } = require('../config/travel-vocabulary');
 
 const tourSchema = new mongoose.Schema({
   id: { type: String, unique: true, sparse: true }, // ID từ data.json (30, 35, 36, 27...)
@@ -32,7 +33,17 @@ const tourSchema = new mongoose.Schema({
     accommodation: { type: mongoose.Schema.Types.ObjectId, ref: 'Hotel' }
   }],
   
-  duration: { type: String, required: true }, // "3 days", "1 week"
+  duration: { type: String, required: true }, // "3 days", "1 week" - de HIEN THI
+  // Ban so cua duration, de LOC va TINH TOAN.
+  //
+  // Vi sao phai co: duration la String ("5 days") nen khong the tra loi
+  // "toi co 6 ngay" bang mot truy van - khong co $lte nao chay duoc tren chuoi.
+  // SmartTour bat buoc can ban so nay. duration van giu lai de hien thi.
+  durationDays: { type: Number, min: 1, index: true },
+
+  // Don vi tien te cho estimatedCost / pricing / priceBreakdown / availability.price.
+  // Ghi ro vi ngan sach nguoi dung nhap phai cung don vi moi so sanh duoc.
+  currency: { type: String, default: CURRENCY },
   type: { type: String, required: true }, // domestic, international
   maxGroupSize: { type: Number, default: 20 },
   minAge: { type: Number, default: 0 },
@@ -81,17 +92,15 @@ const tourSchema = new mongoose.Schema({
 
   // Chu de cua tour, dung chung tu vung voi TourGuide.specialtyThemes.
   // Nho truong nay moi ghep duoc "tour thien ve van hoa" voi "HDV manh ve van hoa".
-  // Duoc suy ra tu attractions/food/description boi scripts/seed-matching-data.js
-  themes: [{
-    type: String,
-    enum: [
-      'culture', 'history', 'architecture', 'museum',
-      'nature', 'mountain', 'beach', 'island', 'wildlife',
-      'adventure', 'trekking', 'water-sports',
-      'food', 'nightlife', 'shopping',
-      'photography', 'family', 'romantic', 'wellness', 'luxury', 'budget'
-    ]
-  }],
+  //
+  // Chu de NOI DUNG lay tu config/city-profiles.js (tham dinh tay 36 thanh pho),
+  // con nhan GIA ('budget'/'luxury') duoc tinh theo phan vi gia moi ngay.
+  // Ca hai do scripts/fix-tour-taxonomy.js ghi.
+  //
+  // Khong con suy tu khoa trong attractions/food nhu truoc: cach do tung gan
+  // 'mountain' cho Malacca (vi "St. Paul's Hill") va 'island' cho Berlin
+  // (vi "Museum Island").
+  themes: [{ type: String, enum: TOUR_THEMES }],
   difficulty: { type: String, enum: ['easy', 'moderate', 'challenging'] },
   bestTimeToVisit: [String], // months
   
@@ -139,6 +148,25 @@ const tourSchema = new mongoose.Schema({
     durationHours: Number
   },
 
+  // Cac chang di chuyen tu tour nay sang NHIEU tour khac.
+  //
+  // transport o tren chi co DUNG MOT "thanh pho ke tiep", nen SmartTour khong
+  // ghep linh hoat duoc. transportLegs duoc tinh tu location.coordinates (da co
+  // san du 36/36 tour, kem index 2dsphere) bang cong thuc haversine, nen khong
+  // phai nhap tay va khong sai lech nhu truong hop Lauterbrunnen -> Milan
+  // "160km di tau 1 gio".
+  //
+  // Sinh boi scripts/build-transport-legs.js
+  transportLegs: [{
+    toTourId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tour' },
+    toCity: String,
+    toCountry: String,
+    distanceKm: Number,
+    mode: { type: String, enum: ['train', 'flight', 'bus', 'ferry'] },
+    durationHours: Number,
+    estimatedCost: Number
+  }],
+
   // --- Nội dung dài cho Chatbot RAG ---
   longDescription: String,
   highlights: [String],
@@ -174,6 +202,10 @@ tourSchema.index({ country: 1, type: 1 });
 tourSchema.index({ 'pricing.adult': 1 });
 tourSchema.index({ 'analytics.popularityScore': -1 });
 tourSchema.index({ 'location.coordinates': '2dsphere' });
+// SmartTour loc theo "toi co N ngay / ngan sach X / thich chu de Y"
+tourSchema.index({ durationDays: 1, estimatedCost: 1 });
+tourSchema.index({ themes: 1 });
+tourSchema.index({ suitableFor: 1 });
 
 tourSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
