@@ -14,8 +14,16 @@
  *   3. Ghi lịch bận vào TourGuide.unavailableDates để API gợi ý hướng dẫn viên
  *      (tham số departureDate) lọc được người đã kín lịch.
  *
+ * LƯU Ý về --no-stagger:
+ * Bước 1 (giãn ngày) KHÔNG idempotent - mỗi lần chạy lại nó cộng thêm offset nữa
+ * nên ngày khởi hành bị trôi dần. Ngày hiện tại đã được giãn đủ, và
+ * scripts/fix-availability-seasonality.js tính giá theo THÁNG của ngày khởi hành,
+ * nên dịch ngày thêm sẽ làm giá lệch khỏi mùa. Dùng --no-stagger để chỉ phân công
+ * hướng dẫn viên mà không chạm vào ngày.
+ *
  * Chạy (từ thư mục backend):
  *   node scripts/build-guide-schedule.js --dry-run
+ *   node scripts/build-guide-schedule.js --no-stagger   (chỉ phân công, giữ nguyên ngày)
  *   node scripts/build-guide-schedule.js
  */
 
@@ -26,6 +34,7 @@ const Tour = require('../models/Tour');
 const TourGuide = require('../models/TourGuide');
 
 const dryRun = process.argv.includes('--dry-run');
+const noStagger = process.argv.includes('--no-stagger');
 
 const parseDays = (d) => parseInt(String(d).match(/\d+/)?.[0] || '5', 10);
 const overlaps = (aFrom, aTo, bFrom, bTo) => aFrom <= bTo && bFrom <= aTo;
@@ -48,7 +57,7 @@ const overlaps = (aFrom, aTo, bFrom, bTo) => aFrom <= bTo && bFrom <= aTo;
 
     // --- 1. Giãn ngày khởi hành ---
     // Mỗi tour lệch đi vài ngày so với tour khác, thay vì tất cả cùng ngày 10 và 24.
-    const offset = (index * 3) % 14;
+    const offset = noStagger ? 0 : (index * 3) % 14;
     const newAvailability = (tour.availability || []).map(slot => {
       const start = new Date(slot.startDate);
       start.setDate(start.getDate() + offset);
@@ -56,7 +65,7 @@ const overlaps = (aFrom, aTo, bFrom, bTo) => aFrom <= bTo && bFrom <= aTo;
       end.setDate(end.getDate() + days - 1);
       return { ...slot.toObject?.() ?? slot, startDate: start, endDate: end };
     });
-    if (newAvailability.length) staggered++;
+    if (newAvailability.length && !noStagger) staggered++;
 
     // --- 2. Phân công từng chuyến ---
     const eligible = (tour.assignedGuide || []).map(String);
