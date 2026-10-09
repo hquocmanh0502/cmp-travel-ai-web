@@ -70,3 +70,11 @@ api-response-analysis.json
 # package-lock.json
 # backend/package-lock.json
 # travelie_dashboard/package-lock.json
+
+# Ban sao luu database - CHUA DU LIEU NGUOI DUNG THAT (84 email, lich su dat tour)
+# Tuyet doi khong day len GitHub. Khoi phuc bang scripts/restore-db.js
+backend/backups/
+
+# Du lieu tai tu nguon ngoai (Tourpedia, OpenStreetMap, Booking.com...)
+# Dung lai theo giay phep goc, khong phan phoi kem repo
+data/external/
