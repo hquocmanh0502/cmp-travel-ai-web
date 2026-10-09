@@ -134,6 +134,19 @@ const check = (name, passed, detail = '') => results.push({ name, passed, detail
   const noProfile = tours.filter(t => !CITY_PROFILES[t.name]);
   check('moi tour co profile thanh pho', noProfile.length === 0, noProfile.map(t => t.name).join(', '));
 
+  // ====================== 6b. hang khach san ======================
+  const tierProblems = [];
+  tours.forEach(t => {
+    const tiers = [...(t.hotelTiers || [])].sort((a, b) => a.level - b.level);
+    for (let i = 1; i < tiers.length; i++) {
+      if (tiers[i].surcharge < tiers[i - 1].surcharge) tierProblems.push(`${t.name}: phu phi nguoc chieu`);
+      if (tiers[i].level === tiers[i - 1].level) tierProblems.push(`${t.name}: trung level ${tiers[i].level}`);
+    }
+    if (tiers.length && tiers[0].surcharge !== 0) tierProblems.push(`${t.name}: muc chuan khac $0`);
+  });
+  check('phu phi khach san tang theo hang, muc chuan $0', tierProblems.length === 0,
+    tierProblems.slice(0, 5).join(', '));
+
   // ====================== 7. toa do & chang di chuyen ======================
   const noCoords = tours.filter(t => !t.location?.coordinates || t.location.coordinates.length !== 2);
   check('moi tour co toa do', noCoords.length === 0, noCoords.map(t => t.name).join(', '));
