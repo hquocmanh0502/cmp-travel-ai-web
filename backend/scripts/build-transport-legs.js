@@ -19,8 +19,12 @@
  *     - mot dau la diem den dao, > 250km             -> bay   : 2.5h + d/750
  *     - cung nuoc, <= 150km, khong co duong sat cao toc -> xe  : 0.5h + d/60
  *     - ca hai co duong sat cao toc, >= 200km        -> tau   : 0.75h + d/180
+ *     - chang qua vung nui, > 600km                  -> bay
+ *     - chang qua vung nui, <= 600km                 -> tau   : 0.5h + d/85 + 1.5h
+ *       (1.5h la thoi gian ra khoi thung lung bang tau dia phuong; dung phu troi
+ *        CO DINH chu khong giam toc ca hanh trinh, neu khong Lauterbrunnen ->
+ *        London 800km se ra 15 gio tau)
  *     - con lai trong cung nhom                      -> tau   : 0.5h + d/85
- *       (qua vung nui thi d/55, vi duong sat mien nui cham hon han)
  *     - hai diem den dao cung nuoc, <= 250km         -> pha   : 1.0h + d/35
  *
  *   Phan cong tren (2.5h bay, 0.75h tau) la thoi gian lam thu tuc / chuyen tau,
@@ -39,7 +43,15 @@ const { CITY_PROFILES } = require('../config/city-profiles');
 
 const dryRun = process.argv.includes('--dry-run');
 
-const LEGS_PER_TOUR = 4;        // so chang luu cho moi tour
+// Luu TAT CA cac chang trong ban kinh REACHABLE_KM, cong them NEAREST_FALLBACK
+// chang gan nhat de tour o vung co lap van co duong di.
+//
+// Vi sao khong chi lay 4 chang gan nhat (cach lam ban dau): trong cum Tay Au
+// cac tour co 8-10 lang gieng trong vong 700km, nen gioi han 4 chang chi phu
+// duoc 66% cac cap di duoc. Paris mat han chang sang Rome, Milan, Barcelona,
+// Venice, Marseille - SmartTour khong ghep noi nhung hanh trinh hoan toan hop ly.
+const REACHABLE_KM = 1500;
+const NEAREST_FALLBACK = 4;
 // Khong dat tran khoang cach: Maldives la diem den co lap, tour gan nhat cach
 // hon 2700km. Neu cat theo nguong thi tour do khong co chang nao, va SmartTour
 // se khong bao gio ghep duoc no vao hanh trinh.
@@ -85,14 +97,19 @@ function resolveLeg(from, to, distanceKm) {
     return { mode: 'bus', durationHours: 0.5 + distanceKm / 60 };
   }
 
-  // Duong sat qua vung nui: toc do thuc te thap hon han vi phai doi tau va duong
-  // vong, va KHONG duoc huong toc do cao toc du hai dau deu co mang cao toc.
-  // Day la ly do chang Lauterbrunnen -> Milan thuc su mat khoang 4 gio chu
-  // khong phai 1 gio nhu du lieu cu ghi.
+  // Chang qua vung nui. Doan trong nui phai di tau dia phuong, doi tau o thi tran
+  // duoi chan nui - mat khoang 1.5h bat ke chang dai bao nhieu. Dung phu troi CO
+  // DINH chu khong giam toc ca hanh trinh: neu giam toc thi chang ngan ra dung
+  // (Lauterbrunnen -> Milan 3.9h, thuc te 4.1h) nhung chang dai sai nang
+  // (-> London 800km se ra 15 gio tau, trong khi thuc te bay het 3-4 gio).
   const throughMountains = from.profile.themes.includes('mountain') ||
                            to.profile.themes.includes('mountain');
   if (throughMountains) {
-    return { mode: 'train', durationHours: 0.5 + distanceKm / 55 };
+    // Qua 600km thi khong ai di tau xuyen nui nua
+    if (distanceKm > 600) {
+      return { mode: 'flight', durationHours: 2.5 + distanceKm / 750 };
+    }
+    return { mode: 'train', durationHours: 0.5 + distanceKm / 85 + 1.5 };
   }
 
   // Duong sat cao toc
@@ -134,14 +151,17 @@ const round1 = (v) => Math.round(v * 10) / 10;
 
   for (const from of nodes) {
     // Tinh khoang cach tu tour nay den tat ca tour khac
-    const candidates = nodes
+    const ranked = nodes
       .filter(to => to.name !== from.name)
-      .map(to => {
-        const distanceKm = haversineKm(from.coords, to.coords);
-        return { to, distanceKm };
-      })
-      .sort((a, b) => a.distanceKm - b.distanceKm)
-      .slice(0, LEGS_PER_TOUR);
+      .map(to => ({ to, distanceKm: haversineKm(from.coords, to.coords) }))
+      .sort((a, b) => a.distanceKm - b.distanceKm);
+
+    // Moi diem den trong ban kinh di duoc, hoac - neu khong co diem nao trong
+    // ban kinh (Maldives) - thi lay mot so chang gan nhat lam duong di toi thieu.
+    const reachable = ranked.filter(c => c.distanceKm <= REACHABLE_KM);
+    const candidates = reachable.length >= NEAREST_FALLBACK
+      ? reachable
+      : ranked.slice(0, NEAREST_FALLBACK);
 
     const legs = candidates.map(({ to, distanceKm }) => {
       const { mode, durationHours } = resolveLeg(from, to, distanceKm);
@@ -187,7 +207,8 @@ const round1 = (v) => Math.round(v * 10) / 10;
   }
 
   // ------------------------------- bao cao -------------------------------
-  console.log(`Da sinh ${legTotal} chang (${LEGS_PER_TOUR} chang/tour).`);
+  const legCounts = nodes.map(x => (x.tour.transportLegs || []).length);
+  console.log(`Da sinh ${legTotal} chang (${Math.min(...legCounts)}-${Math.max(...legCounts)} chang/tour).`);
   console.log('Phuong tien:', Object.entries(modeCount).map(([k, v]) => `${k} ${v}`).join(' | '));
 
   console.log('\n--- Kiem tra lai nhung chang tung bi sai ---');
