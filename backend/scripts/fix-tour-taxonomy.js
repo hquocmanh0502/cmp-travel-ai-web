@@ -145,6 +145,21 @@ function deriveSuitableFor({ themes, phys, pace, difficulty, durationDays, minAg
     out.push('business');
   }
 
+  // Luoi an toan: khong tour nao duoc phep RONG nhom khach.
+  //
+  // Rome tung roi qua ca 7 luat: 7 ngay (dai qua cho business), pace packed
+  // (loai couple), phys 3 (loai family va seniors), doan 12 nguoi (loai solo),
+  // khong co nightlife/shopping (loai friends). Nhung mot tour van hoa 7 ngay o
+  // Rome ro rang la phu hop voi khach di mot minh - de rong la loi du lieu, vi
+  // moi tour deu phu hop voi MOT AI DO.
+  //
+  // Chon theo tin hieu noi dung manh nhat, khong gan bua.
+  if (!out.length) {
+    if (overlaps(themes, cityish) >= 2) out.push('solo');
+    else if (overlaps(themes, ['beach', 'island', 'wellness', 'nature']) >= 1) out.push('couple');
+    else out.push('friends');
+  }
+
   return out;
 }
 
@@ -279,6 +294,7 @@ function deriveSuitableFor({ themes, phys, pace, difficulty, durationDays, minAg
   console.log('  seniors   : phys<=2 VA pace != packed VA difficulty != challenging');
   console.log('  honeymoon : >=1 chu de thuoc {romantic,island} HOAC (beach VA wellness)');
   console.log('  business  : <=5 ngay VA pace != relaxed VA khong phai dao VA >=2 chu de thanh pho');
+  console.log('  (luoi an toan: neu khong luat nao khop thi gan 1 nhom theo tin hieu noi dung manh nhat)');
 
   if (dryRun) console.log('\nDRY-RUN: chua ghi gi vao DB.');
   await mongoose.disconnect();

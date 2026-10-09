@@ -99,6 +99,10 @@ const check = (name, passed, detail = '') => results.push({ name, passed, detail
     tooCommonAud.map(([k, c]) => `${k} ${Math.round(c / n * 100)}%`).join(', ') ||
     `cao nhat: ${Object.entries(audCount).sort((a, b) => b[1] - a[1])[0].map(String).join(' ')}`);
 
+  const noAudience = tours.filter(t => !(t.suitableFor || []).length);
+  check('moi tour co >=1 nhom khach phu hop', noAudience.length === 0,
+    noAudience.map(t => t.name).join(', '));
+
   const invalidAud = tours.filter(t => (t.suitableFor || []).some(x => !AUDIENCES.includes(x)));
   check('moi nhom khach nam trong enum', invalidAud.length === 0,
     invalidAud.map(t => t.name).join(', '));
