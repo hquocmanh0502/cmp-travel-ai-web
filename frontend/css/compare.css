@@ -89,23 +89,6 @@
     cursor: not-allowed;
 }
 
-/* Nút So sánh trên thẻ tour ở trang destination */
-.card-compare {
-    border: 1px solid #ff6600;
-    background: #fff;
-    color: #ff6600;
-    border-radius: 6px;
-    padding: 5px 12px;
-    font-size: 13px;
-    cursor: pointer;
-    margin-top: 8px;
-}
-
-.card-compare.active {
-    background: #ff6600;
-    color: #fff;
-}
-
 /* ------------------------------------------------------------ compare.html */
 /* Theo đúng khuôn của my-wishlist.css để không lệch so với các trang khác */
 .compare-container {

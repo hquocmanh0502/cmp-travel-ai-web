@@ -469,28 +469,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         cardBody.appendChild(cardPrice);
         cardBody.appendChild(cardRate);
 
-        // Nút so sánh ngay trên thẻ: trước đây chỉ trang chi tiết mới có nút này,
-        // nhưng muốn so sánh thì chọn từ danh sách mới tiện.
-        const tourIdForCompare = String(destination._id || destination.id);
-        const compareBtn = document.createElement("button");
-        compareBtn.type = "button";
-        compareBtn.className = "card-compare";
-        const selected = window.CompareBar
-          ? window.CompareBar.read().includes(tourIdForCompare)
-          : false;
-        compareBtn.textContent = selected ? "✓ Đang so sánh" : "⇄ So sánh";
-        if (selected) compareBtn.classList.add("active");
-
-        compareBtn.addEventListener("click", (e) => {
-          // Chặn click lan ra thẻ, nếu không sẽ nhảy sang trang chi tiết.
-          e.stopPropagation();
-          if (!window.CompareBar) return;
-          const nowSelected = window.CompareBar.toggle(tourIdForCompare, destination.name);
-          compareBtn.classList.toggle("active", nowSelected);
-          compareBtn.textContent = nowSelected ? "✓ Đang so sánh" : "⇄ So sánh";
-        });
-        cardBody.appendChild(compareBtn);
-
         card.appendChild(img);
         card.appendChild(cardBody);
         col.appendChild(card);
