@@ -62,6 +62,8 @@ debug-*
 manual-*
 performance_test.*
 !backend/scripts/test-auth.js
+!backend/scripts/test-pricing.js
+!backend/scripts/test-departures.js
 
 # Documentation that can be recreated
 api-response-analysis.json
