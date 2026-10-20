@@ -105,8 +105,8 @@ function loadFromLocalStorage() {
             // Default preferences
             userPreferences = {
                 budget: {
-                    min: 500,
-                    max: 5000
+                    min: 3000,
+                    max: 8000
                 },
                 travelStyle: ['adventure', 'cultural'],
                 accommodation: {
@@ -140,8 +140,8 @@ function loadFromLocalStorage() {
 function mapApiToFormData(apiPreferences) {
     return {
         budget: {
-            min: apiPreferences.budgetRange?.min || 500,
-            max: apiPreferences.budgetRange?.max || 5000
+            min: apiPreferences.budgetRange?.min || 3000,
+            max: apiPreferences.budgetRange?.max || 8000
         },
         travelStyle: apiPreferences.travelStyle || [],
         accommodation: {
@@ -164,8 +164,8 @@ function populatePreferencesForm() {
     const budgetMax = document.getElementById('budgetMax');
     
     if (budgetMin && budgetMax) {
-        budgetMin.value = userPreferences.budget?.min || 500;
-        budgetMax.value = userPreferences.budget?.max || 5000;
+        budgetMin.value = userPreferences.budget?.min || 3000;
+        budgetMax.value = userPreferences.budget?.max || 8000;
         updateRangeDisplay('budgetMin');
         updateRangeDisplay('budgetMax');
     }
@@ -504,8 +504,8 @@ async function savePreferences() {
 function mapFormToApiData(formData) {
     return {
         budgetRange: {
-            min: formData.budget?.min || 500,
-            max: formData.budget?.max || 5000
+            min: formData.budget?.min || 3000,
+            max: formData.budget?.max || 8000
         },
         travelStyle: formData.travelStyle || [],
         activities: formData.activities || [],
@@ -530,8 +530,8 @@ function mapFormToApiData(formData) {
 function collectFormData() {
     const formData = {
         budget: {
-            min: parseInt(document.getElementById('budgetMin')?.value || 500),
-            max: parseInt(document.getElementById('budgetMax')?.value || 5000)
+            min: parseInt(document.getElementById('budgetMin')?.value || 3000),
+            max: parseInt(document.getElementById('budgetMax')?.value || 8000)
         },
         travelStyle: [],
         accommodation: {

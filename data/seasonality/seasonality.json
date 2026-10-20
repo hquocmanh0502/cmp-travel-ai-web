@@ -1,0 +1,1914 @@
+{
+  "fetchedAt": "2026-10-19T16:03:51.293Z",
+  "source": "Open-Meteo Historical Weather API (ERA5), 2016-01-01..2025-12-31, CC BY 4.0 - https://open-meteo.com",
+  "cities": [
+    {
+      "city": "London",
+      "climate": [
+        {
+          "tmaxC": 7.7,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 9.3,
+          "rainyDays": 11.2
+        },
+        {
+          "tmaxC": 11.3,
+          "rainyDays": 12.9
+        },
+        {
+          "tmaxC": 14.2,
+          "rainyDays": 9.5
+        },
+        {
+          "tmaxC": 17.9,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 21.4,
+          "rainyDays": 10.5
+        },
+        {
+          "tmaxC": 22.9,
+          "rainyDays": 10.4
+        },
+        {
+          "tmaxC": 22.6,
+          "rainyDays": 8.8
+        },
+        {
+          "tmaxC": 19.9,
+          "rainyDays": 11.2
+        },
+        {
+          "tmaxC": 15.6,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 11,
+          "rainyDays": 12
+        },
+        {
+          "tmaxC": 9,
+          "rainyDays": 11.6
+        }
+      ]
+    },
+    {
+      "city": "Florence",
+      "climate": [
+        {
+          "tmaxC": 10.8,
+          "rainyDays": 11.1
+        },
+        {
+          "tmaxC": 13,
+          "rainyDays": 10.9
+        },
+        {
+          "tmaxC": 15.5,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 19.2,
+          "rainyDays": 10.3
+        },
+        {
+          "tmaxC": 22.6,
+          "rainyDays": 14.3
+        },
+        {
+          "tmaxC": 28.9,
+          "rainyDays": 7.4
+        },
+        {
+          "tmaxC": 32.1,
+          "rainyDays": 5.2
+        },
+        {
+          "tmaxC": 32.2,
+          "rainyDays": 6.4
+        },
+        {
+          "tmaxC": 26.6,
+          "rainyDays": 9.6
+        },
+        {
+          "tmaxC": 21.5,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 15.4,
+          "rainyDays": 13.2
+        },
+        {
+          "tmaxC": 11.9,
+          "rainyDays": 13
+        }
+      ]
+    },
+    {
+      "city": "Valencia",
+      "climate": [
+        {
+          "tmaxC": 16.4,
+          "rainyDays": 3.6
+        },
+        {
+          "tmaxC": 17.3,
+          "rainyDays": 3.7
+        },
+        {
+          "tmaxC": 18.6,
+          "rainyDays": 8.5
+        },
+        {
+          "tmaxC": 20.2,
+          "rainyDays": 6.6
+        },
+        {
+          "tmaxC": 23.7,
+          "rainyDays": 4.4
+        },
+        {
+          "tmaxC": 27.8,
+          "rainyDays": 3.4
+        },
+        {
+          "tmaxC": 30.4,
+          "rainyDays": 2
+        },
+        {
+          "tmaxC": 30.8,
+          "rainyDays": 3.3
+        },
+        {
+          "tmaxC": 27.7,
+          "rainyDays": 7.2
+        },
+        {
+          "tmaxC": 24.2,
+          "rainyDays": 6.1
+        },
+        {
+          "tmaxC": 19.8,
+          "rainyDays": 5.8
+        },
+        {
+          "tmaxC": 17.1,
+          "rainyDays": 4.4
+        }
+      ]
+    },
+    {
+      "city": "Marseille",
+      "climate": [
+        {
+          "tmaxC": 11.5,
+          "rainyDays": 6.3
+        },
+        {
+          "tmaxC": 12.9,
+          "rainyDays": 7
+        },
+        {
+          "tmaxC": 14.7,
+          "rainyDays": 6.1
+        },
+        {
+          "tmaxC": 17.2,
+          "rainyDays": 7.1
+        },
+        {
+          "tmaxC": 20.6,
+          "rainyDays": 7.2
+        },
+        {
+          "tmaxC": 25.5,
+          "rainyDays": 4.3
+        },
+        {
+          "tmaxC": 28.4,
+          "rainyDays": 1.3
+        },
+        {
+          "tmaxC": 28.3,
+          "rainyDays": 2
+        },
+        {
+          "tmaxC": 24.3,
+          "rainyDays": 5.1
+        },
+        {
+          "tmaxC": 20.5,
+          "rainyDays": 8.2
+        },
+        {
+          "tmaxC": 15.3,
+          "rainyDays": 9.9
+        },
+        {
+          "tmaxC": 12.8,
+          "rainyDays": 7.4
+        }
+      ]
+    },
+    {
+      "city": "Toronto",
+      "climate": [
+        {
+          "tmaxC": 0,
+          "rainyDays": 9.7
+        },
+        {
+          "tmaxC": 1.5,
+          "rainyDays": 9.7
+        },
+        {
+          "tmaxC": 5.3,
+          "rainyDays": 10.5
+        },
+        {
+          "tmaxC": 10.6,
+          "rainyDays": 12.8
+        },
+        {
+          "tmaxC": 17.4,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 23.4,
+          "rainyDays": 10.5
+        },
+        {
+          "tmaxC": 26.6,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 25.7,
+          "rainyDays": 10
+        },
+        {
+          "tmaxC": 22.2,
+          "rainyDays": 9
+        },
+        {
+          "tmaxC": 15.4,
+          "rainyDays": 11.6
+        },
+        {
+          "tmaxC": 7.8,
+          "rainyDays": 9.6
+        },
+        {
+          "tmaxC": 2.5,
+          "rainyDays": 12.7
+        }
+      ]
+    },
+    {
+      "city": "Athens",
+      "climate": [
+        {
+          "tmaxC": 12.4,
+          "rainyDays": 7.8
+        },
+        {
+          "tmaxC": 13.7,
+          "rainyDays": 7.2
+        },
+        {
+          "tmaxC": 16.1,
+          "rainyDays": 6.5
+        },
+        {
+          "tmaxC": 20.4,
+          "rainyDays": 5.9
+        },
+        {
+          "tmaxC": 25,
+          "rainyDays": 5.3
+        },
+        {
+          "tmaxC": 30.5,
+          "rainyDays": 5.1
+        },
+        {
+          "tmaxC": 33.8,
+          "rainyDays": 2.1
+        },
+        {
+          "tmaxC": 33,
+          "rainyDays": 2.4
+        },
+        {
+          "tmaxC": 28.6,
+          "rainyDays": 2.9
+        },
+        {
+          "tmaxC": 23.4,
+          "rainyDays": 3.3
+        },
+        {
+          "tmaxC": 18.7,
+          "rainyDays": 8.3
+        },
+        {
+          "tmaxC": 14.2,
+          "rainyDays": 8.9
+        }
+      ]
+    },
+    {
+      "city": "Malacca",
+      "climate": [
+        {
+          "tmaxC": 29.5,
+          "rainyDays": 21.4
+        },
+        {
+          "tmaxC": 30.9,
+          "rainyDays": 16.9
+        },
+        {
+          "tmaxC": 30.9,
+          "rainyDays": 24.3
+        },
+        {
+          "tmaxC": 30.4,
+          "rainyDays": 27.9
+        },
+        {
+          "tmaxC": 30.2,
+          "rainyDays": 26.2
+        },
+        {
+          "tmaxC": 29.7,
+          "rainyDays": 21.9
+        },
+        {
+          "tmaxC": 29.6,
+          "rainyDays": 21.4
+        },
+        {
+          "tmaxC": 29.3,
+          "rainyDays": 23.1
+        },
+        {
+          "tmaxC": 29.3,
+          "rainyDays": 23.3
+        },
+        {
+          "tmaxC": 29.7,
+          "rainyDays": 24.4
+        },
+        {
+          "tmaxC": 29.4,
+          "rainyDays": 26.9
+        },
+        {
+          "tmaxC": 29.4,
+          "rainyDays": 25.4
+        }
+      ]
+    },
+    {
+      "city": "Causeway Bay",
+      "climate": [
+        {
+          "tmaxC": 19.1,
+          "rainyDays": 6
+        },
+        {
+          "tmaxC": 19.9,
+          "rainyDays": 7.2
+        },
+        {
+          "tmaxC": 22.6,
+          "rainyDays": 13
+        },
+        {
+          "tmaxC": 25.3,
+          "rainyDays": 16
+        },
+        {
+          "tmaxC": 27.6,
+          "rainyDays": 21.8
+        },
+        {
+          "tmaxC": 29.3,
+          "rainyDays": 27.5
+        },
+        {
+          "tmaxC": 30.3,
+          "rainyDays": 26.1
+        },
+        {
+          "tmaxC": 29.9,
+          "rainyDays": 26.9
+        },
+        {
+          "tmaxC": 29.7,
+          "rainyDays": 21.8
+        },
+        {
+          "tmaxC": 27.5,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 24.5,
+          "rainyDays": 6.3
+        },
+        {
+          "tmaxC": 20.6,
+          "rainyDays": 3.5
+        }
+      ]
+    },
+    {
+      "city": "Manchester",
+      "climate": [
+        {
+          "tmaxC": 7,
+          "rainyDays": 16.5
+        },
+        {
+          "tmaxC": 8.5,
+          "rainyDays": 15.9
+        },
+        {
+          "tmaxC": 10.4,
+          "rainyDays": 15.6
+        },
+        {
+          "tmaxC": 13,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 16.7,
+          "rainyDays": 13.5
+        },
+        {
+          "tmaxC": 19.3,
+          "rainyDays": 15.7
+        },
+        {
+          "tmaxC": 20.4,
+          "rainyDays": 18.7
+        },
+        {
+          "tmaxC": 19.9,
+          "rainyDays": 17
+        },
+        {
+          "tmaxC": 17.7,
+          "rainyDays": 15.5
+        },
+        {
+          "tmaxC": 14.1,
+          "rainyDays": 17.4
+        },
+        {
+          "tmaxC": 9.9,
+          "rainyDays": 16.7
+        },
+        {
+          "tmaxC": 8.2,
+          "rainyDays": 17.6
+        }
+      ]
+    },
+    {
+      "city": "Rome",
+      "climate": [
+        {
+          "tmaxC": 12.5,
+          "rainyDays": 9.8
+        },
+        {
+          "tmaxC": 14.5,
+          "rainyDays": 8.2
+        },
+        {
+          "tmaxC": 16.6,
+          "rainyDays": 11.1
+        },
+        {
+          "tmaxC": 19.7,
+          "rainyDays": 9.9
+        },
+        {
+          "tmaxC": 23.4,
+          "rainyDays": 12.1
+        },
+        {
+          "tmaxC": 29.8,
+          "rainyDays": 4.8
+        },
+        {
+          "tmaxC": 33.1,
+          "rainyDays": 4
+        },
+        {
+          "tmaxC": 32.8,
+          "rainyDays": 5.1
+        },
+        {
+          "tmaxC": 27.4,
+          "rainyDays": 9.1
+        },
+        {
+          "tmaxC": 22.7,
+          "rainyDays": 10.6
+        },
+        {
+          "tmaxC": 17.2,
+          "rainyDays": 13.1
+        },
+        {
+          "tmaxC": 13.6,
+          "rainyDays": 10.1
+        }
+      ]
+    },
+    {
+      "city": "Venice",
+      "climate": [
+        {
+          "tmaxC": 7.7,
+          "rainyDays": 6.7
+        },
+        {
+          "tmaxC": 9.9,
+          "rainyDays": 6.7
+        },
+        {
+          "tmaxC": 13.1,
+          "rainyDays": 8.3
+        },
+        {
+          "tmaxC": 16.8,
+          "rainyDays": 9.3
+        },
+        {
+          "tmaxC": 20.8,
+          "rainyDays": 14.6
+        },
+        {
+          "tmaxC": 26.2,
+          "rainyDays": 8.2
+        },
+        {
+          "tmaxC": 28.4,
+          "rainyDays": 8.5
+        },
+        {
+          "tmaxC": 28.7,
+          "rainyDays": 7.6
+        },
+        {
+          "tmaxC": 24,
+          "rainyDays": 9.9
+        },
+        {
+          "tmaxC": 19,
+          "rainyDays": 9
+        },
+        {
+          "tmaxC": 13,
+          "rainyDays": 10
+        },
+        {
+          "tmaxC": 8.8,
+          "rainyDays": 7.5
+        }
+      ]
+    },
+    {
+      "city": "Paris",
+      "climate": [
+        {
+          "tmaxC": 7.4,
+          "rainyDays": 12.8
+        },
+        {
+          "tmaxC": 9.7,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 12.5,
+          "rainyDays": 13.1
+        },
+        {
+          "tmaxC": 16,
+          "rainyDays": 10
+        },
+        {
+          "tmaxC": 19.5,
+          "rainyDays": 12.5
+        },
+        {
+          "tmaxC": 23.8,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 25.4,
+          "rainyDays": 9.6
+        },
+        {
+          "tmaxC": 25.5,
+          "rainyDays": 9.7
+        },
+        {
+          "tmaxC": 21.9,
+          "rainyDays": 9.2
+        },
+        {
+          "tmaxC": 17.2,
+          "rainyDays": 12.4
+        },
+        {
+          "tmaxC": 11.1,
+          "rainyDays": 11.9
+        },
+        {
+          "tmaxC": 8.5,
+          "rainyDays": 13.2
+        }
+      ]
+    },
+    {
+      "city": "Bordeaux",
+      "climate": [
+        {
+          "tmaxC": 10.2,
+          "rainyDays": 13.1
+        },
+        {
+          "tmaxC": 12.9,
+          "rainyDays": 10.3
+        },
+        {
+          "tmaxC": 15,
+          "rainyDays": 12.9
+        },
+        {
+          "tmaxC": 18,
+          "rainyDays": 11.6
+        },
+        {
+          "tmaxC": 21.2,
+          "rainyDays": 12.5
+        },
+        {
+          "tmaxC": 25.2,
+          "rainyDays": 12.5
+        },
+        {
+          "tmaxC": 27.2,
+          "rainyDays": 7.6
+        },
+        {
+          "tmaxC": 28,
+          "rainyDays": 7.7
+        },
+        {
+          "tmaxC": 24.5,
+          "rainyDays": 10.1
+        },
+        {
+          "tmaxC": 20.3,
+          "rainyDays": 11.5
+        },
+        {
+          "tmaxC": 14.3,
+          "rainyDays": 13.5
+        },
+        {
+          "tmaxC": 11.5,
+          "rainyDays": 12.8
+        }
+      ]
+    },
+    {
+      "city": "Porto",
+      "climate": [
+        {
+          "tmaxC": 13.6,
+          "rainyDays": 12.5
+        },
+        {
+          "tmaxC": 15.1,
+          "rainyDays": 10.6
+        },
+        {
+          "tmaxC": 15.7,
+          "rainyDays": 14.4
+        },
+        {
+          "tmaxC": 17.7,
+          "rainyDays": 12.5
+        },
+        {
+          "tmaxC": 20,
+          "rainyDays": 9.5
+        },
+        {
+          "tmaxC": 21.7,
+          "rainyDays": 7.8
+        },
+        {
+          "tmaxC": 24.6,
+          "rainyDays": 3.2
+        },
+        {
+          "tmaxC": 24.8,
+          "rainyDays": 2.4
+        },
+        {
+          "tmaxC": 23.4,
+          "rainyDays": 5.8
+        },
+        {
+          "tmaxC": 20.9,
+          "rainyDays": 12.5
+        },
+        {
+          "tmaxC": 16.5,
+          "rainyDays": 14.9
+        },
+        {
+          "tmaxC": 14.5,
+          "rainyDays": 14.5
+        }
+      ]
+    },
+    {
+      "city": "Kazan",
+      "climate": [
+        {
+          "tmaxC": -7.5,
+          "rainyDays": 11.5
+        },
+        {
+          "tmaxC": -6.1,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 0.1,
+          "rainyDays": 9.4
+        },
+        {
+          "tmaxC": 9.9,
+          "rainyDays": 9.2
+        },
+        {
+          "tmaxC": 17.8,
+          "rainyDays": 9.4
+        },
+        {
+          "tmaxC": 22.1,
+          "rainyDays": 8.5
+        },
+        {
+          "tmaxC": 25.3,
+          "rainyDays": 8.4
+        },
+        {
+          "tmaxC": 24,
+          "rainyDays": 7.6
+        },
+        {
+          "tmaxC": 16.6,
+          "rainyDays": 8.7
+        },
+        {
+          "tmaxC": 8.8,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 0.6,
+          "rainyDays": 11.1
+        },
+        {
+          "tmaxC": -5.3,
+          "rainyDays": 11.9
+        }
+      ]
+    },
+    {
+      "city": "Bangkok",
+      "climate": [
+        {
+          "tmaxC": 31.5,
+          "rainyDays": 3.8
+        },
+        {
+          "tmaxC": 32.4,
+          "rainyDays": 6.1
+        },
+        {
+          "tmaxC": 33.5,
+          "rainyDays": 7.7
+        },
+        {
+          "tmaxC": 34.3,
+          "rainyDays": 11.7
+        },
+        {
+          "tmaxC": 33.4,
+          "rainyDays": 20.7
+        },
+        {
+          "tmaxC": 32.5,
+          "rainyDays": 23.9
+        },
+        {
+          "tmaxC": 31.5,
+          "rainyDays": 26
+        },
+        {
+          "tmaxC": 31.6,
+          "rainyDays": 25.8
+        },
+        {
+          "tmaxC": 31,
+          "rainyDays": 27.2
+        },
+        {
+          "tmaxC": 30.9,
+          "rainyDays": 22.9
+        },
+        {
+          "tmaxC": 31.2,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 31.1,
+          "rainyDays": 4
+        }
+      ]
+    },
+    {
+      "city": "Munich",
+      "climate": [
+        {
+          "tmaxC": 4.2,
+          "rainyDays": 14
+        },
+        {
+          "tmaxC": 7.3,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 10.4,
+          "rainyDays": 12.4
+        },
+        {
+          "tmaxC": 14.3,
+          "rainyDays": 12.4
+        },
+        {
+          "tmaxC": 17.7,
+          "rainyDays": 15.8
+        },
+        {
+          "tmaxC": 23.1,
+          "rainyDays": 15.1
+        },
+        {
+          "tmaxC": 24.1,
+          "rainyDays": 15
+        },
+        {
+          "tmaxC": 24.1,
+          "rainyDays": 14.2
+        },
+        {
+          "tmaxC": 19.5,
+          "rainyDays": 12.7
+        },
+        {
+          "tmaxC": 15.2,
+          "rainyDays": 11.8
+        },
+        {
+          "tmaxC": 8.2,
+          "rainyDays": 12.3
+        },
+        {
+          "tmaxC": 5.1,
+          "rainyDays": 12.9
+        }
+      ]
+    },
+    {
+      "city": "Maldives",
+      "climate": [
+        {
+          "tmaxC": 27.8,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 28.2,
+          "rainyDays": 7.9
+        },
+        {
+          "tmaxC": 28.7,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 29.2,
+          "rainyDays": 17.5
+        },
+        {
+          "tmaxC": 29.2,
+          "rainyDays": 24
+        },
+        {
+          "tmaxC": 28.9,
+          "rainyDays": 15.1
+        },
+        {
+          "tmaxC": 28.7,
+          "rainyDays": 18.2
+        },
+        {
+          "tmaxC": 28.5,
+          "rainyDays": 15.9
+        },
+        {
+          "tmaxC": 28.3,
+          "rainyDays": 18.6
+        },
+        {
+          "tmaxC": 28.3,
+          "rainyDays": 20.4
+        },
+        {
+          "tmaxC": 28,
+          "rainyDays": 20
+        },
+        {
+          "tmaxC": 28.1,
+          "rainyDays": 18.9
+        }
+      ]
+    },
+    {
+      "city": "Amsterdam",
+      "climate": [
+        {
+          "tmaxC": 6.7,
+          "rainyDays": 14.5
+        },
+        {
+          "tmaxC": 8,
+          "rainyDays": 13.1
+        },
+        {
+          "tmaxC": 10.4,
+          "rainyDays": 12.4
+        },
+        {
+          "tmaxC": 13.3,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 17.5,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 20.8,
+          "rainyDays": 12.3
+        },
+        {
+          "tmaxC": 21.7,
+          "rainyDays": 14.5
+        },
+        {
+          "tmaxC": 22.1,
+          "rainyDays": 13.2
+        },
+        {
+          "tmaxC": 19.5,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 15.2,
+          "rainyDays": 15.4
+        },
+        {
+          "tmaxC": 10.1,
+          "rainyDays": 14.9
+        },
+        {
+          "tmaxC": 7.7,
+          "rainyDays": 14.5
+        }
+      ]
+    },
+    {
+      "city": "Montreal",
+      "climate": [
+        {
+          "tmaxC": -4.2,
+          "rainyDays": 12.1
+        },
+        {
+          "tmaxC": -2.2,
+          "rainyDays": 11.5
+        },
+        {
+          "tmaxC": 3.5,
+          "rainyDays": 12.4
+        },
+        {
+          "tmaxC": 10.9,
+          "rainyDays": 12.5
+        },
+        {
+          "tmaxC": 18.9,
+          "rainyDays": 10.8
+        },
+        {
+          "tmaxC": 24,
+          "rainyDays": 13
+        },
+        {
+          "tmaxC": 26.7,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 25.4,
+          "rainyDays": 12.6
+        },
+        {
+          "tmaxC": 21.5,
+          "rainyDays": 8.2
+        },
+        {
+          "tmaxC": 14.6,
+          "rainyDays": 11.8
+        },
+        {
+          "tmaxC": 5.6,
+          "rainyDays": 13.1
+        },
+        {
+          "tmaxC": -0.9,
+          "rainyDays": 12.9
+        }
+      ]
+    },
+    {
+      "city": "Osaka",
+      "climate": [
+        {
+          "tmaxC": 9.1,
+          "rainyDays": 5.9
+        },
+        {
+          "tmaxC": 9.9,
+          "rainyDays": 6.9
+        },
+        {
+          "tmaxC": 14.1,
+          "rainyDays": 10.6
+        },
+        {
+          "tmaxC": 19,
+          "rainyDays": 9.6
+        },
+        {
+          "tmaxC": 23.2,
+          "rainyDays": 11.8
+        },
+        {
+          "tmaxC": 26.7,
+          "rainyDays": 13.8
+        },
+        {
+          "tmaxC": 31,
+          "rainyDays": 16
+        },
+        {
+          "tmaxC": 32.8,
+          "rainyDays": 13.3
+        },
+        {
+          "tmaxC": 29.3,
+          "rainyDays": 14.7
+        },
+        {
+          "tmaxC": 22.9,
+          "rainyDays": 11.2
+        },
+        {
+          "tmaxC": 17.2,
+          "rainyDays": 7.3
+        },
+        {
+          "tmaxC": 11.6,
+          "rainyDays": 6.6
+        }
+      ]
+    },
+    {
+      "city": "Phuket",
+      "climate": [
+        {
+          "tmaxC": 29.9,
+          "rainyDays": 11
+        },
+        {
+          "tmaxC": 31.4,
+          "rainyDays": 7
+        },
+        {
+          "tmaxC": 32.3,
+          "rainyDays": 10.6
+        },
+        {
+          "tmaxC": 31.7,
+          "rainyDays": 18.3
+        },
+        {
+          "tmaxC": 30.5,
+          "rainyDays": 26.4
+        },
+        {
+          "tmaxC": 29.8,
+          "rainyDays": 21.6
+        },
+        {
+          "tmaxC": 29.6,
+          "rainyDays": 21.2
+        },
+        {
+          "tmaxC": 29.4,
+          "rainyDays": 23.4
+        },
+        {
+          "tmaxC": 28.9,
+          "rainyDays": 24.5
+        },
+        {
+          "tmaxC": 28.9,
+          "rainyDays": 28.2
+        },
+        {
+          "tmaxC": 28.8,
+          "rainyDays": 26.3
+        },
+        {
+          "tmaxC": 29.1,
+          "rainyDays": 16.6
+        }
+      ]
+    },
+    {
+      "city": "Milan",
+      "climate": [
+        {
+          "tmaxC": 7.7,
+          "rainyDays": 7.1
+        },
+        {
+          "tmaxC": 11,
+          "rainyDays": 8.5
+        },
+        {
+          "tmaxC": 14.6,
+          "rainyDays": 9.3
+        },
+        {
+          "tmaxC": 18.6,
+          "rainyDays": 8.9
+        },
+        {
+          "tmaxC": 22,
+          "rainyDays": 16.6
+        },
+        {
+          "tmaxC": 27.9,
+          "rainyDays": 10.6
+        },
+        {
+          "tmaxC": 29.7,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 29.5,
+          "rainyDays": 10.4
+        },
+        {
+          "tmaxC": 24.4,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 19.1,
+          "rainyDays": 10.5
+        },
+        {
+          "tmaxC": 12.2,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 7.9,
+          "rainyDays": 7.8
+        }
+      ]
+    },
+    {
+      "city": "Lisbon",
+      "climate": [
+        {
+          "tmaxC": 14.9,
+          "rainyDays": 8.1
+        },
+        {
+          "tmaxC": 16.3,
+          "rainyDays": 7.2
+        },
+        {
+          "tmaxC": 17.2,
+          "rainyDays": 10.5
+        },
+        {
+          "tmaxC": 19.5,
+          "rainyDays": 10
+        },
+        {
+          "tmaxC": 22.8,
+          "rainyDays": 4.7
+        },
+        {
+          "tmaxC": 25.1,
+          "rainyDays": 4
+        },
+        {
+          "tmaxC": 28.1,
+          "rainyDays": 1
+        },
+        {
+          "tmaxC": 28.8,
+          "rainyDays": 0.5
+        },
+        {
+          "tmaxC": 26.4,
+          "rainyDays": 4
+        },
+        {
+          "tmaxC": 23.3,
+          "rainyDays": 8.8
+        },
+        {
+          "tmaxC": 18,
+          "rainyDays": 10.9
+        },
+        {
+          "tmaxC": 15.7,
+          "rainyDays": 8.7
+        }
+      ]
+    },
+    {
+      "city": "Moscow",
+      "climate": [
+        {
+          "tmaxC": -4.2,
+          "rainyDays": 13.1
+        },
+        {
+          "tmaxC": -2.9,
+          "rainyDays": 8.8
+        },
+        {
+          "tmaxC": 2.8,
+          "rainyDays": 9.1
+        },
+        {
+          "tmaxC": 11.5,
+          "rainyDays": 10.3
+        },
+        {
+          "tmaxC": 17.6,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 22.5,
+          "rainyDays": 11.2
+        },
+        {
+          "tmaxC": 24.3,
+          "rainyDays": 14.5
+        },
+        {
+          "tmaxC": 23.3,
+          "rainyDays": 9.4
+        },
+        {
+          "tmaxC": 17.2,
+          "rainyDays": 8.3
+        },
+        {
+          "tmaxC": 9.6,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 2.2,
+          "rainyDays": 11.1
+        },
+        {
+          "tmaxC": -2,
+          "rainyDays": 13.5
+        }
+      ]
+    },
+    {
+      "city": "Kuala Lumpur",
+      "climate": [
+        {
+          "tmaxC": 30.4,
+          "rainyDays": 23.7
+        },
+        {
+          "tmaxC": 31.6,
+          "rainyDays": 18
+        },
+        {
+          "tmaxC": 31.7,
+          "rainyDays": 25.1
+        },
+        {
+          "tmaxC": 31.4,
+          "rainyDays": 28.3
+        },
+        {
+          "tmaxC": 31.2,
+          "rainyDays": 27.3
+        },
+        {
+          "tmaxC": 31,
+          "rainyDays": 22.4
+        },
+        {
+          "tmaxC": 31.3,
+          "rainyDays": 21
+        },
+        {
+          "tmaxC": 30.9,
+          "rainyDays": 24.6
+        },
+        {
+          "tmaxC": 30.8,
+          "rainyDays": 24.3
+        },
+        {
+          "tmaxC": 30.7,
+          "rainyDays": 23.2
+        },
+        {
+          "tmaxC": 30.1,
+          "rainyDays": 28.7
+        },
+        {
+          "tmaxC": 30,
+          "rainyDays": 27.2
+        }
+      ]
+    },
+    {
+      "city": "Kyoto",
+      "climate": [
+        {
+          "tmaxC": 8.2,
+          "rainyDays": 7.5
+        },
+        {
+          "tmaxC": 9.1,
+          "rainyDays": 7.4
+        },
+        {
+          "tmaxC": 13.7,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 18.8,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 23.3,
+          "rainyDays": 11.8
+        },
+        {
+          "tmaxC": 26.8,
+          "rainyDays": 13.9
+        },
+        {
+          "tmaxC": 30.8,
+          "rainyDays": 16.9
+        },
+        {
+          "tmaxC": 32.4,
+          "rainyDays": 13.3
+        },
+        {
+          "tmaxC": 28.4,
+          "rainyDays": 15.4
+        },
+        {
+          "tmaxC": 22,
+          "rainyDays": 11.8
+        },
+        {
+          "tmaxC": 16.4,
+          "rainyDays": 6.6
+        },
+        {
+          "tmaxC": 10.6,
+          "rainyDays": 7.2
+        }
+      ]
+    },
+    {
+      "city": "Delhi",
+      "climate": [
+        {
+          "tmaxC": 19.3,
+          "rainyDays": 3.7
+        },
+        {
+          "tmaxC": 23.8,
+          "rainyDays": 3
+        },
+        {
+          "tmaxC": 29.7,
+          "rainyDays": 3.8
+        },
+        {
+          "tmaxC": 36.7,
+          "rainyDays": 2.6
+        },
+        {
+          "tmaxC": 38.7,
+          "rainyDays": 5.2
+        },
+        {
+          "tmaxC": 38.3,
+          "rainyDays": 9.4
+        },
+        {
+          "tmaxC": 33.8,
+          "rainyDays": 22.6
+        },
+        {
+          "tmaxC": 32.5,
+          "rainyDays": 20.6
+        },
+        {
+          "tmaxC": 32.6,
+          "rainyDays": 11.7
+        },
+        {
+          "tmaxC": 31.8,
+          "rainyDays": 2.6
+        },
+        {
+          "tmaxC": 26.9,
+          "rainyDays": 1.1
+        },
+        {
+          "tmaxC": 21.6,
+          "rainyDays": 1.3
+        }
+      ]
+    },
+    {
+      "city": "Lyon",
+      "climate": [
+        {
+          "tmaxC": 6.9,
+          "rainyDays": 12.1
+        },
+        {
+          "tmaxC": 10.1,
+          "rainyDays": 8.4
+        },
+        {
+          "tmaxC": 13.4,
+          "rainyDays": 11.2
+        },
+        {
+          "tmaxC": 16.8,
+          "rainyDays": 10.1
+        },
+        {
+          "tmaxC": 20.5,
+          "rainyDays": 12.6
+        },
+        {
+          "tmaxC": 26.2,
+          "rainyDays": 11.1
+        },
+        {
+          "tmaxC": 28.2,
+          "rainyDays": 8
+        },
+        {
+          "tmaxC": 28.3,
+          "rainyDays": 7
+        },
+        {
+          "tmaxC": 23.5,
+          "rainyDays": 7.8
+        },
+        {
+          "tmaxC": 17.9,
+          "rainyDays": 9.5
+        },
+        {
+          "tmaxC": 11.2,
+          "rainyDays": 12.1
+        },
+        {
+          "tmaxC": 7.7,
+          "rainyDays": 12.6
+        }
+      ]
+    },
+    {
+      "city": "Lauterbrunnen",
+      "climate": [
+        {
+          "tmaxC": 5.7,
+          "rainyDays": 16.5
+        },
+        {
+          "tmaxC": 8,
+          "rainyDays": 13.3
+        },
+        {
+          "tmaxC": 9.5,
+          "rainyDays": 15.3
+        },
+        {
+          "tmaxC": 12.8,
+          "rainyDays": 16.4
+        },
+        {
+          "tmaxC": 16,
+          "rainyDays": 22.3
+        },
+        {
+          "tmaxC": 21.6,
+          "rainyDays": 19.5
+        },
+        {
+          "tmaxC": 22.9,
+          "rainyDays": 18.7
+        },
+        {
+          "tmaxC": 23.1,
+          "rainyDays": 15.8
+        },
+        {
+          "tmaxC": 19.1,
+          "rainyDays": 17.5
+        },
+        {
+          "tmaxC": 16.1,
+          "rainyDays": 14
+        },
+        {
+          "tmaxC": 9.9,
+          "rainyDays": 14.5
+        },
+        {
+          "tmaxC": 7.6,
+          "rainyDays": 13.9
+        }
+      ]
+    },
+    {
+      "city": "Vancouver",
+      "climate": [
+        {
+          "tmaxC": 6.2,
+          "rainyDays": 18
+        },
+        {
+          "tmaxC": 5.9,
+          "rainyDays": 16.4
+        },
+        {
+          "tmaxC": 9,
+          "rainyDays": 17.1
+        },
+        {
+          "tmaxC": 12.1,
+          "rainyDays": 14.5
+        },
+        {
+          "tmaxC": 16.2,
+          "rainyDays": 10
+        },
+        {
+          "tmaxC": 18.9,
+          "rainyDays": 10.5
+        },
+        {
+          "tmaxC": 22.3,
+          "rainyDays": 4.5
+        },
+        {
+          "tmaxC": 22.5,
+          "rainyDays": 6
+        },
+        {
+          "tmaxC": 18.5,
+          "rainyDays": 11.2
+        },
+        {
+          "tmaxC": 12.9,
+          "rainyDays": 16.2
+        },
+        {
+          "tmaxC": 8.7,
+          "rainyDays": 18.7
+        },
+        {
+          "tmaxC": 5.7,
+          "rainyDays": 20.1
+        }
+      ]
+    },
+    {
+      "city": "Santorini",
+      "climate": [
+        {
+          "tmaxC": 14.8,
+          "rainyDays": 9.9
+        },
+        {
+          "tmaxC": 15.3,
+          "rainyDays": 6.9
+        },
+        {
+          "tmaxC": 16.6,
+          "rainyDays": 6.5
+        },
+        {
+          "tmaxC": 19.5,
+          "rainyDays": 3.9
+        },
+        {
+          "tmaxC": 23,
+          "rainyDays": 2.8
+        },
+        {
+          "tmaxC": 27.5,
+          "rainyDays": 1.3
+        },
+        {
+          "tmaxC": 29.7,
+          "rainyDays": 0.4
+        },
+        {
+          "tmaxC": 29.3,
+          "rainyDays": 0.9
+        },
+        {
+          "tmaxC": 27,
+          "rainyDays": 0.9
+        },
+        {
+          "tmaxC": 23.2,
+          "rainyDays": 2.5
+        },
+        {
+          "tmaxC": 20,
+          "rainyDays": 4.4
+        },
+        {
+          "tmaxC": 16.5,
+          "rainyDays": 9.5
+        }
+      ]
+    },
+    {
+      "city": "Tokyo",
+      "climate": [
+        {
+          "tmaxC": 9.2,
+          "rainyDays": 4.9
+        },
+        {
+          "tmaxC": 10.5,
+          "rainyDays": 6.6
+        },
+        {
+          "tmaxC": 14.5,
+          "rainyDays": 11.6
+        },
+        {
+          "tmaxC": 18.9,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 23.1,
+          "rainyDays": 12.2
+        },
+        {
+          "tmaxC": 26.3,
+          "rainyDays": 15
+        },
+        {
+          "tmaxC": 30.4,
+          "rainyDays": 15.8
+        },
+        {
+          "tmaxC": 31.8,
+          "rainyDays": 14.3
+        },
+        {
+          "tmaxC": 27.8,
+          "rainyDays": 15.5
+        },
+        {
+          "tmaxC": 21.6,
+          "rainyDays": 12.8
+        },
+        {
+          "tmaxC": 16.7,
+          "rainyDays": 8.8
+        },
+        {
+          "tmaxC": 11.5,
+          "rainyDays": 6.7
+        }
+      ]
+    },
+    {
+      "city": "Langkawi",
+      "climate": [
+        {
+          "tmaxC": 30.6,
+          "rainyDays": 12.7
+        },
+        {
+          "tmaxC": 32.7,
+          "rainyDays": 8.4
+        },
+        {
+          "tmaxC": 33.1,
+          "rainyDays": 14.3
+        },
+        {
+          "tmaxC": 31.4,
+          "rainyDays": 25.4
+        },
+        {
+          "tmaxC": 30.4,
+          "rainyDays": 27.9
+        },
+        {
+          "tmaxC": 29.6,
+          "rainyDays": 23.7
+        },
+        {
+          "tmaxC": 29.6,
+          "rainyDays": 24.2
+        },
+        {
+          "tmaxC": 29.3,
+          "rainyDays": 26.7
+        },
+        {
+          "tmaxC": 28.9,
+          "rainyDays": 26.5
+        },
+        {
+          "tmaxC": 28.9,
+          "rainyDays": 27.8
+        },
+        {
+          "tmaxC": 28.8,
+          "rainyDays": 27.6
+        },
+        {
+          "tmaxC": 29.3,
+          "rainyDays": 17.2
+        }
+      ]
+    },
+    {
+      "city": "Berlin",
+      "climate": [
+        {
+          "tmaxC": 4.1,
+          "rainyDays": 13.2
+        },
+        {
+          "tmaxC": 6.3,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 9.7,
+          "rainyDays": 10.4
+        },
+        {
+          "tmaxC": 14.4,
+          "rainyDays": 8.1
+        },
+        {
+          "tmaxC": 19.3,
+          "rainyDays": 8.4
+        },
+        {
+          "tmaxC": 24.6,
+          "rainyDays": 10.7
+        },
+        {
+          "tmaxC": 24.5,
+          "rainyDays": 11.6
+        },
+        {
+          "tmaxC": 25.1,
+          "rainyDays": 8.5
+        },
+        {
+          "tmaxC": 20.9,
+          "rainyDays": 7.2
+        },
+        {
+          "tmaxC": 14.8,
+          "rainyDays": 11.4
+        },
+        {
+          "tmaxC": 8.3,
+          "rainyDays": 10.2
+        },
+        {
+          "tmaxC": 5.2,
+          "rainyDays": 12.1
+        }
+      ]
+    },
+    {
+      "city": "Barcelona",
+      "climate": [
+        {
+          "tmaxC": 13.8,
+          "rainyDays": 4.2
+        },
+        {
+          "tmaxC": 15,
+          "rainyDays": 6.3
+        },
+        {
+          "tmaxC": 16.1,
+          "rainyDays": 8.4
+        },
+        {
+          "tmaxC": 17.9,
+          "rainyDays": 8.7
+        },
+        {
+          "tmaxC": 21.3,
+          "rainyDays": 7.9
+        },
+        {
+          "tmaxC": 26.1,
+          "rainyDays": 5.6
+        },
+        {
+          "tmaxC": 28.6,
+          "rainyDays": 5.2
+        },
+        {
+          "tmaxC": 28.9,
+          "rainyDays": 6.5
+        },
+        {
+          "tmaxC": 25.3,
+          "rainyDays": 11.3
+        },
+        {
+          "tmaxC": 22,
+          "rainyDays": 10
+        },
+        {
+          "tmaxC": 17.5,
+          "rainyDays": 7.8
+        },
+        {
+          "tmaxC": 15,
+          "rainyDays": 5.2
+        }
+      ]
+    }
+  ]
+}

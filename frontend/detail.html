@@ -75,7 +75,7 @@
           <li class="active"><a href="gallery.html">Gallery</a></li>
           <li class="active"><a href="blog.html">Blog</a></li>
           <li class="active"><a href="contact.html">Contact</a></li>
-          <li class="active"><a href="feedback.html">Feedback</a></li>
+          <li class="active"><a href="smart-tour.html">Smart Tour</a></li>
           
           <!-- User menu (giữ nguyên) -->
           <li class="greeting-li" style="display: none;">
@@ -332,8 +332,11 @@
           </div>
           <div class="booking-form">
             <div class="form-group">
-              <label>Check-in Date</label>
-              <input type="date" class="form-control" id="checkinDate">
+              <!-- Tour doan chi chay theo lich khoi hanh: chon chuyen, khong chon ngay tu do -->
+              <label for="checkinDate">Departure</label>
+              <select class="form-control" id="checkinDate">
+                <option value="">Select a departure</option>
+              </select>
             </div>
             <div class="form-group">
               <label>Number of Travelers</label>

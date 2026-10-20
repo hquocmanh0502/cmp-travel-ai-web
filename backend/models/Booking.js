@@ -47,7 +47,17 @@ const bookingSchema = new mongoose.Schema({
     default: null
   },
   
-  // Dates
+  // Chuyen khoi hanh cu the (Tour.availability._id). Booking tao tu 2026-10-19
+  // bat buoc co; booking cu (ngay tu do, truoc khi co lich) de null.
+  // Ngay nhan/tra phong va ngay di do SERVER suy ra tu chuyen nay
+  // (startDate / endDate), khach khong nhap - xem services/departureService.js.
+  departureId: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: null,
+    index: true
+  },
+
+  // Dates (quy uoc: ngay theo lich, luu 00:00 UTC - xem models/Tour.js)
   checkinDate: {
     type: Date,
     required: true

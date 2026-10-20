@@ -1774,7 +1774,44 @@ document.addEventListener('DOMContentLoaded', function() {
         return icons[level] || '🥉';
     }
     
+    // Danh sach chuyen khoi hanh sap toi (Tour.availability). Gia tri moi option
+    // la ngay "YYYY-MM-DD" theo lich (availability luu 00:00 UTC cua ngay dia
+    // phuong), nen doc va hien thi deu theo UTC de khong lech ngay.
+    function populateDepartures(tour) {
+        const select = document.getElementById('checkinDate');
+        if (!select || select.tagName !== 'SELECT') return;
+
+        const fmt = (d) => new Date(d).toLocaleDateString('en-GB', {
+            day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC'
+        });
+        const upcoming = (tour.availability || [])
+            .filter(a => new Date(a.startDate) > new Date())
+            .sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+        select.innerHTML = '<option value="">Select a departure</option>';
+        upcoming.forEach(a => {
+            const option = document.createElement('option');
+            option.value = new Date(a.startDate).toISOString().slice(0, 10);
+            const seats = a.availableSlots || 0;
+            option.textContent = `${fmt(a.startDate)} – ${fmt(a.endDate)} · $${(a.price || 0).toLocaleString()} · ` +
+                (seats > 0 ? `${seats} seats left` : 'sold out');
+            option.disabled = seats <= 0;
+            select.appendChild(option);
+        });
+        if (!upcoming.length) {
+            select.innerHTML = '<option value="">No upcoming departures</option>';
+        }
+        // Smart Tour links here with ?departure=YYYY-MM-DD - preselect that departure
+        const wanted = new URLSearchParams(window.location.search).get('departure');
+        const match = wanted && [...select.options].find(o => o.value === wanted && !o.disabled);
+        if (match) {
+            select.value = wanted;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+
     function updatePriceBreakdown(tour) {
+        populateDepartures(tour);
         // Use VIP discounted price if available
         const basePrice = tour.vipInfo?.finalPrice || tour.estimatedCost;
         const adultPrice = tour.pricing?.adult || basePrice;
@@ -3547,6 +3584,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             checkinDate.addEventListener('change', function() {
                 validateBookingForm();
+                // Gia doi theo mua cua ngay khoi hanh
+                calculateTotalPrice();
             });
         }
     }
@@ -4116,26 +4155,56 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Booking functionality
+    //
+    // Gia hien tren man hinh lay tu server (/tours/:id/quote), tuc CUNG ham tinh
+    // tien luc tao booking. Gia nguoi lon doi theo mua cua ngay khoi hanh (vd Paris
+    // thang 12 la $5,950 chu khong phai $7,000), nen khong tu tinh o day nua -
+    // neu khong khach se thay mot gia nhung bi tru mot gia khac.
+    let quoteRequestId = 0;
+
+    async function fetchQuote({ adults, children, hotelId, departureDate }) {
+        const tourId = currentTour?._id || currentTour?.id;
+        const params = new URLSearchParams({ adults, children });
+        if (hotelId) params.set('hotelId', hotelId);
+        if (departureDate) params.set('departureDate', departureDate);
+        const res = await fetch(`http://localhost:3000/api/tours/${tourId}/quote?${params}`);
+        if (!res.ok) throw new Error(`Quote failed: HTTP ${res.status}`);
+        return res.json();
+    }
+
+    function renderPriceRows(adults, children, adultPrice, childPrice) {
+        const priceRows = document.querySelectorAll('.price-row');
+        if (priceRows.length >= 3) {
+            priceRows[0].querySelector('span:last-child').textContent = `$${(adults * adultPrice).toLocaleString()}`;
+            priceRows[1].querySelector('span:last-child').textContent = `$${(children * childPrice).toLocaleString()}`;
+            priceRows[2].querySelector('span:last-child').textContent = `$${(adults * adultPrice + children * childPrice).toLocaleString()}`;
+        }
+    }
+
     function calculateTotalPrice() {
         if (!currentTour) return 0;
         
         const adults = parseInt(document.querySelector('.traveler-item:first-child .quantity')?.textContent) || 0;
         const children = parseInt(document.querySelector('.traveler-item:last-child .quantity')?.textContent) || 0;
+        const departureDate = document.getElementById('checkinDate')?.value || '';
         
-        const adultPrice = currentTour.estimatedCost || 0;
-        const childPrice = adultPrice * 0.7; // Children get 30% discount
-        
-        const total = (adults * adultPrice) + (children * childPrice);
-        
-        // Update price display
-        const priceRows = document.querySelectorAll('.price-row');
-        if (priceRows.length >= 3) {
-            priceRows[0].querySelector('span:last-child').textContent = `$${(adults * adultPrice).toLocaleString()}`;
-            priceRows[1].querySelector('span:last-child').textContent = `$${(children * childPrice).toLocaleString()}`;
-            priceRows[2].querySelector('span:last-child').textContent = `$${total.toLocaleString()}`;
+        // Hien tam gia co ban trong luc cho server bao gia theo ngay
+        const adultPrice = currentTour.pricing?.adult || currentTour.estimatedCost || 0;
+        const childPrice = currentTour.pricing?.child ?? Math.round(adultPrice * 0.7);
+        renderPriceRows(adults, children, adultPrice, childPrice);
+
+        if (adults > 0) {
+            const requestId = ++quoteRequestId;
+            fetchQuote({ adults, children, departureDate })
+                .then(q => {
+                    // Bo ket qua cu neu khach da doi so nguoi / ngay trong luc cho
+                    if (requestId !== quoteRequestId) return;
+                    renderPriceRows(adults, children, q.adultPrice, q.childPrice);
+                })
+                .catch(err => console.warn('Khong lay duoc bao gia theo ngay:', err));
         }
         
-        return total;
+        return adults * adultPrice + children * childPrice;
     }
     
     function validateBookingForm() {
@@ -4147,10 +4216,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!checkinDate) {
             isValid = false;
-            message = 'Please select a check-in date';
+            message = 'Please select a departure';
         } else if (new Date(checkinDate) < new Date()) {
             isValid = false;
-            message = 'Check-in date must be in the future';
+            message = 'This departure has already left';
         } else if (adults === 0) {
             isValid = false;
             message = 'At least one adult is required';
@@ -5533,7 +5602,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function proceedToReservation(hotelId, hotelName, selectedGuide) {
+    async function proceedToReservation(hotelId, hotelName, selectedGuide) {
         console.log('📝 Proceeding to reservation with:', { hotelId, hotelName, selectedGuide });
         
         // Get current booking data
@@ -5543,7 +5612,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Validate required fields
         if (!checkinDate) {
-            showAlert('Please select a check-in date first.', 'warning');
+            showAlert('Please select a departure first.', 'warning');
             return;
         }
         
@@ -5552,9 +5621,18 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Calculate total price
-        const basePrice = currentTour?.estimatedCost || 1000;
-        const totalPrice = (basePrice * adults) + (basePrice * 0.7 * children);
+        // Gia tour theo ngay khoi hanh do server tinh (khong gom phu phi khach
+        // san - trang reservation cong rieng). Server tinh lai lan nua khi tao
+        // booking, con so o day chi de hien cho khach.
+        let totalPrice;
+        try {
+            const quote = await fetchQuote({ adults, children, departureDate: checkinDate });
+            totalPrice = quote.tourBaseCost;
+        } catch (err) {
+            console.warn('Khong lay duoc bao gia, tam dung gia co ban:', err);
+            const basePrice = currentTour?.pricing?.adult || currentTour?.estimatedCost || 0;
+            totalPrice = (basePrice * adults) + Math.round(basePrice * 0.7) * children;
+        }
         
         // Store booking data in session storage
         const bookingData = {

@@ -100,7 +100,10 @@ const topN = (counter, n) => Object.entries(counter)
       bookedTourIds.add(String(t._id));
       countryCount[t.country] = (countryCount[t.country] || 0) + 1;
       (t.themes || []).forEach(th => { themeCount[th] = (themeCount[th] || 0) + 1; });
-      if (b.totalAmount) amounts.push(b.totalAmount);
+      // Ngan sach tinh THEO NGUOI (cung don vi voi gia tour), khong phai tong
+      // tien ca doan - neu khong, doan 3 nguoi da chi $22,000 se thanh "ngan sach
+      // toi da $26,400/nguoi" va tour nao cung lot vao tam.
+      if (b.totalAmount) amounts.push(b.totalAmount / Math.max(1, (b.adults || 1) + (b.children || 0)));
     }
 
     const favCountries = topN(countryCount, 4);
@@ -109,7 +112,7 @@ const topN = (counter, n) => Object.entries(counter)
     const styles = [...new Set(favThemes.map(t => THEME_TO_STYLE[t]).filter(Boolean))];
     const activities = [...new Set(favThemes.map(t => THEME_TO_ACTIVITY[t]).filter(Boolean))];
 
-    // Khoảng ngân sách lấy quanh mức đã từng chi, nới 20% mỗi đầu
+    // Khoảng ngân sách (USD/người) lấy quanh mức đã từng chi, nới 20% mỗi đầu
     const min = amounts.length ? Math.round(Math.min(...amounts) * 0.8) : 3000;
     const max = amounts.length ? Math.round(Math.max(...amounts) * 1.2) : 8000;
 

@@ -5,6 +5,7 @@ const router = express.Router();
 const Tour = require('../models/Tour');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
+const { releaseForBooking } = require('../services/departureService');
 const Hotel = require('../models/Hotel');
 const Feedback = require('../models/Feedback');
 const Blog = require('../models/Blog');
@@ -1132,11 +1133,16 @@ router.put('/bookings/:id/status', isAdmin, async (req, res) => {
       updateData.cancellationReason = reason || 'Cancelled by admin';
     }
     
+    // Lay trang thai cu de chi tra cho khi booking chuyen sang 'cancelled' LAN DAU
+    const before = await Booking.findById(id).select('status');
     const booking = await Booking.findByIdAndUpdate(
       id,
       { $set: updateData },
       { new: true }
     );
+    if (booking && status === 'cancelled' && before?.status !== 'cancelled') {
+      await releaseForBooking(booking);
+    }
     
     if (!booking) {
       return res.status(404).json({
@@ -1246,6 +1252,7 @@ router.delete('/bookings/:id', isAdmin, async (req, res) => {
     const { reason } = req.body;
     
     // Soft delete by setting status to cancelled
+    const before = await Booking.findById(id).select('status');
     const booking = await Booking.findByIdAndUpdate(
       id,
       { 
@@ -1264,6 +1271,7 @@ router.delete('/bookings/:id', isAdmin, async (req, res) => {
         error: 'Booking not found'
       });
     }
+    if (before?.status !== 'cancelled') await releaseForBooking(booking);
     
     res.json({
       success: true,

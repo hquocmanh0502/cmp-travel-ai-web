@@ -9,7 +9,8 @@
  *     booking that co departureDate.
  *
  * CACH SUA:
- *   1. Gia theo mua, dua tren bestTimeToVisit (da co san, khac nhau theo vung):
+ *   1. Gia theo mua, dua tren bestTimeToVisit - tu 2026-10-19 suy tu thoi tiet
+ *      that (scripts/fetch-seasonality.js). Xem services/seasonalPricing.js:
  *        - thang chinh mua  : +20%
  *        - thang giap mua   : +8%   (lien ke thang chinh mua)
  *        - thang thap diem  : -15%
@@ -17,7 +18,7 @@
  *      Lam tron den $10 cho giong bang gia that.
  *
  *   2. So cho = maxGroupSize cua tour, TRU so khach da dat that o chuyen do
- *      (doi chieu Booking.departureDate voi availability.startDate).
+ *      (dem theo Booking.departureId - booking gan voi dung chuyen).
  *      Nho vay con so hien ra man hinh la so cho con that.
  *
  *   3. TAN SUAT chuyen theo do pho bien: tour pho bien mo chuyen day hon
@@ -40,13 +41,8 @@ const Booking = require('../models/Booking');
 
 const dryRun = process.argv.includes('--dry-run');
 
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'];
-
-// He so gia theo mua
-const PEAK = 1.20;
-const SHOULDER = 1.08;
-const LOW = 0.85;
+// Cong thuc gia theo mua dung chung voi luc tinh tien (services/pricingService.js)
+const { MONTHS, buildSeasonFactors, calendarMonth, round10 } = require('../services/seasonalPricing');
 
 // Tan suat mo chuyen theo do pho bien (so ngay giua hai chuyen)
 const INTERVAL_POPULAR = 20;
@@ -55,38 +51,6 @@ const INTERVAL_QUIET = 45;
 const SCHEDULE_SPAN_DAYS = 330;
 const MAX_DEPARTURES = 30; // chan an toan
 
-/** Chi so thang (0-11) tu ten thang trong bestTimeToVisit. */
-function monthIndex(name) {
-  return MONTHS.indexOf(String(name).trim());
-}
-
-/**
- * Phan loai mua cho tung thang trong nam.
- * Tra ve mang 12 he so gia.
- */
-function buildSeasonFactors(bestTimeToVisit = []) {
-  const peak = new Set(
-    bestTimeToVisit.map(monthIndex).filter(i => i >= 0)
-  );
-
-  // Thang giap mua: ke ngay truoc/sau mot thang chinh mua
-  const shoulder = new Set();
-  for (const m of peak) {
-    shoulder.add((m + 11) % 12);
-    shoulder.add((m + 1) % 12);
-  }
-
-  return MONTHS.map((_, i) => {
-    if (peak.has(i)) return PEAK;
-    if (shoulder.has(i)) return SHOULDER;
-    // Khong phai mua dep va cung khong giap mua -> thap diem
-    return peak.size ? LOW : 1.0;
-  });
-}
-
-/** Lam tron den boi so 10 cho giong bang gia that. */
-const round10 = (v) => Math.round(v / 10) * 10;
-
 (async () => {
   await connectDB();
 
@@ -94,21 +58,21 @@ const round10 = (v) => Math.round(v / 10) * 10;
   console.log(`Tim thay ${tours.length} tour.\n`);
 
   // Dem khach da dat that theo (tourId, ngay khoi hanh)
+  // Dem theo CHUYEN (Booking.departureId). Truoc day dem theo ngay departureDate,
+  // nhung booking luu ngay tu do nen khong khop chuyen nao (0/227).
+  // Em be khong tinh ghe - cung cach voi services/departureService.seatsFor.
   const bookingRows = await Booking.aggregate([
-    { $match: { status: { $ne: 'cancelled' }, departureDate: { $ne: null } } },
+    { $match: { status: { $ne: 'cancelled' }, departureId: { $ne: null } } },
     {
       $group: {
-        _id: {
-          tourId: '$tourId',
-          day: { $dateToString: { format: '%Y-%m-%d', date: '$departureDate' } }
-        },
+        _id: '$departureId',
         guests: { $sum: { $add: ['$adults', { $ifNull: ['$children', 0] }] } }
       }
     }
   ]);
 
   const bookedMap = new Map();
-  bookingRows.forEach(r => bookedMap.set(`${r._id.tourId}|${r._id.day}`, r.guests));
+  bookingRows.forEach(r => bookedMap.set(String(r._id), r.guests));
   console.log(`Co ${bookingRows.length} chuyen da co khach dat that.\n`);
 
   const priceSpread = [];
@@ -118,7 +82,7 @@ const round10 = (v) => Math.round(v / 10) * 10;
 
   for (const tour of tours) {
     const basePrice = tour.estimatedCost;
-    const factors = buildSeasonFactors(tour.bestTimeToVisit);
+    const factors = buildSeasonFactors(tour);
     const capacity = tour.maxGroupSize || 20;
 
     // Tour cang pho bien thi chuyen cang day
@@ -148,7 +112,8 @@ const round10 = (v) => Math.round(v / 10) * 10;
 
       while (!spansFullYear() && departures.length < MAX_DEPARTURES) {
         cursor = new Date(cursor.getTime() + intervalDays * 24 * 3600 * 1000);
-        const endDate = new Date(cursor.getTime() + durationDays * 24 * 3600 * 1000);
+        // endDate = ngay cuoi tour (tra phong) = start + (so ngay - 1)
+        const endDate = new Date(cursor.getTime() + (durationDays - 1) * 24 * 3600 * 1000);
         departures.push({
           startDate: new Date(cursor),
           endDate,
@@ -164,12 +129,11 @@ const round10 = (v) => Math.round(v / 10) * 10;
 
     for (const dep of departures) {
       const start = new Date(dep.startDate);
-      const factor = factors[start.getMonth()];
+      const factor = factors[calendarMonth(start)];
 
       dep.price = round10(basePrice * factor);
 
-      const dayKey = `${tour._id}|${start.toISOString().slice(0, 10)}`;
-      const booked = bookedMap.get(dayKey) || 0;
+      const booked = dep._id ? (bookedMap.get(String(dep._id)) || 0) : 0;
       if (booked > 0) matchedDepartures++;
 
       dep.availableSlots = Math.max(0, capacity - booked);
@@ -221,7 +185,7 @@ const round10 = (v) => Math.round(v / 10) * 10;
   console.log(`\nVi du ${tour.name} (mua dep: ${(tour.bestTimeToVisit || []).join(', ')}):`);
   tour.availability.slice(0, 6).forEach(d => {
     const dt = new Date(d.startDate);
-    console.log(`  ${dt.toISOString().slice(0, 10)}  ${MONTHS[dt.getMonth()].padEnd(10)} $${String(d.price).padStart(5)}   con ${d.availableSlots} cho`);
+    console.log(`  ${dt.toISOString().slice(0, 10)}  ${MONTHS[calendarMonth(dt)].padEnd(10)} $${String(d.price).padStart(5)}   con ${d.availableSlots} cho`);
   });
 
   if (dryRun) console.log('\nDRY-RUN: chua ghi gi vao DB.');

@@ -56,6 +56,10 @@ const userSchema = new mongoose.Schema({
   
   // AI Preferences (mở rộng)
   preferences: {
+    // USD MOI NGUOI cho CA CHUYEN - cung don vi voi Tour.estimatedCost /
+    // pricing.adult, de SmartTour va recommendationService so thang duoc.
+    // (Khong phai tong tien ca doan: truoc day du lieu mau tinh theo tong tien
+    // booking nen co nguoi "ngan sach" $26,400 - xem scripts/fix-budget-per-person.js)
     budgetRange: { min: Number, max: Number },
     favoriteCountries: [String],
     favoriteDestinations: [String],

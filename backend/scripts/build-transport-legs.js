@@ -52,6 +52,16 @@ const dryRun = process.argv.includes('--dry-run');
 // Venice, Marseille - SmartTour khong ghep noi nhung hanh trinh hoan toan hop ly.
 const REACHABLE_KM = 1500;
 const NEAREST_FALLBACK = 4;
+
+// CHANG BAY NOI MANG (them 2026-10-19). Chi co chang gan thi mang bi dut thanh
+// nhieu cum: chi 46% cap thanh pho toi duoc, Bangkok -> Kyoto "khong co duong"
+// du thuc te bay thang ~6h. Moi thanh pho deu co san bay quoc te
+// (config/city-logistics.js), nen cap nao chua co chang gan thi them chang bay.
+//   - <= LONG_HAUL_DIRECT_KM : bay thang
+//   - xa hon                 : 1 diem dung, cong LAYOVER_HOURS (duong bay thang
+//                              sieu xa hiem, gia dinh bay thang se qua lac quan)
+const LONG_HAUL_DIRECT_KM = 7000;
+const LAYOVER_HOURS = 2.5;
 // Khong dat tran khoang cach: Maldives la diem den co lap, tour gan nhat cach
 // hon 2700km. Neu cat theo nguong thi tour do khong co chang nao, va SmartTour
 // se khong bao gio ghep duoc no vao hanh trinh.
@@ -163,8 +173,18 @@ const round1 = (v) => Math.round(v * 10) / 10;
       ? reachable
       : ranked.slice(0, NEAREST_FALLBACK);
 
-    const legs = candidates.map(({ to, distanceKm }) => {
-      const { mode, durationHours } = resolveLeg(from, to, distanceKm);
+    // Cap chua co chang gan -> them chang bay noi mang
+    const nearNames = new Set(candidates.map(c => c.to.name));
+    const hubFlights = ranked
+      .filter(c => !nearNames.has(c.to.name))
+      .map(c => ({ ...c, hubFlight: true }));
+
+    const legs = [...candidates, ...hubFlights].map(({ to, distanceKm, hubFlight }) => {
+      let { mode, durationHours } = hubFlight
+        ? { mode: 'flight', durationHours: 2.5 + distanceKm / 750 }
+        : resolveLeg(from, to, distanceKm);
+      const stops = mode === 'flight' && distanceKm > LONG_HAUL_DIRECT_KM ? 1 : 0;
+      durationHours += stops * LAYOVER_HOURS;
       const km = Math.round(distanceKm);
       const hours = round1(durationHours);
 
@@ -184,6 +204,7 @@ const round1 = (v) => Math.round(v * 10) / 10;
         toCountry: to.country,
         distanceKm: km,
         mode,
+        stops,
         durationHours: hours,
         estimatedCost: Math.round(COST_BASE[mode] + km * COST_PER_KM[mode])
       };

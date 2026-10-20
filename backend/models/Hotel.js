@@ -55,6 +55,9 @@ const hotelSchema = new mongoose.Schema({
     
     checkInTime: String,
     checkOutTime: String,
+    // true = khach san khong co du lieu rieng, dang dung gia tri pho bien nhat
+    // trong DB (config/city-logistics.js DEFAULT_CHECK_TIMES)
+    checkTimesEstimated: { type: Boolean, default: false },
     
     policies: {
       cancellation: String,

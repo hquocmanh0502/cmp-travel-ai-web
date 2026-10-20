@@ -175,8 +175,32 @@ const AUDIENCES = ['solo', 'couple', 'family', 'friends', 'seniors', 'honeymoon'
 // ---------------------------------------------------------------------------
 const CURRENCY = 'USD';
 
+// ---------------------------------------------------------------------------
+// 7. O "Interests" cua SmartTour
+//
+//    CHI gom chu de the hien duoc trong LICH TUNG NGAY - bang diem tham quan
+//    (Poi.themes) hoac bua an (Tour.food: mon dac san). Khach chon "Food" ma
+//    lich toan bao tang la loi lo ngay khi demo (truoc 2026-10-19: 17/20 tour
+//    gan 'food' nhung co duoi 2 diem am thuc).
+//
+//    Khong dua vao o chon:
+//      romantic, wellness, adventure, trekking, water-sports, wildlife
+//        -> khong co loai diem tham quan nao the hien (0 POI)
+//      family   -> hoi qua "Travelling with", khong phai so thich
+//      budget, luxury -> la muc GIA, da co o ngan sach
+//    Cac chu de nay van nam trong Tour.themes de loc / cham diem tour.
+//
+//    scripts/verify-data-quality.js kiem tra: tour nao gan mot chu de trong
+//    danh sach nay thi phai co it nhat 2 diem / mon an the hien chu de do.
+// ---------------------------------------------------------------------------
+const SMARTTOUR_INTERESTS = [
+  'museum', 'history', 'culture', 'architecture', 'food',
+  'nature', 'beach', 'island', 'mountain', 'nightlife', 'shopping', 'photography'
+];
+
 module.exports = {
   TOUR_THEMES,
+  SMARTTOUR_INTERESTS,
   PRICE_THEMES,
   TRAVEL_STYLES,
   ACTIVITIES,

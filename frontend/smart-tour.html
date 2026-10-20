@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tour</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./images/header/logo-title.png"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Volkhov|Poppins|Roboto+Condensed|Yesteryear">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/smart-tour.css">
+</head>
+<body>
+    <header class="header" style="background-image: url('./images/homepage-image/header-image-2.jpg'); height: 60vh;">
+        <div class="overlay"></div>
+        <div class="header-text">
+            <div id="up-title">PLAN</div>
+            <div id="down-title">Smart Tour</div>
+        </div>
+        <div class="nav-top-bar">
+            <a href="index.html"><img src="./images/header/logo-removebg-preview.png" alt="" id="logo" /></a>
+            <div class="nav-bar">
+                <ul>
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="active"><a href="aboutus.html">About Us</a></li>
+                    <li class="active"><a href="destination.html">Destination</a></li>
+                    <li class="active"><a href="gallery.html">Gallery</a></li>
+                    <li class="active"><a href="blog.html">Blog</a></li>
+                    <li class="active"><a href="contact.html">Contact</a></li>
+                    <li class="active"><a href="#" id="current" style="color: #ff6600;">Smart Tour</a></li>
+
+                    <li class="greeting-li" style="display: none;">
+                        <span class="user-greeting">
+                            Hello, <span id="username">Username</span>! <i class="fa fa-caret-down"></i>
+                        </span>
+                        <div class="user-dropdown-menu">
+                            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                            <a href="my-bookings.html"><i class="fas fa-ticket-alt"></i> My Bookings</a>
+                            <a href="my-wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+                            <a href="compare.html"><i class="fas fa-scale-balanced"></i> Compare Tours</a>
+                            <a href="travel-history.html"><i class="fas fa-history"></i> Travel History</a>
+                            <a href="preferences.html"><i class="fas fa-cog"></i> AI Preferences</a>
+                            <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </li>
+
+                    <li class="auth-li" id="auth-li">
+                        <div class="auth-buttons">
+                            <a href="login.html" class="btn-login">Login</a>
+                            <a href="create_acc.html" class="btn-register">Register</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="st-page">
+        <div class="st-intro">
+            <h1>Plan your trip in one step</h1>
+            <p>Tell us your dates, days and budget. We pick one tour or chain 2–3 whole tours with real departures, transfers and prices.</p>
+        </div>
+
+        <div class="st-layout">
+            <!-- Form -->
+            <form id="stForm" class="st-form" novalidate>
+                <h2><i class="fas fa-sliders"></i> Your trip</h2>
+
+                <label class="st-label">I can depart between</label>
+                <div class="st-row">
+                    <input type="date" id="startFrom" required>
+                    <input type="date" id="startTo" required>
+                </div>
+
+                <div class="st-row">
+                    <div>
+                        <label class="st-label" for="days">Days available</label>
+                        <input type="number" id="days" min="2" max="30" value="8" required>
+                    </div>
+                    <div>
+                        <label class="st-label" for="budget">Budget / person (USD)</label>
+                        <input type="number" id="budget" min="500" step="100" value="10000" required>
+                    </div>
+                </div>
+
+                <div class="st-row">
+                    <div>
+                        <label class="st-label" for="adults">Adults (12+)</label>
+                        <input type="number" id="adults" min="1" max="12" value="2" required>
+                    </div>
+                    <div>
+                        <label class="st-label" for="travelParty">Travelling as</label>
+                        <select id="travelParty">
+                            <option value="">Auto</option>
+                            <option value="solo">Solo</option>
+                            <option value="couple">Couple</option>
+                            <option value="honeymoon">Honeymoon</option>
+                            <option value="family">Family</option>
+                            <option value="friends">Friends</option>
+                            <option value="seniors">Seniors</option>
+                            <option value="business">Business</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label class="st-label">Children (age at departure)</label>
+                <div id="childList" class="st-children"></div>
+                <button type="button" id="addChild" class="st-link-btn"><i class="fas fa-plus"></i> Add child</button>
+
+                <label class="st-label">Interests</label>
+                <div id="interestList" class="st-chips"></div>
+
+                <div class="st-row">
+                    <div>
+                        <label class="st-label" for="pace">Pace</label>
+                        <select id="pace">
+                            <option value="any">Any</option>
+                            <option value="relaxed">Relaxed</option>
+                            <option value="balanced">Balanced</option>
+                            <option value="packed">Packed</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="st-label" for="maxPhysical">Max walking level</label>
+                        <select id="maxPhysical">
+                            <option value="1">1 · Light walking</option>
+                            <option value="2">2 · Easy</option>
+                            <option value="3" selected>3 · Moderate</option>
+                            <option value="4">4 · Active</option>
+                            <option value="5">5 · Strenuous</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label class="st-label" for="mustSelect">Must include <span class="st-hint">(optional, up to 3)</span></label>
+                <select id="mustSelect">
+                    <option value="">Add a city you must visit…</option>
+                </select>
+                <div id="mustList" class="st-chips st-must"></div>
+                <div class="st-segment st-segment-2" id="mustModeSeg" hidden>
+                    <button type="button" data-v="all" class="on">All of them</button>
+                    <button type="button" data-v="any">At least one</button>
+                </div>
+
+                <label class="st-label">Cities per trip</label>
+                <div class="st-segment" id="maxToursSeg">
+                    <button type="button" data-v="1">1 tour</button>
+                    <button type="button" data-v="2">Up to 2</button>
+                    <button type="button" data-v="3" class="on">Up to 3</button>
+                </div>
+
+                <button type="submit" class="st-submit" id="stSubmit">
+                    <i class="fas fa-wand-magic-sparkles"></i> Find my trip
+                </button>
+                <p class="st-note">Prices exclude flights from Vietnam to the first city and back home.</p>
+            </form>
+
+            <!-- Results -->
+            <section class="st-results" aria-live="polite">
+                <div id="stSummary" class="st-summary"></div>
+                <div id="stPlans">
+                    <div class="st-empty">
+                        <i class="fas fa-route"></i>
+                        <p>Fill in the form and press <b>Find my trip</b>.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer></footer>
+
+    <script src="./js/api-auth.js"></script>
+    <script src="./js/toast.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/smart-tour.js"></script>
+    <script src="./js/erro.js"></script>
+</body>
+</html>

@@ -228,7 +228,7 @@ function initializeFooter() {
               <li><a href="aboutus.html">About us</a></li>
               <li><a href="blog.html">Blog</a></li>
               <li><a href="contact.html">Contact</a></li>
-              <li><a href="feedback.html">Feedback</a></li>
+              <li><a href="smart-tour.html">Smart Tour</a></li>
             </ul>
           </div>
           <div class="footer-column">

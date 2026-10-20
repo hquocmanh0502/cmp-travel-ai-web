@@ -187,7 +187,7 @@ router.get('/tours/:id/suggested-guides', async (req, res) => {
   }
 });
 
-// Bao gia mot tour theo so khach va hang khach san.
+// Bao gia mot tour theo so khach, hang khach san va ngay khoi hanh.
 // Frontend goi endpoint nay thay vi tu tinh, de gia tren man hinh luon khop
 // voi gia server tinh luc dat tour.
 router.get('/tours/:id/quote', async (req, res) => {
@@ -199,7 +199,9 @@ router.get('/tours/:id/quote', async (req, res) => {
       adults: req.query.adults,
       children: req.query.children,
       infants: req.query.infants,
-      hotelId: req.query.hotelId
+      hotelId: req.query.hotelId,
+      // Khong co ngay thi tra gia co ban; co ngay thi tra gia theo mua cua ngay do
+      departureDate: req.query.departureDate
     });
 
     res.json({ tourId: tour._id, currency: 'USD', ...quote });

@@ -1,0 +1,239 @@
+{
+  "source": "OpenStreetMap",
+  "license": "ODbL 1.0 (https://opendatacommons.org/licenses/odbl/) - © OpenStreetMap contributors",
+  "fetchedAt": "2026-10-19T17:43:01.303Z",
+  "method": {
+    "rule": "chu de tour co < 2 POI Wikidata the hien -> them toi da 2 diem OSM cung loai",
+    "radiusM": 20000,
+    "ranking": "wikidata > wikipedia > name:en > so the > khoang cach",
+    "themeSources": {
+      "beach": [
+        {
+          "category": "beach",
+          "filter": "[\"natural\"=\"beach\"]"
+        }
+      ],
+      "nightlife": [
+        {
+          "category": "nightlife",
+          "filter": "[\"amenity\"~\"^(bar|pub|nightclub)$\"]"
+        }
+      ],
+      "photography": [
+        {
+          "category": "viewpoint",
+          "filter": "[\"tourism\"=\"viewpoint\"]"
+        }
+      ],
+      "island": [
+        {
+          "category": "island",
+          "filter": "[\"place\"=\"island\"]"
+        }
+      ],
+      "food": [
+        {
+          "category": "market",
+          "filter": "[\"amenity\"=\"marketplace\"]"
+        }
+      ],
+      "mountain": [
+        {
+          "category": "mountain",
+          "filter": "[\"natural\"=\"peak\"]"
+        }
+      ],
+      "nature": [
+        {
+          "category": "nature",
+          "filter": "[\"leisure\"=\"nature_reserve\"]"
+        }
+      ],
+      "shopping": [
+        {
+          "category": "shopping",
+          "filter": "[\"shop\"=\"mall\"]"
+        }
+      ]
+    }
+  },
+  "complete": true,
+  "cities": [
+    {
+      "city": "Maldives",
+      "country": "Maldives",
+      "gaps": [
+        "beach"
+      ],
+      "fetched": [
+        "beach"
+      ],
+      "pois": [
+        {
+          "osmId": "way/133846422",
+          "wikidataId": null,
+          "name": "Artificial Beach",
+          "description": "beach in Maldives, Maldives",
+          "category": "beach",
+          "coordinates": [
+            73.5255103,
+            4.1940914
+          ],
+          "distanceKm": 2.7,
+          "website": null,
+          "wikipediaUrl": null
+        },
+        {
+          "osmId": "way/1090801488",
+          "wikidataId": null,
+          "name": "Palm Beach",
+          "description": "beach in Maldives, Maldives",
+          "category": "beach",
+          "coordinates": [
+            73.5592073,
+            4.2970521
+          ],
+          "distanceKm": 14.6,
+          "website": null,
+          "wikipediaUrl": null
+        }
+      ]
+    },
+    {
+      "city": "Phuket",
+      "country": "Thailand",
+      "gaps": [
+        "nightlife"
+      ],
+      "fetched": [
+        "nightlife"
+      ],
+      "pois": [
+        {
+          "osmId": "node/5061263522",
+          "wikidataId": null,
+          "name": "Nan's Bar",
+          "description": "nightlife in Phuket, Thailand",
+          "category": "nightlife",
+          "coordinates": [
+            98.295832,
+            7.8337212
+          ],
+          "distanceKm": 7,
+          "website": null,
+          "wikipediaUrl": null
+        },
+        {
+          "osmId": "node/2509041384",
+          "wikidataId": null,
+          "name": "Rockin' Angels Blues Cafe",
+          "description": "nightlife in Phuket, Thailand",
+          "category": "nightlife",
+          "coordinates": [
+            98.387353,
+            7.884685
+          ],
+          "distanceKm": 5.4,
+          "website": null,
+          "wikipediaUrl": null
+        }
+      ]
+    },
+    {
+      "city": "Santorini",
+      "country": "Greece",
+      "gaps": [
+        "beach",
+        "photography"
+      ],
+      "fetched": [
+        "beach",
+        "photography"
+      ],
+      "pois": [
+        {
+          "osmId": "relation/18717233",
+          "wikidataId": "Q25161960",
+          "name": "Perissa beach",
+          "description": "beach in Santorini, Greece",
+          "category": "beach",
+          "coordinates": [
+            25.4718748,
+            36.3523632
+          ],
+          "distanceKm": 4.6,
+          "website": null,
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Perissa%2C_Santorini"
+        },
+        {
+          "osmId": "way/416730022",
+          "wikidataId": "Q14238620",
+          "name": "Vlychada beach",
+          "description": "beach in Santorini, Greece",
+          "category": "beach",
+          "coordinates": [
+            25.4315513,
+            36.3393128
+          ],
+          "distanceKm": 6.6,
+          "website": null,
+          "wikipediaUrl": null
+        },
+        {
+          "osmId": "node/10911862376",
+          "wikidataId": null,
+          "name": "Diapla Viewpoint",
+          "description": "viewpoint in Santorini, Greece",
+          "category": "viewpoint",
+          "coordinates": [
+            25.4507826,
+            36.3643515
+          ],
+          "distanceKm": 3.3,
+          "website": null,
+          "wikipediaUrl": null
+        }
+      ]
+    },
+    {
+      "city": "Langkawi",
+      "country": "Malaysia",
+      "gaps": [
+        "island"
+      ],
+      "fetched": [
+        "island"
+      ],
+      "pois": [
+        {
+          "osmId": "relation/3446938",
+          "wikidataId": "Q7413026",
+          "name": "Tuba Island",
+          "description": "island in Langkawi, Malaysia",
+          "category": "island",
+          "coordinates": [
+            99.8427856,
+            6.2410369
+          ],
+          "distanceKm": 13,
+          "website": null,
+          "wikipediaUrl": "https://ms.wikipedia.org/wiki/Pulau_Tuba"
+        },
+        {
+          "osmId": "relation/3446932",
+          "wikidataId": "Q12506739",
+          "name": "Dayang Bunting Island",
+          "description": "island in Langkawi, Malaysia",
+          "category": "island",
+          "coordinates": [
+            99.8052067,
+            6.231668
+          ],
+          "distanceKm": 13.2,
+          "website": null,
+          "wikipediaUrl": "https://ms.wikipedia.org/wiki/Pulau_Dayang_Bunting"
+        }
+      ]
+    }
+  ]
+}

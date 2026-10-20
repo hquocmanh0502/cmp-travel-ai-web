@@ -98,6 +98,7 @@ app.use('/api/contacts', contactRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/chatbot', chatbotRoutes);
+app.use('/api/smart-tour', require('./routes/smart-tour'));
 app.use('/api', indexRoutes); // Mount index routes (includes /blogs, /tours, etc.)
 console.log('📧 Contact routes mounted at /api/contacts');
 console.log('👤 Users routes mounted at /api/users');

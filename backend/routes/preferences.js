@@ -22,7 +22,7 @@ router.get('/:userId', async (req, res) => {
 
     // Return preferences with default values if not set
     const preferences = {
-      budgetRange: user.preferences?.budgetRange || { min: 500, max: 10000 },
+      budgetRange: user.preferences?.budgetRange || { min: 3000, max: 8000 },
       travelStyle: user.preferences?.travelStyle || [],
       activities: user.preferences?.activities || [],
       favoriteCountries: user.preferences?.favoriteCountries || [],
@@ -138,7 +138,7 @@ router.post('/:userId/reset', async (req, res) => {
 
     // Reset to default preferences
     const defaultPreferences = {
-      budgetRange: { min: 500, max: 10000 },
+      budgetRange: { min: 3000, max: 8000 },
       travelStyle: [],
       activities: [],
       favoriteCountries: [],

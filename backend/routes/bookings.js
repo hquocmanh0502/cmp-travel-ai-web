@@ -6,6 +6,9 @@ const Hotel = require('../models/Hotel');
 const User = require('../models/User');
 const { applyVIPDiscount, calculateVIPLevel } = require('../services/vipService');
 const { calculateBookingPrice } = require('../services/pricingService');
+const {
+  seatsFor, findDeparture, upcomingDepartures, reserveSeats, releaseSeats, releaseForBooking
+} = require('../services/departureService');
 const { requireAuth, requireSelfOrAdmin } = require('../middleware/auth');
 
 // Xác thực bằng JWT thật.
@@ -88,6 +91,19 @@ router.post('/', verifyAuth, async (req, res) => {
         error: 'Tour not found'
       });
     }
+
+    // Tour doan chi chay theo LICH KHOI HANH. Ngay khach gui phai trung mot chuyen
+    // con trong tuong lai; ngay nhan/tra phong lay tu chuyen do, khong tin client.
+    const seats = seatsFor({ adults, children });
+    const departure = findDeparture(tour, departureDate || checkinDate);
+    if (!departure || new Date(departure.startDate) <= new Date()) {
+      return res.status(400).json({
+        success: false,
+        error: 'There is no scheduled departure on this date. Please choose one of the available departures.',
+        code: 'NO_DEPARTURE',
+        upcomingDepartures: upcomingDepartures(tour, { seats })
+      });
+    }
     
     // Verify hotel exists (if provided)
     let hotel = null;
@@ -128,7 +144,9 @@ router.post('/', verifyAuth, async (req, res) => {
     // nen chi can sua request la dat duoc tour gia 0 dong. Gio moi con so deu tinh
     // lai tu du lieu tour trong DB; so client gui len chi dung de doi chieu.
     const priced = calculateBookingPrice(tour, {
-      adults, children, infants, hotelId, guide, servicesCost
+      adults, children, infants, hotelId, guide, servicesCost,
+      // Gia theo mua cua chuyen - cung so voi /tours/:id/quote va SmartTour
+      departureDate: departure.startDate
     });
 
     const clientTotal = parseFloat(totalAmount) || 0;
@@ -147,9 +165,11 @@ router.post('/', verifyAuth, async (req, res) => {
       hotelName: hotel ? hotel.name : 'No hotel selected', // ✅ Store hotel name
       selectedGuide: guide ? guide._id : null,
       guideName: guide ? guide.name : null, // ✅ Store guide name
-      checkinDate: new Date(checkinDate),
-      checkoutDate: new Date(checkoutDate || checkinDate),
-      departureDate: new Date(departureDate || checkinDate),
+      departureId: departure._id,
+      // Suy ra tu chuyen: nhan phong ngay khoi hanh, tra phong ngay cuoi tour
+      checkinDate: departure.startDate,
+      checkoutDate: departure.endDate,
+      departureDate: departure.startDate,
       adults: parseInt(adults),
       children: parseInt(children) || 0,
       infants: parseInt(infants) || 0,
@@ -181,8 +201,24 @@ router.post('/', verifyAuth, async (req, res) => {
       });
     }
     
-    // Save booking
-    await booking.save();
+    // Giu cho TRUOC khi luu: tru nguyen tu, het cho thi dung lai.
+    const reserved = await reserveSeats(tour._id, departure._id, seats);
+    if (!reserved) {
+      return res.status(409).json({
+        success: false,
+        error: 'Not enough seats left on this departure.',
+        code: 'SOLD_OUT',
+        upcomingDepartures: upcomingDepartures(tour, { seats })
+      });
+    }
+
+    try {
+      await booking.save();
+    } catch (saveError) {
+      // Luu that bai thi tra lai cho vua giu, neu khong cho se mat vinh vien
+      await releaseSeats(tour._id, departure._id, seats);
+      throw saveError;
+    }
     
     // Populate tour and hotel details
     await booking.populate('tourId', 'name country img rating estimatedCost duration pricing');
@@ -328,6 +364,7 @@ router.patch('/:bookingId/status', requireBookingOwner, async (req, res) => {
       });
     }
     
+    const wasCancelled = booking.status === 'cancelled';
     booking.status = status;
     if (adminNotes) {
       booking.adminNotes = adminNotes;
@@ -339,6 +376,8 @@ router.patch('/:bookingId/status', requireBookingOwner, async (req, res) => {
     }
     
     await booking.save();
+    // Huy lan dau -> tra cho cho chuyen
+    if (status === 'cancelled' && !wasCancelled) await releaseForBooking(booking);
     
     res.json({
       success: true,
@@ -383,6 +422,7 @@ router.post('/:bookingId/cancel', requireBookingOwner, async (req, res) => {
     booking.cancellationReason = reason || 'User requested cancellation';
     
     await booking.save();
+    await releaseForBooking(booking);
     
     res.json({
       success: true,

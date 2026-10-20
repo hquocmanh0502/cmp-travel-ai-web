@@ -30,7 +30,7 @@
                     <li class="active"><a href="gallery.html">Gallery</a></li>
                     <li class="active"><a href="blog.html">Blog</a></li>
                     <li class="active"><a href="contact.html">Contact</a></li>
-                    <li class="active"><a href="feedback.html">Feedback</a></li>
+                    <li class="active"><a href="smart-tour.html">Smart Tour</a></li>
                     
                     <!-- User dropdown menu -->
                     <li class="greeting-li" style="display: none;">
@@ -79,25 +79,26 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="budgetMin">Minimum Budget (USD)</label>
+                    <!-- USD moi nguoi cho ca chuyen, cung don vi voi gia tour ($3,200 - $9,600) -->
+                    <label for="budgetMin">Minimum Budget (USD per person, whole trip)</label>
                     <div class="range-input">
-                        <input type="range" id="budgetMin" class="range-slider" min="100" max="2000" value="500" step="50">
+                        <input type="range" id="budgetMin" class="range-slider" min="500" max="10000" value="3000" step="100">
                         <div class="range-values">
-                            <span>$100</span>
-                            <span class="current-value">$500</span>
-                            <span>$2,000</span>
+                            <span>$500</span>
+                            <span class="current-value">$3,000</span>
+                            <span>$10,000</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="budgetMax">Maximum Budget (USD)</label>
+                    <label for="budgetMax">Maximum Budget (USD per person, whole trip)</label>
                     <div class="range-input">
-                        <input type="range" id="budgetMax" class="range-slider" min="500" max="10000" value="5000" step="100">
+                        <input type="range" id="budgetMax" class="range-slider" min="1000" max="15000" value="8000" step="100">
                         <div class="range-values">
-                            <span>$500</span>
-                            <span class="current-value">$5,000</span>
-                            <span>$10,000</span>
+                            <span>$1,000</span>
+                            <span class="current-value">$8,000</span>
+                            <span>$15,000</span>
                         </div>
                     </div>
                 </div>

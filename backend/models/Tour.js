@@ -73,10 +73,18 @@ const tourSchema = new mongoose.Schema({
   location: {
     coordinates: [Number], // [lng, lat]
     address: String,
-    region: String
+    region: String,
+    // Mui gio IANA ("Europe/Paris") de doi gio dia phuong - xem config/city-logistics.js
+    timezone: String
   },
   
   // Availability
+  //
+  // QUY UOC NGAY: startDate / endDate la NGAY THEO LICH DIA PHUONG cua thanh pho,
+  // luu dang 00:00 UTC (vd chuyen Paris 04/12 = 2026-12-04T00:00:00Z). Doc ngay
+  // bang toISOString().slice(0, 10) hoac services/seasonalPricing.calendarDay.
+  // Gio cu the (don khach, nhan phong) tinh bang location.timezone + operations.
+  // endDate = startDate + (durationDays - 1) ngay = ngay tra phong, ve.
   availability: [{
     startDate: Date,
     endDate: Date,
@@ -102,7 +110,21 @@ const tourSchema = new mongoose.Schema({
   // (vi "Museum Island").
   themes: [{ type: String, enum: TOUR_THEMES }],
   difficulty: { type: String, enum: ['easy', 'moderate', 'challenging'] },
-  bestTimeToVisit: [String], // months
+  // Thang dep (ten thang tieng Anh). Tu 2026-10-19 suy tu THOI TIET THAT
+  // (Open-Meteo 2016-2025), xem scripts/fetch-seasonality.js.
+  bestTimeToVisit: [String],
+
+  // Thoi tiet theo thang tu nguon that - can cu cua bestTimeToVisit va gia theo mua.
+  seasonality: {
+    monthly: [{
+      month: String,        // "January"...
+      tmaxC: Number,        // nhiet do cao nhat trung binh (°C)
+      rainyDays: Number,    // so ngay mua >= 1mm trung binh
+      comfort: Number       // diem de chiu 0-1 (tu tmaxC + rainyDays)
+    }],
+    sources: { climate: String },
+    fetchedAt: Date
+  },
   
 
   // ==========================================================================
@@ -163,9 +185,27 @@ const tourSchema = new mongoose.Schema({
     toCountry: String,
     distanceKm: Number,
     mode: { type: String, enum: ['train', 'flight', 'bus', 'ferry'] },
+    stops: { type: Number, default: 0 },   // so diem dung (bay > 7000km: 1)
+    // Tinh tu cua ra/ga (gom lam thu tuc), CHUA gom duong tu trung tam ra san
+    // bay/ga - phan do lay tu logistics.*.transferMinutes cua hai thanh pho.
     durationHours: Number,
     estimatedCost: Number
   }],
+
+  // Hau can de SmartTour tinh gio den noi khi noi hai tour (config/city-logistics.js)
+  logistics: {
+    airport: { iata: String, name: String, transferMinutes: Number },
+    // Ga tau / ben xe / ben pha chinh; null neu khong co (vd Phuket)
+    ground: { name: String, type: { type: String, enum: ['rail', 'bus', 'ferry'] }, transferMinutes: Number }
+  },
+
+  // Quy dinh van hanh (gio dia phuong "HH:mm"). Hien moi tour dung chung mot quy dinh.
+  operations: {
+    arrivalPickup: { from: String, to: String },      // ngay 1: khung gio xe don
+    welcomeMeeting: String,                            // ngay 1: gap doan
+    departureTransfer: { from: String, to: String },   // ngay cuoi: khung gio xe tien
+    latestArrival: String                              // noi tour: den KS sau gio nay -> them dem noi chuyen
+  },
 
   // --- Nội dung dài cho Chatbot RAG ---
   longDescription: String,
