@@ -877,3 +877,9 @@ select:disabled:hover::after {
 .btn-auto-select i {
   font-size: 1.1rem;
 }
+
+/* Chuyen ghep SmartTour trong o tom tat */
+.summary-trip { margin-top: 16px; border-top: 1px dashed #ffb27f; padding-top: 12px; }
+.summary-trip-row { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; flex-wrap: wrap; }
+.summary-trip-row.conn { color: #666; font-size: 0.9rem; padding-left: 18px; }
+.summary-trip-row.total { border-top: 1px solid #eee; margin-top: 6px; padding-top: 10px; font-weight: 700; }

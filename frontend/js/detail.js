@@ -5625,8 +5625,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // san - trang reservation cong rieng). Server tinh lai lan nua khi tao
         // booking, con so o day chi de hien cho khach.
         let totalPrice;
+        let quote = null;
         try {
-            const quote = await fetchQuote({ adults, children, departureDate: checkinDate });
+            quote = await fetchQuote({ adults, children, departureDate: checkinDate });
             totalPrice = quote.tourBaseCost;
         } catch (err) {
             console.warn('Khong lay duoc bao gia, tam dung gia co ban:', err);
@@ -5634,8 +5635,15 @@ document.addEventListener('DOMContentLoaded', function() {
             totalPrice = (basePrice * adults) + Math.round(basePrice * 0.7) * children;
         }
         
+        // Ngay ket thuc that cua chuyen da chon (server cung luu dung ngay nay)
+        const departure = (currentTour?.availability || [])
+            .find(a => new Date(a.startDate).toISOString().slice(0, 10) === checkinDate);
+
         // Store booking data in session storage
         const bookingData = {
+            checkoutDate: departure ? new Date(departure.endDate).toISOString().slice(0, 10) : null,
+            // Gia 1 em be (o Infant chon tren trang reservation)
+            infantPrice: quote?.infantPrice ?? null,
             tourId: currentTour?._id || currentTour?.id,
             tourName: currentTour?.name || 'Selected Tour',
             tourDuration: currentTour?.duration || null,

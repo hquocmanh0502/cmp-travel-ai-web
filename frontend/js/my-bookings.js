@@ -149,6 +149,10 @@ async function loadUserBookings() {
                     } : null,
                     guideName: guideName,
                     hasReviewedGuide: booking.hasReviewedGuide || false,
+                    // Chuyen SmartTour (ghep tour)
+                    tripId: booking.tripId || null,
+                    tripOrder: booking.tripOrder || null,
+                    tripConnection: booking.tripConnection?.mode ? booking.tripConnection : null,
                     _rawBooking: booking // Keep original data for reference
                 };
             });
@@ -301,6 +305,10 @@ function displayBookings(bookings) {
                     <img src="${booking.tourImage}" alt="${booking.tourName}" class="tour-thumbnail">
                     <div class="tour-details">
                         <h3>${booking.tourName}</h3>
+                        ${booking.tripId ? `<div class="tour-meta"><span><i class="fas fa-suitcase-rolling"></i>
+                            Smart Tour trip · tour ${booking.tripOrder} of ${allBookings.filter(b => b.tripId === booking.tripId).length}</span>
+                            ${booking.tripConnection ? `<span><i class="fas fa-route"></i> ${booking.tripConnection.mode} from ${booking.tripConnection.fromTour}
+                            ($${(booking.tripConnection.transportCost + booking.tripConnection.nightsCost).toLocaleString()} incl.)</span>` : ''}</div>` : ''}
                         <div class="tour-meta">
                             <span><i class="fas fa-map-marker-alt"></i> ${booking.destination}</span>
                             <span><i class="fas fa-clock"></i> ${booking.duration}</span>
@@ -338,7 +346,7 @@ function displayBookings(bookings) {
                     </button>
                     ${booking.paymentStatus === 'unpaid' && booking.status === 'pending' ? `
                         <button class="btn btn-primary" onclick="payNow('${booking.id}')">
-                            <i class="fas fa-credit-card"></i> Pay Now
+                            <i class="fas fa-credit-card"></i> ${booking.tripId ? 'Pay Trip' : 'Pay Now'}
                         </button>
                     ` : ''}
                     ${booking.status === 'confirmed' ? `
@@ -636,19 +644,34 @@ function showBookingModal(booking) {
     });
 }
 
-function cancelBooking(bookingId) {
-    if (!confirm('Are you sure you want to cancel this booking?')) return;
-    
+async function cancelBooking(bookingId) {
     const booking = allBookings.find(b => b.id === bookingId);
-    if (booking) {
+    if (!booking) return;
+    // Chuyen ghep: huy tung tour, cac tour khac cua chuyen giu nguyen
+    const msg = booking.tripId
+        ? `Cancel only "${booking.tourName}"? The other tours in this trip stay booked.`
+        : 'Are you sure you want to cancel this booking?';
+    if (!confirm(msg)) return;
+
+    try {
+        // Truoc day chi doi tren man hinh: booking khong huy that, ghe khong duoc tra
+        const response = await fetch(`/api/bookings/${booking._id}/cancel`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('authToken') || ''}`
+            },
+            body: JSON.stringify({ reason: 'User requested cancellation' })
+        });
+        const data = await response.json();
+        if (!response.ok || !data.success) throw new Error(data.error || 'Cancel failed');
+
         booking.status = 'cancelled';
-        booking.paymentStatus = 'refunded';
-        
-        // Update display
         updateBookingStats();
         applyFilters();
-        
         showNotification('Booking cancelled successfully', 'success');
+    } catch (error) {
+        showNotification(`❌ ${error.message}`, 'error');
     }
 }
 
@@ -688,21 +711,27 @@ async function payNow(bookingId) {
         return;
     }
 
+    // Tour thuoc chuyen SmartTour: tra mot lan moi tour chua tra cua chuyen
+    const tripDue = booking.tripId
+        ? allBookings.filter(b => b.tripId === booking.tripId && b.status !== 'cancelled' && b.paymentStatus !== 'paid')
+        : null;
+
     try {
         // Get user's current wallet balance
         const walletResponse = await fetch(`http://localhost:3000/api/wallet/${userId}`);
         const walletData = await walletResponse.json();
-        
+
         if (!walletData.success) {
             showNotification('Could not fetch wallet balance', 'error');
             return;
         }
 
         const balance = walletData.wallet?.balance || 0;
-        const amount = booking.totalAmount;
-        
+        const amount = tripDue ? tripDue.reduce((s, b) => s + b.totalAmount, 0) : booking.totalAmount;
+        const label = tripDue ? { tourName: `Trip: ${tripDue.map(b => b.tourName).join(' + ')}` } : booking;
+
         // Show payment confirmation modal - use booking._id for API, not booking.id
-        showPaymentConfirmationModal(booking, balance, amount, booking._id, userId);
+        showPaymentConfirmationModal(label, balance, amount, tripDue ? `trip:${booking.tripId}` : booking._id, userId);
 
     } catch (error) {
         console.error('Payment error:', error);
@@ -854,11 +883,15 @@ async function confirmPayment(bookingId, userId) {
         confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
         // Make payment API call
-        const response = await fetch(`http://localhost:3000/api/bookings/${bookingId}/pay-with-wallet`, {
+        const payPath = bookingId.startsWith('trip:')
+            ? `trip/${bookingId.slice(5)}/pay-with-wallet`
+            : `${bookingId}/pay-with-wallet`;
+        const response = await fetch(`http://localhost:3000/api/bookings/${payPath}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token') || 'dummy-token'}`
+                // Login luu token o 'authToken' (js/auth.js)
+                'Authorization': `Bearer ${localStorage.getItem('authToken') || localStorage.getItem('token') || ''}`
             },
             body: JSON.stringify({ userId })
         });
@@ -872,16 +905,14 @@ async function confirmPayment(bookingId, userId) {
             // Show success notification
             showNotification(`✅ Payment successful! Your booking is now confirmed.`, 'success');
             
-            // Update booking in the list - use _id to match
-            const bookingIndex = allBookings.findIndex(b => b._id === bookingId);
-            if (bookingIndex !== -1) {
-                allBookings[bookingIndex].paymentStatus = 'paid';
-                allBookings[bookingIndex].status = 'confirmed';
-            }
+            // Update booking(s) in the list - use _id (or tripId) to match
+            allBookings
+                .filter(b => b._id === bookingId || (b.tripId && `trip:${b.tripId}` === bookingId && b.status !== 'cancelled'))
+                .forEach(b => { b.paymentStatus = 'paid'; b.status = 'confirmed'; });
             
             // Refresh the display after short delay
             setTimeout(() => {
-                loadBookings();
+                loadUserBookings();
                 // Close detail modal if open
                 document.querySelector('.modal-overlay')?.remove();
             }, 1500);
@@ -1288,7 +1319,7 @@ async function handleGuideReviewSubmit(e) {
             
             // Refresh bookings to update review status
             setTimeout(() => {
-                loadBookings();
+                loadUserBookings();
             }, 1500);
         } else {
             throw new Error(data.error || 'Failed to submit review');

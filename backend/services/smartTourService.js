@@ -35,20 +35,34 @@ const MAX_WAIT_DAYS = 1;
 const MAX_SHORTER_DAYS = 3;
 const RESULT_LIMIT = 6;
 const MIN_SINGLE_TOUR_DAYS = 3;
+// Van hien ke hoach vuot ngan sach toi 10% (kem canh bao) thay vi loai im lang
+const BUDGET_TOLERANCE = 1.1;
+// Dung 70-100% ngan sach la dep nhat: khach co nhieu tien thuong muon chuyen tot hon
+const BUDGET_SWEET_SPOT = 0.7;
+// Moi loai (A: 1 tour, B: ghep tour) co it nhat bay nhieu ke hoach trong ket qua, neu co
+const MIN_PER_LEVEL = 2;
 
 // Trong so cham diem. Tong = 1.
 // So thich nang nhat vi do la ly do khach chon noi den; thoi tiet va do khop
 // so ngay xep sau. Khong co diem "pho bien": du lieu booking hien la du lieu
 // mau (225 booking tao trong 1 tuan), cham theo no la hoc lai chinh du lieu gia.
+// distance: tong km giua cac thanh pho, chuan hoa min-max trong cac ung vien
+// (Tsai & Wang 2025, cong thuc 17-18) - chan ke hoach nhay vung xa.
 const WEIGHTS = {
   interests: 0.35,
   weather: 0.15,
-  duration: 0.15,
+  duration: 0.10,
   budget: 0.10,
   pace: 0.10,
-  group: 0.10,
-  connections: 0.05
+  group: 0.05,
+  connections: 0.05,
+  distance: 0.10
 };
+// Mau so toi thieu khi chuan hoa quang duong: neu chi co 1 ke hoach ghep
+// (Bordeaux + Lyon, 450 km) thi min-max bien no thanh "xa nhat" = 0 diem.
+const MIN_DISTANCE_SCALE_KM = 5000;
+// Trong so do noi tieng trong diem moi diem tham quan (β, cong thuc 11)
+const POI_POP_BETA = 0.5;
 
 const PACE_ORDER = ['relaxed', 'balanced', 'packed'];
 
@@ -212,16 +226,22 @@ async function fetchCatalog() {
   const hotels = await Hotel.find({ _id: { $in: hotelIds } }, { name: 1, checkInTime: 1, checkOutTime: 1 }).lean();
   const hotelById = Object.fromEntries(hotels.map(h => [String(h._id), h]));
 
-  // So diem tham quan theo chu de cua moi tour
+  // Diem so thich theo chu de cua moi tour. Moi diem tham quan dong gop
+  // poiWeight = β·POP + (1-β), POP = log(1+sitelinks) chuan hoa min-max tren moi
+  // diem (Tsai & Wang 2025, cong thuc 8 + 11; khong co du lieu thoi gian ghe nen
+  // phan ATT thay bang "co mat" = 1). Diem OSM (sitelinks 0) van duoc 1 - β.
+  const pois = await Poi.find({}, { tourId: 1, themes: 1, name: 1, popularity: 1 }).sort({ 'popularity.rank': 1 }).lean();
+  const logMax = Math.log1p(Math.max(1, ...pois.map(p => p.popularity?.sitelinks || 0)));
+  const poiWeight = (p) => POI_POP_BETA * Math.log1p(p.popularity?.sitelinks || 0) / logMax + (1 - POI_POP_BETA);
   const poiThemes = {};
   const poiNames = {};
-  (await Poi.find({}, { tourId: 1, themes: 1, name: 1, 'popularity.rank': 1 }).sort({ 'popularity.rank': 1 }).lean())
+  pois
     .forEach(p => {
       const k = String(p.tourId);
       poiThemes[k] = poiThemes[k] || {};
       poiNames[k] = poiNames[k] || {};
       (p.themes || []).forEach(th => {
-        poiThemes[k][th] = (poiThemes[k][th] || 0) + 1;
+        poiThemes[k][th] = (poiThemes[k][th] || 0) + poiWeight(p);
         (poiNames[k][th] = poiNames[k][th] || []).push(p.name);
       });
     });
@@ -236,6 +256,7 @@ async function fetchCatalog() {
       timezone: t.location?.timezone || 'UTC',
       operations: { ...DEFAULT_OPERATIONS, ...(t.operations || {}) },
       standardHotel: hotel ? hotel.name : null,
+      standardHotelId: hotel ? String(hotel._id) : null,
       checkOutTime: hotel?.checkOutTime || DEFAULT_CHECK_TIMES.checkOutTime,
       poiThemes: poiThemes[id] || {},
       poiNames: poiNames[id] || {},
@@ -379,9 +400,11 @@ function pricePlan(plan, input) {
 
   const connections = plan.connections.map((c, i) => {
     const B = stops[i + 1].tour;
-    // Gia 1 dem / nguoi = phan luu tru trong gia tour B chia cho so dem cua tour B
+    // Gia 1 dem / nguoi = phan luu tru trong gia tour B chia cho so dem cua tour B.
+    // Fallback: uoc 40% estimatedCost neu tour chua co priceBreakdown (tranh hien $0).
     const nights = Math.max(1, (B.durationDays || 2) - 1);
-    const nightPerPerson = Math.round((B.priceBreakdown?.accommodation || 0) / nights);
+    const accommodation = B.priceBreakdown?.accommodation || (B.estimatedCost || 0) * 0.4;
+    const nightPerPerson = Math.round(accommodation / nights);
     const transportCost = c.costPerPerson * payingGuests;
     const nightsCost = c.connectionNights * nightPerPerson * payingGuests;
     return { ...c, transportCost, nightsCost, nightPerPerson, cost: transportCost + nightsCost };
@@ -397,21 +420,24 @@ const pct = (v) => Math.round(v * 100);
 
 /** Do phu so thich cua MOT tour: 0..1, kem ten diem lam bang chung. */
 function interestCoverage(tour, interests) {
-  if (!interests.length) return { score: 1, matched: {} };
+  if (!interests.length) return { score: 1, matched: {}, support: {} };
   const matched = {};
+  const perTheme = {};
   let sum = 0;
   for (const th of interests) {
     let support = tour.poiThemes[th] || 0;
     const examples = (tour.poiNames[th] || []).slice(0, 2);
     if (th === 'food') {
-      support += (tour.food || []).length;
+      // Mon an khong co do noi tieng -> tinh nhu diem POP = 0
+      support += (tour.food || []).length * (1 - POI_POP_BETA);
       examples.push(...(tour.food || []).slice(0, 2 - examples.length));
     }
-    // 3 diem tro len cho mot so thich = du de xep vao lich 1 chuyen
-    sum += Math.min(support, 3) / 3;
+    // Tuong duong 3 diem rat noi tieng (hoac 6 diem it ten tuoi) = du cho 1 chuyen
+    perTheme[th] = Math.min(support, 3) / 3;
+    sum += perTheme[th];
     if (support > 0) matched[th] = examples;
   }
-  return { score: sum / interests.length, matched };
+  return { score: sum / interests.length, matched, support: perTheme };
 }
 
 /** Diem thoi tiet thang khoi hanh (comfort 0..1 tu Open-Meteo). */
@@ -442,7 +468,14 @@ function scorePlan(plan, input) {
 
   // So thich
   const coverage = plan.stops.map(s => interestCoverage(s.tour, input.interests));
-  const interests = weighted(s => coverage[plan.stops.indexOf(s)].score);
+  const perStop = weighted(s => coverage[plan.stops.indexOf(s)].score);
+  // Ca chuyen: moi so thich lay diem tot nhat trong cac diem dung, de thuong
+  // ghep tour bo sung nhau (Paris nghe thuat + Thuy Si thien nhien).
+  // Tour don: bang perStop.
+  const wholeTrip = input.interests.length
+    ? input.interests.reduce((s, th) => s + Math.max(...coverage.map(c => c.support[th])), 0) / input.interests.length
+    : 1;
+  const interests = (perStop + wholeTrip) / 2;
   if (input.interests.length) {
     const covered = input.interests.filter(th => coverage.some(c => c.matched[th]));
     const missing = input.interests.filter(th => !covered.includes(th));
@@ -475,10 +508,16 @@ function scorePlan(plan, input) {
   if (plan.totalDays === input.days) reasons.push(`Uses exactly your ${input.days} days`);
   else warnings.push(`${input.days - plan.totalDays} of your ${input.days} days left free`);
 
-  // Ngan sach: duoi ngan sach la dat; cang du dia cang tot mot chut
+  // Ngan sach: 70-100% = 1; re hon giam dan ve 0.6; vuot ngan sach (toi 10%)
+  // tu 0.4 xuong 0
   const ratio = plan.costPerPerson / input.budget;
-  const budget = ratio <= 1 ? 0.6 + 0.4 * (1 - ratio) : 0;
+  const budget = ratio > 1 ? Math.max(0, 0.4 * (1 - (ratio - 1) / (BUDGET_TOLERANCE - 1)))
+    : ratio >= BUDGET_SWEET_SPOT ? 1
+    : 0.6 + 0.4 * ratio / BUDGET_SWEET_SPOT;
   reasons.push(`$${plan.costPerPerson.toLocaleString('en-US')}/person (${pct(ratio)}% of budget)`);
+  if (ratio > 1) {
+    warnings.push(`Over budget by $${(plan.costPerPerson - input.budget).toLocaleString('en-US')}/person`);
+  }
 
   // Nhip do + nhom khach
   const pace = weighted(s => paceScore(s.tour, input.pace));
@@ -499,7 +538,12 @@ function scorePlan(plan, input) {
     if (c.connectionNights) warnings.push(`${c.connectionNights} connection night(s) in ${c.to}`);
   });
 
-  const breakdown = { interests, weather, duration, budget, pace, group, connections };
+  // Quang duong: 1 - DIS chuan hoa min-max (min = 0 vi tour don khong di chuyen)
+  const travelKm = plan.connections.reduce((s, c) => s + (c.distanceKm || 0), 0);
+  const distance = input.maxTravelKm ? 1 - travelKm / input.maxTravelKm : 1;
+  if (distance < 0.5) warnings.push(`Long hops between cities: ${Math.round(travelKm).toLocaleString('en-US')} km in total`);
+
+  const breakdown = { interests, weather, duration, budget, pace, group, connections, distance };
   const score = Object.entries(WEIGHTS).reduce((s, [k, w]) => s + w * breakdown[k], 0);
   return {
     ...plan,
@@ -551,23 +595,43 @@ function presentPlan(p) {
 
 /**
  * Giu ke hoach tot nhat cho moi TAP tour (Paris+Amsterdam chi hien 1 lan du co
- * nhieu ngay khoi hanh), va khong de mot tour chiem het danh sach.
+ * nhieu ngay khoi hanh), khong de mot tour chiem het danh sach, va co ca tour
+ * don (A) lan ghep tour (B): vong 1 lay toi da MIN_PER_LEVEL ke hoach tot nhat
+ * moi loai, vong 2 lap cho trong bang ke hoach tot nhat con lai.
+ * `scored` da xep diem giam dan.
  */
 function pickDiverse(scored, limit) {
   const seenSets = new Set();
   const tourUses = {};
+  const perLevel = { A: 0, B: 0 };
   const out = [];
-  for (const p of scored) {
+  const take = (p) => {
     const key = p.stops.map(s => s.tour.id).sort().join('+');
-    if (seenSets.has(key)) continue;
-    if (p.stops.some(s => (tourUses[s.tour.id] || 0) >= 2)) continue;
+    if (seenSets.has(key)) return;
+    if (p.stops.some(s => (tourUses[s.tour.id] || 0) >= 2)) return;
     seenSets.add(key);
     p.stops.forEach(s => { tourUses[s.tour.id] = (tourUses[s.tour.id] || 0) + 1; });
+    perLevel[p.stops.length === 1 ? 'A' : 'B']++;
     out.push(p);
+  };
+  // Giu cho tour don truoc: it ung vien hon, va de bi chan neu tour do da
+  // nam trong 2 ke hoach ghep chon truoc (luat moi tour toi da 2 lan)
+  for (const level of ['A', 'B']) {
+    for (const p of scored) {
+      if (out.length >= limit || perLevel[level] >= MIN_PER_LEVEL) break;
+      if ((p.stops.length === 1 ? 'A' : 'B') === level) take(p);
+    }
+  }
+  for (const p of scored) {
     if (out.length >= limit) break;
+    take(p);
   }
   return out;
 }
+
+/** Ke hoach trong ngan sach luon dung truoc; vuot ngan sach chi lap cho trong. */
+const byRank = (budget) => (a, b) =>
+  (a.costPerPerson > budget) - (b.costPerPerson > budget) || b.score - a.score;
 
 /** Khi khong co ke hoach nao: noi ro rang buoc nao chan, kem ke hoach gan nhat. */
 function explainEmpty(allPriced, input, catalog) {
@@ -589,6 +653,10 @@ function explainEmpty(allPriced, input, catalog) {
     const maxDays = longest.reduce((a, b) => a + b, 0) - (longest.length - 1);
     const maxSlots = Math.max(0, ...inWindow.map(d => d.slots));
 
+    if (!lastDeparture) {
+      tips.push('No departures have been scheduled yet. Check back later.');
+      return { tips, closest: [] };
+    }
     if (input.startFrom > lastDeparture) {
       tips.push(`Departures are scheduled only until ${lastDeparture}. Pick an earlier date.`);
     } else if (input.days < MIN_SINGLE_TOUR_DAYS) {
@@ -684,8 +752,9 @@ async function planTrip(rawInput) {
     };
   }
   const priced = raw.map(p => pricePlan(p, input));
-  const affordable = priced.filter(p => p.costPerPerson <= input.budget);
-  const scored = affordable.map(p => scorePlan(p, input)).sort((a, b) => b.score - a.score);
+  const affordable = priced.filter(p => p.costPerPerson <= input.budget * BUDGET_TOLERANCE);
+  input.maxTravelKm = Math.max(MIN_DISTANCE_SCALE_KM, ...affordable.map(p => p.connections.reduce((s, c) => s + (c.distanceKm || 0), 0)));
+  const scored = affordable.map(p => scorePlan(p, input)).sort(byRank(input.budget));
 
   const result = {
     input,
@@ -693,18 +762,64 @@ async function planTrip(rawInput) {
     counts: {
       candidates: all.length,
       withMustInclude: input.mustInclude.length ? raw.length : undefined,
-      withinBudget: affordable.length,
+      withinBudget: affordable.filter(p => p.costPerPerson <= input.budget).length,
       levelA: scored.filter(p => p.stops.length === 1).length,
       levelB: scored.filter(p => p.stops.length > 1).length
     },
-    plans: pickDiverse(scored, RESULT_LIMIT).map(presentPlan)
+    plans: pickDiverse(scored, RESULT_LIMIT).sort(byRank(input.budget)).map(presentPlan)
   };
   if (!result.plans.length) Object.assign(result, explainEmpty(priced, input, catalog));
   return result;
 }
 
+/**
+ * Bao gia lai MOT chuyen ghep khach da chon, de dat tour. Kiem tra lai bang
+ * dung luat cua buildPlans (cho trong, ngay noi khop, cho toi da MAX_WAIT_DAYS)
+ * va tinh gia bang pricePlan - so tien dat = so tien SmartTour da hien.
+ * Nem loi co status 400 (sai du lieu / khong noi duoc) hoac 409 (het cho).
+ *
+ * @param {object} raw { stops: [{ tourId, startDay: "YYYY-MM-DD" }], adults, children, infants }
+ */
+async function quoteTrip(raw = {}) {
+  const fail = (msg, status = 400) => { const e = new Error(msg); e.status = status; throw e; };
+  const stopsIn = Array.isArray(raw.stops) ? raw.stops : [];
+  if (stopsIn.length < 2 || stopsIn.length > MAX_TOURS_PER_PLAN) fail(`A trip has 2 to ${MAX_TOURS_PER_PLAN} tours`);
+
+  const adults = parseInt(raw.adults, 10);
+  if (!(adults >= 1 && adults <= 12)) fail('adults must be between 1 and 12');
+  const children = Math.max(0, parseInt(raw.children, 10) || 0);
+  const infants = Math.max(0, parseInt(raw.infants, 10) || 0);
+  const party = { adults, children, infants, seats: adults + children };
+
+  const catalog = await loadCatalog();
+  const tomorrow = addDays(new Date().toISOString().slice(0, 10), 1);
+  const stops = [];
+  const connections = [];
+  for (const s of stopsIn) {
+    const tour = catalog[String(s.tourId)];
+    if (!tour) fail(`Unknown tour: ${s.tourId}`);
+    if (stops.some(x => x.tour.id === tour.id)) fail(`${tour.name} appears twice in this trip`);
+    const startDay = String(s.startDay || '');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(startDay) || startDay < tomorrow) fail(`${tour.name}: departure ${startDay} is not bookable`);
+    const departure = departureOn(tour, startDay, party.seats);
+    if (!departure) fail(`${tour.name} has no departure with ${party.seats} free seat(s) on ${startDay}`, 409);
+
+    const last = stops[stops.length - 1];
+    if (last) {
+      const conn = planConnection(last.tour, tour, last.endDay);
+      const wait = conn ? daysBetween(conn.earliestStart, startDay) : -1;
+      if (wait < 0 || wait > MAX_WAIT_DAYS) fail(`${tour.name} on ${startDay} does not connect with ${last.tour.name}`);
+      connections.push({ ...conn, waitDays: wait, connectionNights: conn.connectionNights + wait, startDay });
+    }
+    stops.push({ tour, departure, startDay, endDay: addDays(startDay, tour.durationDays - 1) });
+  }
+  const totalDays = daysBetween(stops[0].startDay, stops[stops.length - 1].endDay) + 1;
+  return pricePlan({ stops, connections, totalDays }, party);
+}
+
 module.exports = {
   planTrip,
+  quoteTrip,
   // xuat de test
   normalizeInput, planConnection, localToUtc, utcToLocal, interestCoverage, WEIGHTS
 };

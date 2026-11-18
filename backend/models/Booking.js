@@ -57,6 +57,24 @@ const bookingSchema = new mongoose.Schema({
     index: true
   },
 
+  // Chuyen SmartTour (ghep 2-3 tour): cac booking cung tripId duoc dat va thanh
+  // toan cung luc, huy thi tung booking. tripOrder: thu tu tour trong chuyen (1..3).
+  tripId: { type: String, default: null, index: true },
+  tripOrder: { type: Number, default: null },
+  // Chang noi TOI tour nay tu tour truoc (chi booking thu 2 tro di). Tien da cong
+  // vao totalAmount: transportCost (ve ca doan) + nightsCost (dem noi chuyen).
+  tripConnection: {
+    fromTour: String,
+    mode: String,
+    leaveDay: String,
+    leaveAt: String,
+    arriveDay: String,
+    arriveAt: String,
+    connectionNights: Number,
+    transportCost: Number,
+    nightsCost: Number
+  },
+
   // Dates (quy uoc: ngay theo lich, luu 00:00 UTC - xem models/Tour.js)
   checkinDate: {
     type: Date,

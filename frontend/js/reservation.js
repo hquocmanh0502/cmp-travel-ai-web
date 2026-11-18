@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         departureDate: checkinDate, // ✅ Use checkin date as departure
         adults: adults,
         children: children,
-        infants: 0,
+        infants: selectedInfants(pendingBooking), // truoc day luon gui 0, bo qua o Infant
         
         rooms: {
           superior: parseInt(document.querySelector('#room-superior')?.value) || 0,
@@ -187,7 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tourBaseCost: pendingBooking.tourPrice || pendingBooking.totalPrice || 0,
         accommodationCost: calculateAccommodationCost(),
         servicesCost: calculateServicesCost(),
-        totalAmount: (pendingBooking.totalPrice || 0) + calculateAccommodationCost() + calculateServicesCost()
+        totalAmount: (pendingBooking.totalPrice || 0) + calculateAccommodationCost() + calculateServicesCost() +
+          (pendingBooking.trip ? 0 : selectedInfants(pendingBooking) * (pendingBooking.infantPrice || 0))
       };
       
       // Validation
@@ -233,13 +234,23 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         showLoading();
         
-        const response = await fetch('/api/bookings', {
+        // Chuyen ghep tu SmartTour: dat tat ca tour mot lan (server tinh lai gia + chang noi)
+        const trip = pendingBooking.trip;
+        const response = await fetch(trip ? '/api/bookings/trip' : '/api/bookings', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(trip ? {
+            stops: trip.stops,
+            adults: formData.adults,
+            children: formData.children,
+            infants: formData.infants,
+            rooms: formData.rooms,
+            services: formData.services,
+            customerInfo: formData.customerInfo
+          } : formData)
         });
         
         console.log('📥 Response status:', response.status);
@@ -261,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
           sessionStorage.removeItem('pendingBooking');
           
           // Show success message
-          showSuccessMessage(data.bookingId);
+          showSuccessMessage(data.bookingId || (data.bookingIds || []).join(', '));
           
           // Redirect after delay
           setTimeout(() => {
@@ -344,8 +355,11 @@ function loadBookingData() {
     if (checkoutInput && pendingBooking.checkinDate) {
       // ✅ Calculate checkout date based on tour duration
       let checkoutDate;
-      
-      if (pendingBooking.tourDuration) {
+
+      if (pendingBooking.checkoutDate) {
+        // Ngay ket thuc THAT cua chuyen khoi hanh - server cung luu dung ngay nay
+        checkoutDate = new Date(pendingBooking.checkoutDate);
+      } else if (pendingBooking.tourDuration) {
         // Parse duration like "7 days 6 nights" or "5 days" or "1 week"
         const durationMatch = pendingBooking.tourDuration.match(/(\d+)\s*(day|week)/i);
         let days = 1; // Default 1 day
@@ -361,8 +375,9 @@ function loadBookingData() {
           }
         }
         
+        // Tour N ngay ket thuc ngay thu N: cong N-1 (truoc day cong N -> thua 1 ngay)
         checkoutDate = new Date(pendingBooking.checkinDate);
-        checkoutDate.setDate(checkoutDate.getDate() + days);
+        checkoutDate.setDate(checkoutDate.getDate() + Math.max(1, days - 1));
         
         console.log(`✅ Calculated checkout from duration: ${pendingBooking.tourDuration} = ${days} days`);
       } else {
@@ -454,8 +469,23 @@ function loadBookingData() {
       console.error('❌ Children select not found!');
     }
     
+    // Em be: chuyen ghep da tinh gia voi so em be tu SmartTour -> khoa.
+    // Dat 1 tour: khach chon o day, tong tien cap nhat theo.
+    const infantSelect = document.querySelector('#infant');
+    if (infantSelect) {
+      if (pendingBooking.trip) {
+        infantSelect.value = String(pendingBooking.trip.infants || 0);
+        infantSelect.disabled = true;
+        infantSelect.style.opacity = '0.7';
+        infantSelect.style.border = '2px solid #ff6600';
+        infantSelect.title = 'Number of infants selected in Smart Tour';
+      } else {
+        infantSelect.addEventListener('change', populateBookingSummary);
+      }
+    }
+
     // Removed smart room suggestion - using simple validation instead
-    
+
     console.log('✅ loadBookingData completed - all constraints applied');
     }
   } catch (error) {
@@ -511,16 +541,16 @@ function populateBookingSummary() {
     console.error('❌ Element #summary-guide not found');
   }
   
-  // Populate check-in date
+  // Populate check-in date (+ ngay ket thuc that neu co)
+  // Ngay luu 00:00 UTC -> hien theo UTC de khong lech ngay theo mui gio may khach
+  const fmtDay = (d) => new Date(d).toLocaleDateString('en-US', {
+    weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
+  });
   const checkinDate = document.getElementById('summary-checkin');
   if (checkinDate && pendingBooking.checkinDate) {
-    const date = new Date(pendingBooking.checkinDate);
-    checkinDate.textContent = date.toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
+    checkinDate.textContent = pendingBooking.checkoutDate
+      ? `${fmtDay(pendingBooking.checkinDate)} – ${fmtDay(pendingBooking.checkoutDate)}`
+      : fmtDay(pendingBooking.checkinDate);
     console.log('✅ Set check-in date:', checkinDate.textContent);
   } else if (checkinDate) {
     checkinDate.textContent = 'Date not selected';
@@ -543,7 +573,11 @@ function populateBookingSummary() {
       if (guestText) guestText += ', ';
       guestText += `${children} child${children > 1 ? 'ren' : ''}`;
     }
-    
+    const infants = selectedInfants(pendingBooking);
+    if (infants > 0) {
+      guestText += `, ${infants} infant${infants > 1 ? 's' : ''}`;
+    }
+
     guests.textContent = guestText || 'Guests not selected';
     console.log('✅ Set guests:', guests.textContent);
   } else {
@@ -553,7 +587,9 @@ function populateBookingSummary() {
   // Populate total price
   const price = document.getElementById('summary-price');
   if (price) {
-    const tourCost = pendingBooking.totalPrice || 0;
+    // Chuyen ghep: totalPrice da gom em be. Dat 1 tour: cong gia em be chon o day
+    const infantCost = pendingBooking.trip ? 0 : selectedInfants(pendingBooking) * (pendingBooking.infantPrice || 0);
+    const tourCost = (pendingBooking.totalPrice || 0) + infantCost;
     const upgrade = calculateAccommodationCost();
     const totalPrice = tourCost + upgrade + calculateServicesCost();
     // Tach ro de khach biet vi sao tong tien khac gia tour niem yet
@@ -565,7 +601,38 @@ function populateBookingSummary() {
     console.error('❌ Element #summary-price not found');
   }
   
+  renderTripSummary(pendingBooking);
   console.log('✅ Booking summary populated successfully!');
+}
+
+/** So em be: chuyen ghep lay tu SmartTour, dat 1 tour lay o #infant. */
+function selectedInfants(pendingBooking) {
+  if (pendingBooking.trip) return pendingBooking.trip.infants || 0;
+  return parseInt(document.querySelector('#infant')?.value) || 0;
+}
+
+/** Chuyen ghep: liet ke tung tour (ngay di that) + chang noi, de khach biet minh dat gi. */
+function renderTripSummary(pendingBooking) {
+  const box = document.getElementById('summary-trip');
+  const trip = pendingBooking.trip;
+  if (!box || !trip?.stops?.[0]?.name) return;
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const day = (d) => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'UTC' });
+  const money = (n) => `$${Math.round(n || 0).toLocaleString('en-US')}`;
+  const rows = [];
+  trip.stops.forEach((s, i) => {
+    rows.push(`<div class="summary-trip-row"><span><b>${i + 1}. ${esc(s.name)}</b> · ${day(s.startDay)} – ${day(s.endDay)}` +
+      ` · <i class="fas fa-hotel"></i> ${esc(s.hotel || 'Standard hotel')}</span><span>${money(s.cost)}</span></div>`);
+    const c = trip.connections?.[i];
+    if (c) {
+      const nights = c.connectionNights ? `, +${c.connectionNights} night in ${esc(c.to)}` : '';
+      rows.push(`<div class="summary-trip-row conn"><span><i class="fas fa-route"></i> ${esc(c.mode)} to ${esc(c.to)},` +
+        ` arrive ${day(c.arriveDay)} ${esc(c.arriveAt)}${nights}</span><span>${money(c.cost)}</span></div>`);
+    }
+  });
+  rows.push(`<div class="summary-trip-row total"><span>Total (before VIP discount)</span><span>${money(pendingBooking.totalPrice)}</span></div>`);
+  box.innerHTML = rows.join('');
+  box.hidden = false;
 }
 
 function showSuccessMessage(bookingId) {

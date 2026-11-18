@@ -180,8 +180,50 @@
         <ul class="neg">${p.warnings.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
       </div>
       <div class="st-bars">${bars}</div>
+      ${p.level === 'B' ? `<div class="st-book-row"><button type="button" class="st-submit st-book-trip" data-i="${i}">
+        <i class="fas fa-suitcase-rolling"></i> Book this trip · ${money(p.totalCost)}</button></div>` : ''}
     </article>`;
   }
+
+  // Ke hoach dang hien + doan khach da chuan hoa (tu response) - de dat ca chuyen
+  let shown = { plans: [], input: null };
+
+  /** Dat ca chuyen ghep: dung lai trang reservation, kem danh sach chang. */
+  function bookTrip(p) {
+    const input = shown.input;
+    sessionStorage.setItem('pendingBooking', JSON.stringify({
+      tourId: p.stops[0].tourId,
+      tourName: p.stops.map(s => s.name).join(' → '),
+      tourDuration: `${p.totalDays} days`,
+      selectedHotel: { id: null, name: p.stops.map(s => s.hotel || 'Standard hotel').join(' · '), surcharge: 0 },
+      selectedGuide: null,
+      checkinDate: p.startDay,
+      checkoutDate: p.endDay,
+      adults: input.adults,
+      children: input.children,
+      // Gia tham khao (chua tru VIP); server tinh lai khi dat
+      totalPrice: p.totalCost,
+      trip: {
+        // tourId + startDay gui len server; phan con lai chi de hien tren trang dat
+        stops: p.stops.map(s => ({
+          tourId: s.tourId, startDay: s.startDay,
+          name: s.name, endDay: s.endDay, cost: s.cost, hotel: s.hotel
+        })),
+        connections: p.connections.map(c => ({
+          mode: c.mode, to: c.to, arriveDay: c.arriveDay, arriveAt: c.arriveAt,
+          connectionNights: c.connectionNights, cost: c.cost
+        })),
+        infants: input.infants
+      },
+      timestamp: new Date().toISOString()
+    }));
+    window.location.href = 'reservation.html?v=' + Date.now();
+  }
+
+  $('stPlans').addEventListener('click', (e) => {
+    const btn = e.target.closest('.st-book-trip');
+    if (btn) bookTrip(shown.plans[Number(btn.dataset.i)]);
+  });
 
   function render(data) {
     const c = data.counts;
@@ -195,6 +237,7 @@
     // Nhung gi server tu dieu chinh (ngay da qua, tre 12+ tinh nguoi lon...)
     if (data.notes?.length) html += `<div class="st-notes"><i class="fas fa-circle-info"></i> ${data.notes.map(esc).join('<br>')}</div>`;
     if (data.tips?.length) html += `<div class="st-tips">${data.tips.map(esc).join('<br>')}</div>`;
+    shown = { plans: data.plans.length ? data.plans : (data.closest || []), input: data.input };
     if (data.plans.length) html += data.plans.map(planHtml).join('');
     else if (data.closest?.length) html += '<h3 class="st-plan-sub">Closest option:</h3>' + data.closest.map(planHtml).join('');
     $('stPlans').innerHTML = html || '<div class="st-empty"><i class="fas fa-circle-exclamation"></i><p>No trip found.</p></div>';

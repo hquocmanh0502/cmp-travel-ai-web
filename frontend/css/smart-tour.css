@@ -159,3 +159,7 @@
   .st-why { grid-template-columns: 1fr; }
   .st-bars { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* Dat ca chuyen ghep */
+.st-book-row { margin-top: 12px; }
+.st-book-row .st-submit { margin-top: 0; }

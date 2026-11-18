@@ -10,6 +10,8 @@ const {
   seatsFor, findDeparture, upcomingDepartures, reserveSeats, releaseSeats, releaseForBooking
 } = require('../services/departureService');
 const { requireAuth, requireSelfOrAdmin } = require('../middleware/auth');
+const { quoteTrip } = require('../services/smartTourService');
+const crypto = require('crypto');
 
 // Xác thực bằng JWT thật.
 //
@@ -239,6 +241,188 @@ router.post('/', verifyAuth, async (req, res) => {
       success: false,
       error: error.message || 'Error creating booking'
     });
+  }
+});
+
+// =============================================
+// CREATE TRIP BOOKING (SmartTour: 2-3 tour noi tiep)
+// =============================================
+// Body: { stops: [{ tourId, startDay }], adults, children, infants, rooms, customerInfo }
+// Tao 1 booking / tour, chung tripId. Gia, ngay, chang noi deu tinh lai o server
+// (quoteTrip). Giu cho TAT CA tour hoac khong tour nao.
+router.post('/trip', verifyAuth, async (req, res) => {
+  const reserved = [];
+  const saved = [];
+  try {
+    const { stops, adults, children, infants, rooms, customerInfo, services } = req.body || {};
+    if (!customerInfo?.fullName || !customerInfo?.email || !customerInfo?.phone) {
+      return res.status(400).json({ success: false, error: 'Customer name, email and phone are required' });
+    }
+
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ success: false, error: 'User not found' });
+
+    let trip;
+    try {
+      trip = await quoteTrip({ stops, adults, children, infants });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ success: false, error: err.message });
+      throw err;
+    }
+
+    const tripId = crypto.randomUUID();
+    const level = user.membershipLevel || 'bronze';
+    const bookings = trip.stops.map((s, i) => {
+      const conn = i ? trip.connections[i - 1] : null;
+      const discount = applyVIPDiscount(s.quote.subtotal, level);
+      return new Booking({
+        userId: user._id,
+        tourId: s.tour._id,
+        tourName: s.tour.name,
+        hotelId: s.tour.standardHotelId,
+        hotelName: s.tour.standardHotel || 'Standard hotel',
+        departureId: s.departure._id,
+        checkinDate: s.departure.startDate,
+        checkoutDate: s.departure.endDate,
+        departureDate: s.departure.startDate,
+        adults: parseInt(adults),
+        children: parseInt(children) || 0,
+        infants: parseInt(infants) || 0,
+        rooms: rooms || {},
+        services: services || {},
+        customerInfo,
+        tourBaseCost: s.quote.tourBaseCost,
+        accommodationCost: s.quote.accommodationCost,
+        servicesCost: 0,
+        vipDiscount: {
+          membershipLevel: level,
+          discountPercentage: discount.discount,
+          discountAmount: discount.discountAmount,
+          originalAmount: discount.originalPrice
+        },
+        // Giam gia VIP chi tren gia tour; chang noi la chi phi van chuyen/luu tru
+        totalAmount: discount.finalPrice + (conn ? conn.cost : 0),
+        tripId,
+        tripOrder: i + 1,
+        tripConnection: conn ? {
+          fromTour: conn.from, mode: conn.mode,
+          leaveDay: conn.leaveDay, leaveAt: conn.leaveAt,
+          arriveDay: conn.arriveDay, arriveAt: conn.arriveAt,
+          connectionNights: conn.connectionNights,
+          transportCost: conn.transportCost, nightsCost: conn.nightsCost
+        } : undefined,
+        status: 'pending',
+        paymentStatus: 'unpaid'
+      });
+    });
+
+    const roomCheck = bookings[0].validateRoomCapacity();
+    if (!roomCheck.isValid) {
+      return res.status(400).json({ success: false, error: roomCheck.error, validation: roomCheck });
+    }
+
+    const seats = seatsFor({ adults, children });
+    for (const b of bookings) {
+      if (!(await reserveSeats(b.tourId, b.departureId, seats))) {
+        return res.status(409).json({
+          success: false,
+          error: `Not enough seats left on ${b.tourName} (${b.departureDate.toISOString().slice(0, 10)}). Please plan again.`,
+          code: 'SOLD_OUT'
+        });
+      }
+      reserved.push(b);
+    }
+
+    for (const b of bookings) saved.push(await b.save());
+    reserved.length = 0; // da luu het -> khong tra cho nua
+
+    res.status(201).json({
+      success: true,
+      message: 'Trip booked successfully',
+      tripId,
+      bookingIds: saved.map(b => b.bookingId),
+      totalAmount: saved.reduce((s, b) => s + b.totalAmount, 0),
+      bookings: saved
+    });
+  } catch (error) {
+    console.error('Trip booking error:', error);
+    res.status(500).json({ success: false, error: error.message || 'Error creating trip booking' });
+  } finally {
+    // Loi giua chung (het cho o tour sau, luu that bai): tra cho + xoa booking
+    // da luu, de khong co chuyen "nua voi" giu cho
+    if (reserved.length) {
+      await Promise.all(reserved.map(b => releaseSeats(b.tourId, b.departureId, seatsFor(b)))).catch(console.error);
+      await Booking.deleteMany({ _id: { $in: saved.map(b => b._id) } }).catch(console.error);
+    }
+  }
+});
+
+// =============================================
+// PAY TRIP WITH WALLET - tru vi 1 lan cho moi booking chua tra cua chuyen
+// =============================================
+router.post('/trip/:tripId/pay-with-wallet', verifyAuth, async (req, res) => {
+  try {
+    const due = await Booking.find({
+      tripId: req.params.tripId,
+      userId: req.userId,
+      status: { $ne: 'cancelled' },
+      paymentStatus: { $ne: 'paid' }
+    }).sort({ tripOrder: 1 });
+    if (!due.length) {
+      return res.status(400).json({ success: false, error: 'Nothing left to pay on this trip' });
+    }
+
+    const amount = due.reduce((s, b) => s + b.totalAmount, 0);
+    const names = due.map(b => b.tourName).join(' + ');
+    const payResult = await User.updateOne(
+      { _id: req.userId, 'wallet.balance': { $gte: amount } },
+      {
+        $inc: { 'wallet.balance': -amount },
+        $push: {
+          'wallet.transactions': {
+            type: 'payment',
+            amount,
+            description: `Payment for trip: ${names}`,
+            reference: req.params.tripId,
+            status: 'completed',
+            date: new Date(),
+            completedAt: new Date()
+          }
+        }
+      }
+    );
+    if (payResult.modifiedCount === 0) {
+      const user = await User.findById(req.userId, 'wallet.balance').lean();
+      const balance = user?.wallet?.balance || 0;
+      return res.status(400).json({
+        success: false, error: 'Insufficient wallet balance',
+        balance, required: amount, shortage: amount - balance
+      });
+    }
+
+    const fresh = await User.findById(req.userId, { 'wallet.balance': 1, 'wallet.transactions': { $slice: -1 } }).lean();
+    const paidAt = new Date();
+    await Booking.updateMany({ _id: { $in: due.map(b => b._id) } }, {
+      $set: {
+        paymentStatus: 'paid',
+        status: 'confirmed',
+        'paymentDetails.paidAt': paidAt,
+        'paymentDetails.paymentMethod': 'CMP Wallet',
+        'paymentDetails.transactionId': String(fresh.wallet.transactions[0]._id)
+      }
+    });
+
+    res.json({
+      success: true,
+      message: 'Payment successful! Your trip is now confirmed.',
+      tripId: req.params.tripId,
+      paidBookings: due.length,
+      amountPaid: amount,
+      walletBalance: fresh.wallet.balance
+    });
+  } catch (error) {
+    console.error('Trip payment error:', error);
+    res.status(500).json({ success: false, error: error.message || 'Error processing payment' });
   }
 });
 
@@ -563,6 +747,16 @@ router.post('/:bookingId/pay-with-wallet', requireBookingOwner, async (req, res)
       return res.status(400).json({
         success: false,
         error: 'Cannot pay for a cancelled booking'
+      });
+    }
+
+    // Tour thuoc chuyen SmartTour: tra mot lan ca chuyen
+    if (booking.tripId) {
+      return res.status(400).json({
+        success: false,
+        error: 'This tour is part of a trip. Please pay for the whole trip.',
+        code: 'PAY_TRIP',
+        tripId: booking.tripId
       });
     }
 
