@@ -1,184 +1,224 @@
+// backend/routes/chatbot.js
+//
+// Chatbot CMP Travel (chat/retrieval_graph). Thay ban mock cu + server Flask
+// :5000: chatbot chay ngay trong Express, moi so lieu lay tu code web.
+//
+//   POST /api/chatbot/message          { message, sessionId? }  -> Server-Sent Events
+//        event session  { sessionId }
+//        event status   { tools: [...] }     dang tra cuu (giao dien hien "dang kiem tra gia...")
+//        event reset    {}                   bo phan chu da hien (agent viet lai)
+//        event token    { text }             tung manh cau tra loi
+//        event done     { answer, cards, verified }
+//        event error    { error }
+//   GET  /api/chatbot/history/:sessionId   tin nhan cu (chuyen trang van giu cuoc chat)
+//   GET  /api/chatbot/status
+//   POST /api/chatbot/feedback
+
 const express = require('express');
-const cors = require('cors');
-const { spawn } = require('child_process');
-const path = require('path');
+const crypto = require('crypto');
+const rateLimit = require('express-rate-limit');
+const { HumanMessage, AIMessage } = require('@langchain/core/messages');
+const ChatConversation = require('../models/ChatConversation');
+const ChatChunk = require('../models/ChatChunk');
+const { optionalAuth, requireAuth } = require('../middleware/auth');
+const memory = require('../chat/shared/memory');
+const config = require('../chat/shared/configuration');
 
 const router = express.Router();
 
-// Enable CORS for chatbot routes
-router.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:8502'],
-    credentials: true
-}));
+// 20 tin / 10 phut moi nguoi dung (hoac IP neu chua dang nhap) - chan ton tien API
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  limit: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => req.user?.id || rateLimit.ipKeyGenerator(req.ip),
+  message: { error: 'Too many messages. Please wait a few minutes.' }
+});
 
-/**
- * @route POST /api/chatbot/message
- * @desc Send message to RAG chatbot and get response
- * @access Public
- */
-router.post('/message', async (req, res) => {
-    try {
-        const { message, sessionId, userId, context } = req.body;
+const SESSION_RX = /^[A-Za-z0-9_-]{8,64}$/;
 
-        if (!message || message.trim().length === 0) {
-            return res.status(400).json({
-                error: 'Message is required'
-            });
+/** Hoi thoai cua sessionId - chi tra ve neu cung chu (khong lo hoi thoai nguoi khac). */
+async function loadConversation(sessionId, userId) {
+  if (!SESSION_RX.test(String(sessionId || ''))) return null;
+  const conv = await ChatConversation.findOne({ sessionId });
+  if (!conv) return null;
+  if (conv.userId && String(conv.userId) !== String(userId || '')) return null;
+  return conv;
+}
+
+const dedupeCards = (cards) => {
+  const seen = new Set();
+  let plans = 0;
+  return cards.filter(c => {
+    // The chuyen ghep cung 1 lan tim chung link Smart Tour -> phan biet bang lo trinh + ngay
+    // (truoc day loc theo link -> 3 chuyen chi con 1 the)
+    const key = c.type === 'plan' ? `plan:${c.route}:${c.startDay}` : `${c.type}:${c.link}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    // Toi da 3 chuyen ghep, theo thu tu lan goi dau tien (dung dieu kien khach dat ra)
+    return !(c.type === 'plan' && ++plans > 3);
+  }).slice(0, 6);
+};
+
+router.post('/message', optionalAuth, limiter, async (req, res) => {
+  const message = String(req.body?.message || '').trim();
+  if (!message) return res.status(400).json({ error: 'Message is required' });
+  if (message.length > config.maxMessageChars) {
+    return res.status(400).json({ error: `Message is too long (max ${config.maxMessageChars} characters)` });
+  }
+  if (!config.hasApiKey()) {
+    return res.status(503).json({ error: 'The assistant is not configured yet (OPENAI_API_KEY missing on the server).' });
+  }
+
+  const userId = req.user?.id || null;
+  let conv = await loadConversation(req.body?.sessionId, userId);
+  const sessionId = conv?.sessionId || crypto.randomUUID();
+  const history = (conv?.messages || []).slice(-config.historyTurns)
+    .map(m => (m.sender === 'user' ? new HumanMessage(m.content?.text || '') : new AIMessage(m.content?.text || '')));
+
+  res.set({ 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
+  res.flushHeaders();
+  const send = (event, data) => res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
+  send('session', { sessionId });
+
+  // Khach dong tab -> dung goi model (khong ton tien cho cau tra loi khong ai doc).
+  // Han chot ca cau tra loi: qua requestDeadlineMs (vd OpenAI treo ca khi da thu lai)
+  // thi dung va bao loi lich su thay vi de khach cho mai.
+  const abort = new AbortController();
+  res.on('close', () => { if (!res.writableEnded) abort.abort(); });
+  const deadline = AbortSignal.timeout(config.requestDeadlineMs);
+  const signal = AbortSignal.any([abort.signal, deadline]);
+
+  // nap tre: server van chay khi chua cai/cau hinh
+  const { getChatGraph, textOf } = require('../chat/retrieval_graph/graph');
+  const { TURN_RESET } = require('../chat/retrieval_graph/state');
+  let answer = '';      // phan da stream cho khach
+  let finalText = '';   // cau tra loi cuoi cua agent (nguon chinh, khong phu thuoc stream)
+  let cards = [];
+  let verified = null;
+  const toolCalls = []; // tham so cong cu cua luot nay -> tin hieu cho bo nho so thich
+  try {
+    // Checkpointer giu nguyen state cua cuoc chat (thread = sessionId): chi gui cau
+    // hoi MOI + reset bo dem cua luot. Cuoc chat cu chua co checkpoint (truoc ban
+    // nay) -> nap lich su chu 1 lan de khong mat ngu canh.
+    const graph = await getChatGraph();
+    const threadConfig = { configurable: { thread_id: sessionId } };
+    const snapshot = await graph.getState(threadConfig);
+    const seed = snapshot.values?.messages?.length ? [] : history;
+    const stream = await graph.stream(
+      { messages: [...seed, new HumanMessage(message)], userId, ...TURN_RESET },
+      { ...threadConfig, streamMode: ['messages', 'updates'], recursionLimit: 30, signal }
+    );
+    for await (const [mode, chunk] of stream) {
+      if (mode === 'messages') {
+        const [msg, meta] = chunk;
+        const text = typeof msg.content === 'string' ? msg.content : '';
+        if (meta?.langgraph_node === 'agent' && text && !msg.tool_call_chunks?.length) {
+          answer += text;
+          send('token', { text });
         }
-
-        // For now, return a mock response
-        // In production, this would interface with your Python RAG chatbot
-        const mockResponse = {
-            message: generateMockResponse(message),
-            intent: detectIntent(message),
-            suggestions: generateSuggestions(message),
-            sessionId: sessionId || `session_${Date.now()}`,
-            context: context || {}
-        };
-
-        res.json(mockResponse);
-
-    } catch (error) {
-        console.error('Chatbot API error:', error);
-        res.status(500).json({
-            error: 'Internal server error',
-            message: 'Sorry, I encountered an error. Please try again.'
-        });
+      } else if (mode === 'updates') {
+        if (chunk.agent) {
+          const ai = chunk.agent.messages?.[0];
+          if (ai?.tool_calls?.length) {
+            // Chu viet truoc khi goi cong cu ("de minh kiem tra...") -> bo, cho cau tra loi that
+            if (answer) send('reset', {});
+            answer = '';
+            send('status', { tools: ai.tool_calls.map(t => t.name) });
+            toolCalls.push(...ai.tool_calls.map(t => ({ name: t.name, args: t.args })));
+          } else if (ai) {
+            finalText = textOf(ai);
+          }
+        }
+        if (chunk.tools) cards = cards.concat(chunk.tools.cards || []);
+        if (chunk.verify) {
+          verified = chunk.verify.verified;
+          if (verified?.retry) { send('reset', {}); answer = ''; }
+        }
+      }
     }
-});
 
-/**
- * @route GET /api/chatbot/status
- * @desc Check chatbot service status
- * @access Public
- */
-router.get('/status', (req, res) => {
-    res.json({
-        status: 'active',
-        service: 'CMP Travel RAG Chatbot',
-        version: '1.0.0',
-        timestamp: new Date().toISOString()
+    cards = dedupeCards(cards);
+    answer = finalText || answer;
+
+    // Luu TRUOC khi bao xong: khach bam goi y ngay sau do thi cau tiep theo van
+    // thay hoi thoai nay (truoc day luu sau res.end() -> mat ngu canh)
+    if (!conv) conv = new ChatConversation({ sessionId, userId, messages: [] });
+    if (userId && !conv.userId) conv.userId = userId;
+    conv.messages.push(
+      { messageId: crypto.randomUUID(), sender: 'user', content: { text: message } },
+      { messageId: crypto.randomUUID(), sender: 'bot', content: { text: answer, cards } }
+    );
+    conv.sessionInfo = { ...(conv.sessionInfo?.toObject?.() || {}), lastActivity: new Date(), messageCount: conv.messages.length };
+    await conv.save().catch(err => console.error('Chat history save failed:', err.message));
+
+    send('done', { answer, cards, verified: verified ? { ok: verified.ok } : null });
+    res.end();
+
+    // Hoc so thich dai han (chi khach da dang nhap) - chay nen, khach khong phai cho
+    if (userId) memory.learnFromTurn(userId, { message, toolCalls });
+  } catch (error) {
+    if (abort.signal.aborted) return; // khach da dong tab
+    const timedOut = deadline.aborted;
+    console.error(timedOut ? 'Chatbot deadline exceeded' : 'Chatbot error:', timedOut ? '' : error);
+    send('error', {
+      error: timedOut
+        ? 'Sorry, this is taking too long right now. Please try again in a moment.'
+        : 'Sorry, I could not answer right now. Please try again.'
     });
+    res.end();
+  }
 });
 
-/**
- * @route POST /api/chatbot/feedback
- * @desc Submit feedback for chatbot response
- * @access Public
- */
+// ---------------------------------------------------------------- bo nho so thich
+// Khach da dang nhap xem / xoa nhung gi tro ly nho ve minh (minh bach, quyen rieng tu)
+
+router.get('/memory', requireAuth, async (req, res) => {
+  try {
+    const items = await memory.listMemories(req.user.id);
+    res.json({ memories: items.map(m => ({ key: m.key, content: m.content, strength: Math.round(m.weight * 10) / 10 })) });
+  } catch (err) {
+    console.error('Chat memory list failed:', err);
+    res.status(500).json({ error: 'Could not load memories' });
+  }
+});
+
+// DELETE /memory = quen het; DELETE /memory/:key = quen 1 dieu (Express 5 khong co ":key?")
+async function forgetHandler(req, res) {
+  try {
+    const removed = await memory.forget(req.user.id, req.params.key);
+    res.json({ success: true, removed });
+  } catch (err) {
+    console.error('Chat memory delete failed:', err);
+    res.status(500).json({ error: 'Could not delete memories' });
+  }
+}
+router.delete('/memory', requireAuth, forgetHandler);
+router.delete('/memory/:key', requireAuth, forgetHandler);
+
+router.get('/history/:sessionId', optionalAuth, async (req, res) => {
+  const conv = await loadConversation(req.params.sessionId, req.user?.id);
+  res.json({
+    sessionId: conv?.sessionId || null,
+    messages: (conv?.messages || []).slice(-30).map(m => ({ sender: m.sender, text: m.content?.text || '', cards: m.content?.cards || [] }))
+  });
+});
+
+router.get('/status', async (req, res) => {
+  res.json({
+    status: config.hasApiKey() ? 'active' : 'not_configured',
+    service: 'CMP Travel Assistant',
+    model: config.chatModel,
+    knowledgeChunks: await ChatChunk.estimatedDocumentCount(),
+    timestamp: new Date().toISOString()
+  });
+});
+
 router.post('/feedback', async (req, res) => {
-    try {
-        const { sessionId, messageId, rating, feedback } = req.body;
-
-        // Store feedback in database (implement based on your DB structure)
-        // For now, just log it
-        console.log('Chatbot feedback received:', {
-            sessionId,
-            messageId,
-            rating,
-            feedback,
-            timestamp: new Date()
-        });
-
-        res.json({
-            success: true,
-            message: 'Thank you for your feedback!'
-        });
-
-    } catch (error) {
-        console.error('Feedback submission error:', error);
-        res.status(500).json({
-            error: 'Failed to submit feedback'
-        });
-    }
+  const { sessionId, rating, feedback } = req.body || {};
+  console.log('Chatbot feedback received:', { sessionId, rating, feedback, timestamp: new Date() });
+  res.json({ success: true, message: 'Thank you for your feedback!' });
 });
-
-// Helper functions
-function detectIntent(message) {
-    const lower = message.toLowerCase();
-    
-    if (/(book|booking|reserve|buy)/i.test(lower)) {
-        return 'booking_intent';
-    } else if (/(tour|trip|travel|destination)/i.test(lower)) {
-        return 'tour_inquiry';
-    } else if (/(hotel|accommodation|stay|room)/i.test(lower)) {
-        return 'hotel_inquiry';
-    } else if (/(price|cost|budget|cheap|expensive)/i.test(lower)) {
-        return 'price_inquiry';
-    } else if (/(hello|hi|hey|greet)/i.test(lower)) {
-        return 'greeting';
-    } else {
-        return 'general';
-    }
-}
-
-function generateMockResponse(message) {
-    const intent = detectIntent(message);
-    
-    switch (intent) {
-        case 'greeting':
-            return "🌟 Hello! Welcome to CMP Travel! I'm your AI Travel Assistant. I can help you find amazing tours, recommend hotels, check prices, and plan your perfect trip. What destination interests you? ✈️";
-        
-        case 'tour_inquiry':
-            return "🗺️ Great! I'd love to help you find the perfect tour. We have amazing destinations worldwide including:\n\n🇫🇷 **France Tours** - From €1,200 | 7 days\n🇯🇵 **Japan Adventures** - From $2,500 | 10 days\n🇹🇭 **Thailand Explorer** - From $1,800 | 8 days\n\nWhich region interests you most? I can provide detailed information about specific tours! 🌍";
-        
-        case 'hotel_inquiry':
-            return "🏨 Excellent! We have partnerships with premium hotels worldwide. Here are some popular options:\n\n⭐ **Luxury Hotels** - 5-star properties from $200/night\n🏢 **Business Hotels** - 4-star comfort from $120/night\n🏖️ **Resort Hotels** - All-inclusive from $180/night\n\nWhat's your preferred location and budget? I can recommend the perfect accommodation! 🛏️";
-        
-        case 'price_inquiry':
-            return "💰 I'd be happy to help with pricing information! Our tours typically range:\n\n🌟 **Budget Tours**: $800 - $1,500\n✨ **Standard Tours**: $1,500 - $3,000\n💎 **Luxury Tours**: $3,000 - $8,000\n\nPrices include accommodation, guided tours, and most meals. What's your budget range? I can find options that fit perfectly! 💳";
-        
-        case 'booking_intent':
-            return "🎫 Wonderful! I can help you with the booking process. Here's how it works:\n\n1️⃣ **Select** your preferred tour/hotel\n2️⃣ **Choose** dates and options\n3️⃣ **Secure** payment (multiple methods available)\n4️⃣ **Receive** confirmation & travel documents\n\nWhich tour or hotel caught your interest? I'll guide you through the booking! 📋";
-        
-        default:
-            return "🤔 I understand you're interested in travel! I specialize in:\n\n✈️ **Tour recommendations** - Find your perfect adventure\n🏨 **Hotel bookings** - Comfortable stays worldwide\n💰 **Price comparisons** - Best value for your budget\n📅 **Travel planning** - Complete itinerary assistance\n\nWhat would you like to explore today? 🌟";
-    }
-}
-
-function generateSuggestions(message) {
-    const intent = detectIntent(message);
-    
-    const suggestionMap = {
-        'greeting': [
-            'Show me popular tours',
-            'Find hotels in Paris',
-            'What are your best deals?',
-            'Plan a 10-day trip'
-        ],
-        'tour_inquiry': [
-            'Tours under $2000',
-            'Luxury European tours',
-            'Adventure tours',
-            'Family-friendly tours'
-        ],
-        'hotel_inquiry': [
-            '5-star hotels in Tokyo',
-            'Budget hotels in Rome',
-            'Beach resorts in Thailand',
-            'Business hotels in NYC'
-        ],
-        'price_inquiry': [
-            'Budget tours under $1500',
-            'Luxury tour packages',
-            'Group discounts',
-            'Early booking deals'
-        ],
-        'booking_intent': [
-            'Check availability',
-            'Payment options',
-            'Cancellation policy',
-            'Travel insurance'
-        ],
-        'general': [
-            'Popular destinations',
-            'Travel tips',
-            'Customer reviews',
-            'Contact support'
-        ]
-    };
-
-    return suggestionMap[intent] || suggestionMap['general'];
-}
 
 module.exports = router;

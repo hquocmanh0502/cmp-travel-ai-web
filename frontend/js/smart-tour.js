@@ -188,36 +188,46 @@
   // Ke hoach dang hien + doan khach da chuan hoa (tu response) - de dat ca chuyen
   let shown = { plans: [], input: null };
 
-  /** Dat ca chuyen ghep: dung lai trang reservation, kem danh sach chang. */
+  /** Dat ca chuyen ghep: dung lai trang reservation (js/trip-booking.js, chung voi khung chat). */
   function bookTrip(p) {
-    const input = shown.input;
-    sessionStorage.setItem('pendingBooking', JSON.stringify({
-      tourId: p.stops[0].tourId,
-      tourName: p.stops.map(s => s.name).join(' → '),
-      tourDuration: `${p.totalDays} days`,
-      selectedHotel: { id: null, name: p.stops.map(s => s.hotel || 'Standard hotel').join(' · '), surcharge: 0 },
-      selectedGuide: null,
-      checkinDate: p.startDay,
-      checkoutDate: p.endDay,
-      adults: input.adults,
-      children: input.children,
-      // Gia tham khao (chua tru VIP); server tinh lai khi dat
-      totalPrice: p.totalCost,
-      trip: {
-        // tourId + startDay gui len server; phan con lai chi de hien tren trang dat
-        stops: p.stops.map(s => ({
-          tourId: s.tourId, startDay: s.startDay,
-          name: s.name, endDay: s.endDay, cost: s.cost, hotel: s.hotel
-        })),
-        connections: p.connections.map(c => ({
-          mode: c.mode, to: c.to, arriveDay: c.arriveDay, arriveAt: c.arriveAt,
-          connectionNights: c.connectionNights, cost: c.cost
-        })),
-        infants: input.infants
-      },
-      timestamp: new Date().toISOString()
-    }));
-    window.location.href = 'reservation.html?v=' + Date.now();
+    const { adults, children, infants } = shown.input;
+    window.CMPTripBooking.toReservation(p, { adults, children, infants });
+  }
+
+  /**
+   * Dien san form tu link (khung chat gui sang: "I love Maldives, 10 days..."):
+   *   smart-tour.html?from=YYYY-MM-DD&to=&days=&budget=&adults=&kids=5,1&interests=beach,food
+   *                  &must=<tourId>,<tourId>&mode=all|any&maxTours=1-3&pace=&party=&run=1
+   * run=1 -> tu bam "Find my trip" de hien ngay cac phuong an so sanh.
+   */
+  function applyPrefill() {
+    const q = new URLSearchParams(window.location.search);
+    if (![...q.keys()].length) return;
+    const set = (id, v) => { if (v != null && v !== '' && $(id)) $(id).value = v; };
+    set('startFrom', q.get('from'));
+    set('startTo', q.get('to'));
+    set('days', q.get('days'));
+    set('budget', q.get('budget'));
+    set('adults', q.get('adults'));
+    set('pace', q.get('pace'));
+    set('travelParty', q.get('party'));
+    (q.get('kids') || '').split(',').filter(Boolean).forEach(a => addChild(Number(a)));
+    (q.get('interests') || '').split(',').filter(Boolean).forEach(v => {
+      const chip = $('interestList').querySelector(`.st-chip[data-v="${CSS.escape(v)}"]`);
+      if (chip && !chip.classList.contains('on')) chip.click();
+    });
+    (q.get('must') || '').split(',').filter(Boolean).slice(0, MAX_MUST).forEach(id => {
+      const tour = tourList.find(t => t.id === id);
+      if (tour) must.set(id, tour.name);
+    });
+    renderMust();
+    const pick = (segId, v) => {
+      const btn = v && $(segId).querySelector(`button[data-v="${CSS.escape(v)}"]`);
+      if (btn) btn.click();
+    };
+    pick('mustModeSeg', q.get('mode'));
+    pick('maxToursSeg', q.get('maxTours'));
+    if (q.get('run') === '1') $('stForm').requestSubmit();
   }
 
   $('stPlans').addEventListener('click', (e) => {
@@ -268,5 +278,6 @@
   });
 
   initDates();
-  loadOptions();
+  // Dien san sau khi co danh sach tour + so thich (chip / must-include can chung)
+  loadOptions().then(applyPrefill);
 })();

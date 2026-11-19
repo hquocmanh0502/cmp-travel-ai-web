@@ -278,26 +278,8 @@ a {
   }
 }
 
-/* 🔥 Chatbot positioning - Tránh conflict với scroll icons */
-.chatbot-widget {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 350px;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-  z-index: 1000;
-  font-family: 'Poppins', sans-serif;
-}
-
 /* Responsive cho mobile */
 @media (max-width: 768px) {
-  .chatbot-widget {
-    width: 300px;
-    right: 15px;
-  }
-  
   .nav-bar > ul {
     gap: 30px;
     flex-wrap: wrap;

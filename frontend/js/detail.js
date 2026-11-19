@@ -963,7 +963,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let assignedGuides = []; // ✅ Store guides globally
     let wishlistItems = JSON.parse(localStorage.getItem('wishlist')) || [];
     let compareItems = JSON.parse(localStorage.getItem('compare')) || [];
-    let chatbotOpen = false;
     
     // Initialize page
     initializePage();
@@ -3499,9 +3498,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Booking functionality
         setupBookingFunctionality();
         
-        // Chatbot
-        setupChatbot();
-        
         // Reviews
         setupReviews();
         
@@ -3588,33 +3584,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 calculateTotalPrice();
             });
         }
-    }
-    
-    function setupChatbot() {
-        const chatbotHeader = document.querySelector('.chatbot-header');
-        const chatbotBody = document.getElementById('chatbot-body');
-        const chatbotInput = document.getElementById('chatbot-input');
-        const chatbotToggle = document.getElementById('chatbot-toggle');
-        
-        if (chatbotHeader) {
-            chatbotHeader.addEventListener('click', toggleChatbot);
-        }
-        
-        if (chatbotInput) {
-            chatbotInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendChatMessage();
-                }
-            });
-        }
-        
-        // Setup suggestion buttons
-        document.querySelectorAll('.chatbot-suggestions button').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const message = this.textContent;
-                sendMessage(message);
-            });
-        });
     }
     
     function setupReviews() {
@@ -3909,11 +3878,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const popup = document.getElementById('popup');
                 if (popup && popup.style.display === 'block') {
                     closeLightbox();
-                }
-                
-                // Close chatbot
-                if (chatbotOpen) {
-                    toggleChatbot();
                 }
             }
         });
@@ -5707,146 +5671,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return starsHTML;
     }
     
-    // Chatbot functionality
-    function toggleChatbot() {
-        const chatbotBody = document.getElementById('chatbot-body');
-        const chatbotToggle = document.getElementById('chatbot-toggle');
-        
-        if (chatbotOpen) {
-            chatbotBody.style.maxHeight = '0';
-            chatbotToggle.style.transform = 'rotate(0deg)';
-            chatbotOpen = false;
-        } else {
-            chatbotBody.style.maxHeight = '500px';
-            chatbotToggle.style.transform = 'rotate(180deg)';
-            chatbotOpen = true;
-            
-            // Track chatbot open
-            trackEvent('chatbot_opened', {
-                tour_id: currentTour?._id
-            });
-        }
-    }
-    
-    function sendMessage(message) {
-        const chatbotInput = document.getElementById('chatbot-input');
-        if (chatbotInput) {
-            chatbotInput.value = message;
-        }
-        sendChatMessage();
-    }
-    
-    async function sendChatMessage() {
-        const chatbotInput = document.getElementById('chatbot-input');
-        const chatbotMessages = document.getElementById('chatbot-messages');
-        
-        if (!chatbotInput || !chatbotMessages) return;
-        
-        const message = chatbotInput.value.trim();
-        if (!message) return;
-        
-        // Add user message
-        addChatMessage(message, 'user');
-        chatbotInput.value = '';
-        
-        // Show typing indicator
-        showTypingIndicator();
-        
-        try {
-            // Send to AI chatbot API
-            const response = await fetch('http://localhost:3000/api/ai/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: message,
-                    tourId: currentTour?._id,
-                    context: 'tour_detail'
-                })
-            });
-            
-            if (response.ok) {
-                const result = await response.json();
-                setTimeout(() => {
-                    hideTypingIndicator();
-                    addChatMessage(result.response, 'bot');
-                }, 1000);
-            } else {
-                throw new Error('AI service unavailable');
-            }
-            
-        } catch (error) {
-            console.error('Chatbot error:', error);
-            setTimeout(() => {
-                hideTypingIndicator();
-                addChatMessage(getDefaultResponse(message), 'bot');
-            }, 1000);
-        }
-        
-        // Track message
-        trackEvent('chatbot_message_sent', {
-            message_length: message.length,
-            tour_id: currentTour?._id
-        });
-    }
-    
-    function addChatMessage(message, sender) {
-        const chatbotMessages = document.getElementById('chatbot-messages');
-        if (!chatbotMessages) return;
-        
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `${sender}-message`;
-        messageDiv.textContent = message;
-        
-        chatbotMessages.appendChild(messageDiv);
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }
-    
-    function showTypingIndicator() {
-        const chatbotMessages = document.getElementById('chatbot-messages');
-        if (!chatbotMessages) return;
-        
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'typing-indicator';
-        typingDiv.id = 'typing-indicator';
-        typingDiv.innerHTML = `
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        `;
-        
-        chatbotMessages.appendChild(typingDiv);
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }
-    
-    function hideTypingIndicator() {
-        const typingIndicator = document.getElementById('typing-indicator');
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
-    }
-    
-    function getDefaultResponse(message) {
-        const responses = {
-            'tour details': `${currentTour?.name} tour lasts ${currentTour?.duration}, costs ${currentTour?.estimatedCost}$. Includes ${currentTour?.inclusions?.length || 4} main services.`,
-            'price': `The price for this tour is $${currentTour?.estimatedCost?.toLocaleString()} for adults. Children get 30% discount.`,
-            'hotel': 'We have many quality hotels from 3-5 stars. You can view the hotel list on the right.',
-            'book': 'To book a tour, please select date and number of guests, then click "Book Now".',
-            'default': 'Thank you for contacting us! I can help you with tour information, pricing, and booking. What do you need assistance with?'
-        };
-        
-        const lowerMessage = message.toLowerCase();
-        
-        for (const [key, response] of Object.entries(responses)) {
-            if (lowerMessage.includes(key)) {
-                return response;
-            }
-        }
-        
-        return responses.default;
-    }
-    
     // Review functionality
     function filterReviews(filter) {
         const reviewItems = document.querySelectorAll('.review-item');
@@ -6606,14 +6430,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Make functions globally available
-    window.toggleChatbot = toggleChatbot;
-    window.sendMessage = sendMessage;
-    window.sendChatMessage = sendChatMessage;
-    window.handleEnter = function(event) {
-        if (event.key === 'Enter') {
-            sendChatMessage();
-        }
-    };
     window.openLightbox = openLightbox;
     window.closeLightbox = closeLightbox;
     window.navigateToTour = navigateToTour;

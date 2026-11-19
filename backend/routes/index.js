@@ -7,12 +7,10 @@ const Blog = require('../models/Blog');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
 const Feedback = require('../models/Feedback');
-const ChatConversation = require('../models/ChatConversation');
 const Recommendation = require('../models/Recommendation');
 
 const recommendationService = require('../services/recommendationService');
 const sentimentService = require('../services/sentimentService');
-const chatbotService = require('../services/chatbotService');
 const matchingService = require('../services/matchingService');
 const compareService = require('../services/compareService');
 const { calculateBookingPrice } = require('../services/pricingService');
@@ -369,35 +367,6 @@ router.post('/feedback', async (req, res) => {
     res.status(201).json({ message: 'Feedback submitted successfully' });
   } catch (err) {
     res.status(500).json({ error: 'Error submitting feedback' });
-  }
-});
-
-// Chatbot
-router.post('/chatbot/message', async (req, res) => {
-  try {
-    const { sessionId, message, userId } = req.body;
-    
-    const botResponse = await chatbotService.processMessage(message, sessionId, userId);
-    
-    let conversation = await ChatConversation.findOne({ sessionId });
-    if (!conversation) {
-      conversation = new ChatConversation({
-        sessionId,
-        user: userId,
-        messages: []
-      });
-    }
-    
-    conversation.messages.push(
-      { sender: 'user', message },
-      { sender: 'bot', message: botResponse.message, intent: botResponse.intent }
-    );
-    conversation.lastActivity = new Date();
-    
-    await conversation.save();
-    res.json(botResponse);
-  } catch (err) {
-    res.status(500).json({ error: 'Error processing message' });
   }
 });
 

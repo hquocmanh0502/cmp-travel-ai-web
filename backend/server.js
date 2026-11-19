@@ -10,13 +10,11 @@ const Tour = require('./models/Tour');
 const Blog = require('./models/Blog');
 const User = require('./models/User');
 const Feedback = require('./models/Feedback');
-const ChatConversation = require('./models/ChatConversation');
 const Hotel = require('./models/Hotel');
 
 // Import services
 const recommendationService = require('./services/recommendationService');
 const sentimentService = require('./services/sentimentService');
-const chatbotService = require('./services/chatbotService');
 
 // Import middleware
 const replyProcessingMiddleware = require('./middleware/replyProcessingMiddleware');
@@ -480,54 +478,7 @@ app.post('/api/feedback', async (req, res) => {
   }
 });
 
-// Chatbot API
-app.post('/api/chatbot/message', async (req, res) => {
-  try {
-    const { sessionId, message, userId } = req.body;
-    
-    if (!sessionId || !message) {
-      return res.status(400).json({ error: 'SessionId and message are required' });
-    }
-    
-    let botResponse;
-    try {
-      botResponse = await chatbotService.processMessage(message, sessionId, userId);
-    } catch (serviceError) {
-      botResponse = {
-        message: 'Xin lỗi, tôi đang gặp sự cố kỹ thuật. Vui lòng thử lại sau.',
-        intent: 'error',
-        suggestions: ['Liên hệ hỗ trợ', 'Thử lại']
-      };
-    }
-    
-    let conversation = await ChatConversation.findOne({ sessionId });
-    if (!conversation) {
-      conversation = new ChatConversation({
-        sessionId,
-        user: userId,
-        messages: []
-      });
-    }
-    
-    conversation.messages.push(
-      { sender: 'user', message, timestamp: new Date() },
-      { sender: 'bot', message: botResponse.message, timestamp: new Date() }
-    );
-    conversation.lastActivity = new Date();
-    
-    await conversation.save();
-    res.json(botResponse);
-  } catch (err) {
-    res.status(500).json({ 
-      error: 'Error processing message',
-      fallbackResponse: {
-        message: 'Xin lỗi, hệ thống chatbot đang bận. Vui lòng thử lại sau.',
-        intent: 'system_error',
-        suggestions: ['Thử lại', 'Liên hệ trực tiếp']
-      }
-    });
-  }
-});
+// Chatbot: routes/chatbot.js (chat/retrieval_graph) - route mock cu o day da bo
 
 // Recommendations API
 app.get('/api/recommendations/:userId', async (req, res) => {

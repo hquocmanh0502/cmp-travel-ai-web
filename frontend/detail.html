@@ -30,33 +30,6 @@
     </button>
   </div>
 
-  <!-- AI Chatbot Widget (giữ nguyên) -->
-  <div id="chatbot-widget" class="chatbot-widget">
-    <div class="chatbot-header" onclick="toggleChatbot()">
-      <div>
-        <i class="fas fa-robot"></i>
-        <span>AI Travel Assistant</span>
-      </div>
-      <i class="fas fa-chevron-up" id="chatbot-toggle"></i>
-    </div>
-    <div class="chatbot-body" id="chatbot-body">
-      <div class="chatbot-messages" id="chatbot-messages">
-        <div class="bot-message">
-          Hello! Tôi có thể giúp bạn tìm hiểu thêm về tour này, so sánh giá cả hoặc gợi ý tour tương tự. Bạn cần hỗ trợ gì?
-        </div>
-      </div>
-      <div class="chatbot-suggestions" id="chatbot-suggestions">
-        <button onclick="sendMessage('Tôi muốn biết thêm về tour này')">Details tour</button>
-        <button onclick="sendMessage('Có tour nào tương tự không?')">Tour tương tự</button>
-        <button onclick="sendMessage('Giá tour này như thế nào?')">Về giá cả</button>
-        <button onclick="sendMessage('Khách sạn ở đây ra sao?')">Về khách sạn</button>
-      </div>
-      <div class="chatbot-input">
-        <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." onkeypress="handleEnter(event)">
-        <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-  </div>
 
   <!-- Header -->
   <header class="header" style="background-image: url('./images/header-bg/destination-bg.png'); height: 70vh;">
