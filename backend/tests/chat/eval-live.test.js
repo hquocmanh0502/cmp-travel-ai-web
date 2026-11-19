@@ -47,7 +47,15 @@ const CASES = [
   { q: 'i love maldives so much, but i also want to visit other place like paris', tools: ['plan_trip'],
     cards: (cs) => { const p = cs.filter(c => c.type === 'plan'); return p.length > 0 && p.every(c => /Maldives/.test(c.route)) && /Paris/.test(p[0].route); } },
   { q: 'tell me detail of maldives tour', tools: ['get_tour'], cards: (cs) => cs.some(c => c.type === 'tour' && c.name === 'Maldives' && c.gallery?.length) },
-  { q: 'help me i want to book the maldives tour', tools: ['get_departures'], cards: (cs) => cs.some(c => c.type === 'departure') }
+  { q: 'help me i want to book the maldives tour', tools: ['get_departures'], cards: (cs) => cs.some(c => c.type === 'departure') },
+  // Cau nguoi dung bao 2026-11-19: huong dan dung web, blog, lien he
+  { q: 'how to add money to this account', tools: ['site_help'], cards: (cs) => cs.some(c => c.link === 'profile.html#wallet') },
+  { q: 'how to get to gallery', tools: ['site_help'], cards: (cs) => cs.some(c => c.link === 'gallery.html') },
+  { q: 'how to use smart tour', tools: ['site_help'], cards: (cs) => cs.some(c => c.link === 'smart-tour.html') },
+  { q: 'where i can read more about maldives in blog', tools: ['search_blog'], cards: (cs) => cs.some(c => c.type === 'link' && /blog-detail\.html\?id=/.test(c.link) && /Maldives/.test(c.title)) },
+  { q: 'is there a blog post about Tokyo?', tools: ['search_blog'], expect: (a) => /no (blog )?(article|post)|(isn't|is not|aren't|are not) (a |any )?(blog )?(article|post)|don't have|do not have|haven't/i.test(a) },
+  { q: 'tell me about contact', tools: ['site_help'], expect: (a) => /\+84 123 456 789|eee@phenikaa-uni\.edu\.vn/.test(a) },
+  { q: 'Làm sao để thanh toán đơn đặt tour?', tools: ['site_help'], vi: true }
 ];
 
 (async () => {

@@ -312,7 +312,8 @@ class CMPTravelChatbot {
         const others = cards.filter(c => c.type !== 'plan');
         let html = plans.map(c => this.planCard(c)).join('');
         if (others.length) {
-            const items = others.map(c => (c.type === 'departure' ? this.departureCard(c) : this.tourCard(c))).join('');
+            const items = others.map(c => (c.type === 'departure' ? this.departureCard(c)
+                : c.type === 'link' ? this.linkCard(c) : this.tourCard(c))).join('');
             html += others.length > 1 ? `<div class="cb-carousel">${items}</div>` : items;
         }
         row.insertAdjacentHTML('afterend', `<div class="cb-cards">${html}</div>`);
@@ -335,6 +336,18 @@ class CMPTravelChatbot {
                     <button type="button" class="cb-btn primary" data-ask="Show me the available dates to book the ${esc(c.name)} tour">Check dates &amp; book</button>
                     <a class="cb-btn" href="${esc(safeHref(c.link))}">View tour</a>
                 </div>
+            </div>
+        </div>`;
+    }
+
+    /** The trang / bai blog (site_help, search_blog): tieu de + mo ta + nut mo trang. */
+    linkCard(c) {
+        return `<div class="cb-card">
+            ${c.img ? `<div class="cb-photo small"><img src="${esc(c.img)}" alt="" loading="lazy"></div>` : ''}
+            <div class="cb-body">
+                <div class="cb-title">${esc(c.title)}</div>
+                ${c.text ? `<div class="cb-meta">${esc(c.text)}</div>` : ''}
+                <div class="cb-actions"><a class="cb-btn primary" href="${esc(safeHref(c.link))}">${esc(c.cta || 'Open page')}</a></div>
             </div>
         </div>`;
     }

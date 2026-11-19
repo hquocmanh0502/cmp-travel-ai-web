@@ -11,6 +11,8 @@
 const { z } = require('zod');
 const Tour = require('../../models/Tour');
 const Booking = require('../../models/Booking');
+const Blog = require('../../models/Blog');
+const { SITE_GUIDE } = require('../../config/site-guide');
 const { calculateBookingPrice, ageBand } = require('../../services/pricingService');
 const { calendarDay, priceForDeparture } = require('../../services/seasonalPricing');
 const { planTrip } = require('../../services/smartTourService');
@@ -343,6 +345,60 @@ const search_knowledge = {
   }
 };
 
-const TOOLS = [search_tours, get_tour, get_departures, quote_price, plan_trip, refund_policy, my_bookings, search_knowledge];
+const site_help = {
+  name: 'site_help',
+  description: 'How to use the CMP Travel website: wallet top-up, paying, booking, cancelling, Smart Tour, '
+    + 'my bookings, compare, wishlist, gallery, blog page, contact details (address, phone, email), about, account/login, VIP. '
+    + 'Use for "how do I...", "where is...", "how to get to ... page", contact questions.',
+  schema: z.object({ topic: z.string().describe('What the customer wants to do or find, in their words') }),
+  async run({ topic }) {
+    const q = String(topic || '').toLowerCase();
+    const scored = SITE_GUIDE
+      .map(g => ({ g, hits: g.keywords.filter(k => q.includes(k)).length }))
+      .filter(x => x.hits)
+      .sort((a, b) => b.hits - a.hits)
+      .slice(0, 3)
+      .map(x => x.g);
+    if (!scored.length) {
+      // Khong khop -> dua muc luc de AI chon / noi khong co, khong bia trang
+      return { matched: 0, pages: SITE_GUIDE.map(g => ({ title: g.title, link: g.link })) };
+    }
+    return {
+      matched: scored.length,
+      guides: scored.map(g => ({ title: g.title, steps: g.steps, link: g.link })),
+      cards: scored.map(g => ({ type: 'link', title: g.title, text: g.steps[0], link: g.link, cta: 'Open page' }))
+    };
+  }
+};
+
+const search_blog = {
+  name: 'search_blog',
+  description: 'Find articles on the CMP Travel blog by place or topic (e.g. "Maldives", "Swiss Alps"). '
+    + 'Returns article links, or found: 0 plus the list of existing articles when there is none. '
+    + 'Use whenever the customer asks to READ about something / asks for blog posts.',
+  schema: z.object({ query: z.string().optional().describe('Place or topic; empty = latest articles') }),
+  async run({ query }) {
+    const filter = { status: { $ne: 'draft' } };
+    const q = String(query || '').trim();
+    if (q) {
+      const rx = new RegExp(escapeRegex(q), 'i');
+      filter.$or = [{ title: rx }, { tags: rx }, { category: rx }, { excerpt: rx }];
+    }
+    const posts = await Blog.find(filter, { title: 1, excerpt: 1, category: 1, image: 1, thumbnail: 1, publishedDate: 1 })
+      .sort({ publishedDate: -1 }).limit(5).lean();
+    if (!posts.length) {
+      const all = await Blog.find({ status: { $ne: 'draft' } }, { title: 1 }).sort({ publishedDate: -1 }).lean();
+      return { found: 0, note: `No blog article about "${q}".`, existingArticles: all.map(b => b.title), blogPage: 'blog.html' };
+    }
+    const link = (b) => `blog-detail.html?id=${b._id}`;
+    return {
+      found: posts.length,
+      articles: posts.map(b => ({ title: b.title, category: b.category, excerpt: (b.excerpt || '').slice(0, 200), link: link(b) })),
+      cards: posts.map(b => ({ type: 'link', title: b.title, text: b.category || '', img: b.thumbnail || b.image, link: link(b), cta: 'Read article' }))
+    };
+  }
+};
+
+const TOOLS = [search_tours, get_tour, get_departures, quote_price, plan_trip, refund_policy, my_bookings, search_knowledge, site_help, search_blog];
 
 module.exports = { TOOLS, partyFrom, findTour };
