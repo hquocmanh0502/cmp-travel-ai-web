@@ -36,6 +36,7 @@ function ageBand(age) {
 
 const CHILD_RATE = 0.7;   // trẻ em trả 70% giá người lớn
 const INFANT_RATE = 0.1;  // em bé trả 10%
+const GROUP_MIN_GUESTS = 10; // doan tu 10 khach tra tien (nguoi lon + tre em) duoc giam gia nhom
 
 const { priceForDeparture } = require('./seasonalPricing');
 
@@ -85,11 +86,18 @@ function calculateBookingPrice(tour, input = {}) {
     : Math.round(adultPrice * INFANT_RATE);
 
   // Tiền tour, đã gồm lưu trú tiêu chuẩn
-  const tourBaseCost = adultPrice * adults + childPrice * children + infantPrice * infants;
+  const grossTourCost = adultPrice * adults + childPrice * children + infantPrice * infants;
+
+  // Giam gia nhom (admin dat pricing.groupDiscount %): doan tu GROUP_MIN_GUESTS
+  // khach tra tien tro len, giam tren tien tour (khong tren phu phi khach san/HDV).
+  // Truoc day dashboard hien "Group price 10+ people" nhung khong noi nao ap dung.
+  const payingGuests = adults + children;
+  const groupPercent = payingGuests >= GROUP_MIN_GUESTS ? Math.max(0, Math.min(100, tour.pricing?.groupDiscount || 0)) : 0;
+  const groupDiscountAmount = Math.round(grossTourCost * groupPercent / 100);
+  const tourBaseCost = grossTourCost - groupDiscountAmount;
 
   // Phụ phí nâng hạng khách sạn: tính cho từng khách trả tiền phòng (người lớn + trẻ em)
   const tier = resolveHotelTier(tour, input.hotelId);
-  const payingGuests = adults + children;
   const accommodationCost = tier ? (tier.surcharge || 0) * Math.max(1, Math.ceil(payingGuests / 2)) : 0;
 
   // Phí hướng dẫn viên riêng (nếu khách chọn người ngoài nhóm mặc định)
@@ -111,6 +119,7 @@ function calculateBookingPrice(tour, input = {}) {
       ? { startDate: season.departure.startDate, availableSlots: season.departure.availableSlots }
       : null,
     tourBaseCost,
+    groupDiscount: { percent: groupPercent, amount: groupDiscountAmount, minGuests: GROUP_MIN_GUESTS },
     hotelTier: tier ? { level: tier.level, hotelName: tier.hotelName, surcharge: tier.surcharge } : null,
     accommodationCost,
     guideCost,
@@ -119,4 +128,4 @@ function calculateBookingPrice(tour, input = {}) {
   };
 }
 
-module.exports = { calculateBookingPrice, resolveHotelTier, CHILD_RATE, INFANT_RATE, AGE_BANDS, ageBand };
+module.exports = { calculateBookingPrice, resolveHotelTier, CHILD_RATE, INFANT_RATE, GROUP_MIN_GUESTS, AGE_BANDS, ageBand };

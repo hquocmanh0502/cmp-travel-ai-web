@@ -354,7 +354,7 @@ function displayBookings(bookings) {
                             <i class="fas fa-download"></i> Download Ticket
                         </button>
                     ` : ''}
-                    ${booking.status === 'pending' ? `
+                    ${(booking.status === 'pending' || booking.status === 'confirmed') && new Date(booking.departureDate) > new Date() ? `
                         <button class="btn btn-danger" onclick="cancelBooking('${booking.id}')">
                             <i class="fas fa-times"></i> Cancel
                         </button>
@@ -648,9 +648,17 @@ async function cancelBooking(bookingId) {
     const booking = allBookings.find(b => b.id === bookingId);
     if (!booking) return;
     // Chuyen ghep: huy tung tour, cac tour khac cua chuyen giu nguyen
-    const msg = booking.tripId
+    let msg = booking.tripId
         ? `Cancel only "${booking.tourName}"? The other tours in this trip stay booked.`
         : 'Are you sure you want to cancel this booking?';
+    // Luat hoan tien (cung luat voi backend services/refundService.js):
+    // >= 30 ngay truoc khoi hanh 100%, 14-29 ngay 50%, < 14 ngay 0%
+    if (booking.paymentStatus === 'paid') {
+        const daysLeft = Math.floor((new Date(booking.departureDate) - new Date()) / 864e5);
+        const rate = daysLeft >= 30 ? 1 : daysLeft >= 14 ? 0.5 : 0;
+        msg += `\n\nDeparture in ${daysLeft} day(s): refund ${rate * 100}% = $${Math.round(booking.totalAmount * rate).toLocaleString()} to your CMP wallet.` +
+            '\n(Refund policy: 30+ days 100%, 14-29 days 50%, under 14 days no refund.)';
+    }
     if (!confirm(msg)) return;
 
     try {
@@ -667,9 +675,10 @@ async function cancelBooking(bookingId) {
         if (!response.ok || !data.success) throw new Error(data.error || 'Cancel failed');
 
         booking.status = 'cancelled';
+        if (data.refundAmount > 0) booking.paymentStatus = 'refunded';
         updateBookingStats();
         applyFilters();
-        showNotification('Booking cancelled successfully', 'success');
+        showNotification(data.message || 'Booking cancelled successfully', 'success');
     } catch (error) {
         showNotification(`❌ ${error.message}`, 'error');
     }

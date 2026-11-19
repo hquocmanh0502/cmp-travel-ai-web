@@ -354,6 +354,12 @@ function BookingsManagement() {
                       <div>
                         <p className="text-xs font-medium text-gray-900 truncate max-w-[180px]">{booking.tourName}</p>
                         <p className="text-xs text-gray-500 truncate max-w-[180px]">{booking.tourLocation}</p>
+                        {booking.tripId && (
+                          <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 text-[10px] font-medium"
+                            title={`Smart Tour trip ${booking.tripId}`}>
+                            Smart Tour trip · tour {booking.tripOrder} · #{booking.tripId.slice(0, 6)}
+                          </span>
+                        )}
                       </div>
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap">
@@ -712,6 +718,26 @@ function BookingDetailModal({ booking, onClose, formatCurrency, formatDate }) {
                 <span className="text-gray-600">Services:</span>
                 <span className="font-medium">{formatCurrency(booking.pricing.servicesCost)}</span>
               </div>
+              {booking.pricing.vipDiscount > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-gray-600">VIP discount:</span>
+                  <span className="font-medium text-green-600">−{formatCurrency(booking.pricing.vipDiscount)}</span>
+                </div>
+              )}
+              {booking.trip?.connection && (
+                <div className="flex justify-between">
+                  <span className="text-gray-600">
+                    Connection ({booking.trip.connection.mode} from {booking.trip.connection.fromTour}
+                    {booking.trip.connection.connectionNights ? `, +${booking.trip.connection.connectionNights} night` : ''}):
+                  </span>
+                  <span className="font-medium">{formatCurrency(booking.pricing.connectionCost)}</span>
+                </div>
+              )}
+              {booking.trip && (
+                <p className="text-xs text-orange-700">
+                  Smart Tour trip #{booking.trip.tripId.slice(0, 6)} · tour {booking.trip.order}. Paid together; cancelled per tour.
+                </p>
+              )}
               <div className="flex justify-between font-bold text-lg pt-2 border-t-2">
                 <span>Total Amount:</span>
                 <span className="text-orange-600">{formatCurrency(booking.pricing.totalAmount)}</span>
@@ -1078,12 +1104,9 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
           phone: formData.customerPhone,
           specialRequests: formData.specialRequests
         },
-        adults: parseInt(formData.adults),
-        children: parseInt(formData.children),
-        infants: parseInt(formData.infants),
-        departureDate: new Date(formData.departureDate),
-        checkinDate: new Date(formData.checkinDate),
-        checkoutDate: new Date(formData.checkoutDate),
+        // Ngay va so khach KHONG sua o day: ngay gan voi chuyen khoi hanh that,
+        // so khach gan voi so ghe da giu va gia server da tinh. Can doi thi huy
+        // booking va dat lai tren web.
         adminNotes: formData.adminNotes
       };
       
@@ -1208,7 +1231,10 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
 
           {/* Travel Dates */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Travel Dates</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-1">Travel Dates &amp; Guests</h3>
+            <p className="text-sm text-gray-500 mb-4">
+              Read-only: dates come from the tour departure and guests hold seats on it. To change them, cancel this booking and book again.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -1218,7 +1244,7 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
                   type="date"
                   name="departureDate"
                   value={formData.departureDate}
-                  onChange={handleChange}
+                  disabled
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                   required
                 />
@@ -1232,7 +1258,7 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
                   type="date"
                   name="checkinDate"
                   value={formData.checkinDate}
-                  onChange={handleChange}
+                  disabled
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                   required
                 />
@@ -1246,7 +1272,7 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
                   type="date"
                   name="checkoutDate"
                   value={formData.checkoutDate}
-                  onChange={handleChange}
+                  disabled
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                   required
                 />
@@ -1266,7 +1292,7 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
                   type="number"
                   name="adults"
                   value={formData.adults}
-                  onChange={handleChange}
+                  disabled
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                   min="1"
                   max="20"
@@ -1282,7 +1308,7 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
                   type="number"
                   name="children"
                   value={formData.children}
-                  onChange={handleChange}
+                  disabled
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                   min="0"
                   max="20"
@@ -1297,7 +1323,7 @@ function EditBookingModal({ booking, onClose, onUpdate, formatCurrency, formatDa
                   type="number"
                   name="infants"
                   value={formData.infants}
-                  onChange={handleChange}
+                  disabled
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
                   min="0"
                   max="10"

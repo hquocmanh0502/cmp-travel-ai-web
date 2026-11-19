@@ -5,7 +5,10 @@ const router = express.Router();
 const Tour = require('../models/Tour');
 const User = require('../models/User');
 const Booking = require('../models/Booking');
-const { releaseForBooking } = require('../services/departureService');
+
+const { recordSpend } = require('../services/vipService');
+const { buildSeasonFactors, calendarMonth, calendarDay, round10 } = require('../services/seasonalPricing');
+const { cancelAndRefund } = require('../services/refundService');
 const Hotel = require('../models/Hotel');
 const Feedback = require('../models/Feedback');
 const Blog = require('../models/Blog');
@@ -435,12 +438,74 @@ router.get('/tours', isAdmin, async (req, res) => {
   }
 });
 
+// ---------------------------------------------------------------- so ngay + chuyen khoi hanh
+//
+// Web tinh tien theo Tour.availability[].price va ghep tour theo
+// availability[].endDate (services/seasonalPricing, smartTourService). Hai so nay
+// phai luon suy ra tu durationDays + pricing.adult + bestTimeToVisit bang CUNG
+// cong thuc voi scripts/apply-duration-rule.js - neu khong, dashboard hien gia /
+// so ngay moi ma web van thu gia / xep lich cu.
+
+const DEPARTURE_DAY_MS = 864e5;
+
+/** Ngay ket thuc + gia theo mua cua mot chuyen. */
+function departureFields(tour, startDate) {
+  const adult = tour.pricing?.adult || tour.estimatedCost || 0;
+  const factor = buildSeasonFactors(tour)[calendarMonth(startDate)];
+  return {
+    endDate: new Date(new Date(startDate).getTime() + (tour.durationDays - 1) * DEPARTURE_DAY_MS),
+    price: round10(adult * factor)
+  };
+}
+
+/**
+ * Danh lai kien thuc chatbot cho 1 tour sau khi admin luu (mo ta, lich trinh,
+ * FAQ doi -> chatbot doc ban moi). Chay nen: khong lam cham / khong lam hong
+ * viec luu tour neu OpenAI loi.
+ */
+function reindexTourForChat(tourId) {
+  const { graph } = require('../chat/ingestion_graph/graph');
+  const { hasApiKey } = require('../chat/shared/configuration');
+  graph.invoke({ tourId: String(tourId), embed: hasApiKey(), stats: {} })
+    .catch(err => console.error(`Chat reindex failed for tour ${tourId}:`, err.message));
+}
+
+/** Chuyen khoi hanh kem so ghe da dat (booking chua huy) - cho tab Departures. */
+async function departuresView(tour) {
+  const booked = await Booking.aggregate([
+    { $match: { tourId: tour._id, status: { $ne: 'cancelled' }, departureId: { $ne: null } } },
+    { $group: { _id: '$departureId', seats: { $sum: { $add: ['$adults', { $ifNull: ['$children', 0] }] } }, bookings: { $sum: 1 } } }
+  ]);
+  const byDep = new Map(booked.map(b => [String(b._id), b]));
+  return (tour.availability || [])
+    .map(a => ({
+      _id: a._id,
+      startDate: calendarDay(a.startDate),
+      endDate: calendarDay(a.endDate),
+      price: a.price,
+      availableSlots: a.availableSlots || 0,
+      bookedSeats: byDep.get(String(a._id))?.seats || 0,
+      bookings: byDep.get(String(a._id))?.bookings || 0,
+      hasGuide: !!a.guideId
+    }))
+    .sort((x, y) => x.startDate.localeCompare(y.startDate));
+}
+
 // Create new tour
 router.post('/tours', isAdmin, async (req, res) => {
   try {
-    const tour = new Tour(req.body);
+    const body = { ...req.body };
+    delete body.availability; // chuyen khoi hanh them o tab Departures sau khi tao
+    const days = parseInt(body.durationDays, 10);
+    if (!(days >= 1 && days <= 30)) {
+      return res.status(400).json({ success: false, error: 'Duration must be 1-30 days' });
+    }
+    body.durationDays = days;
+    body.duration = `${days} days`;
+    const tour = new Tour(body);
     await tour.save();
-    
+    reindexTourForChat(tour._id);
+
     res.status(201).json({
       success: true,
       data: tour,
@@ -459,23 +524,57 @@ router.post('/tours', isAdmin, async (req, res) => {
 // Update tour
 router.put('/tours/:id', isAdmin, async (req, res) => {
   try {
-    const tour = await Tour.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    
-    if (!tour) {
-      return res.status(404).json({ 
-        success: false, 
-        error: 'Tour not found' 
+    const current = await Tour.findById(req.params.id).lean();
+    if (!current) {
+      return res.status(404).json({
+        success: false,
+        error: 'Tour not found'
       });
     }
-    
+
+    const body = { ...req.body };
+    delete body._id;
+    delete body.availability; // sua chuyen khoi hanh qua /tours/:id/departures
+    const days = body.durationDays != null ? parseInt(body.durationDays, 10) : current.durationDays;
+    if (!(days >= 1 && days <= 30)) {
+      return res.status(400).json({ success: false, error: 'Duration must be 1-30 days' });
+    }
+    if (days !== current.durationDays) {
+      // Booking da giu ghe theo ngay ket thuc cu - doi so ngay se lech lich cua khach
+      const active = await Booking.countDocuments({
+        tourId: current._id, status: { $in: ['pending', 'confirmed'] }, departureDate: { $gte: new Date() }
+      });
+      if (active) {
+        return res.status(409).json({
+          success: false,
+          error: `Cannot change duration: ${active} active booking(s) on upcoming departures. Cancel or complete them first.`
+        });
+      }
+    }
+    body.durationDays = days;
+    body.duration = `${days} days`;
+
+    // Gia / so ngay / thang dep doi -> tinh lai ngay ket thuc + gia tung chuyen
+    const next = { ...current, ...body, pricing: { ...current.pricing, ...(body.pricing || {}) } };
+    const pricingChanged = (next.pricing?.adult || next.estimatedCost) !== (current.pricing?.adult || current.estimatedCost)
+      || JSON.stringify(next.bestTimeToVisit || []) !== JSON.stringify(current.bestTimeToVisit || []);
+    if (days !== current.durationDays || pricingChanged) {
+      body.availability = (current.availability || []).map(a => ({ ...a, ...departureFields(next, a.startDate) }));
+    }
+
+    const tour = await Tour.findByIdAndUpdate(
+      req.params.id,
+      { $set: body },
+      { new: true, runValidators: true }
+    );
+    reindexTourForChat(tour._id);
+
     res.json({
       success: true,
       data: tour,
-      message: 'Tour updated successfully'
+      message: body.availability
+        ? `Tour updated. ${body.availability.length} departure(s) recalculated (end date / price).`
+        : 'Tour updated successfully'
     });
   } catch (error) {
     console.error('Error updating tour:', error);
@@ -487,9 +586,102 @@ router.put('/tours/:id', isAdmin, async (req, res) => {
   }
 });
 
+// Chuyen khoi hanh cua tour (kem so ghe da dat)
+router.get('/tours/:id/departures', isAdmin, async (req, res) => {
+  try {
+    const tour = await Tour.findById(req.params.id, { availability: 1, durationDays: 1 }).lean();
+    if (!tour) return res.status(404).json({ success: false, error: 'Tour not found' });
+    res.json({ success: true, durationDays: tour.durationDays, data: await departuresView(tour) });
+  } catch (error) {
+    console.error('Error listing departures:', error);
+    res.status(500).json({ success: false, error: 'Error listing departures' });
+  }
+});
+
+// Them chuyen: ngay ket thuc + gia theo mua do server tinh (cung cong thuc web)
+router.post('/tours/:id/departures', isAdmin, async (req, res) => {
+  try {
+    const { startDate, slots } = req.body || {};
+    const day = String(startDate || '');
+    const seats = parseInt(slots, 10);
+    const tomorrow = calendarDay(new Date(Date.now() + DEPARTURE_DAY_MS));
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || day < tomorrow) {
+      return res.status(400).json({ success: false, error: 'Start date must be a future date (YYYY-MM-DD)' });
+    }
+    if (!(seats >= 1 && seats <= 200)) {
+      return res.status(400).json({ success: false, error: 'Seats must be 1-200' });
+    }
+    const tour = await Tour.findById(req.params.id).lean();
+    if (!tour) return res.status(404).json({ success: false, error: 'Tour not found' });
+    if (!tour.durationDays) return res.status(400).json({ success: false, error: 'Set the tour duration first' });
+    if ((tour.availability || []).some(a => calendarDay(a.startDate) === day)) {
+      return res.status(409).json({ success: false, error: `There is already a departure on ${day}` });
+    }
+    // Ngay luu 00:00 UTC (quy uoc ngay theo lich - models/Tour.js)
+    const start = new Date(`${day}T00:00:00Z`);
+    await Tour.updateOne({ _id: tour._id }, {
+      $push: { availability: { startDate: start, availableSlots: seats, ...departureFields(tour, start) } }
+    });
+    const fresh = await Tour.findById(tour._id, { availability: 1 }).lean();
+    res.status(201).json({ success: true, data: await departuresView(fresh) });
+  } catch (error) {
+    console.error('Error adding departure:', error);
+    res.status(500).json({ success: false, error: 'Error adding departure' });
+  }
+});
+
+// Sua so ghe CON TRONG cua mot chuyen
+router.patch('/tours/:id/departures/:depId', isAdmin, async (req, res) => {
+  try {
+    const seats = parseInt(req.body?.availableSlots, 10);
+    if (!(seats >= 0 && seats <= 200)) {
+      return res.status(400).json({ success: false, error: 'Seats left must be 0-200' });
+    }
+    const result = await Tour.updateOne(
+      { _id: req.params.id, 'availability._id': req.params.depId },
+      { $set: { 'availability.$.availableSlots': seats } }
+    );
+    if (!result.matchedCount) return res.status(404).json({ success: false, error: 'Departure not found' });
+    const fresh = await Tour.findById(req.params.id, { availability: 1 }).lean();
+    res.json({ success: true, data: await departuresView(fresh) });
+  } catch (error) {
+    console.error('Error updating departure:', error);
+    res.status(500).json({ success: false, error: 'Error updating departure' });
+  }
+});
+
+// Xoa chuyen: chi khi khong con booking nao chua huy tren chuyen do
+router.delete('/tours/:id/departures/:depId', isAdmin, async (req, res) => {
+  try {
+    const active = await Booking.countDocuments({ departureId: req.params.depId, status: { $ne: 'cancelled' } });
+    if (active) {
+      return res.status(409).json({
+        success: false,
+        error: `This departure has ${active} booking(s). Cancel them first (customers are refunded).`
+      });
+    }
+    const result = await Tour.updateOne({ _id: req.params.id }, { $pull: { availability: { _id: req.params.depId } } });
+    if (!result.modifiedCount) return res.status(404).json({ success: false, error: 'Departure not found' });
+    const fresh = await Tour.findById(req.params.id, { availability: 1 }).lean();
+    res.json({ success: true, data: await departuresView(fresh) });
+  } catch (error) {
+    console.error('Error deleting departure:', error);
+    res.status(500).json({ success: false, error: 'Error deleting departure' });
+  }
+});
+
 // Delete tour
 router.delete('/tours/:id', isAdmin, async (req, res) => {
   try {
+    // Con booking dang hoat dong -> khong xoa (booking se tro toi tour khong ton tai).
+    // Muon an tour khoi web: dat status 'inactive'.
+    const active = await Booking.countDocuments({ tourId: req.params.id, status: { $in: ['pending', 'confirmed'] } });
+    if (active) {
+      return res.status(409).json({
+        success: false,
+        error: `This tour has ${active} active booking(s). Set it to inactive instead, or cancel the bookings first.`
+      });
+    }
     const tour = await Tour.findByIdAndDelete(req.params.id);
     
     if (!tour) {
@@ -873,6 +1065,9 @@ router.get('/bookings', isAdmin, async (req, res) => {
       status: booking.status,
       paymentStatus: booking.paymentStatus,
       paymentMethod: booking.paymentMethod,
+      // Chuyen ghep SmartTour: cac booking cung tripId
+      tripId: booking.tripId || null,
+      tripOrder: booking.tripOrder || null,
       bookingDate: booking.createdAt,
       updatedAt: booking.updatedAt
     }));
@@ -1020,6 +1215,10 @@ router.get('/bookings/:id', isAdmin, async (req, res) => {
         tourBaseCost: booking.tourBaseCost,
         accommodationCost: booking.accommodationCost,
         servicesCost: booking.servicesCost,
+        // Chuyen ghep SmartTour: chang noi TOI tour nay da cong vao totalAmount
+        connectionCost: booking.tripConnection?.mode
+          ? (booking.tripConnection.transportCost || 0) + (booking.tripConnection.nightsCost || 0) : 0,
+        vipDiscount: booking.vipDiscount?.discountAmount || 0,
         totalAmount: booking.totalAmount,
         paidAmount: booking.paymentDetails?.paidAmount || 0,
         remainingAmount: booking.totalAmount - (booking.paymentDetails?.paidAmount || 0)
@@ -1041,6 +1240,13 @@ router.get('/bookings/:id', isAdmin, async (req, res) => {
       // CMP Wallet (if used)
       cmpWalletPayment: booking.paymentMethod === 'cmp_wallet' ? booking.cmpWalletPayment : null,
       
+      // Chuyen ghep SmartTour
+      trip: booking.tripId ? {
+        tripId: booking.tripId,
+        order: booking.tripOrder,
+        connection: booking.tripConnection?.mode ? booking.tripConnection : null
+      } : null,
+
       // Review
       hasReviewed: booking.hasReviewed,
       reviewId: booking.reviewId,
@@ -1076,14 +1282,16 @@ router.get('/bookings/:id', isAdmin, async (req, res) => {
 router.put('/bookings/:id', isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
-    
-    // Don't allow updating certain fields
-    delete updates._id;
-    delete updates.userId;
-    delete updates.tourId;
-    delete updates.createdAt;
-    
+    // Chi cho sua thong tin lien he + ghi chu. Ngay, so khach, gia, trang thai
+    // co luong rieng (giu/tra ghe, tinh gia o server, /status, /payment); sua
+    // thang o day lam lech so ghe va booking tro sai chuyen khoi hanh.
+    const updates = {};
+    if (req.body.customerInfo) updates.customerInfo = req.body.customerInfo;
+    if (req.body.adminNotes !== undefined) updates.adminNotes = req.body.adminNotes;
+    if (!Object.keys(updates).length) {
+      return res.status(400).json({ success: false, error: 'Only customer info and admin notes can be edited' });
+    }
+
     const booking = await Booking.findByIdAndUpdate(
       id,
       { $set: updates },
@@ -1125,24 +1333,26 @@ router.put('/bookings/:id/status', isAdmin, async (req, res) => {
       });
     }
     
-    const updateData = { status };
-    
-    // If cancelling, save cancellation info
-    if (status === 'cancelled') {
-      updateData.cancellationDate = new Date();
-      updateData.cancellationReason = reason || 'Cancelled by admin';
+    // Booking da huy da tra ghe (va co the da hoan tien): mo lai se ban qua cho
+    const current = await Booking.findById(id).select('status').lean();
+    if (current?.status === 'cancelled' && status !== 'cancelled') {
+      return res.status(400).json({
+        success: false,
+        error: 'A cancelled booking cannot be reopened (its seats were released). Please create a new booking.'
+      });
     }
-    
-    // Lay trang thai cu de chi tra cho khi booking chuyen sang 'cancelled' LAN DAU
-    const before = await Booking.findById(id).select('status');
-    const booking = await Booking.findByIdAndUpdate(
+
+    // Huy: tra ghe + hoan 100% vao vi neu da tra bang vi (services/refundService)
+    let refund = null;
+    if (status === 'cancelled') {
+      refund = await cancelAndRefund(id, { byAdmin: true, reason });
+    }
+    // Da huy tu truoc (refund null) hoac trang thai khac: chi cap nhat status
+    const booking = refund?.booking || await Booking.findByIdAndUpdate(
       id,
-      { $set: updateData },
+      { $set: { status } },
       { new: true }
     );
-    if (booking && status === 'cancelled' && before?.status !== 'cancelled') {
-      await releaseForBooking(booking);
-    }
     
     if (!booking) {
       return res.status(404).json({
@@ -1154,7 +1364,10 @@ router.put('/bookings/:id/status', isAdmin, async (req, res) => {
     res.json({
       success: true,
       data: booking,
-      message: `Booking status updated to ${status}`
+      refundAmount: refund?.refundAmount || 0,
+      message: refund?.refundAmount
+        ? `Booking cancelled, $${refund.refundAmount} refunded to the customer's wallet`
+        : `Booking status updated to ${status}`
     });
   } catch (error) {
     console.error('Error updating booking status:', error);
@@ -1210,24 +1423,7 @@ router.put('/bookings/:id/payment', isAdmin, async (req, res) => {
     
     // Update user's totalSpent and VIP level if payment is now paid
     if (paymentStatus === 'paid' && previousPaymentStatus !== 'paid') {
-      const user = await User.findById(booking.userId);
-      if (user) {
-        // Add booking amount to totalSpent
-        user.totalSpent = (user.totalSpent || 0) + booking.totalAmount;
-        user.totalBookings = (user.totalBookings || 0) + 1;
-        
-        // Recalculate VIP level
-        const { calculateVIPLevel } = require('../services/vipService');
-        const newLevel = calculateVIPLevel(user.totalSpent);
-        
-        // Update VIP level and set vipSince if level changed from bronze
-        if (user.membershipLevel === 'bronze' && newLevel !== 'bronze') {
-          user.vipSince = new Date();
-        }
-        user.membershipLevel = newLevel;
-        
-        await user.save();
-      }
+      await recordSpend(booking.userId, booking.totalAmount, 1);
     }
     
     res.json({
@@ -1249,33 +1445,25 @@ router.put('/bookings/:id/payment', isAdmin, async (req, res) => {
 router.delete('/bookings/:id', isAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const { reason } = req.body;
-    
-    // Soft delete by setting status to cancelled
-    const before = await Booking.findById(id).select('status');
-    const booking = await Booking.findByIdAndUpdate(
-      id,
-      { 
-        $set: { 
-          status: 'cancelled',
-          cancellationDate: new Date(),
-          cancellationReason: reason || 'Cancelled by admin'
-        }
-      },
-      { new: true }
-    );
-    
+    const { reason } = req.body || {};
+
+    // Soft delete = huy: tra ghe + hoan 100% neu da tra bang vi
+    const refund = await cancelAndRefund(id, { byAdmin: true, reason });
+    const booking = refund?.booking || await Booking.findById(id);
+
     if (!booking) {
       return res.status(404).json({
         success: false,
         error: 'Booking not found'
       });
     }
-    if (before?.status !== 'cancelled') await releaseForBooking(booking);
-    
+
     res.json({
       success: true,
-      message: 'Booking cancelled successfully',
+      message: refund?.refundAmount
+        ? `Booking cancelled, $${refund.refundAmount} refunded to the customer's wallet`
+        : 'Booking cancelled successfully',
+      refundAmount: refund?.refundAmount || 0,
       data: booking
     });
   } catch (error) {

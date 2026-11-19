@@ -43,110 +43,45 @@ router.get('/', async (req, res) => {
     
     console.log('📋 Final baseFilter:', JSON.stringify(baseFilter, null, 2));
 
-    let paginatedReviews, totalFilteredResults;
+    // Mot pipeline cho ca co / khong tim kiem. Sap xep THEO TOUR (ten A->Z), trong
+    // moi tour review moi nhat truoc - truoc day sap theo ngay nen review cua mot
+    // tour nam rai rac khap cac trang.
+    const term = (search || '').trim();
+    // Escape: go "(" truoc day lam RegExp loi -> 500
+    const searchRegex = term ? new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') : null;
+    const pipeline = [
+      { $match: baseFilter },
+      { $lookup: { from: 'users', localField: 'userId', foreignField: '_id', as: 'user' } },
+      { $lookup: { from: 'tours', localField: 'tourId', foreignField: '_id', as: 'tour' } },
+      { $lookup: { from: 'users', localField: 'replies.userId', foreignField: '_id', as: 'replyUsers' } },
+      ...(searchRegex ? [{
+        $match: {
+          $or: [
+            { 'content.text': searchRegex },    // Nội dung review
+            { 'user.fullName': searchRegex },   // Tên user
+            { 'tour.name': searchRegex }        // Tên tour
+          ]
+        }
+      }] : []),
+      // Review cua tour da xoa xep cuoi
+      { $addFields: { sortTour: { $ifNull: [{ $arrayElemAt: ['$tour.name', 0] }, '￿'] } } },
+      { $sort: { sortTour: 1, 'timestamps.createdAt': -1, _id: 1 } },
+      { $facet: { total: [{ $count: 'n' }], rows: [{ $skip: skip }, { $limit: parseInt(limit) }] } }
+    ];
 
-    if (search && search.trim()) {
-      console.log(`🔎 Performing GLOBAL search for: "${search}"`);
-      
-      // Use aggregation pipeline for cross-collection search
-      const searchRegex = new RegExp(search, 'i');
-      
-      const pipeline = [
-        { $match: baseFilter },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'userId',
-            foreignField: '_id',
-            as: 'user'
-          }
-        },
-        {
-          $lookup: {
-            from: 'tours', 
-            localField: 'tourId',
-            foreignField: '_id',
-            as: 'tour'
-          }
-        },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'replies.userId',
-            foreignField: '_id',
-            as: 'replyUsers'
-          }
-        },
-        {
-          $match: {
-            $or: [
-              { 'content.text': searchRegex },    // Nội dung review
-              { 'user.fullName': searchRegex },   // Tên user  
-              { 'tour.name': searchRegex }        // Tên tour
-            ]
-          }
-        },
-        // Apply admin reply filter after search if specified
-        ...(Object.keys(adminReplyFilter).length > 0 ? [{ $match: adminReplyFilter }] : []),
-        { $sort: { 'timestamps.createdAt': -1 } }
-      ];
+    const [{ total, rows }] = await Comment.aggregate(pipeline);
+    const totalFilteredResults = total[0]?.n || 0;
 
-      console.log('🔍 Aggregation pipeline steps:', pipeline.length);
-      console.log('🔧 Pipeline with admin filter:', JSON.stringify(pipeline, null, 2));
-
-      // Get total count for ALL search results (not just current page)
-      const countPipeline = [...pipeline, { $count: 'total' }];
-      const countResult = await Comment.aggregate(countPipeline);
-      totalFilteredResults = countResult[0]?.total || 0;
-      
-      console.log('📊 Count pipeline result:', countResult);
-
-      // Get paginated results from ALL search results
-      const dataPipeline = [
-        ...pipeline,
-        { $skip: skip },
-        { $limit: parseInt(limit) }
-      ];
-      
-      const results = await Comment.aggregate(dataPipeline);
-      
-      // Transform aggregation results to match populate format
-      paginatedReviews = results.map(doc => ({
-        ...doc,
-        userId: doc.user[0] || null,
-        tourId: doc.tour[0] || null,
-        replies: (doc.replies || []).map(reply => {
-          // Find the user info for this reply
-          const replyUser = doc.replyUsers?.find(user => 
-            user._id.toString() === reply.userId?.toString()
-          );
-          return {
-            ...reply,
-            userId: replyUser || reply.userId
-          };
-        })
-      }));
-      
-      console.log(`🔎 GLOBAL search found ${totalFilteredResults} total results across ALL pages`);
-      console.log(`📄 Showing ${results.length} results for page ${page}`);
-      
-    } else {
-      console.log('📋 No search - using regular pagination');
-      
-      // Regular pagination without search
-      totalFilteredResults = await Comment.countDocuments(baseFilter);
-      
-      paginatedReviews = await Comment.find(baseFilter)
-        .populate('userId', 'fullName email avatar')
-        .populate('tourId', 'name country img')
-        .populate('replies.userId', 'fullName email avatar')
-        .sort({ 'timestamps.createdAt': -1 })
-        .skip(skip)
-        .limit(parseInt(limit))
-        .lean();
-        
-      console.log(`📄 Found ${totalFilteredResults} total, showing ${paginatedReviews.length}`);
-    }
+    // Dua ve dang giong populate de phan bien doi phia duoi giu nguyen
+    const paginatedReviews = rows.map(doc => ({
+      ...doc,
+      userId: doc.user[0] || null,
+      tourId: doc.tour[0] || null,
+      replies: (doc.replies || []).map(reply => ({
+        ...reply,
+        userId: doc.replyUsers?.find(u => u._id.toString() === reply.userId?.toString()) || reply.userId
+      }))
+    }));
 
     if (paginatedReviews.length > 0) {
       console.log('👤 First review user:', paginatedReviews[0].userId?.fullName || 'No user');
@@ -169,6 +104,7 @@ router.get('/', async (req, res) => {
       userName: review.userId?.fullName || 'Unknown User',
       userEmail: review.userId?.email || 'No email',
       userAvatar: review.userId?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(review.userId?.fullName || 'User')}&background=0D8ABC&color=fff`,
+      tourId: review.tourId?._id || null,
       tourName: review.tourId?.name || 'Unknown Tour',
       tourCountry: review.tourId?.country || 'Unknown',
       tourImage: review.tourId?.img?.[0] || '',

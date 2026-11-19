@@ -4,10 +4,11 @@ const Booking = require('../models/Booking');
 const Tour = require('../models/Tour');
 const Hotel = require('../models/Hotel');
 const User = require('../models/User');
-const { applyVIPDiscount, calculateVIPLevel } = require('../services/vipService');
+const { applyVIPDiscount, calculateVIPLevel, recordSpend } = require('../services/vipService');
+const { cancelAndRefund } = require('../services/refundService');
 const { calculateBookingPrice } = require('../services/pricingService');
 const {
-  seatsFor, findDeparture, upcomingDepartures, reserveSeats, releaseSeats, releaseForBooking
+  seatsFor, findDeparture, upcomingDepartures, reserveSeats, releaseSeats
 } = require('../services/departureService');
 const { requireAuth, requireSelfOrAdmin } = require('../middleware/auth');
 const { quoteTrip } = require('../services/smartTourService');
@@ -402,15 +403,29 @@ router.post('/trip/:tripId/pay-with-wallet', verifyAuth, async (req, res) => {
 
     const fresh = await User.findById(req.userId, { 'wallet.balance': 1, 'wallet.transactions': { $slice: -1 } }).lean();
     const paidAt = new Date();
-    await Booking.updateMany({ _id: { $in: due.map(b => b._id) } }, {
-      $set: {
-        paymentStatus: 'paid',
-        status: 'confirmed',
-        'paymentDetails.paidAt': paidAt,
-        'paymentDetails.paymentMethod': 'CMP Wallet',
-        'paymentDetails.transactionId': String(fresh.wallet.transactions[0]._id)
+    // Tung booking: paidAmount = phan cua no; chung 1 giao dich vi
+    await Booking.bulkWrite(due.map(b => ({
+      updateOne: {
+        filter: { _id: b._id },
+        update: {
+          $set: {
+            paymentStatus: 'paid',
+            status: 'confirmed',
+            paymentMethod: 'cmp_wallet',
+            'paymentDetails.paidAmount': b.totalAmount,
+            'paymentDetails.paidAt': paidAt,
+            cmpWalletPayment: {
+              transactionId: String(fresh.wallet.transactions[0]._id),
+              transactionDate: paidAt,
+              amountDeducted: b.totalAmount,
+              walletBalanceAfter: fresh.wallet.balance,
+              paymentConfirmed: true
+            }
+          }
+        }
       }
-    });
+    })));
+    await recordSpend(req.userId, amount, due.length);
 
     res.json({
       success: true,
@@ -547,21 +562,27 @@ router.patch('/:bookingId/status', requireBookingOwner, async (req, res) => {
         error: 'Booking not found'
       });
     }
-    
-    const wasCancelled = booking.status === 'cancelled';
-    booking.status = status;
-    if (adminNotes) {
-      booking.adminNotes = adminNotes;
+
+    // Chu booking chi duoc tu HUY (cung luat hoan tien voi /cancel). Truoc day
+    // khach tu dat duoc 'confirmed'/'completed' cho booking chua tra tien.
+    if (req.user.role !== 'admin') {
+      if (status !== 'cancelled') {
+        return res.status(403).json({ success: false, error: 'You can only cancel your booking' });
+      }
+      const result = await cancelAndRefund(booking._id, { reason: req.body.cancellationReason });
+      if (!result) return res.status(400).json({ success: false, error: 'Booking already cancelled' });
+      return res.json({ success: true, message: 'Booking status updated', ...result });
     }
-    
+
+    // Admin: cung luat voi /api/admin/bookings/:id/status
+    if (booking.status === 'cancelled' && status !== 'cancelled') {
+      return res.status(400).json({ success: false, error: 'A cancelled booking cannot be reopened' });
+    }
     if (status === 'cancelled') {
-      booking.cancellationDate = new Date();
-      booking.cancellationReason = req.body.cancellationReason || 'User requested';
+      await cancelAndRefund(booking._id, { byAdmin: true, reason: req.body.cancellationReason });
     }
-    
-    await booking.save();
-    // Huy lan dau -> tra cho cho chuyen
-    if (status === 'cancelled' && !wasCancelled) await releaseForBooking(booking);
+    await Booking.updateOne({ _id: booking._id }, { $set: { status, ...(adminNotes ? { adminNotes } : {}) } });
+    booking.status = status;
     
     res.json({
       success: true,
@@ -594,24 +615,23 @@ router.post('/:bookingId/cancel', requireBookingOwner, async (req, res) => {
       });
     }
     
-    if (booking.status === 'cancelled') {
+    // Huy + tra ghe + hoan tien theo so ngay truoc khoi hanh (services/refundService)
+    const result = await cancelAndRefund(booking._id, { reason });
+    if (!result) {
       return res.status(400).json({
         success: false,
         error: 'Booking already cancelled'
       });
     }
-    
-    booking.status = 'cancelled';
-    booking.cancellationDate = new Date();
-    booking.cancellationReason = reason || 'User requested cancellation';
-    
-    await booking.save();
-    await releaseForBooking(booking);
-    
+
     res.json({
       success: true,
-      message: 'Booking cancelled successfully',
-      booking
+      message: result.refundAmount
+        ? `Booking cancelled. $${result.refundAmount.toLocaleString('en-US')} (${Math.round(result.refundRate * 100)}%) refunded to your wallet.`
+        : 'Booking cancelled successfully',
+      refundAmount: result.refundAmount,
+      refundRate: result.refundRate,
+      booking: result.booking
     });
     
   } catch (error) {
@@ -811,20 +831,28 @@ router.post('/:bookingId/pay-with-wallet', requireBookingOwner, async (req, res)
       });
     }
 
-    const freshUser = await User.findById(user._id, 'wallet.balance').lean();
+    // Doc lai SAU khi tru: so du moi + giao dich vua them (truoc day lay giao
+    // dich cuoi tu ban user cu -> transactionId tro nham giao dich truoc do)
+    const freshUser = await User.findById(user._id, { 'wallet.balance': 1, 'wallet.transactions': { $slice: -1 } }).lean();
     user.wallet.balance = freshUser.wallet.balance;
 
-    // Update booking payment status
+    // Update booking payment status. paymentMethod la truong o goc schema
+    // (paymentDetails.paymentMethod khong co trong schema -> bi bo im lang)
     booking.paymentStatus = 'paid';
     booking.status = 'confirmed';
-    if (!booking.paymentDetails) {
-      booking.paymentDetails = {};
-    }
-    booking.paymentDetails.paidAt = new Date();
-    booking.paymentDetails.paymentMethod = 'CMP Wallet';
-    booking.paymentDetails.transactionId = user.wallet.transactions[user.wallet.transactions.length - 1]._id.toString();
+    booking.paymentMethod = 'cmp_wallet';
+    booking.paymentDetails = { ...(booking.paymentDetails?.toObject?.() || {}), paidAmount: bookingAmount, paidAt: new Date() };
+    booking.cmpWalletPayment = {
+      transactionId: String(freshUser.wallet.transactions[0]._id),
+      transactionDate: new Date(),
+      amountDeducted: bookingAmount,
+      walletBalanceBefore: walletBalance,
+      walletBalanceAfter: freshUser.wallet.balance,
+      paymentConfirmed: true
+    };
 
     await booking.save();
+    await recordSpend(user._id, bookingAmount, 1);
 
     // Populate booking details
     await booking.populate('tourId', 'name country img rating estimatedCost duration');

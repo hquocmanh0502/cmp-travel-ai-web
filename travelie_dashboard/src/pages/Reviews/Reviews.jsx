@@ -194,7 +194,7 @@ const Reviews = () => {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Review Management</h1>
-        <p className="text-gray-600">Manage and moderate user reviews</p>
+        <p className="text-gray-600">Manage and moderate user reviews · grouped by tour (A–Z), newest first within each tour</p>
       </div>
 
       {/* Statistics Cards */}
@@ -235,7 +235,7 @@ const Reviews = () => {
               type="text"
               placeholder="Search reviews, users, tours..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
@@ -243,7 +243,7 @@ const Reviews = () => {
           {/* Rating Filter */}
           <select
             value={filterRating}
-            onChange={(e) => setFilterRating(e.target.value)}
+            onChange={(e) => { setFilterRating(e.target.value); setCurrentPage(1); }}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Ratings</option>
@@ -257,7 +257,7 @@ const Reviews = () => {
           {/* Admin Replied Filter */}
           <select
             value={filterAdminReplied}
-            onChange={(e) => setFilterAdminReplied(e.target.value)}
+            onChange={(e) => { setFilterAdminReplied(e.target.value); setCurrentPage(1); }}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Reviews</option>
@@ -294,9 +294,18 @@ const Reviews = () => {
             
             const statusDisplay = getStatusDisplay(review.status);
             const StatusIcon = statusDisplay.icon;
+            // API sap theo tour: hien tieu de moi khi sang tour khac
+            const newTour = index === 0 || reviews[index - 1].tourName !== review.tourName;
 
             return (
-              <div key={review.id} className="bg-white p-6 rounded-lg shadow-sm border">
+              <React.Fragment key={review.id}>
+              {newTour && (
+                <h2 className={`text-lg font-semibold text-gray-800 flex items-center ${index ? 'pt-4' : ''}`}>
+                  {String(review.tourName || 'Unknown Tour')}
+                  <span className="ml-2 text-sm font-normal text-gray-500">{String(review.tourCountry || '')}</span>
+                </h2>
+              )}
+              <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
                     <img
@@ -386,6 +395,7 @@ const Reviews = () => {
                   </div>
                 </div>
               </div>
+              </React.Fragment>
             );
           })}
         </div>

@@ -19,6 +19,7 @@ import {
 import { FiStar, FiMapPin, FiGlobe, FiMessageSquare } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import ImageUpload from './ImageUpload';
+import DeparturesPanel from './Tours/DeparturesPanel';
 import { tourGuidesAPI, guideReviewsAPI } from '../utils/api';
 
 const API_BASE_URL = 'http://localhost:3000/api/admin';
@@ -127,7 +128,9 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
     country: tourData?.country || '',
     description: tourData?.description || '',
     img: tourData?.img ? (typeof tourData.img === 'string' ? { url: tourData.img, data: tourData.img } : tourData.img) : null,
-    duration: tourData?.duration || '7 Days',
+    // So ngay that (web tinh gia, ghep tour, ngay ket thuc chuyen theo so nay);
+    // chu "N days" do server sinh tu durationDays
+    durationDays: tourData?.durationDays ?? (parseInt(String(tourData?.duration || '').match(/\d+/)?.[0], 10) || 5),
     type: tourData?.type || 'international',
     estimatedCost: tourData?.estimatedCost || tourData?.pricing?.adult || 5000,
     maxGroupSize: tourData?.maxGroupSize || 20,
@@ -143,11 +146,13 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
     },
     
     // Pricing
+    // ?? thay vi ||: gia 0 (em be mien phi) la gia tri that, khong duoc bi thay.
+    // Mac dinh theo dung ti le backend tinh (pricingService: tre 70%, em be 10%).
     pricing: {
-      adult: tourData?.pricing?.adult || 5000,
-      child: tourData?.pricing?.child || 3500,
-      infant: tourData?.pricing?.infant || 1500,
-      groupDiscount: tourData?.pricing?.groupDiscount || 10
+      adult: tourData?.pricing?.adult ?? 5000,
+      child: tourData?.pricing?.child ?? Math.round((tourData?.pricing?.adult ?? 5000) * 0.7),
+      infant: tourData?.pricing?.infant ?? Math.round((tourData?.pricing?.adult ?? 5000) * 0.1),
+      groupDiscount: tourData?.pricing?.groupDiscount ?? 0
     },
     
     // Detailed information
@@ -496,7 +501,9 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
     { id: 'guide', label: 'Tour Guide', icon: MdPerson },
     { id: 'gallery', label: 'Gallery (12 Photos)', icon: MdPhotoLibrary },
     { id: 'itinerary', label: 'Itinerary', icon: MdSchedule },
-    { id: 'pricing', label: 'Pricing', icon: MdAttachMoney }
+    { id: 'pricing', label: 'Pricing', icon: MdAttachMoney },
+    // Chuyen khoi hanh chi sua duoc khi tour da ton tai (can tour id)
+    ...(isEdit ? [{ id: 'departures', label: 'Departures', icon: MdPeople }] : [])
   ];
 
   return (
@@ -606,16 +613,21 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
                   {/* Duration */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Duration
+                      Duration (days) *
                     </label>
                     <input
-                      type="text"
-                      name="duration"
-                      value={formData.duration}
+                      type="number"
+                      name="durationDays"
+                      min="1"
+                      max="30"
+                      value={formData.durationDays}
                       onChange={handleBasicChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                      placeholder="7 Days"
+                      required
                     />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Changing it moves the end date of every departure. Blocked while upcoming bookings exist.
+                    </p>
                   </div>
 
                   {/* Type */}
@@ -1621,6 +1633,10 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
             )}
 
             {/* Pricing Tab */}
+            {activeTab === 'departures' && isEdit && (
+              <DeparturesPanel tourId={tour._id} />
+            )}
+
             {activeTab === 'pricing' && (
               <div className="space-y-6">
                 <div className="bg-green-50 p-4 rounded-lg">
@@ -1694,7 +1710,7 @@ export default function EnhancedTourFormModal({ tour, isEdit, onClose, onSuccess
                       />
                     </div>
                     <p className="text-xs text-gray-500 mt-1">
-                      Auto: {Math.floor(formData.pricing.adult * 0.3)} (30% of adult)
+                      Auto: {Math.round(formData.pricing.adult * 0.1)} (10% of adult)
                     </p>
                   </div>
 

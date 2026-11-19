@@ -132,9 +132,34 @@ function getAllVIPTiers() {
   return VIP_TIERS;
 }
 
+/**
+ * Ghi nhan tien khach da TRA (am = hoan tien) va tinh lai hang VIP.
+ *
+ * Moi duong thanh toan / hoan tien deu goi ham nay. Truoc day chi admin "mark
+ * paid" cong totalSpent, khach tra bang vi tren web thi khong -> hai khach chi
+ * bang nhau co hang VIP khac nhau.
+ *
+ * @param {string} userId
+ * @param {number} amount  so tien (USD); am khi hoan tien
+ * @param {number} bookings so booking duoc tinh them (am khi hoan ca booking)
+ */
+async function recordSpend(userId, amount, bookings = 0) {
+  const User = require('../models/User'); // require tre: tranh vong User <-> service
+  const user = await User.findById(userId);
+  if (!user) return null;
+  user.totalSpent = Math.max(0, (user.totalSpent || 0) + amount);
+  user.totalBookings = Math.max(0, (user.totalBookings || 0) + bookings);
+  const level = calculateVIPLevel(user.totalSpent);
+  if ((user.membershipLevel || 'bronze') === 'bronze' && level !== 'bronze') user.vipSince = new Date();
+  user.membershipLevel = level;
+  await user.save();
+  return level;
+}
+
 module.exports = {
   VIP_TIERS,
   calculateVIPLevel,
+  recordSpend,
   getVIPDiscount,
   applyVIPDiscount,
   getVIPTierInfo,
